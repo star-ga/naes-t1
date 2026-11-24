@@ -1,0 +1,68 @@
+{
+  "artifact_sha256": [
+    {
+      "kind": "safe_statement_count_extract",
+      "sha256": "172dd624365ee3346b5f20eb060633ffd26f0477e2c13162dc4927838ee11d13"
+    },
+    {
+      "kind": "authority_ledger_label",
+      "sha256": "c84c3b22750cffa0afffe00d7486950e06c23da19128771b03e0da84fb950c92"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "66a2e4516a3068a618e1725db0c8f50e0acc9f31f3077f4c8ed1c886e349f6cc"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "5bdfadaf67099b99d1c40e025d6dce044c22658fc49353919299df2d16921556"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "61dd664cc97193b7cd6831a5c932482af6995ec8d48cb553bc96f05199e8d72c"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "d05f3ce8171db52a487f95c8a9389e1fd01d7910e8a9a442d7db495d97954e1b"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "ae0a049a336f5ab958283713311ada8b8ee928d6ec5dabbc90e4ecc5014fd2f0"
+    },
+    {
+      "kind": "historical_method_or_search_output",
+      "sha256": "d48abbcdfd7525c058d45c056d8d8d60d4d376f18f7fa297072e22e37510bccc",
+      "status": "withheld"
+    },
+    {
+      "kind": "record: proofs/certificates/floor_cert/s5i5/SUMMARY.md",
+      "sha256": "746d962ff2a4af24f7f878781a6606cff0430e6e8507993383d8f62477798412"
+    },
+    {
+      "kind": "record: proofs/certificates/floor_cert/s5i5/levels.json",
+      "sha256": "11f577b1df25b9294bdb18957d81a99f22a7e8b035a575304e5efddad3649ec2"
+    }
+  ],
+  "floor": 45,
+  "game": "s5i5",
+  "game_id": "s5i5-18d95033",
+  "game_levels": 8,
+  "level": 7,
+  "lower_bound": {
+    "kind": "engine_bfs_completion_loop",
+    "statement": "Record: proofs/certificates/floor_cert/s5i5 (verdict CONFIRMED against the current game file; claim code Cl). Breadth-first search on the engine over 582724 states and 11628960 edges closes layers 1 through 44 with no win; the recorded route wins at the floor and its prefix does not.",
+    "value": 45
+  },
+  "naes_t1_actions": 45,
+  "proof_class": "Exhaustive search",
+  "proof_detail": "engine_bfs_completion_loop",
+  "schema_version": 1,
+  "source_certificate_sha256": "b5e04b0c0a66243c299e40635a668af51cf75d772b2909ab0b4f8b31a8af8de9",
+  "status": "proven",
+  "upper_bound": {
+    "expected_levels_completed": 7,
+    "length": 45,
+    "opening_reset_counted": false,
+    "route": "6@54,51 6@17,51 6@17,51 6@10,51 6@10,51 6@10,51 6@10,51 6@10,51 6@39,51 6@10,51 6@10,51 6@10,51 6@26,51 6@54,51 6@60,58 6@60,58 6@60,51 6@60,51 6@10,58 6@10,58 6@10,58 6@10,58 6@10,58 6@10,58 6@10,58 6@10,58 6@10,58 6@10,58 6@39,51 6@39,51 6@32,51 6@32,51 6@10,58 6@10,58 6@32,51 6@32,51 6@32,51 6@32,51 6@32,51 6@32,58 6@32,58 6@32,58 6@32,58 6@32,58 6@32,58",
+    "seed": 0
+  }
+}

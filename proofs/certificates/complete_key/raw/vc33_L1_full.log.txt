@@ -1,0 +1,4 @@
+LAYER level=1 depth=1 frontier=4 visited=5 edges=4103 t=8.8
+LAYER level=1 depth=2 frontier=3 visited=8 edges=20515 t=54.4
+RESULT game=vc33 level=1 verdict=CONFIRMED states=8 edges=20515 seconds=54.449
+rc=0

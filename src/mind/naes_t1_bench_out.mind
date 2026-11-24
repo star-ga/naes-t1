@@ -1,0 +1,232 @@
+// Output of the bench mode: hexadecimal and decimal writers, the timing lines,
+// the sample lines and the split timers of the block phase.
+// Entry points: write_hex32, time_setup4, emit_samples4, emit_time_lines,
+// emit_split_nl4.
+
+fn write_hex32(fd: i64, dig: i64) -> i64 {
+    let b: i64 = __mind_alloc(64);
+    if b == 0 {
+        return 0 - 1;
+    }
+    let mut i: i64 = 0;
+    while i < 32 {
+        let byte: i64 = __mind_load_i8(dig + i);
+        let hi: i64 = (byte >> 4) & 15;
+        let lo: i64 = byte & 15;
+        let mut hd: i64 = 48 + hi;
+        let mut ldg: i64 = 48 + lo;
+        if hi >= 10 {
+            hd = 87 + hi;
+        }
+        if lo >= 10 {
+            ldg = 87 + lo;
+        }
+        __mind_store_i8(b + i * 2, hd);
+        __mind_store_i8(b + i * 2 + 1, ldg);
+        i = i + 1;
+    }
+    let rc: i64 = write_fd_all(fd, b, 64);
+    __mind_free(b);
+    rc
+}
+
+fn wr9(fd: i64, a: i64, b: i64, c: i64, d: i64, e: i64, f: i64, g: i64, h: i64, i: i64) -> i64 {
+    let p: i64 = __mind_alloc(9);
+    __mind_store_i8(p, a);
+    __mind_store_i8(p + 1, b);
+    __mind_store_i8(p + 2, c);
+    __mind_store_i8(p + 3, d);
+    __mind_store_i8(p + 4, e);
+    __mind_store_i8(p + 5, f);
+    __mind_store_i8(p + 6, g);
+    __mind_store_i8(p + 7, h);
+    __mind_store_i8(p + 8, i);
+    let rc: i64 = write_fd_all(fd, p, 9);
+    __mind_free(p);
+    rc
+}
+
+fn emit_compared(fd: i64) -> i64 {
+    wr9(fd, 67, 79, 77, 80, 65, 82, 69, 68, 61)
+}
+
+fn emit_match(fd: i64) -> i64 {
+    let p: i64 = __mind_alloc(6);
+    __mind_store_i8(p, 77);
+    __mind_store_i8(p + 1, 65);
+    __mind_store_i8(p + 2, 84);
+    __mind_store_i8(p + 3, 67);
+    __mind_store_i8(p + 4, 72);
+    __mind_store_i8(p + 5, 32);
+    let rc: i64 = write_fd_all(fd, p, 6);
+    __mind_free(p);
+    rc
+}
+
+fn emit_stream(fd: i64) -> i64 {
+    let p: i64 = __mind_alloc(14);
+    __mind_store_i8(p, 83);
+    __mind_store_i8(p + 1, 84);
+    __mind_store_i8(p + 2, 82);
+    __mind_store_i8(p + 3, 69);
+    __mind_store_i8(p + 4, 65);
+    __mind_store_i8(p + 5, 77);
+    __mind_store_i8(p + 6, 95);
+    __mind_store_i8(p + 7, 83);
+    __mind_store_i8(p + 8, 72);
+    __mind_store_i8(p + 9, 65);
+    __mind_store_i8(p + 10, 50);
+    __mind_store_i8(p + 11, 53);
+    __mind_store_i8(p + 12, 54);
+    __mind_store_i8(p + 13, 32);
+    let rc: i64 = write_fd_all(fd, p, 14);
+    __mind_free(p);
+    rc
+}
+
+fn emit_us(fd: i64) -> i64 {
+    let p: i64 = __mind_alloc(16);
+    __mind_store_i8(p, 85);
+    __mind_store_i8(p + 1, 83);
+    __mind_store_i8(p + 2, 95);
+    __mind_store_i8(p + 3, 80);
+    __mind_store_i8(p + 4, 69);
+    __mind_store_i8(p + 5, 82);
+    __mind_store_i8(p + 6, 95);
+    __mind_store_i8(p + 7, 68);
+    __mind_store_i8(p + 8, 69);
+    __mind_store_i8(p + 9, 67);
+    __mind_store_i8(p + 10, 73);
+    __mind_store_i8(p + 11, 83);
+    __mind_store_i8(p + 12, 73);
+    __mind_store_i8(p + 13, 79);
+    __mind_store_i8(p + 14, 78);
+    __mind_store_i8(p + 15, 32);
+    let rc: i64 = write_fd_all(fd, p, 16);
+    __mind_free(p);
+    rc
+}
+
+fn emit_nl(fd: i64) -> i64 {
+    let p: i64 = __mind_alloc(1);
+    __mind_store_i8(p, 10);
+    let rc: i64 = write_fd_all(fd, p, 1);
+    __mind_free(p);
+    rc
+}
+
+fn emit_slash(fd: i64) -> i64 {
+    let p: i64 = __mind_alloc(1);
+    __mind_store_i8(p, 47);
+    let rc: i64 = write_fd_all(fd, p, 1);
+    __mind_free(p);
+    rc
+}
+
+// Slot array for the timed pass (2n i64: nanoseconds, then bad flags). Returns
+// 0 when timing is off, or -1 when the warm-up trips the activation guard.
+fn time_setup4(model: i64, w4: i64, cfg: i64, serve: i64, n: i64) -> i64 {
+    if ld(cfg, cf_time()) != 1 {
+        return 0;
+    }
+    let t0: i64 = clock4(time_on4(w4));
+    let mut c: i64 = 0;
+    while c < 20 || clock4(w4) - t0 < 3000000000 {
+        let i: i64 = (c + 2207 + ld(cfg, cf_offset())) % 5499;
+        if decide4(model, w4, serve + i * 8196) < 0 {
+            return 0 - 1;
+        }
+        c = c + 1;
+    }
+    st(w4, w4_stem_ns(), 0);
+    st(w4, w4_block_ns(), 0);
+    reset_split4(w4);
+    emit_word(2, 4854687250628362583, 138836462657, 13);
+    print_i64(2, c);
+    emit_nl(2);
+    alloc_zero(2 * n)
+}
+
+fn emit_samples4(w4: i64, idx: i64, tns: i64, n: i64) -> i64 {
+    let err: i64 = 2;
+    let mut bad: i64 = 0;
+    let mut k: i64 = 0;
+    while k < n {
+        put_word4(w4, err, 9083393321812307, 0, 7);
+        put_i64_4(w4, err, k);
+        put_sp4(w4, err);
+        put_i64_4(w4, err, ld(idx, k));
+        put_sp4(w4, err);
+        put_i64_4(w4, err, ld(tns, k));
+        put_sp4(w4, err);
+        put_i64_4(w4, err, ld(tns, n + k));
+        put_nl4(w4, err);
+        bad = bad + ld(tns, n + k);
+        k = k + 1;
+    }
+    put_word4(w4, err, 5207098233617336653, 4919423145315619653, 16);
+    put_sp4(w4, err);
+    put_i64_4(w4, err, bad);
+    put_nl4(w4, err)
+}
+
+fn emit_time_lines(w4: i64, n: i64, t: i64) -> i64 {
+    let err: i64 = 2;
+    emit_us(err);
+    print_i64(err, t / n / 1000);
+    emit_nl(err);
+    emit_word(err, 6004810429522593872, 32, 9);
+    print_i64(err, ld(w4, w4_stem_ns()) / n / 1000);
+    emit_sp(err);
+    print_i64(err, ld(w4, w4_block_ns()) / n / 1000);
+    emit_sp(err);
+    print_i64(err, ld(w4, w4_head_ns()) / n / 1000);
+    emit_split_nl4(w4, err, n)
+}
+
+fn w4_bank_ns() -> i64 { 15 }
+fn w4_seg_ns() -> i64 { 16 }
+fn w4_epi_ns() -> i64 { 17 }
+
+// Sampled form: the clock is read on one source row in 16 and the bank time is
+// scaled by 16, so the bank time is an estimate. This gives 384 clock calls
+// per decision instead of 3072.
+fn bank_ns4s(w4: i64, t0: i64) -> i64 {
+    if t0 == 0 {
+        return 0;
+    }
+    add_ns(w4, w4_bank_ns(), (clock4(w4) - t0) * 16);
+    0
+}
+
+// At the end of block4: the segment loop ran [tb, te), the epilogue [te, now).
+fn split_end4(w4: i64, tb: i64, te: i64) -> i64 {
+    if tb == 0 {
+        return 0;
+    }
+    add_ns(w4, w4_seg_ns(), te - tb);
+    add_ns(w4, w4_epi_ns(), clock4(w4) - te);
+    0
+}
+
+// Replaces the head slot reset at the end of the warm-up: head and split
+// slots.
+fn reset_split4(w4: i64) -> i64 {
+    st(w4, w4_head_ns(), 0);
+    st(w4, w4_bank_ns(), 0);
+    st(w4, w4_seg_ns(), 0);
+    st(w4, w4_epi_ns(), 0)
+}
+
+// Ends the PHASE_US line, then prints the BLOCK_US line.
+fn emit_split_nl4(w4: i64, err: i64, n: i64) -> i64 {
+    let bank: i64 = ld(w4, w4_bank_ns());
+    emit_nl(err);
+    emit_word(err, 6004810455024880706, 32, 9);
+    print_i64(err, bank / n / 1000);
+    emit_sp(err);
+    print_i64(err, (ld(w4, w4_seg_ns()) - bank) / n / 1000);
+    emit_sp(err);
+    print_i64(err, ld(w4, w4_epi_ns()) / n / 1000);
+    emit_nl(err)
+}

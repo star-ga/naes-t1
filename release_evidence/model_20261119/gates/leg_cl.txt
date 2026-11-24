@@ -1,0 +1,12 @@
+=== CLOSED LOOP RUN 1 START 12:21:50 ===
+CLOSED_LOOP_RUN_1_EXIT=0
+<per-worker lines withheld>
+TOTAL {"actions": 5499, "<key withheld>": "<word withheld>", "elapsed_s": 497.94, "exact": true, "full_corpus": true, "games": 25, "games_exact": 25, "levels": 183, "records_sha256": "<private>", "ref_actions": 5499, "ref_levels": 183, "resets": 25, "run": 1, "stream_sha256": "c8749c520a4e993edcf64ef4199c1764a09da75ba9e3bf5e2c21716b7ffbfcf1", "weights_sha256": "<private>", "workers": "<threads>", "wrong_actions": 0, "wrong_clicks": 0, "wrong_decisions": 0}
+=== CLOSED LOOP RUN 2 START 12:30:09 ===
+CLOSED_LOOP_RUN_2_EXIT=0
+<per-worker lines withheld>
+TOTAL {"actions": 5499, "<key withheld>": "<word withheld>", "elapsed_s": 274.13, "exact": true, "full_corpus": true, "games": 25, "games_exact": 25, "levels": 183, "records_sha256": "<private>", "ref_actions": 5499, "ref_levels": 183, "resets": 25, "run": 2, "stream_sha256": "c8749c520a4e993edcf64ef4199c1764a09da75ba9e3bf5e2c21716b7ffbfcf1", "weights_sha256": "<private>", "workers": "<threads>", "wrong_actions": 0, "wrong_clicks": 0, "wrong_decisions": 0}
+STREAM_COMPARE_EXIT=0
+STREAM_COMPARE {"first_bytes": 817732, "first_sha256": "c8749c520a4e993edcf64ef4199c1764a09da75ba9e3bf5e2c21716b7ffbfcf1", "identical": true, "second_bytes": 817732, "second_sha256": "c8749c520a4e993edcf64ef4199c1764a09da75ba9e3bf5e2c21716b7ffbfcf1"}
+CL_ALL_DONE 12:34:43
+LEG_CL_RC=0

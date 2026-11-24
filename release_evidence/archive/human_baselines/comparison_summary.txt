@@ -1,0 +1,12 @@
+csv_rows=183
+api_games=25
+row_match=183
+row_mismatch_or_missing=0
+sum_csv_human_baseline=17135
+sum_api_baseline_actions=17135
+human_baselines.json_sha256_field=9be40c55cccb0e39f3a884d42f9284c717999fe4eb2f710313b6a812d182be64
+human_baselines.json_retrieval_date=not recorded in the source table
+human_baselines.json_level_rows=0
+kit_vs_api_value_mismatches=0
+kit_vs_api_game_id_differences=0
+scorecard_api_json_ok=14/14

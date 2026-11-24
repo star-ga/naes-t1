@@ -1,0 +1,453 @@
+{
+  "level": 5,
+  "recorded_floor": 28,
+  "budget": 150,
+  "depth_cap": 27,
+  "classes": [
+    {
+      "key": [
+        "idle"
+      ],
+      "rep": [
+        0,
+        0
+      ],
+      "pixels": 3876
+    },
+    {
+      "key": [
+        "sld",
+        "0077dketvcncpc",
+        -1
+      ],
+      "rep": [
+        4,
+        55
+      ],
+      "pixels": 25
+    },
+    {
+      "key": [
+        "sld",
+        "0077dketvcncpc",
+        0
+      ],
+      "rep": [
+        9,
+        55
+      ],
+      "pixels": 5
+    },
+    {
+      "key": [
+        "sld",
+        "0077dketvcncpc",
+        1
+      ],
+      "rep": [
+        10,
+        55
+      ],
+      "pixels": 25
+    },
+    {
+      "key": [
+        "sld",
+        "0078vkisbwvycx",
+        -1
+      ],
+      "rep": [
+        19,
+        55
+      ],
+      "pixels": 25
+    },
+    {
+      "key": [
+        "sld",
+        "0078vkisbwvycx",
+        0
+      ],
+      "rep": [
+        24,
+        55
+      ],
+      "pixels": 5
+    },
+    {
+      "key": [
+        "sld",
+        "0078vkisbwvycx",
+        1
+      ],
+      "rep": [
+        25,
+        55
+      ],
+      "pixels": 25
+    },
+    {
+      "key": [
+        "sld",
+        "0075alcxsczxjl",
+        -1
+      ],
+      "rep": [
+        34,
+        55
+      ],
+      "pixels": 25
+    },
+    {
+      "key": [
+        "sld",
+        "0075alcxsczxjl",
+        0
+      ],
+      "rep": [
+        39,
+        55
+      ],
+      "pixels": 5
+    },
+    {
+      "key": [
+        "sld",
+        "0075alcxsczxjl",
+        1
+      ],
+      "rep": [
+        40,
+        55
+      ],
+      "pixels": 25
+    },
+    {
+      "key": [
+        "sld",
+        "0081qcyhnubdbe",
+        -1
+      ],
+      "rep": [
+        49,
+        55
+      ],
+      "pixels": 25
+    },
+    {
+      "key": [
+        "sld",
+        "0081qcyhnubdbe",
+        0
+      ],
+      "rep": [
+        54,
+        55
+      ],
+      "pixels": 5
+    },
+    {
+      "key": [
+        "sld",
+        "0081qcyhnubdbe",
+        1
+      ],
+      "rep": [
+        55,
+        55
+      ],
+      "pixels": 25
+    }
+  ],
+  "class_mismatches": [],
+  "simple_actions_at_start": [
+    {
+      "id": 1,
+      "pose_unchanged": true,
+      "steps": 150,
+      "level": 4,
+      "state": "GameState.NOT_FINISHED"
+    },
+    {
+      "id": 2,
+      "pose_unchanged": true,
+      "steps": 150,
+      "level": 4,
+      "state": "GameState.NOT_FINISHED"
+    },
+    {
+      "id": 3,
+      "pose_unchanged": true,
+      "steps": 150,
+      "level": 4,
+      "state": "GameState.NOT_FINISHED"
+    },
+    {
+      "id": 4,
+      "pose_unchanged": true,
+      "steps": 150,
+      "level": 4,
+      "state": "GameState.NOT_FINISHED"
+    },
+    {
+      "id": 5,
+      "pose_unchanged": true,
+      "steps": 150,
+      "level": 4,
+      "state": "GameState.NOT_FINISHED"
+    },
+    {
+      "id": 7,
+      "pose_unchanged": true,
+      "steps": 150,
+      "level": 4,
+      "state": "GameState.NOT_FINISHED"
+    }
+  ],
+  "reset_at_start": {
+    "back_to_start_pose": false,
+    "level": 0,
+    "state": "GameState.NOT_FINISHED",
+    "steps": 50
+  },
+  "pins": {
+    "s5i5.py": "341f85bac1fb5ca7a3315a367405c3c993a57ce4dd0ff01cc8aaa72bf6c6ed34",
+    "base_game.py": "5b5f41f3bec4c0c97a727fda7326114991dc0d4a5642d489b40ee4aa87e6b15f",
+    "level.py": "f74db969772b251018b2fcce6ec42f3522adeef4e9c03c036e455d2a35e3215a",
+    "camera.py": "f06e16807b0f97d86cafb5481bb3969213f27768f789d898c6b8b07e957de397",
+    "enums.py": "94ebef48f6fe950a18679a1b991c366e8e28c32ab58c9335f385e19bea21950e",
+    "sprites.py": "ea9d3d02c7db0814954134a0e0ea6a3cb9b80066930dbdbfc5865befb54c493f"
+  },
+  "identity_display_to_grid": true,
+  "status": "CONFIRMED",
+  "search_status": "NO_SHORTER",
+  "reason": "layers 1..27 closed with no win",
+  "layers_closed": 27,
+  "nodes": 46228,
+  "states": 3749,
+  "expanded": 3556,
+  "edges": 46228,
+  "seconds": 38.662,
+  "per_layer": [
+    {
+      "depth": 1,
+      "expanded": 1,
+      "visited": 7,
+      "edges": 13,
+      "wins": 0,
+      "seconds": 0.01
+    },
+    {
+      "depth": 2,
+      "expanded": 6,
+      "visited": 24,
+      "edges": 78,
+      "wins": 0,
+      "seconds": 0.036
+    },
+    {
+      "depth": 3,
+      "expanded": 17,
+      "visited": 57,
+      "edges": 221,
+      "wins": 0,
+      "seconds": 0.148
+    },
+    {
+      "depth": 4,
+      "expanded": 33,
+      "visited": 110,
+      "edges": 429,
+      "wins": 0,
+      "seconds": 0.348
+    },
+    {
+      "depth": 5,
+      "expanded": 53,
+      "visited": 187,
+      "edges": 689,
+      "wins": 0,
+      "seconds": 0.364
+    },
+    {
+      "depth": 6,
+      "expanded": 77,
+      "visited": 291,
+      "edges": 1001,
+      "wins": 0,
+      "seconds": 0.705
+    },
+    {
+      "depth": 7,
+      "expanded": 104,
+      "visited": 423,
+      "edges": 1352,
+      "wins": 0,
+      "seconds": 1.146
+    },
+    {
+      "depth": 8,
+      "expanded": 132,
+      "visited": 583,
+      "edges": 1716,
+      "wins": 0,
+      "seconds": 1.437
+    },
+    {
+      "depth": 9,
+      "expanded": 160,
+      "visited": 763,
+      "edges": 2080,
+      "wins": 0,
+      "seconds": 1.873
+    },
+    {
+      "depth": 10,
+      "expanded": 180,
+      "visited": 956,
+      "edges": 2340,
+      "wins": 0,
+      "seconds": 1.833
+    },
+    {
+      "depth": 11,
+      "expanded": 193,
+      "visited": 1156,
+      "edges": 2509,
+      "wins": 0,
+      "seconds": 2.293
+    },
+    {
+      "depth": 12,
+      "expanded": 200,
+      "visited": 1356,
+      "edges": 2600,
+      "wins": 0,
+      "seconds": 2.252
+    },
+    {
+      "depth": 13,
+      "expanded": 200,
+      "visited": 1545,
+      "edges": 2600,
+      "wins": 0,
+      "seconds": 2.208
+    },
+    {
+      "depth": 14,
+      "expanded": 189,
+      "visited": 1719,
+      "edges": 2457,
+      "wins": 0,
+      "seconds": 2.112
+    },
+    {
+      "depth": 15,
+      "expanded": 174,
+      "visited": 1877,
+      "edges": 2262,
+      "wins": 0,
+      "seconds": 1.731
+    },
+    {
+      "depth": 16,
+      "expanded": 158,
+      "visited": 2024,
+      "edges": 2054,
+      "wins": 0,
+      "seconds": 1.703
+    },
+    {
+      "depth": 17,
+      "expanded": 147,
+      "visited": 2164,
+      "edges": 1911,
+      "wins": 0,
+      "seconds": 1.46
+    },
+    {
+      "depth": 18,
+      "expanded": 140,
+      "visited": 2304,
+      "edges": 1820,
+      "wins": 0,
+      "seconds": 1.375
+    },
+    {
+      "depth": 19,
+      "expanded": 140,
+      "visited": 2449,
+      "edges": 1820,
+      "wins": 0,
+      "seconds": 1.698
+    },
+    {
+      "depth": 20,
+      "expanded": 145,
+      "visited": 2600,
+      "edges": 1885,
+      "wins": 0,
+      "seconds": 1.676
+    },
+    {
+      "depth": 21,
+      "expanded": 151,
+      "visited": 2754,
+      "edges": 1963,
+      "wins": 0,
+      "seconds": 1.704
+    },
+    {
+      "depth": 22,
+      "expanded": 154,
+      "visited": 2907,
+      "edges": 2002,
+      "wins": 0,
+      "seconds": 1.588
+    },
+    {
+      "depth": 23,
+      "expanded": 153,
+      "visited": 3059,
+      "edges": 1989,
+      "wins": 0,
+      "seconds": 1.569
+    },
+    {
+      "depth": 24,
+      "expanded": 152,
+      "visited": 3213,
+      "edges": 1976,
+      "wins": 0,
+      "seconds": 1.387
+    },
+    {
+      "depth": 25,
+      "expanded": 154,
+      "visited": 3377,
+      "edges": 2002,
+      "wins": 0,
+      "seconds": 1.585
+    },
+    {
+      "depth": 26,
+      "expanded": 164,
+      "visited": 3556,
+      "edges": 2132,
+      "wins": 0,
+      "seconds": 1.411
+    },
+    {
+      "depth": 27,
+      "expanded": 179,
+      "visited": 3749,
+      "edges": 2327,
+      "wins": 0,
+      "seconds": 1.512
+    }
+  ],
+  "recorded_replay_win": true,
+  "recorded_prefix_wins": false,
+  "shorter": null,
+  "win_depth": null
+}

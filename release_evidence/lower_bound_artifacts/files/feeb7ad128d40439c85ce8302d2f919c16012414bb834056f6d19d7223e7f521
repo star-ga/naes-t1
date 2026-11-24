@@ -1,0 +1,76 @@
+{
+ "game": "ft09",
+ "gid": "ft09-0d8bbf25",
+ "won": 6,
+ "total": 6,
+ "other_variants": [],
+ "mmae_sum": 6.0,
+ "new_legality_hits": 0,
+ "removed_legality_hits": 0,
+ "wall": 210.0,
+ "timing": [
+  {
+   "gid": "ft09-0d8bbf25",
+   "secs": 0.4,
+   "hit_wall": false
+  }
+ ],
+ "legality_now": {
+  "game_id": 0,
+  "white_box": 0,
+  "hidden_dep": 0
+ },
+ "legality_base": {
+  "game_id": 0,
+  "white_box": 0,
+  "hidden_dep": 0
+ },
+ "changed": [],
+ "per_level": [
+  {
+   "level": 1,
+   "steps": 4,
+   "floor": 4,
+   "mmae": 1.0,
+   "refuted": false
+  },
+  {
+   "level": 2,
+   "steps": 7,
+   "floor": 7,
+   "mmae": 1.0,
+   "refuted": false
+  },
+  {
+   "level": 3,
+   "steps": 14,
+   "floor": 14,
+   "mmae": 1.0,
+   "refuted": false
+  },
+  {
+   "level": 4,
+   "steps": 16,
+   "floor": 16,
+   "mmae": 1.0,
+   "refuted": false
+  },
+  {
+   "level": 5,
+   "steps": 21,
+   "floor": 21,
+   "mmae": 1.0,
+   "refuted": false
+  },
+  {
+   "level": 6,
+   "steps": 13,
+   "floor": 13,
+   "mmae": 1.0,
+   "refuted": false
+  }
+ ],
+ "measured_at": "2026-09-24T23:15:49+00:00",
+ "source": "prf0 <word withheld>, build-host, idle 100%->100%, parallel <threads>, wall 210, bundle add9e23071dee797",
+ "bundle_hash": "add9e23071dee797"
+}

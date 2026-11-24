@@ -1,0 +1,340 @@
+"""wa30 L3 component-relay COST ALGEBRA, reformulated BACKWARD as a pattern database.
+
+The forward DP in wa30_L3_exact.py computes the min relaxed helper-tour cost from the
+START state.  A prover needs COST-TO-GO from an ARBITRARY mid-search state, so this file
+solves the same lattice toward the all-delivered terminal instead.
+
+RELAXED WORLD (every rule here is an OVER-approximation of the engine, so every cost is
+<= the true cost -- see SOUNDNESS below):
+
+  node  = (F, p, d)
+      F : bitmask over the NG cell-aligned goal slots -- slots currently OCCUPIED by a box
+          (held or not).  F never shrinks: goals sit in the helper component, no agent that
+          can reach them ever removes a box from one.
+      p : helper cell (must lie in the helper's static agent component A1)
+      d : 4 = helper free,  0..3 = helper holds a box sitting at p+(NDX[d],NDY[d])
+
+  edges (all cost exactly 1 engine tick, because the helper performs at most one action
+  per tick and the tick count is what we are bounding):
+      FREE(p)      -> FREE(p')          p' adjacent, in A1, not an occupied goal   [walk]
+      FREE(p)      -> CARRY_d(p)        only where a FREE OFF-GOAL box can sit      [grab]
+      CARRY_d(p)   -> CARRY_d(p')       relaxed carry move                          [carry]
+      CARRY_d(p)   -> FREE(p)           release (box on a goal) or player steal      [drop]
+  a carry move that lands the box on an unfilled goal g moves to CARRY_d(F|g, p'), and
+  from a box-on-goal node the ONLY edge is the release -- that is what the engine does
+  (ynmgxjqkgh releases the instant the carried box sits on a goal and never re-grabs a
+  box that is on a goal).
+
+  terminal: FREE(F,p) with popcount(F) >= NB   =>   REM = 0   (== won_(): every box on a
+  goal cell and none held).
+
+All edges cost 1, so REM = plain BFS distance to the terminal set on the REVERSE graph.
+
+SOUNDNESS (the only thing that matters).  h must never OVERESTIMATE.  Two guarantees:
+ (1) every transition the ENGINE can make maps to an edge of this graph (walk/carry
+     legality is checked against STATIC walls+holes and occupied goals only -- boxes,
+     the player and the enemies are deleted from the obstacle set), and every engine WIN
+     maps to a terminal node.  Hence a real remaining play of length L induces a relaxed
+     path of length <= L, so REM <= L.  This is also what makes h CONSISTENT: h drops by
+     at most 1 per tick because each tick is one relaxed edge.
+ (2) the grab is NOT priced from thin air: it is offered only at cells where a free
+     off-goal box can physically sit (FREEBOX below).  That set is derived, not assumed.
+
+THE TRAP THIS AVOIDS.  The forward DP prices every delivery as a full fetch from the
+handoff column.  At a mid-search state a box may already be in the helper's hands and
+half-way to its goal; charging it a full fetch would OVERESTIMATE and make every bound
+worthless.  Here the carried box is a first-class node (CARRY_d) whose cost-to-go is the
+ACTUAL remaining carry, so no such charge is ever made.
+"""
+import sys
+from collections import deque
+
+NC = 256
+NDX = (-1, 1, 0, 0)
+NDY = (0, 0, -1, 1)
+INF = 0xFFFF
+LEVELS = "<path>/levels.txt"
+
+
+def cx(c):
+    return c & 15
+
+
+def cy(c):
+    return c >> 4
+
+
+def cell_add(c, dx, dy):
+    x, y = cx(c) + dx, cy(c) + dy
+    if x < 0 or x > 15 or y < 0 or y > 15:
+        return -1
+    return x + 16 * y
+
+
+def nbrs(c):
+    return [cell_add(c, NDX[d], NDY[d]) for d in range(4)]
+
+
+def parse_level(path, level):
+    """Read the SAME file the C prover reads, so the statics cannot drift."""
+    toks = open(path).read().split()
+    i = 0
+    while i < len(toks):
+        assert toks[i] == "LEVEL", toks[i]
+        lv = int(toks[i + 1])
+        i += 2
+        hdr = [int(toks[i + j]) for j in range(10)]
+        i += 10
+        p, rot, nb, nh, ne, nw, ng, neg, nho, ub = hdr
+
+        def take(n):
+            nonlocal i
+            v = [int(toks[i + j]) for j in range(n)]
+            i += n
+            return v
+
+        boxes = take(nb)
+        hel = take(nh)
+        ene = take(ne)
+        walls = take(nw)
+        goals = take(ng)
+        egoal = take(neg)
+        holes = take(nho)
+        if lv == level:
+            return dict(p=p, rot=rot, boxes=boxes, hel=hel, ene=ene, walls=walls,
+                        goals=goals, egoal=egoal, holes=holes, ub=ub)
+    raise SystemExit("level not found")
+
+
+def build(level=3):
+    D = parse_level(LEVELS, level)
+    WALL = [0] * NC
+    HOLE = [0] * NC
+    GOAL = [0] * NC
+    for c in D["walls"]:
+        WALL[c] = 1
+    for c in D["holes"]:
+        HOLE[c] = 1
+    for c in D["goals"]:
+        GOAL[c] = 1
+    NB = len(D["boxes"])
+    assert len(D["hel"]) == 1, "table assumes exactly one helper"
+    # agent-passable / box-passable
+    A = [c for c in range(NC) if not WALL[c] and not HOLE[c]]
+    Bset = set(c for c in range(NC) if not WALL[c])
+    Aset = set(A)
+    comp = {}
+    ncomp = 0
+    for s in A:
+        if s in comp:
+            continue
+        comp[s] = ncomp
+        st = [s]
+        while st:
+            u = st.pop()
+            for v in nbrs(u):
+                if v >= 0 and v in Aset and v not in comp:
+                    comp[v] = ncomp
+                    st.append(v)
+        ncomp += 1
+    hcomp = comp[D["hel"][0]]
+    A1 = sorted(c for c in A if comp[c] == hcomp)
+    # agents that are NOT the helper (player + enemies) and the components they live in
+    other_comps = set()
+    other_comps.add(comp[D["p"]])
+    for e in D["ene"]:
+        other_comps.add(comp[e])
+    other_comps.discard(hcomp)
+    # -------- where can a FREE, OFF-GOAL box sit? ------------------------------------
+    # A box only ever moves while carried.  The helper releases ONLY onto a goal cell and
+    # never re-grabs a goal box, so a free off-goal box is either (a) still on its start
+    # cell, or (b) was released by a NON-helper agent, hence adjacent to that agent's
+    # component.  Anything else is unreachable, so offering a grab there would be a free
+    # gift to the search -- and offering it NOWHERE else is what makes the bound strong.
+    FREEBOX = set(D["boxes"])
+    for c in Bset:
+        for v in nbrs(c):
+            if v >= 0 and v in Aset and comp[v] in other_comps:
+                FREEBOX.add(c)
+                break
+    FREEBOX = set(c for c in FREEBOX if not GOAL[c])
+    goalcells = sorted(c for c in range(NC) if GOAL[c])
+    NG = len(goalcells)
+    assert NG <= 16
+    gidx = {c: i for i, c in enumerate(goalcells)}
+    return dict(D=D, WALL=WALL, HOLE=HOLE, GOAL=GOAL, NB=NB, A1=A1, A1set=set(A1),
+                Bset=Bset, FREEBOX=FREEBOX, goalcells=goalcells, NG=NG, gidx=gidx,
+                comp=comp, hcomp=hcomp)
+
+
+def solve(M):
+    NB, NG = M["NB"], M["NG"]
+    A1set, Bset, GOAL = M["A1set"], M["Bset"], M["GOAL"]
+    FREEBOX, gidx = M["FREEBOX"], M["gidx"]
+    goalcells = M["goalcells"]
+
+    masks = [f for f in range(1 << NG) if bin(f).count("1") <= NB]
+    FIDX = [-1] * (1 << NG)
+    for i, f in enumerate(masks):
+        FIDX[f] = i
+    NF = len(masks)
+    PI = [-1] * NC
+    A1 = M["A1"]
+    for i, c in enumerate(A1):
+        PI[c] = i
+    NPI = len(A1)
+    STRIDE = NPI * 5
+
+    fcells = [set(goalcells[i] for i in range(NG) if f >> i & 1) for f in masks]
+    fpop = [bin(f).count("1") for f in masks]
+
+    def nid(fi, c, d):
+        return fi * STRIDE + PI[c] * 5 + d
+
+    NN = NF * STRIDE
+    REM = [INF] * NN
+
+    # ---- forward edges, then invert.  All costs are 1, so a reverse BFS is exact. ----
+    rev = [[] for _ in range(NN)]
+    terminals = []
+    for fi in range(NF):
+        FC = fcells[fi]
+        pop = fpop[fi]
+        for p in A1:
+            if p in FC:
+                continue                      # a filled goal holds a box: not standable
+            # ---------------- FREE(p) ----------------
+            u = nid(fi, p, 4)
+            if pop >= NB:
+                terminals.append(u)
+                continue                      # terminal: won_ is already true here
+            for d in range(4):
+                q = cell_add(p, NDX[d], NDY[d])
+                if q < 0 or q not in A1set or q in FC:
+                    continue
+                rev[nid(fi, q, 4)].append(u)          # walk  FREE(p)->FREE(q)
+            for d in range(4):
+                bp = cell_add(p, NDX[d], NDY[d])
+                if bp < 0 or bp not in FREEBOX or bp in FC:
+                    continue
+                if pop + 1 > NB:
+                    continue
+                rev[nid(fi, p, d)].append(u)          # grab  FREE(p)->CARRY_d(p)
+            # -------------- CARRY_d(p) --------------
+        for p in A1:
+            if p in FC:
+                continue
+            for d in range(4):
+                bp = cell_add(p, NDX[d], NDY[d])
+                if bp < 0 or bp not in Bset:
+                    continue                  # invalid node: box on a wall / off-grid
+                ongoal = GOAL[bp]
+                if ongoal:
+                    # The carried box sits ON a goal slot, so that slot IS occupied and
+                    # must be in F.  (F is occupied-by-ANY-box and this box is the occupant,
+                    # so `bp in FC` must not reject it here.)
+                    if not (masks[fi] >> gidx[bp] & 1):
+                        continue
+                    if pop > NB:
+                        continue
+                else:
+                    if bp in FC:
+                        continue              # another box already there: collision
+                    if pop + 1 > NB:
+                        continue              # more boxes in play than exist
+                u = nid(fi, p, d)
+                # release / player-steal: CARRY_d(p) -> FREE(p)
+                rev[nid(fi, p, 4)].append(u)
+                if ongoal:
+                    continue                  # engine releases: no other edge exists
+                for m in range(4):
+                    q = cell_add(p, NDX[m], NDY[m])
+                    if q < 0 or q not in A1set or q in FC:
+                        continue
+                    bq = cell_add(q, NDX[d], NDY[d])
+                    if bq < 0 or bq not in Bset or bq in FC:
+                        continue
+                    if GOAL[bq]:
+                        g = gidx[bq]
+                        nf = masks[fi] | (1 << g)
+                        nfi = FIDX[nf]
+                        if nfi < 0:
+                            continue
+                        rev[nid(nfi, q, d)].append(u)
+                    else:
+                        rev[nid(fi, q, d)].append(u)
+
+    dq = deque()
+    for t in terminals:
+        REM[t] = 0
+        dq.append(t)
+    while dq:
+        v = dq.popleft()
+        dv = REM[v]
+        for u in rev[v]:
+            if REM[u] > dv + 1:
+                REM[u] = dv + 1
+                dq.append(u)
+    return dict(masks=masks, FIDX=FIDX, PI=PI, NPI=NPI, NF=NF, STRIDE=STRIDE, REM=REM,
+                NB=NB, NG=NG, goalcells=goalcells)
+
+
+def emit_header(M, S, path):
+    NF, NPI, STRIDE = S["NF"], S["NPI"], S["STRIDE"]
+    D = M["D"]
+    fp = 0
+    for arr in (D["walls"], D["goals"], D["holes"], D["boxes"], D["hel"], [D["p"]]):
+        for v in sorted(arr):
+            fp = (fp * 1000003 + v + 7) & 0xFFFFFFFF
+    out = [
+        "/* GENERATED by <path>/wa30_L3_relay_pdb.py -- do not edit by hand.",
+        " * Backward component-relay cost algebra for wa30 L3: REM(F,helper cell,carry dir)",
+        " * = min relaxed engine ticks still needed.  Admissible + consistent (see the",
+        " * generator's docstring for the over-approximation argument). */",
+        "#define ALG_NF %d" % NF,
+        "#define ALG_NPI %d" % NPI,
+        "#define ALG_STRIDE %d" % STRIDE,
+        "#define ALG_NB %d" % S["NB"],
+        "#define ALG_NG %d" % S["NG"],
+        "#define ALG_FP %uu" % fp,
+        "#define ALG_INF 65535",
+        "static const int16_t ALG_FIDX[%d] = {%s};" % (
+            len(S["FIDX"]), ",".join(str(v) for v in S["FIDX"])),
+        "static const int16_t ALG_PI[256] = {%s};" % ",".join(str(v) for v in S["PI"]),
+        "static const uint8_t ALG_GOALCELL[%d] = {%s};" % (
+            S["NG"], ",".join(str(v) for v in S["goalcells"])),
+    ]
+    rem = S["REM"]
+    out.append("static const uint16_t ALG_TAB[%d] = {" % len(rem))
+    step = 32
+    for i in range(0, len(rem), step):
+        out.append(",".join(str(v) for v in rem[i:i + step]) + ("," if i + step < len(rem) else ""))
+    out.append("};")
+    open(path, "w").write("\n".join(out) + "\n")
+    return fp
+
+
+def lookup(M, S, F, p, d):
+    fi = S["FIDX"][F]
+    if fi < 0 or S["PI"][p] < 0:
+        return INF
+    return S["REM"][fi * S["STRIDE"] + S["PI"][p] * 5 + d]
+
+
+if __name__ == "__main__":
+    M = build(3)
+    print("A1 cells=%d  goals=%d  NB=%d  FREEBOX=%d cells (cols %s)" % (
+        len(M["A1"]), M["NG"], M["NB"], len(M["FREEBOX"]),
+        sorted(set(cx(c) for c in M["FREEBOX"]))))
+    S = solve(M)
+    print("nodes=%d  reachable=%d" % (len(S["REM"]), sum(1 for v in S["REM"] if v < INF)))
+    hel0 = M["D"]["hel"][0]
+    F0 = 0
+    for b in M["D"]["boxes"]:
+        if M["GOAL"][b]:
+            F0 |= 1 << M["gidx"][b]
+    root = lookup(M, S, F0, hel0, 4)
+    print("ROOT  F=%d helper cell=%d (x=%d,y=%d)  REM=%d" % (
+        F0, hel0, cx(hel0) * 4, cy(hel0) * 4, root))
+    fp = emit_header(M, S, "<path>/wa30_L3_relay_tab.h")
+    print("header written, fingerprint=%u" % fp)

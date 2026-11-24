@@ -1,0 +1,39 @@
+{
+  "artifact_sha256": [
+    {
+      "kind": "safe_statement_count_extract",
+      "sha256": "94058e0de31150dd5fd8ef22f6480059c5d810ce1f8e48d8062b6f9cc9c82bba"
+    },
+    {
+      "kind": "authority_ledger_label",
+      "sha256": "b5f95e224296893b6d8b9f8981712f7677784fc6db52abf58e77dc707a4a065d"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "1fb34bc00e9d0e00153f88741352a260d39f7837c753c46fd6e2c3bc77196d6d"
+    }
+  ],
+  "floor": 8,
+  "game": "lp85",
+  "game_id": "lp85-305b61c3",
+  "game_levels": 8,
+  "level": 2,
+  "lower_bound": {
+    "kind": "move_ordering_uniform_cost+lemma",
+    "statement": "Uniform-cost layers 1 through 7 are exhausted without a win.",
+    "value": 8
+  },
+  "naes_t1_actions": 8,
+  "proof_class": "Exhaustive search",
+  "proof_detail": "move_ordering_uniform_cost+lemma",
+  "schema_version": 1,
+  "source_certificate_sha256": "60cc14a2338ef878ef9cadfc682b379598f630c387f28c59828065e0ba96f092",
+  "status": "proven",
+  "upper_bound": {
+    "expected_levels_completed": 2,
+    "length": 8,
+    "opening_reset_counted": false,
+    "route": "6@39,17 6@48,35 6@39,17 6@48,35 6@39,17 6@48,35 6@39,17 6@48,35",
+    "seed": 0
+  }
+}

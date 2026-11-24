@@ -1,0 +1,53 @@
+// K3 bank of the multi-worker block walk, second part (k3_* functions).
+// Entry points: bank_build_k3.
+
+fn bank_build_k3(hin: i64, bank: i64, sy: i64, seg: i64, gsz: i64, cg: i64, zero: i64, path: i64) -> i64 {
+    if gsz != 3 {
+        return mw_bank_build4(hin, bank, sy, seg, gsz, cg, zero);
+    }
+    let ps: i64 = plane() * 8;
+    let mut c: i64 = seg * cg * 3;
+    let mut cend: i64 = c + cg * 3;
+    if cend > 64 {
+        cend = 64;
+    }
+    let mut p: i64 = hin + (c * plane() + origin() + sy * pw()) * 8;
+    let mut dst: i64 = bank + 128;
+    let mut stride: i64 = 768;
+    let mut bits: i64 = 19;
+    if path == 1 {
+        dst = bank + 64;
+        stride = 384;
+        bits = 51;
+    }
+    let dstep: i64 = stride * 13;
+    let pstep: i64 = ps * 3;
+    while c < cend {
+        let slot: i64 = dst - 32;
+        let s0: i64 = __mind_load_i64(slot);
+        let s1: i64 = __mind_load_i64(slot + 8);
+        let s2: i64 = __mind_load_i64(slot + 16);
+        let s3: i64 = __mind_load_i64(slot + 24);
+        let mut p1: i64 = zero;
+        let mut p2: i64 = zero;
+        if c + 1 < 64 {
+            p1 = p + ps;
+        }
+        if c + 2 < 64 {
+            p2 = p + ps + ps;
+        }
+        __mind_store_i64(slot, p);
+        __mind_store_i64(slot + 8, p1);
+        __mind_store_i64(slot + 16, p2);
+        __mind_store_i64(slot + 24, zero);
+        __mind_group_bank_i64(slot, dst, stride, 64, bits);
+        __mind_store_i64(slot, s0);
+        __mind_store_i64(slot + 8, s1);
+        __mind_store_i64(slot + 16, s2);
+        __mind_store_i64(slot + 24, s3);
+        p = p + pstep;
+        dst = dst + dstep;
+        c = c + 3;
+    }
+    0
+}

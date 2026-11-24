@@ -1,0 +1,205 @@
+// Rotation of the record queue between the process groups (rot_* functions).
+// Entry points: rot_slots, rot_ready, rot_tok, rot_batch.
+
+fn rot_on() -> i64 { 1 }
+fn rot_fast_end() -> i64 { 0 }
+fn rot_adv(c: i64) -> i64 { c + 1 }
+fn rot_layer(c: i64) -> i64 { c }
+fn rot_slot(k: i64) -> i64 { k % pull_batch() }
+fn rot_keep(c: i64) -> i64 { 1 }
+fn rot_early() -> i64 { 0 }
+fn rot_rec() -> i64 { 2199023255552 }
+fn rot_wb() -> i64 { 3368 }
+fn rot_we() -> i64 { 3369 }
+fn rot_wn() -> i64 { 3376 }
+fn rot_wc() -> i64 { 3400 }
+fn rot_wr() -> i64 { 3424 }
+
+fn rot_slots(groups: i64) -> i64 {
+    if rot_on() == 1 && 2 * groups < pull_batch() {
+        return pull_batch();
+    }
+    2 * groups
+}
+
+fn rot_ready(mc: i64) -> i64 {
+    let mut a: i64 = ld(mc, 0);
+    let e: i64 = a + pull_batch() * mig_bytes();
+    while rot_on() == 1 && a < e {
+        __mind_store_i8(a, 0);
+        a = a + 4096;
+    }
+    pull_sig(ld(mc, 7), mc + 128, 1)
+}
+
+fn rot_tok(k: i64) -> i64 {
+    if rot_on() == 1 {
+        return rot_rec() + k;
+    }
+    k
+}
+
+fn rot_batch(mc: i64) -> i64 {
+    let sh: i64 = ld(mc, 13);
+    let mut g: i64 = 0;
+    while rot_on() == 1 && g < ld(mc, 1) {
+        __mind_atomic_store_release_i64(sh + (mig_wi() + g) * 8, 0 - 1);
+        let c: i64 = ld(sh, rot_wc() + g);
+        if c > 0 {
+            st(sh, 64 + g, (3 * mig_ns(sh, g) + ld(sh, rot_wn() + g) / c) / 4);
+            st(sh, 96 + g, 1);
+            st(sh, rot_wn() + g, 0);
+            st(sh, rot_wc() + g, 0);
+        }
+        g = g + 1;
+    }
+    if rot_on() == 1 {
+        __mind_atomic_store_release_i64(sh + rot_wb() * 8, __mind_load_i64(sh + rot_wb() * 8) + 1);
+    }
+    0
+}
+
+fn rot_mark(sh: i64) -> i64 {
+    if __mind_atomic_load_acquire_i64(sh + rot_we() * 8) == __mind_atomic_load_acquire_i64(sh + rot_wb() * 8) {
+        return 1;
+    }
+    0
+}
+
+fn rot_rest(mc: i64) -> i64 {
+    if rot_on() * rot_fast_end() == 1 && rot_mark(ld(mc, 13)) == 1 && mig_slow(mc) == 1 {
+        return 1;
+    }
+    0
+}
+
+fn rot_wake(mc: i64) -> i64 {
+    let sh: i64 = ld(mc, 13);
+    let mut h: i64 = 0;
+    let mut g: i64 = 1;
+    while g < ld(mc, 1) {
+        if mig_ns(sh, g) < mig_ns(sh, h) {
+            h = g;
+        }
+        g = g + 1;
+    }
+    st(mc, 19, 0 - 1);
+    write_fd_all(ld(ld(mc, 12), h), mc + 152, 8)
+}
+
+fn rot_next(mc: i64) -> i64 {
+    let mut r: i64 = rot_rest(mc);
+    if r == 1 {
+        mig_add(ld(mc, 13), rot_wr() + ld(mc, 5), 1);
+        if rot_wake(mc) < 0 {
+            return mig_bad();
+        }
+    }
+    while r == 1 {
+        if mw_read_exact(ld(ld(mc, 11), ld(mc, 5)), mc + 128, 8) != 8 {
+            return mig_bad();
+        }
+        if ld(mc, 16) != 0 - 1 {
+            return ld(mc, 16);
+        }
+        r = rot_rest(mc);
+    }
+    mig_next(mc)
+}
+
+fn rot_bind(w4: i64, mc: i64, i: i64, k: i64) -> i64 {
+    if rot_on() == 0 {
+        return mig_bind(w4, mc, i, k);
+    }
+    let p: i64 = mig_on(w4, mc);
+    if p != 0 {
+        st(p, 1, ld(mc, 6));
+        st(p, 14, 0);
+    }
+    mig_add(ld(mc, 13), 3344 + ld(mc, 5), 1) - 1
+}
+
+fn rot_post(mc: i64, sh: i64, s: i64, c: i64, nb: i64) -> i64 {
+    if c >= nb {
+        return 8;
+    }
+    st(mig_slot(mc, s), 2, c);
+    st(mig_slot(mc, s), 5, ld(mc, 5));
+    if rot_fast_end() == 1 && c == nb - 1 {
+        __mind_atomic_store_release_i64(sh + rot_we() * 8, __mind_atomic_load_acquire_i64(sh + rot_wb() * 8));
+    }
+    mig_add(sh, 3272 + ld(mc, 5), 1);
+    let h: i64 = mig_pick(mc);
+    let mut fd: i64 = ld(mc, 3);
+    if h >= 0 {
+        fd = ld(ld(mc, 12), h);
+    }
+    st(mc, 19, mig_hand() + s * 256 + c);
+    if write_fd_all(fd, mc + 152, 8) < 0 {
+        return 4;
+    }
+    0
+}
+
+fn rot_run(model: i64, w4: i64, fx: i64, serve: i64, sh: i64, mc: i64, s: i64, c: i64) -> i64 {
+    let g: i64 = ld(mc, 5);
+    let nb: i64 = __mind_load_i64(model + 8);
+    let sl: i64 = mig_slot(mc, s);
+    let i: i64 = ld(sl, 0);
+    let f0: i64 = mig_resume(w4, mc, s, rot_layer(c));
+    if f0 >= 0 {
+        st(ld(w4, 26), 16, 1);
+    }
+    let ts: i64 = pull_clock(mc + 160);
+    let mut action: i64 = 0 - 3;
+    if rot_early() == 1 && c == nb - 1 {
+        action = mw_act_head(model, ld(w4, w4_ws()), 64);
+    } else {
+        action = mw_decide4(model, w4, serve + i * 8196);
+    }
+    st(sh, rot_wn() + g, ld(sh, rot_wn() + g) + (pull_clock(mc + 160) - ts) * nb);
+    st(sh, rot_wc() + g, ld(sh, rot_wc() + g) + 1);
+    let mut trip: i64 = 0;
+    if f0 >= 0 {
+        st(ld(w4, 26), 16, 0);
+        trip = ld(ld(w4, 26), 6) - f0;
+    } else {
+        mig_add(sh, 3344 + g, 1);
+    }
+    if action == 0 - 3 {
+        return rot_post(mc, sh, s, rot_adv(c), nb);
+    }
+    let k: i64 = ld(sl, 1);
+    st(sl, 3, trip);
+    mig_add(sh, 3320 + g, trip);
+    mig_release(mc, s);
+    pull_reply(w4, fx, sh, mc, k, i, action, mig_cover())
+}
+
+fn rot_take(model: i64, w4: i64, fx: i64, serve: i64, sel: i64, sh: i64, mc: i64, v: i64) -> i64 {
+    if rot_on() == 0 {
+        return pull_take(model, w4, fx, serve, sh, mc, v);
+    }
+    if v >= rot_rec() {
+        let k: i64 = v - rot_rec();
+        if k >= ld(sel, 1) {
+            return 8;
+        }
+        let sl: i64 = mig_slot(mc, rot_slot(k));
+        st(sl, 0, ld(ld(sel, 0), k));
+        st(sl, 1, k);
+        st(sl, 3, 0);
+        st(sl, 4, 1);
+        return rot_run(model, w4, fx, serve, sh, mc, rot_slot(k), 0);
+    }
+    let s: i64 = (v - mig_hand()) / 256;
+    let c: i64 = (v - mig_hand()) % 256;
+    if s >= pull_batch() || c < 1 || c >= __mind_load_i64(model + 8) {
+        return 8;
+    }
+    mig_add(sh, 3296 + ld(mc, 5), 1);
+    if rot_keep(c) == 0 {
+        return pull_sig(ld(mc, 7), mc + 128, 1);
+    }
+    rot_run(model, w4, fx, serve, sh, mc, s, c)
+}

@@ -1,0 +1,123 @@
+{
+  "artifact_sha256": [
+    {
+      "kind": "safe_statement_count_extract",
+      "sha256": "b33eee5dc3296b3bc69b09ff254702ed74350dc77e7b2bf3a9ab2e442339a30e"
+    },
+    {
+      "kind": "authority_ledger_label",
+      "sha256": "9a8eccca1f89ca26f426eddf8a0a08b056202fd181af9094dc7de695922f8451"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "9899a86fdb681855b0191e0bce3eda9e57970d55c41d73159da384f4599ea978"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "11b692972cea8a551b4abd6875d3fba0410dc009e776c352566ec9fa32c51124"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "55652a1c5ba2f6dbb6d2eeb5fc7b53421c239ae54b3ae165456dbda5bc548497"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "268cfc2a73ed29b1108c349d6597f962b2c976d064769f2632fe70dfb70ab389"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "5bdfadaf67099b99d1c40e025d6dce044c22658fc49353919299df2d16921556"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "7e16f92c3aeee362c855e2adafb226c3d782f6e53d393b43d1df865019a190cc"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "7e48679f7e201e92db6c7bd96434651d57cab21abea3c89e2a29be7adad0214a"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "a7bb64ec9064dd50265cb117fb4e4ad12bab79df0098ec97d321540710044899"
+    },
+    {
+      "kind": "existing_search_or_enumeration_record",
+      "sha256": "bd0223697509c1956d28e08b6755e4734b6642989a14602400f9a6b73cec6a46"
+    },
+    {
+      "kind": "existing_search_or_enumeration_record",
+      "sha256": "7eb366a44dd99ad5900e57e2fa068c44460fc0763edda363103de49c6298d2a3"
+    },
+    {
+      "kind": "existing_search_or_enumeration_record",
+      "sha256": "4cec946948045a87c5825cf812a58a61b8a4ff3398f3069af6383ad27254b49c"
+    },
+    {
+      "kind": "existing_search_or_enumeration_record",
+      "sha256": "be7099071c871a1ea1344b5aced14fb1177c6da8870766e1309fc44b421991eb"
+    },
+    {
+      "kind": "existing_search_or_enumeration_record",
+      "sha256": "2891f086b73a982d02aa19b69ec78025e48ad33249354ae2be7c3d14f7f9a3d8"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "58384cd413404d94235cb5826fcf935f8f731b925925ffe1ca08add5b75e8757"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "33818c1afdd4bb7d2dc9bc9aa9465ff74ab1a65b84de758498ae34872e8931fd"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "3d3ddf56fc5ac908110cd56d5f5380aa6cc2f459f8ac66b5cbdcde6d14b46088"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "f9f6d5903281dee0a782f93abe5f438fdfd7847dc0d5239c5accdf2a77e594e2"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "3c418f97fb68bfffdce9fd8187a05e85f0524ccd73a6fb3d308a709659922c20"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "ad31ac284e793527259124beb82388ea38bd42f060c66e4c8e03dda489df996a"
+    },
+    {
+      "kind": "record: proofs/certificates/floor_cert/sp80/SUMMARY.md",
+      "sha256": "89e3c58ea1000e09d31f81a5757dc4f148d93c8416ed750fc846684e80c99c57"
+    },
+    {
+      "kind": "record: proofs/certificates/floor_cert/sp80/levels.json",
+      "sha256": "c1efdb0c5c2357d49865df1f1f1b14b6cc1f12ea0bc0d6312aede3b08d89d7c3"
+    },
+    {
+      "kind": "record: proofs/certificates/floor_cert/sp80/raw/L1.json",
+      "sha256": "f2825c350bd9b6402e37e6dfdea9e5f02a438a09551930892b977b5eaa12dabc"
+    }
+  ],
+  "floor": 4,
+  "game": "sp80",
+  "game_id": "sp80-589a99af",
+  "game_levels": 6,
+  "level": 1,
+  "lower_bound": {
+    "kind": "engine_spill_of_every_placement",
+    "statement": "Record: proofs/certificates/floor_cert/sp80 (verdict CONFIRMED). Every display pixel at the start selects the only piece and moves nothing (4096 pixels, 0 position changes); the official engine then spilled all 12 cells at distance 0, 1 or 2 and none won (proofs/certificates/floor_cert/sp80/raw/L1.json). This is an enumeration on the engine, not a search over a model.",
+    "value": 4
+  },
+  "naes_t1_actions": 4,
+  "proof_class": "Exact math",
+  "proof_detail": "engine_spill_of_every_placement",
+  "schema_version": 1,
+  "source_certificate_sha256": "3b283c51c1203960ad2d0b3ec23731d564efa796576d03db53058cb0bb29811b",
+  "status": "proven",
+  "upper_bound": {
+    "expected_levels_completed": 1,
+    "length": 4,
+    "opening_reset_counted": false,
+    "route": "4 4 4 5",
+    "seed": 0
+  }
+}

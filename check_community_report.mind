@@ -1,0 +1,195 @@
+        let line: i64 = cc_bnew(256);
+        let mut lb: i64 = cc_bstr(line, "A ");
+        if ok == 1 {
+            lb = cc_bstr(lb, "ok  ");
+        } else {
+            lb = cc_bstr(lb, "FAIL");
+        }
+        lb = cc_bpush(lb, 32);
+        lb = cc_bmem(lb, name_p, name_n);
+        let mut pad: i64 = 28 - name_n;
+        while pad > 0 {
+            lb = cc_bpush(lb, 32);
+            pad = pad - 1;
+        }
+        lb = cc_bstr(lb, " won ");
+        lb = cc_bpush_i64w(lb, got_won, 3);
+        lb = cc_bpush(lb, 47);
+        lb = cc_bpush_i64w(lb, want_won, 3);
+        lb = cc_bstr(lb, "  mean ");
+        lb = cc_bpush_f6(lb, got_mean);
+        lb = cc_bpush(lb, 47);
+        lb = cc_bpush_f6(lb, want_mean);
+        lb = cc_bstr(lb, "  floor ");
+        lb = cc_bpush_i64w(lb, got_at, 3);
+        lb = cc_bpush(lb, 47);
+        lb = cc_bpush_i64w(lb, want_at, 3);
+        lb = cc_bstr(lb, "  current ");
+        lb = cc_bpush_f6(lb, got_cur);
+        lb = cc_bpush(lb, 47);
+        lb = cc_bpush_f6(lb, want_cur);
+        lb = cc_bpush(lb, 10);
+        let _em: i64 = cc_emit(line);
+        if ok == 0 {
+            bad = bad + 1;
+        }
+        if have_rec == 1 {
+            let rd: i64 = cc_bnew(rec_n + nn + 2);
+            let mut rdb: i64 = cc_bmem(rd, rec_p, rec_n);
+            rdb = cc_bpush(rdb, 47);
+            rdb = cc_bmem(rdb, np, nn);
+            // sort game indices
+            let order: i64 = __mind_alloc(64 * 8);
+            let mut oi: i64 = 0;
+            while oi < ng_store {
+                __mind_store_i64(order + oi * 8, oi);
+                oi = oi + 1;
+            }
+            oi = 1;
+            while oi < ng_store {
+                let keyi: i64 = __mind_load_i64(order + oi * 8);
+                let mut oj: i64 = oi - 1;
+                let mut moving: i64 = 1;
+                while moving == 1 {
+                    if oj < 0 {
+                        moving = 0;
+                    } else {
+                        let left: i64 = __mind_load_i64(order + oj * 8);
+                        if cc_name_less(__mind_load_i64(ghp + keyi * 8), __mind_load_i64(ghn + keyi * 8), __mind_load_i64(ghp + left * 8), __mind_load_i64(ghn + left * 8)) == 1 {
+                            __mind_store_i64(order + (oj + 1) * 8, left);
+                            oj = oj - 1;
+                        } else {
+                            moving = 0;
+                        }
+                    }
+                }
+                __mind_store_i64(order + (oj + 1) * 8, keyi);
+                oi = oi + 1;
+            }
+            let mut b_bad: i64 = 0;
+            oi = 0;
+            while oi < ng_store {
+                let gix: i64 = __mind_load_i64(order + oi * 8);
+                let gp: i64 = __mind_load_i64(ghp + gix * 8);
+                let gn: i64 = __mind_load_i64(ghn + gix * 8);
+                let val: i64 = __mind_load_i64(ghv + gix * 8);
+                // prefix is game + "-"
+                let pref: i64 = cc_bnew(gn + 2);
+                let _pp: i64 = cc_bmem(pref, gp, gn);
+                let _pd: i64 = cc_bpush(pref, 45);
+                let hold: i64 = __mind_alloc(48);
+                let n1: i64 = cc_glob_count(cc_cstr(rd), cc_bdata(pref), cc_blen(pref), hold);
+                let mut nfiles: i64 = n1;
+                let mut sub: i64 = 0;
+                if n1 == 0 {
+                    let subb: i64 = cc_bnew(cc_blen(rd) + 16);
+                    let _sb: i64 = cc_bmem(subb, cc_bdata(rd), cc_blen(rd));
+                    let _ss: i64 = cc_bstr(subb, "/recordings");
+                    sub = subb;
+                    nfiles = cc_glob_count(cc_cstr(subb), cc_bdata(pref), cc_blen(pref), hold);
+                }
+                if nfiles != 1 {
+                    let bl: i64 = cc_bnew(256);
+                    let mut b: i64 = cc_bstr(bl, "B FAIL ");
+                    b = cc_bmem(b, name_p, name_n);
+                    b = cc_bpush(b, 32);
+                    b = cc_bmem(b, gp, gn);
+                    b = cc_bstr(b, ": ");
+                    b = cc_bpush_i64(b, nfiles);
+                    b = cc_bstr(b, " recording files in ");
+                    b = cc_bmem(b, cc_bdata(rd), cc_blen(rd));
+                    b = cc_bpush(b, 10);
+                    let _be: i64 = cc_emit(bl);
+                    b_bad = b_bad + 1;
+                } else {
+                    let dirb: i64 = if sub == 0 { rd } else { sub };
+                    let fb: i64 = cc_bnew(cc_blen(dirb) + __mind_load_i64(hold + 32) + 2);
+                    let mut fbj: i64 = cc_bmem(fb, cc_bdata(dirb), cc_blen(dirb));
+                    fbj = cc_bpush(fbj, 47);
+                    fbj = cc_bmem(fbj, __mind_load_i64(hold + 24), __mind_load_i64(hold + 32));
+                    let per: i64 = __mind_alloc(64 * 8);
+                    let parsed: i64 = cc_parse_recording(cc_cstr(fb), per, 64);
+                    if __mind_load_i64(parsed + 16) == 0 {
+                        return 1;
+                    }
+                    let got_n: i64 = __mind_load_i64(parsed + 0);
+                    let got_r: i64 = __mind_load_i64(parsed + 8);
+                    let arr: i64 = cc_get(val, "per_level");
+                    let want_n: i64 = if arr == 0 { 0 } else { jv_arr_len(arr) };
+                    let want_r: i64 = cc_int(cc_get(val, "resets"));
+                    let mut same: i64 = 1;
+                    if got_n != want_n || got_r != want_r {
+                        same = 0;
+                    }
+                    let mut pi: i64 = 0;
+                    while pi < got_n && pi < want_n {
+                        if __mind_load_i64(per + pi * 8) != cc_int(jv_arr_get(arr, pi)) {
+                            same = 0;
+                        }
+                        pi = pi + 1;
+                    }
+                    if same == 0 {
+                        let bl: i64 = cc_bnew(512);
+                        let mut b: i64 = cc_bstr(bl, "B FAIL ");
+                        b = cc_bmem(b, name_p, name_n);
+                        b = cc_bpush(b, 32);
+                        b = cc_bmem(b, gp, gn);
+                        b = cc_bstr(b, ": recording {'per_level': [");
+                        pi = 0;
+                        while pi < got_n {
+                            if pi > 0 {
+                                b = cc_bstr(b, ", ");
+                            }
+                            b = cc_bpush_i64(b, __mind_load_i64(per + pi * 8));
+                            pi = pi + 1;
+                        }
+                        b = cc_bstr(b, "], 'resets': ");
+                        b = cc_bpush_i64(b, got_r);
+                        b = cc_bstr(b, "} != per_level.json {'per_level': [");
+                        pi = 0;
+                        while pi < want_n {
+                            if pi > 0 {
+                                b = cc_bstr(b, ", ");
+                            }
+                            b = cc_bpush_i64(b, cc_int(jv_arr_get(arr, pi)));
+                            pi = pi + 1;
+                        }
+                        b = cc_bstr(b, "], 'resets': ");
+                        b = cc_bpush_i64(b, want_r);
+                        b = cc_bstr(b, "}\n");
+                        let _be: i64 = cc_emit(bl);
+                        b_bad = b_bad + 1;
+                    }
+                }
+                oi = oi + 1;
+            }
+            let bl: i64 = cc_bnew(256);
+            let mut b: i64 = cc_bstr(bl, "B ");
+            if b_bad == 0 {
+                b = cc_bstr(b, "ok  ");
+            } else {
+                b = cc_bstr(b, "FAIL");
+            }
+            b = cc_bpush(b, 32);
+            b = cc_bmem(b, name_p, name_n);
+            b = cc_bstr(b, ": ");
+            b = cc_bpush_i64(b, ng_store - b_bad);
+            b = cc_bpush(b, 47);
+            b = cc_bpush_i64(b, ng_store);
+            b = cc_bstr(b, " games match the recordings\n");
+            let _be: i64 = cc_emit(bl);
+            bad = bad + b_bad;
+        }
+        k = k + 1;
+    }
+    let fin: i64 = cc_bnew(64);
+    if bad == 0 {
+        let _f: i64 = cc_bstr(fin, "# ALL MATCH\n");
+    } else {
+        let mut f: i64 = cc_bstr(fin, "# ");
+        f = cc_bpush_i64(f, bad);
+        let _f2: i64 = cc_bstr(f, " MISMATCHES\n");
+    }
+    let _fe: i64 = cc_emit(fin);
+    if bad == 0 { 0 } else { 1 }
+}

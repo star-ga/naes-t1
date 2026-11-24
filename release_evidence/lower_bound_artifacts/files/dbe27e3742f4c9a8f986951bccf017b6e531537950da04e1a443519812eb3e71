@@ -1,0 +1,11 @@
+[<label withheld>] starts loaded from cache
+2026-09-21 22:35:12 | INFO | Created new scorecard: 531dda6f-a38a-43d7-a5d8-1a99a0197d91
+INFO:arc_agi.base:Created new scorecard: 531dda6f-a38a-43d7-a5d8-1a99a0197d91
+2026-09-21 22:35:12 | INFO | Successfully loaded game class Tn36 from <path>
+INFO:arc_agi.base:Successfully loaded game class Tn36 from <path>
+[replay-backend] cls=Tn36 kwargs={} deterministic=yes deepcopy_cache=on
+<word withheld> (most recent call last):
+  File "<path>", line 49, in <module>
+    assert row["starts"]["<label withheld>"]["frame_sha1"]==starts[str(lv)]["frame_sha"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<word withheld>

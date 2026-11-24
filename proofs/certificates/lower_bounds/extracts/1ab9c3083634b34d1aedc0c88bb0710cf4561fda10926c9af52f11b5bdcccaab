@@ -1,0 +1,351 @@
+{
+ "game": "tr87",
+ "leg": "<label withheld>",
+ "self_check": "replayed known tr87 floors L1=14 L2=25 L3=21 L4=21 L5=14 from acquire_level_starts: all PASS",
+ "results": [
+  {
+   "game": "tr87",
+   "level": 6,
+   "kind": "proven",
+   "status": "PROVEN",
+   "floor": 23,
+   "ub": 23,
+   "lb": 23,
+   "proof_kind": "alter_offset_complete_enumeration_disjoint_cost_partition",
+   "path": [
+    [
+     1,
+     null,
+     null
+    ],
+    [
+     1,
+     null,
+     null
+    ],
+    [
+     3,
+     null,
+     null
+    ],
+    [
+     1,
+     null,
+     null
+    ],
+    [
+     1,
+     null,
+     null
+    ],
+    [
+     1,
+     null,
+     null
+    ],
+    [
+     4,
+     null,
+     null
+    ],
+    [
+     4,
+     null,
+     null
+    ],
+    [
+     1,
+     null,
+     null
+    ],
+    [
+     4,
+     null,
+     null
+    ],
+    [
+     2,
+     null,
+     null
+    ],
+    [
+     4,
+     null,
+     null
+    ],
+    [
+     1,
+     null,
+     null
+    ],
+    [
+     4,
+     null,
+     null
+    ],
+    [
+     4,
+     null,
+     null
+    ],
+    [
+     2,
+     null,
+     null
+    ],
+    [
+     2,
+     null,
+     null
+    ],
+    [
+     4,
+     null,
+     null
+    ],
+    [
+     1,
+     null,
+     null
+    ],
+    [
+     1,
+     null,
+     null
+    ],
+    [
+     4,
+     null,
+     null
+    ],
+    [
+     4,
+     null,
+     null
+    ],
+    [
+     2,
+     null,
+     null
+    ]
+   ],
+   "replay_verified": true,
+   "vector": [
+    5,
+    6,
+    1,
+    6,
+    0,
+    2,
+    5,
+    0,
+    1,
+    0,
+    0,
+    4
+   ],
+   "walk": 10,
+   "rot": 13,
+   "lower_bound_argument": "tr87 L6 is alter_rules + tree_translation, available_actions=[1,2,3,4] (no clicks). Complete state = (offset vector v in Z_7^12 over the 12 rule SIDES, cursor index in Z_12); the query/answer rows are never mutated. ACTION1/2 add -1/+1 to the SELECTED side's offset; ACTION3/4 add -1/+1 to the cursor mod 12; the win test bsqsshqpox() runs ONLY after ACTION1/2. Partition the actions of any winning play into the two DISJOINT label classes {ACTION1,ACTION2} and {ACTION3,ACTION4}: |play| = n_rot + n_cur (an identity, no independence assumed). If the play ends in offset vector v then n_rot >= sum_j ringdist_7(v_j) (each rotate changes one coordinate by +-1 on Z_7) and n_cur >= walk(supp(v)) (the cursor must stand on every side it rotates, and the minimum length of a walk on the cycle Z_12 from index 0 visiting a set S is walk(S) = min_{l,r} l+r+min(l,r) over (l,r) covering S). Hence |play| >= min over WINNING v of cost(v). That minimum was computed EXACTLY by complete DFS enumeration of Z_7^12 pruned only by the monotone bound (sum ringdist over assigned coords) + walk(assigned support) <= 23, which is a valid lower bound on every completion, so no winning vector below the bound is skipped. The win predicate is a line-by-line transcription of Tr87.bsqsshqpox() and was bisimulated against the live engine (side names + win predicate) with 0 mismatches.",
+   "start_convention": "mm.acquire_level_starts (cascade bootstrap)",
+   "self_check": {
+    "1": {
+     "expect": 14,
+     "win_at": 14,
+     "win_at_F_minus_1": null,
+     "ok": true
+    },
+    "5": {
+     "expect": 14,
+     "win_at": 14,
+     "win_at_F_minus_1": null,
+     "ok": true
+    },
+    "2": {
+     "expect": 25,
+     "win_at": 25,
+     "win_at_F_minus_1": null,
+     "ok": true
+    },
+    "3": {
+     "expect": 21,
+     "win_at": 21,
+     "win_at_F_minus_1": null,
+     "ok": true
+    },
+    "4": {
+     "expect": 21,
+     "win_at": 21,
+     "win_at_F_minus_1": null,
+     "ok": true
+    }
+   },
+   "model": {
+    "M": 12,
+    "cursor0": 0,
+    "nrules": 6,
+    "query": [
+     [
+      "nxkictbbvztA",
+      7
+     ],
+     [
+      "nxkictbbvztA",
+      6
+     ],
+     [
+      "nxkictbbvztA",
+      1
+     ]
+    ],
+    "answer": [
+     [
+      "nxkictbbvztC",
+      3
+     ],
+     [
+      "nxkictbbvztC",
+      1
+     ],
+     [
+      "nxkictbbvztC",
+      5
+     ],
+     [
+      "nxkictbbvztC",
+      5
+     ],
+     [
+      "nxkictbbvztC",
+      1
+     ],
+     [
+      "nxkictbbvztC",
+      3
+     ]
+    ]
+   },
+   "bisim": {
+    "transitions": 4800,
+    "mismatches": 0,
+    "wins_seen": 0
+   },
+   "enumerator": [
+    "BOUND 23 nodes 1698398129 leaves 347377281 winners<=BOUND 1",
+    "  cost 23 : 1 winning vectors",
+    "MINCOST 23",
+    "VECTOR 5 6 1 6 0 2 5 0 1 0 0 4",
+    "",
+    "real\t4m8.189s",
+    "user\t0m31.790s",
+    "sys\t0m0.127s"
+   ],
+   "independent_check": {
+    "route_A_pruned_dfs_Z7_12": {
+     "leaves": 347377281,
+     "note": "every vector with cost<=23; count independently reproduced by a Python subset/generating-function count (347,377,281)",
+     "winners_le_bound": 1,
+     "mincost": 23,
+     "vector": [
+      5,
+      6,
+      1,
+      6,
+      0,
+      2,
+      5,
+      0,
+      1,
+      0,
+      0,
+      4
+     ]
+    },
+    "route_B_unpruned_full_sweep": {
+     "vectors_visited": 13841287201,
+     "winners_total": 420,
+     "mincost": 23,
+     "vector": [
+      5,
+      6,
+      1,
+      6,
+      0,
+      2,
+      5,
+      0,
+      1,
+      0,
+      0,
+      4
+     ],
+     "note": "no pruning at all; OpenMP over the first two coordinates"
+    },
+    "route_C_factored_structural": {
+     "winners_total": 420,
+     "mincost": 23,
+     "vector": [
+      5,
+      6,
+      1,
+      6,
+      0,
+      2,
+      5,
+      0,
+      1,
+      0,
+      0,
+      4
+     ],
+     "note": "different algorithm (rule<->query-position bijection + per-rule expansion tables over 7^6 f-defining offsets); identical winner count and identical optimum"
+    },
+    "model_fidelity": {
+     "engine_extract_vs_hand_derivation_from_level_source": "IDENTICAL",
+     "false_branch_bisim_transitions": 4800,
+     "predicate_impls_agreeing": [
+      "engine bsqsshqpox",
+      "python abstract_win",
+      "python verbatim-sprite reimplementation",
+      "C win()"
+     ]
+    },
+    "true_branch_bisim": {
+     "winning_vectors_driven_into_the_live_engine": 41,
+     "mismatches": 0
+    }
+   },
+   "mm_verify_replay": {
+    "at_F": true,
+    "at_F_minus_1": false
+   }
+  }
+ ],
+ "self_check_verify_replay": {
+  "1": {
+   "expect": 14,
+   "len": 14,
+   "verify_replay": true
+  },
+  "2": {
+   "expect": 25,
+   "len": 25,
+   "verify_replay": true
+  },
+  "3": {
+   "expect": 21,
+   "len": 21,
+   "verify_replay": true
+  },
+  "4": {
+   "expect": 21,
+   "len": 21,
+   "verify_replay": true
+  },
+  "5": {
+   "expect": 14,
+   "len": 14,
+   "verify_replay": true
+  }
+ }
+}

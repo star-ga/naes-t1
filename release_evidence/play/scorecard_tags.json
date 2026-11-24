@@ -1,0 +1,10 @@
+{
+ "tags_line": "STARGA, MIND, NAES-T1, agent",
+ "tags": [
+  "STARGA",
+  "MIND",
+  "NAES-T1",
+  "agent"
+ ],
+ "source": "release_evidence/play/scorecard.json tags array"
+}

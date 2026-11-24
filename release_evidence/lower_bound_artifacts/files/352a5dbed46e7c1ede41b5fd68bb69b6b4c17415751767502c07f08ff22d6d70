@@ -1,0 +1,74 @@
+{
+ "level": 4,
+ "controls": {
+  "planted": {
+   "planted_goal": [
+    2,
+    1
+   ],
+   "candidates_at_dist_2": [
+    [
+     2,
+     1
+    ],
+    [
+     4,
+     3
+    ]
+   ],
+   "build-host": [
+    {
+     "P": 1,
+     "T": 1,
+     "status": "UNSAT"
+    }
+   ],
+   "k2": [
+    {
+     "P": 1,
+     "T": 2,
+     "status": "SAT",
+     "witness": [
+      3,
+      3
+     ],
+     "sim_won": true
+    }
+   ],
+   "k1_all_unsat": true,
+   "k2_any_sat_and_won": true,
+   "verdict": "PASS"
+  },
+  "corrupt": {
+   "mutations": [
+    {
+     "mutated_index": 30,
+     "from": 3,
+     "to": 4,
+     "sim_won": false,
+     "encoding_sat": false,
+     "error": "UNSAT"
+    },
+    {
+     "mutated_index": 29,
+     "from": 3,
+     "to": 4,
+     "sim_won": false,
+     "encoding_sat": false,
+     "error": "UNSAT"
+    },
+    {
+     "mutated_index": 0,
+     "from": 2,
+     "to": 1,
+     "sim_won": false,
+     "encoding_sat": false,
+     "error": "UNSAT"
+    }
+   ],
+   "verdict": "PASS"
+  }
+ },
+ "secs": 1.3,
+ "verdict": "PASS"
+}

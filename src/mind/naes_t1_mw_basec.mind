@@ -1,0 +1,310 @@
+// Multi-worker copy of the base functions, part 3: the plans, the bank and
+// the row and epilogue helpers of the multi-worker block walk.
+// Entry points: mw_finish_row_epi, mw_best_cell4v, mw_head_phase4, mw_stem_phase4.
+
+fn mw_finish_row4(acc: i64, m: i64, sh: i64, bq: i64, hin: i64, hout: i64, cell0: i64) -> i64 {
+    if sh < 1 {
+        return mw_finish_row(acc, m, sh, bq, hin, hout, cell0);
+    }
+    let mut um: i64 = m;
+    let mut mneg: i64 = 0;
+    if m < 0 {
+        um = 0 - m;
+        mneg = 1;
+    }
+    let s: i64 = sh - 1;
+    let t: i64 = s - 32;
+    let src: i64 = hin + cell0 * 8;
+    let dst: i64 = hout + cell0 * 8;
+    let mut i: i64 = 0;
+    while i < 512 {
+        let a: i64 = __mind_load_i64(acc + i);
+        let mut ua: i64 = a;
+        let mut neg: i64 = mneg;
+        if a < 0 {
+            ua = 0 - a;
+            neg = 1 - neg;
+        }
+        let x: i64 = (ua >> 32) * um;
+        let lo: i64 = (ua & 4294967295) * um;
+        let mut q: i64 = 0;
+        if s >= 32 {
+            if t <= 62 {
+                q = (x + (lo >> 32)) >> t;
+            }
+        } else {
+            q = (x << (32 - s)) + (lo >> s);
+        }
+        let mut v: i64 = (q + 1) >> 1;
+        if neg == 1 {
+            v = 0 - v;
+        }
+        v = v + bq;
+        if v < 0 {
+            v = 0;
+        }
+        let nv: i64 = v + __mind_load_i64(src + i);
+        if nv >= mw_act_limit() {
+            return 0 - 1;
+        }
+        __mind_store_i64(dst + i, nv);
+        i = i + 8;
+    }
+    0
+}
+
+fn mw_epi_cells(w4: i64) -> i64 {
+    let mut k: i64 = ld(w4, w4_epi_cells());
+    if k == 0 {
+        k = mw_alloc_zero(32);
+        if k == 0 {
+            return 0;
+        }
+        epi_put4(k + 96, 1);
+        epi_put4(k + 128, mw_act_limit() - 1);
+        __mind_store_i64(k + 176, 63);
+        __mind_store_i64(k + 184, 32);
+        st(w4, w4_epi_cells(), k);
+    }
+    k
+}
+
+fn mw_finish_row_epi(w4: i64, acc: i64, m: i64, sh: i64, bq: i64, src: i64, dst: i64) -> i64 {
+    if ld(w4, w4_epi()) == 1 || sh < 1 || m > 2147483647 || m < 0 - 2147483647 {
+        return mw_finish_row4(acc, m, sh, bq, src, dst, 0);
+    }
+    let k: i64 = mw_epi_cells(w4);
+    if k == 0 {
+        return 0 - 1;
+    }
+    let s: i64 = sh - 1;
+    let mut hi: i64 = 0;
+    if m < 0 {
+        epi_put4(k, 0 - m);
+        epi_put4(k + 32, 0 - 1);
+    } else {
+        epi_put4(k, m);
+        epi_put4(k + 32, 0);
+    }
+    epi_put4(k + 64, bq);
+    if s >= 32 {
+        hi = 1;
+        __mind_store_i64(k + 160, s - 32);
+    } else {
+        __mind_store_i64(k + 160, 32 - s);
+        __mind_store_i64(k + 168, s);
+    }
+    finish_row4v(acc, src, dst, k, hi)
+}
+
+fn mw_best_cell4v(acc: i64, scratch: i64, dir: i64) -> i64 {
+    let mut best: i64 = 0;
+    if dir == 1 {
+        click_consts(scratch);
+        argmax4v(acc, scratch);
+        best = mw_reduce4(scratch, 1);
+    }
+    if dir == 0 - 1 {
+        click_consts(scratch);
+        argmin4v(acc, scratch);
+        best = mw_reduce4(scratch, 0 - 1);
+    }
+    best
+}
+
+fn mw_click4v(model: i64, ws: i64, h: i64, scratch: i64) -> i64 {
+    let lay: i64 = mw_model_layer(model, __mind_load_i64(model + 8) + 2);
+    let t: i64 = __mind_load_i64(lay + 32);
+    let acc: i64 = ld(ws, ws_acc());
+    click_list4v(t, scratch);
+    click_sum4v(acc, h, scratch);
+    let m: i64 = ld(__mind_load_i64(lay + 40), 0);
+    let mut dir: i64 = 1;
+    if m < 0 {
+        dir = 0 - 1;
+    }
+    if m == 0 {
+        dir = 0;
+    }
+    let best: i64 = mw_best_cell4v(acc, scratch, dir);
+    st(ws, ws_cell(), best);
+    best
+}
+
+fn mw_head_phase4(model: i64, w4: i64, h: i64) -> i64 {
+    let ws: i64 = ld(w4, w4_ws());
+    let scratch: i64 = ld(w4, w4_scratch());
+    pool4v(h, ld(ws, ws_sum()), ld(ws, ws_max()), scratch);
+    let action: i64 = mw_act_head(model, ws, 64);
+    st(ws, ws_cell(), 0 - 1);
+    if action == 6 {
+        mw_click4v(model, ws, h, scratch);
+    }
+    action
+}
+
+fn mw_stem_phase4(w4: i64, rec: i64) -> i64 {
+    mw_encode4(ld(w4, w4_planes()), rec);
+    mw_stem4(ld(w4, w4_ws()), ld(w4, w4_tabs()), ld(w4, w4_planes()), ld(w4, w4_scratch()), ld(w4, w4_zero()))
+}
+
+fn mw_block_phase4(model: i64, w4: i64, b: i64, hin: i64, hout: i64) -> i64 {
+    mw_block4(w4, mw_model_layer(model, b + 1), ld(ld(w4, w4_plans()), b), hin, hout)
+}
+
+fn mw_pad_plans4(plans: i64, model: i64, gsz: i64, cg: i64) -> i64 {
+    if plans == 0 || model == 0 || gsz == 0 || cg == 0 {
+        return 0;
+    }
+    let nb: i64 = __mind_load_i64(model + 8);
+    let mut b: i64 = 0;
+    while b < nb {
+        if mw_gsum_fill(ld(plans, b)) == 0 {
+            return 0;
+        }
+        b = b + 1;
+    }
+    plans
+}
+
+fn mw_pad_bank4(gsz: i64, cg: i64) -> i64 {
+    let raw: i64 = mw_alloc_zero((cg * n_codes(gsz) + 1) * 96 + 16);
+    if raw == 0 {
+        return 0;
+    }
+    gsum_align64(raw)
+}
+
+fn mw_gsum_fill(plan: i64) -> i64 {
+    let nseg: i64 = ld(plan, pl_nseg());
+    let starts: i64 = ld(plan, pl_starts());
+    let offs: i64 = ld(plan, pl_offs());
+    let table: i64 = mw_alloc_zero(nseg * 64 * 9);
+    if table == 0 || starts == 0 || offs == 0 {
+        return 0;
+    }
+    let shift: i64 = gsum_off_shift();
+    let mut seg: i64 = 0;
+    while seg < nseg {
+        let mut o: i64 = 0;
+        while o < 64 {
+            let mut ky: i64 = 0;
+            while ky < 3 {
+                let b: i64 = start_index(seg, o, ky);
+                let j0: i64 = ld(starts, b);
+                let j1: i64 = ld(starts, b + 1);
+                let j2: i64 = ld(starts, b + 2);
+                let pos: i64 = j1 - j0;
+                let neg: i64 = j2 - j1;
+                st(table, b, offs + j0 * 8 + shift);
+                st(table, b + 1, pos);
+                st(table, b + 2, neg);
+                ky = ky + 1;
+            }
+            o = o + 1;
+        }
+        seg = seg + 1;
+    }
+    st(plan, 5, table);
+    1
+}
+
+fn mw_rows_bind(w4: i64) -> i64 {
+    let d: i64 = mw_alloc_zero(11);
+    let r: i64 = mw_alloc_zero(512);
+    if d == 0 || r == 0 {
+        return 0;
+    }
+    __mind_store_i64(d + 64, r);
+    __mind_store_i64(d + 80, mw_act_limit() - 1);
+    st(w4, w4_desc(), d);
+    st(w4, mw_w4_erec(), r);
+    d
+}
+
+fn mw_erec_layer(w4: i64, ms: i64, es: i64, bs: i64) -> i64 {
+    if ld(w4, w4_epi()) != 2 {
+        return 0;
+    }
+    let r: i64 = ld(w4, mw_w4_erec());
+    let mut o: i64 = 0;
+    while o < 64 {
+        let m: i64 = ld(ms, o);
+        let sh: i64 = 0 - ld(es, o);
+        if sh < 1 || m > 2147483647 || m < 0 - 2147483647 {
+            return 0;
+        }
+        let p: i64 = r + o * 64;
+        let s: i64 = sh - 1;
+        if m < 0 {
+            __mind_store_i64(p, 0 - m);
+            __mind_store_i64(p + 8, 0 - 1);
+        } else {
+            __mind_store_i64(p, m);
+            __mind_store_i64(p + 8, 0);
+        }
+        if s >= 32 {
+            __mind_store_i64(p + 16, 0);
+            __mind_store_i64(p + 24, 32);
+            if s - 32 <= 62 {
+                __mind_store_i64(p + 32, s - 32);
+            } else {
+                __mind_store_i64(p + 32, 64);
+            }
+        } else {
+            __mind_store_i64(p + 16, 32 - s);
+            __mind_store_i64(p + 24, s);
+            __mind_store_i64(p + 32, 0);
+        }
+        __mind_store_i64(p + 40, ld(bs, o));
+        o = o + 1;
+    }
+    1
+}
+
+fn mw_load_fixture4(path: i64) -> i64 {
+    let fd: i64 = open_ro(path);
+    if fd < 0 {
+        return 0;
+    }
+    let rec: i64 = __mind_alloc(16);
+    if mw_read_fd_all(fd, rec) < 0 {
+        close_fd(fd);
+        return 0;
+    }
+    close_fd(fd);
+    let buf: i64 = ld(rec, 0);
+    if ld(rec, 1) != fixture_len() {
+        return 0;
+    }
+    if rd_u32(buf, 0) != 1397047630 || rd_u32(buf, 4) != 4600148 || rd_u32(buf, 8) != 5499 {
+        return 0;
+    }
+    buf
+}
+
+fn mw_build_serve4(fx: i64) -> i64 {
+    let serve: i64 = __mind_alloc(5499 * 8196);
+    if serve == 0 {
+        return 0;
+    }
+    let mut i: i64 = 0;
+    while i < 5499 {
+        let src: i64 = fixture_rec(fx, i);
+        let dst: i64 = serve + i * 8196;
+        let mut k: i64 = 0;
+        while k < 8192 {
+            __mind_store_i64(dst + k, __mind_load_i64(src + k));
+            k = k + 8;
+        }
+        while k < 8196 {
+            __mind_store_i8(dst + k, __mind_load_i8(src + k));
+            k = k + 1;
+        }
+        if mw_fixture_to_request(dst) == 0 {
+            return 0;
+        }
+        i = i + 1;
+    }
+    serve
+}

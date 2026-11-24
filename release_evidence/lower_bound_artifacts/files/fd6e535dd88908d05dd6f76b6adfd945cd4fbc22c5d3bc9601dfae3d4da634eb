@@ -1,0 +1,328 @@
+{
+  "status": "<word withheld>",
+  "floor": 20,
+  "exhausted_through": 19,
+  "nodes": 846,
+  "edges": 2782,
+  "seconds": 23.424574492964894,
+  "layers": [
+    {
+      "depth": 1,
+      "new_states": 4,
+      "total_states": 5,
+      "edges": 4,
+      "seconds": 0.151
+    },
+    {
+      "depth": 2,
+      "new_states": 7,
+      "total_states": 12,
+      "edges": 20,
+      "seconds": 0.247
+    },
+    {
+      "depth": 3,
+      "new_states": 9,
+      "total_states": 21,
+      "edges": 48,
+      "seconds": 0.413
+    },
+    {
+      "depth": 4,
+      "new_states": 8,
+      "total_states": 29,
+      "edges": 84,
+      "seconds": 0.856
+    },
+    {
+      "depth": 5,
+      "new_states": 14,
+      "total_states": 43,
+      "edges": 116,
+      "seconds": 1.088
+    },
+    {
+      "depth": 6,
+      "new_states": 20,
+      "total_states": 63,
+      "edges": 172,
+      "seconds": 1.414
+    },
+    {
+      "depth": 7,
+      "new_states": 20,
+      "total_states": 83,
+      "edges": 252,
+      "seconds": 2.367
+    },
+    {
+      "depth": 8,
+      "new_states": 21,
+      "total_states": 104,
+      "edges": 332,
+      "seconds": 2.876
+    },
+    {
+      "depth": 9,
+      "new_states": 27,
+      "total_states": 131,
+      "edges": 416,
+      "seconds": 3.405
+    },
+    {
+      "depth": 10,
+      "new_states": 24,
+      "total_states": 155,
+      "edges": 524,
+      "seconds": 4.84
+    },
+    {
+      "depth": 11,
+      "new_states": 30,
+      "total_states": 185,
+      "edges": 620,
+      "seconds": 5.395
+    },
+    {
+      "depth": 12,
+      "new_states": 36,
+      "total_states": 221,
+      "edges": 740,
+      "seconds": 6.082
+    },
+    {
+      "depth": 13,
+      "new_states": 48,
+      "total_states": 269,
+      "edges": 884,
+      "seconds": 7.82
+    },
+    {
+      "depth": 14,
+      "new_states": 56,
+      "total_states": 325,
+      "edges": 1076,
+      "seconds": 8.964
+    },
+    {
+      "depth": 15,
+      "new_states": 68,
+      "total_states": 393,
+      "edges": 1300,
+      "seconds": 10.286
+    },
+    {
+      "depth": 16,
+      "new_states": 64,
+      "total_states": 457,
+      "edges": 1572,
+      "seconds": 13.604
+    },
+    {
+      "depth": 17,
+      "new_states": 80,
+      "total_states": 537,
+      "edges": 1828,
+      "seconds": 15.142
+    },
+    {
+      "depth": 18,
+      "new_states": 104,
+      "total_states": 641,
+      "edges": 2148,
+      "seconds": 17.094
+    },
+    {
+      "depth": 19,
+      "new_states": 129,
+      "total_states": 770,
+      "edges": 2564,
+      "seconds": 21.771
+    }
+  ],
+  "route": [
+    [
+      1,
+      null,
+      null
+    ],
+    [
+      1,
+      null,
+      null
+    ],
+    [
+      1,
+      null,
+      null
+    ],
+    [
+      1,
+      null,
+      null
+    ],
+    [
+      1,
+      null,
+      null
+    ],
+    [
+      1,
+      null,
+      null
+    ],
+    [
+      1,
+      null,
+      null
+    ],
+    [
+      1,
+      null,
+      null
+    ],
+    [
+      1,
+      null,
+      null
+    ],
+    [
+      1,
+      null,
+      null
+    ],
+    [
+      1,
+      null,
+      null
+    ],
+    [
+      1,
+      null,
+      null
+    ],
+    [
+      4,
+      null,
+      null
+    ],
+    [
+      4,
+      null,
+      null
+    ],
+    [
+      4,
+      null,
+      null
+    ],
+    [
+      4,
+      null,
+      null
+    ],
+    [
+      4,
+      null,
+      null
+    ],
+    [
+      4,
+      null,
+      null
+    ],
+    [
+      4,
+      null,
+      null
+    ],
+    [
+      2,
+      null,
+      null
+    ]
+  ],
+  "attainment": {
+    "length": 20,
+    "first_advance": 20,
+    "prefix_advanced": false,
+    "route_sha256": "cc305a6ec5a73dca3204e5b5faee3189bde28757e130ce5481e9c49b50329bce",
+    "native_remaining_steps_at_prefix": 81,
+    "exact": true
+  },
+  "runtime_noop_checks": 1392,
+  "level": 5,
+  "controls": {
+    "canonical_source": "original cached cascade replayed on fresh native engine, seed=0",
+    "cascade_actions": 118,
+    "cascade_sha256": "8c30b5fe9178f5cb39297b285bde40d75e59d93ab94d23bd45de35b04cfc7ca5",
+    "start_key_sha256": "5d564760203b26fac6ebc1003829a44956c7ad7bb50b5c4d32ef900a25e7b115",
+    "direct_set_level_same_gameplay_key": true,
+    "source_sha256": "d60295f9614c659f5fcf0625b95ad645e13b457c5c06745cdeb41dd5697a536c",
+    "engine_sha256": "5b5f41f3bec4c0c97a727fda7326114991dc0d4a5642d489b40ee4aa87e6b15f",
+    "budget": 100,
+    "action_ids": [
+      1,
+      2,
+      3,
+      4,
+      6
+    ],
+    "noops": {
+      "(5, None, None)": {
+        "same_gameplay_key": true,
+        "budget_delta": 0,
+        "advanced": false
+      },
+      "(7, None, None)": {
+        "same_gameplay_key": true,
+        "budget_delta": 0,
+        "advanced": false
+      },
+      "(6, -100, -100)": {
+        "same_gameplay_key": true,
+        "budget_delta": -1,
+        "advanced": false
+      },
+      "(6, 999, 999)": {
+        "same_gameplay_key": true,
+        "budget_delta": -1,
+        "advanced": false
+      },
+      "(6, 0, 0)": {
+        "same_gameplay_key": true,
+        "budget_delta": -1,
+        "advanced": false
+      }
+    },
+    "all_4096_start_click_classes": [
+      {
+        "class": "miss",
+        "pixels": 4087,
+        "representative": [
+          0,
+          0
+        ],
+        "selected_after": 8
+      },
+      {
+        "class": "8",
+        "pixels": 9,
+        "representative": [
+          27,
+          48
+        ],
+        "selected_after": 8
+      }
+    ],
+    "original_route_replay": {
+      "length": 20,
+      "first_advance": 20,
+      "prefix_advanced": false,
+      "route_sha256": "de4f085856de53209753aeaac1350b8e7ed0ca158ce24ef80848e2abc31b6dfb",
+      "native_remaining_steps_at_prefix": 81,
+      "exact": true
+    }
+  },
+  "verifier_sha256": "4fd03d0ba52b5c06ae878b8d87678f07ecd319658193f84d376651b55a18e83d"
+}

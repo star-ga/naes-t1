@@ -1,0 +1,171 @@
+{
+  "artifact_sha256": [
+    {
+      "kind": "safe_statement_count_extract",
+      "sha256": "bf36ef733e1ad6a2417a93f521dc346d0c7c690a8607f86bd585376ce5b3d025"
+    },
+    {
+      "kind": "authority_ledger_label",
+      "sha256": "5d05003d2f142dbdd6a564ed2565ba6724c30b84544ffafc87eeca25373b0bc5"
+    },
+    {
+      "kind": "per_level_certificate_record",
+      "sha256": "8bd92ec53604b2271031c6e4f8c79f63e1f71a015388197d8bb8286d39c0d1d4"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "c40a3aafeb225f8e125af7ff301ff548c975e2ce265b1f4c8970164702e499e7"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "a3ccba1118dc4ad15b89d99c7003a816ce67ddbfd5a3786a1382d03ba67c8659"
+    },
+    {
+      "kind": "existing_search_or_enumeration_record",
+      "sha256": "a3ccba1118dc4ad15b89d99c7003a816ce67ddbfd5a3786a1382d03ba67c8659"
+    },
+    {
+      "kind": "existing_search_or_enumeration_record",
+      "sha256": "7c1076af4c9a759de143fb5c697e79bb91cc64e872ff8aa6015ee1ef368f28b5"
+    },
+    {
+      "kind": "existing_search_or_enumeration_record",
+      "sha256": "e1601c7c55b8cd77023746dcee92e5a366c9b304e1a5c3323314665b5241473d"
+    },
+    {
+      "kind": "existing_search_or_enumeration_record",
+      "sha256": "93e86fac8bedef1ea88e3d2ef62caee1c0ade0ff86ec45f0b9be966f59df0f5f"
+    },
+    {
+      "kind": "existing_search_or_enumeration_record",
+      "sha256": "4e0f8ce334e556d45e0b2f16b847ac810b4813f91bf3a0f3405fd30b771763bc"
+    },
+    {
+      "kind": "existing_search_or_enumeration_record",
+      "sha256": "ada650350f6a877728dc3eda59749544053175e4de694d2d199fd72b0bcc973f"
+    },
+    {
+      "kind": "existing_search_or_enumeration_record",
+      "sha256": "9a011aed8cab7705c4415317e6652d82fd3867042e9ffcc932378896f5377155"
+    },
+    {
+      "kind": "existing_search_or_enumeration_record",
+      "sha256": "a3b2de6024aed739d893fa855e1f6f9a0e7d3ce7732085fb805923e9f3888f99"
+    },
+    {
+      "kind": "existing_search_or_enumeration_record",
+      "sha256": "47b1b89dd7b1fbb37a7b672558c665ad5fe78404bb3fcb18acf9ea4f78892f15"
+    },
+    {
+      "kind": "existing_search_or_enumeration_record",
+      "sha256": "49cc7b52587ca9739b9ba07fb7766b6c92cb94ead44f601ca828087e0c8b7af9"
+    },
+    {
+      "kind": "existing_search_or_enumeration_record",
+      "sha256": "15daece3ad43a6ce402c1cb2d309db0d7e3ef39b321e8004cc8ea1feff322962"
+    },
+    {
+      "kind": "existing_search_or_enumeration_record",
+      "sha256": "55bb0a5c24243255d5ee27d466a46f3cf5a5133c200a6e35fe66a1e6abf72316"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "34d167fd6127d10d0e7b72cb3cd181889c9f179ecdaf0c6d7c106234d3745d12"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "84e8f20cf98fd57d3c14a49b286619b5487cb220c094cbfd4d1eb991a692d2f0"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "dcdc4ec2c321ddb070faab39514b65965020830dabb475da92511631f7c039c6"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "091d90ace368a7c7be615fb115a5e8e3471196f4c3ae255fd2edac8fdf4da1d3"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "b848edd57327727142d4ec3814ddc3ae9c917054a7735bedaf1d7c8762c5f7b9"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "64fed7679d2288efd4bc4eac622f5da08321e58e8dbb37bb0410de3e6ad2d087"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "4e67fb00d80c0c463f73244be5750a838ad056fa88e82fc6bd5a9719cbcc0143"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "6743f806839de842c630886b007e80a7d687d3755089f28cbd3f095384fdd326"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "f3030bac9db2754e3d76bbc7eefb512424988fc4679322d5c895c7a9ee672c5f"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "094ca0e11cb8c2cf663ecc8a2557b13b3d15ba9508243969d08c7fbe2ff2427c"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "4b01b49efe3fe180957a0cb94d13f6dcbe2d3b45a6668c30ee3bf73f57323fab"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "1fbcc489ada808c7755cf83d39f8f6733a6ece0c4cad936a4403fd824eb1a55e"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "a37aed975e34a668297a6101c7750acaea04f590d64a21e209d5431ada047208"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "f0300b15386e6ecb3e8c263a9bce6691377b2e15ea3a236ac088f5f7b56f7da8"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "936f87a8f1b0e5abae2371a1f0a39d4088a118ad053d14ecc2cf416a7e8617a6"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "bd9fe1c7b905875e6d1edd854bceab0d10b607d1c1963efbcff574f2b692f966"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "5dbb6d1df3a346dfd3ee69e6bc59b27febe908443bf8b6ab565d6ea783878ae7"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "8529a83a9dfe85e32a9b8a0574099221f89645c6f5ab8de7ac87ca78805aba58"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "786759fd73beda197a991af60ac613624f319517d74830b9fc11d735495e961c"
+    }
+  ],
+  "floor": 35,
+  "game": "sc25",
+  "game_id": "sc25-635fd71a",
+  "game_levels": 6,
+  "level": 6,
+  "lower_bound": {
+    "kind": "complete_state_macro_uniform_cost_search_all_facings",
+    "statement": "Complete uniform-cost search uses a lossless cast macro, charging one action per pattern entry; the necessary state and full cast effects are retained. All costs below 35 close without a goal.",
+    "value": 35
+  },
+  "naes_t1_actions": 35,
+  "proof_class": "Exhaustive search",
+  "proof_detail": "complete_state_macro_uniform_cost_search_all_facings",
+  "schema_version": 1,
+  "source_certificate_sha256": "2220bd21acde6b1305a93541e0cca41bbbcb71b2941e82dcbd3c764283cec9cf",
+  "status": "proven",
+  "upper_bound": {
+    "expected_levels_completed": 6,
+    "length": 35,
+    "opening_reset_counted": false,
+    "route": "6@30,50 6@25,55 6@35,55 6@30,60 6@25,50 6@30,50 6@30,55 4 4 1 1 6@30,50 6@30,55 6@30,60 3 6@30,50 6@25,55 6@35,55 6@30,60 6@25,50 6@30,50 6@30,55 6@30,50 6@30,55 6@30,60 6@25,50 6@30,50 6@30,55 1 4 1 1 1 1 1",
+    "seed": 0
+  }
+}

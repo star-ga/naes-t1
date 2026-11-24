@@ -1,0 +1,483 @@
+// Pull loop of the multi-worker bench path: the worker process, the parent,
+// the join and the report. Exit codes: 0 clean, 1 a reply differs, 3 setup
+// failed, 4 fixture or stream failed, 6 digest failed, 7 reply digest differs,
+// 8 a group failed or a record is not covered.
+// Entry points: pull_token, pull_clock, pull_sig, pull_reply.
+
+fn pull_warm() -> i64 { 20 }
+fn pull_slot(k: i64) -> i64 { k }
+fn pull_token(k: i64) -> i64 { k }
+fn pull_cover(sh: i64) -> i64 { sh + 1024 }
+fn pull_out(sh: i64) -> i64 { sh + 9216 }
+
+fn pull_mask(cp: i64, lo: i64, hi: i64) -> i64 {
+    let m: i64 = mw_alloc_zero(2);
+    if m == 0 {
+        return 0 - 1;
+    }
+    let mut c: i64 = lo;
+    while c < hi {
+        let cpu: i64 = ld(cp, 240 + c);
+        st8(m, cpu / 8, ldu8(m, cpu / 8) + bit_byte(cpu % 8));
+        c = c + 1;
+    }
+    __mind_sys_sched_setaffinity(0, 16, m)
+}
+
+fn pull_clock(ts: i64) -> i64 {
+    if __mind_sys_clock_gettime(1, ts) < 0 {
+        return 0;
+    }
+    ld(ts, 0) * 1000000000 + ld(ts, 1)
+}
+
+fn pull_sig(fd: i64, buf: i64, v: i64) -> i64 {
+    st8(buf, 8, v);
+    write_fd_all(fd, buf + 8, 1)
+}
+
+fn pull_reply(w4: i64, fx: i64, sh: i64, mc: i64, k: i64, i: i64, action: i64, cov: i64) -> i64 {
+    let g: i64 = ld(mc, 5);
+    let ws: i64 = ld(w4, w4_ws());
+    if action < 0 {
+        return 5;
+    }
+    let exp: i64 = fixture_rec(fx, i);
+    if action == __mind_load_i8(exp + 8196) && mw_result_cell(ws) == signed_i16(exp + 8198) {
+        st(sh, g, ld(sh, g) + 1);
+    }
+    mw_store_reply(ws, action, pull_out(sh) + pull_slot(k) * 3);
+    st8(pull_cover(sh), k, ldu8(pull_cover(sh), k) + cov);
+    st(sh, 32 + g, ld(sh, 32 + g) + 1);
+    if pull_sig(ld(mc, 7), mc + 128, 1) < 0 {
+        return 4;
+    }
+    0
+}
+
+fn pull_rec(model: i64, w4: i64, fx: i64, serve: i64, sel: i64, sh: i64, mc: i64, k: i64) -> i64 {
+    let g: i64 = ld(mc, 5);
+    let i: i64 = ld(ld(sel, 0), k);
+    let ts: i64 = pull_clock(mc + 160);
+    let s: i64 = rot_bind(w4, mc, i, k);
+    let action: i64 = mw_decide4(model, w4, serve + i * 8196);
+    if action == 0 - 3 {
+        return 0;
+    }
+    let rc: i64 = pull_reply(w4, fx, sh, mc, k, i, action, 1);
+    mig_release(mc, s);
+    st(sh, 64 + g, ld(sh, 64 + g) + pull_clock(mc + 160) - ts);
+    st(sh, 96 + g, ld(sh, 96 + g) + 1);
+    rc
+}
+
+fn pull_take(model: i64, w4: i64, fx: i64, serve: i64, sh: i64, mc: i64, v: i64) -> i64 {
+    let s: i64 = (v - mig_hand()) / 256;
+    if s >= 2 * ld(mc, 1) {
+        return 8;
+    }
+    let i: i64 = ld(mig_slot(mc, s), 0);
+    let f0: i64 = mig_resume(w4, mc, s, (v - mig_hand()) % 256);
+    let action: i64 = mw_decide4(model, w4, serve + i * 8196);
+    let rc: i64 = pull_reply(w4, fx, sh, mc, ld(mig_slot(mc, s), 1), i, action, mig_cover());
+    mig_taken(w4, mc, s, f0);
+    rc
+}
+
+fn pull_loop(model: i64, w4: i64, fx: i64, serve: i64, sel: i64, sh: i64, mc: i64) -> i64 {
+    let mut v: i64 = rot_next(mc);
+    while v != mig_stop() {
+        let mut rc: i64 = 4;
+        if v >= mig_hand() {
+            rc = rot_take(model, w4, fx, serve, sel, sh, mc, v);
+        }
+        if v >= 0 && v < ld(sel, 1) {
+            rc = pull_rec(model, w4, fx, serve, sel, sh, mc, v);
+        }
+        if rc != 0 {
+            return rc;
+        }
+        v = rot_next(mc);
+    }
+    0
+}
+
+fn pull_child(model: i64, w4: i64, fx: i64, serve: i64, sel: i64, sh: i64, t: i64, mc: i64) -> i64 {
+    if team_start4(model, w4, t, 0, 0) < 0 {
+        return 3;
+    }
+    let tw: i64 = pull_clock(mc + 160);
+    let mut c: i64 = 0;
+    while c < pull_warm() {
+        if mw_decide4(model, w4, serve + ((c + 2207) % 5499) * 8196) < 0 {
+            return 5;
+        }
+        c = c + 1;
+    }
+    st(sh, 64 + ld(mc, 5), pull_clock(mc + 160) - tw);
+    st(sh, 96 + ld(mc, 5), pull_warm());
+    if rot_ready(mc) < 0 {
+        return 4;
+    }
+    let rc: i64 = pull_loop(model, w4, fx, serve, sel, sh, mc);
+    if rc != 0 {
+        return rc;
+    }
+    if pull_sig(ld(mc, 7), mc + 128, 1) < 0 {
+        return 4;
+    }
+    team_stop4(ld(w4, w4_team()), model, 0)
+}
+
+// Worker bookkeeping of the main process: the process ids (word 26 of the
+// control block), one status word per group (word 27; 0 while the worker
+// runs, else the wait status plus 1; the words after the groups hold the
+// status buffer and a 200 microsecond time span), the stop flag (word 28) and
+// the number of failures seen (word 29).
+fn pull_ended(mc: i64, g: i64) -> i64 {
+    let sts: i64 = ld(mc, 27);
+    if ld(sts, g) != 0 {
+        return 1;
+    }
+    let pid: i64 = ld(ld(mc, 26), g);
+    if pid <= 0 {
+        st(sts, g, 65536);
+        return 1;
+    }
+    let r: i64 = __mind_sys_wait4(pid, sts + ld(mc, 1) * 8, 1, 0);
+    if r == 0 {
+        return 0;
+    }
+    if r == pid {
+        st(sts, g, __mind_load_i32(sts + ld(mc, 1) * 8) + 1);
+    } else {
+        st(sts, g, 65536);
+    }
+    1
+}
+
+// Counts the workers that ended in a way that fails the run: any worker that
+// ended before the stop signal, or one that ended with a status other than 0.
+fn pull_failed_count(mc: i64) -> i64 {
+    let mut bad: i64 = 0;
+    let mut g: i64 = 0;
+    while g < ld(mc, 1) {
+        if pull_ended(mc, g) == 1 && (ld(mc, 28) == 0 || ld(ld(mc, 27), g) != 1) {
+            bad = bad + 1;
+        }
+        g = g + 1;
+    }
+    bad
+}
+
+fn pull_running(mc: i64) -> i64 {
+    let mut live: i64 = 0;
+    let mut g: i64 = 0;
+    while g < ld(mc, 1) {
+        if pull_ended(mc, g) == 0 {
+            live = live + 1;
+        }
+        g = g + 1;
+    }
+    live
+}
+
+// Waits for every worker and keeps its status.
+fn pull_collect(mc: i64) -> i64 {
+    let sts: i64 = ld(mc, 27);
+    let mut g: i64 = 0;
+    while g < ld(mc, 1) {
+        let pid: i64 = ld(ld(mc, 26), g);
+        if ld(sts, g) == 0 && pid <= 0 {
+            st(sts, g, 65536);
+        }
+        if ld(sts, g) == 0 {
+            if __mind_sys_wait4(pid, sts + ld(mc, 1) * 8, 0, 0) == pid {
+                st(sts, g, __mind_load_i32(sts + ld(mc, 1) * 8) + 1);
+            } else {
+                st(sts, g, 65536);
+            }
+        }
+        g = g + 1;
+    }
+    0
+}
+
+// Ends every worker that still runs with signal 9 and collects all of them.
+// A slot with a process id of 0 or less names no worker and is never signalled.
+fn pull_end_all(mc: i64, bad: i64) -> i64 {
+    st(mc, 29, bad);
+    let mut g: i64 = 0;
+    while g < ld(mc, 1) {
+        if ld(ld(mc, 27), g) == 0 && ld(ld(mc, 26), g) > 0 {
+            __mind_sys_kill(ld(ld(mc, 26), g), 9);
+        }
+        g = g + 1;
+    }
+    pull_collect(mc)
+}
+
+// Reads n bytes from the reply pipe, which is non-blocking in the main
+// process. When no byte is there, it checks the workers and waits 200
+// microseconds. A worker that ended too early, or a pipe that cannot be used,
+// ends the run: the other workers are stopped and collected, and the failure
+// count is kept in word 29.
+// Returns the number of bytes that are not 1, or n when the read fails.
+fn pull_read(mc: i64, buf: i64, n: i64) -> i64 {
+    let mut got: i64 = 0;
+    while got < n {
+        let k: i64 = read_some(ld(mc, 4), buf + got, n - got);
+        if k > 0 {
+            got = got + k;
+        } else {
+            let mut bad: i64 = 0;
+            if k == 0 {
+                bad = 1;
+            } else if __mind_sys_fcntl(ld(mc, 4), 3, 0) < 0 {
+                bad = 1;
+            } else {
+                bad = pull_failed_count(mc);
+                if bad == 0 && pull_running(mc) == 0 {
+                    bad = 1;
+                }
+            }
+            if bad > 0 {
+                pull_end_all(mc, bad);
+                return n;
+            }
+            __mind_sys_nanosleep(ld(mc, 27) + (ld(mc, 1) + 2) * 8, 0);
+        }
+    }
+    let mut bad: i64 = 0;
+    let mut g: i64 = 0;
+    while g < n {
+        if ldu8(buf, g) != 1 {
+            bad = bad + 1;
+        }
+        g = g + 1;
+    }
+    bad
+}
+
+fn pull_reap(mc: i64) -> i64 {
+    pull_collect(mc);
+    let mut bad: i64 = 0;
+    let mut g: i64 = 0;
+    while g < ld(mc, 1) {
+        if ld(ld(mc, 27), g) != 1 {
+            bad = bad + 1;
+        }
+        g = g + 1;
+    }
+    bad
+}
+
+fn pull_line(w0: i64, w1: i64, n: i64, v: i64) -> i64 {
+    emit_word(2, w0, w1, n);
+    print_i64(2, v);
+    emit_nl(2)
+}
+
+// Timed part = the records after the plan batches. Counts the replies in the
+// shared block that differ from the fixture. Returns -1 when the expected
+// replies cannot be built.
+fn pull_timed_bad(fx: i64, sel: i64, sh: i64, nb: i64, n: i64) -> i64 {
+    let exp: i64 = expected_replies(fx);
+    if exp == 0 {
+        return 0 - 1;
+    }
+    let mut bad: i64 = 0;
+    let mut k: i64 = nb;
+    while k < n {
+        let i: i64 = ld(ld(sel, 0), k);
+        bad = bad + 1 - reply_ok(pull_out(sh) + k * 3, exp + i * 3);
+        k = k + 1;
+    }
+    bad
+}
+
+// Standard error: WORKER_PROCESSES, WORKER_DECISIONS, MISMATCHES_TIMED,
+// US_PER_DECISION. Standard output: the result lines of the one-worker pass.
+fn pull_report(cfg: i64, sh: i64, serve: i64, n: i64, groups: i64, wall: i64, nb: i64, tbad: i64) -> i64 {
+    let mut matches: i64 = 0;
+    let mut cover: i64 = 0;
+    let mut k: i64 = 0;
+    while k < n {
+        if ldu8(pull_cover(sh), k) != 1 {
+            cover = cover + 1;
+        }
+        k = k + 1;
+    }
+    if tbad < 0 {
+        return 3;
+    }
+    let sc: i64 = mw_alloc_zero(8);
+    if sc == 0 {
+        return 3;
+    }
+    emit_word(2, 5791438103391653719, 6000293695650484050, 16);
+    put_sp_sc(2, sc);
+    print_i64(2, groups);
+    emit_nl(2);
+    emit_word(2, 4926746974936518487, 6002822529679967045, 16);
+    let mut g: i64 = 0;
+    while g < groups {
+        matches = matches + ld(sh, g);
+        put_sp_sc(2, sc);
+        put_dec(2, sc, ld(sh, 32 + g));
+        g = g + 1;
+    }
+    emit_nl(2);
+    emit_word(2, 5207098233617336653, 4919423145315619653, 16);
+    put_sp_sc(2, sc);
+    print_i64(2, tbad);
+    emit_nl(2);
+    // The timed part is empty only when every record is a plan batch; the
+    // bench mode never selects fewer than 5499 records, so the line is skipped.
+    if n > nb {
+        emit_us(2);
+        print_i64(2, wall / (n - nb) / 1000);
+        emit_nl(2);
+    }
+    if cover != 0 {
+        pull_line(4996267987394907982, 541345106, 12, cover);
+        return 8;
+    }
+    let dig: i64 = __mind_alloc(32);
+    let sdig: i64 = __mind_alloc(32);
+    if sha256_u(pull_out(sh), n * 3, dig) != 0 || sha256_u(serve, 5499 * 8196, sdig) != 0 {
+        return 6;
+    }
+    emit_result_lines(1, n, matches, dig, sdig);
+    if ld(cfg, cf_stream()) != 0 {
+        if write_stream_file(ld(cfg, cf_stream()), pull_out(sh), n * 3) < 0 {
+            return 4;
+        }
+    }
+    if matches != n || tbad != 0 {
+        return 1;
+    }
+    if n == 5499 && ld(cfg, cf_offset()) == 0 && ld(cfg, cf_records()) == 0 && hash_ok(dig) != 1 {
+        return 7;
+    }
+    0
+}
+
+// Starts one worker process per group, pins each to one allowed CPU, reads
+// the ready bytes, runs the plan batches and the timed part, sends the stop
+// signal and collects the workers. The worker count is the smaller of
+// --threads (1 to 24) and the allowed CPUs. A worker that ends before the stop
+// signal ends the run at once with status 8: the main process stops the other
+// workers and prints the worker-failed line.
+fn mw_pull_run(model: i64, w4: i64, cfg: i64, fx: i64, serve: i64, sel: i64) -> i64 {
+    let t: i64 = ld(cfg, cf_workers());
+    let n: i64 = ld(sel, 1);
+    let nb: i64 = plan_span(ld(cfg, cf_time()), n);
+    let cp: i64 = mw_alloc_zero(272);
+    let pids: i64 = mw_alloc_zero(32);
+    let buf: i64 = mw_alloc_zero(1024);
+    let tsb: i64 = mw_alloc_zero(2);
+    let toks: i64 = mw_alloc_zero(n);
+    let smp: i64 = mw_alloc_zero(n + 1);
+    let sh: i64 = __mind_sys_mmap(0, 28672, 3, 33, 0 - 1, 0);
+    if cp == 0 || pids == 0 || buf == 0 || tsb == 0 || toks == 0 || smp == 0 || sh <= 0 {
+        return 3;
+    }
+    let allowed: i64 = read_allowed(cp);
+    let want: i64 = ld(cfg, bf_threads());
+    let mut ncpu: i64 = allowed;
+    if want < ncpu {
+        ncpu = want;
+    }
+    if ncpu < 1 || t < 1 {
+        return 3;
+    }
+    let groups: i64 = mig_groups(ncpu, t);
+    let mc: i64 = mig_open(sh, groups, rot_slots(groups));
+    if mc == 0 {
+        return 3;
+    }
+    let sts: i64 = mw_alloc_zero(groups + 4);
+    if sts == 0 {
+        return 3;
+    }
+    st(sts, groups + 3, 200000);
+    st(mc, 26, pids);
+    st(mc, 27, sts);
+    let main_pid: i64 = mig_stat_num(1);
+    let mut g: i64 = 0;
+    while g < groups {
+        let lo: i64 = (g * t) % ncpu;
+        let mut hi: i64 = lo + t;
+        if hi > ncpu {
+            hi = ncpu;
+        }
+        let pid: i64 = __mind_sys_fork();
+        if pid < 0 {
+            pull_end_all(mc, 1);
+            return 3;
+        }
+        if pid == 0 {
+            close_fd(ld(mc, 4));
+            st(mc, 5, g);
+            let mut rc: i64 = 3;
+            if mig_orphan(main_pid) == 0 && pull_mask(cp, lo, hi) == 0 {
+                rc = pull_child(model, w4, fx, serve, sel, sh, hi - lo, mc);
+            }
+            if rc != 0 {
+                pull_sig(ld(mc, 7), buf, 2);
+            }
+            __mind_sys_exit_group(rc);
+            return 3;
+        }
+        st(pids, g, pid);
+        g = g + 1;
+    }
+    if __mind_sys_fcntl(ld(mc, 4), 4, 2048) < 0 {
+        pull_end_all(mc, 1);
+        return 3;
+    }
+    close_fd(ld(mc, 7));
+    let mut k: i64 = nb;
+    while k < n {
+        st(toks, k - nb, pull_token(k));
+        k = k + 1;
+    }
+    let mut bad: i64 = pull_read(mc, buf, groups);
+    if bad == 0 && nb > 0 {
+        bad = plan_run(mc, buf, tsb, smp, nb);
+    }
+    if ld(mc, 29) != 0 {
+        return pull_died(mc);
+    }
+    let t0: i64 = pull_clock(tsb);
+    if bad == 0 && n > nb {
+        bad = 1;
+        if mig_post(mc, toks, n - nb) == 0 {
+            bad = pull_read(mc, buf, n - nb);
+        }
+    }
+    let t1: i64 = pull_clock(tsb);
+    if ld(mc, 29) != 0 {
+        return pull_died(mc);
+    }
+    st(mc, 28, 1);
+    mig_ring(mc, mig_stop());
+    bad = bad + pull_read(mc, buf, groups);
+    bad = bad + pull_reap(mc);
+    if ld(mc, 29) != 0 {
+        return pull_died(mc);
+    }
+    if bad != 0 {
+        pull_line(5070862163012374359, 35477592492353, 14, bad);
+        return 8;
+    }
+    pull_report(cfg, sh, serve, n, groups, t1 - t0, nb, pull_timed_bad(fx, sel, sh, nb, n))
+}
+
+fn pull_died(mc: i64) -> i64 {
+    pull_line(5070862163012374359, 35477592492353, 14, ld(mc, 29));
+    8
+}
+
+fn pull_batch() -> i64 { 25 }

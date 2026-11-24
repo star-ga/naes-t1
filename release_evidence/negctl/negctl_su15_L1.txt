@@ -1,0 +1,21 @@
+command:
+cd <work> && PROOF_SOURCE=<proof-checkout> SU15_RECEIPT=<su15-L1-receipt> OPERATION_MODE=offline nice -n 15 timeout 180 <interp> <path>/neg_b_su15_l1.py > <out>/b.txt 2> <out>/b.err; echo RC:$?
+
+rc:
+0
+
+wrapper line:
+RC:0
+
+note:
+Stdout begins with two scorecard lines, copied below, then one game-load line that names the proof checkout. That load line is omitted. The JSON result line is copied unchanged. Stderr repeats the scorecard and the load line; the checkout path in the load line below is replaced by <proof-checkout>. The replay-backend line is unchanged. This is the run after the receipt attribute map is applied. A run that stopped in the source-text guard is not this result.
+
+stdout:
+INFO:arc_agi.scorecard:Initialized ScorecardManager with idle_for=0:15:00 and max_open_for=3 days, 0:00:00
+2026-11-06 15:19:46 | INFO | Created new scorecard: a8558040-4c25-49ce-a0b1-9db6cf223adb
+{"checker": "tools/floor_plan/su15_action7_prove.py action7_live_checks", "class": "B", "first_counterexample": {"board_after_click": {"enemy": [], "fruit": [[2, 2, 49]], "grayed": false}, "board_after_undo": {"enemy": [], "fruit": [[2, 3, 58]], "grayed": false}, "board_before_click": {"enemy": [], "fruit": [[2, 3, 58]], "grayed": false}, "click": [6, 3, 50], "route_index": 0, "stack_after_undo": 1, "stack_before": 1, "undo_restored_prior_board": true}, "planted_lemma": "ACTION7 leaves the semantic fruit/enemy board unchanged after a click", "recorded_floor": 7, "rejected": true, "row": "su15_L1", "states_visited_before_counterexample": 1, "true_lemma_checks": {"checked_nonterminal_route_states": 6, "live_restore_checks": 6, "per_level": {"1": {"checked_nonterminal_route_states": 6, "live_restore_checks": 6, "start_semantic_noop": 1}}, "start_semantic_noop_checks": 1}, "witness_prefix_win_at": null, "witness_replay_win_at": 7}
+
+stderr:
+INFO:arc_agi.base:Created new scorecard: a8558040-4c25-49ce-a0b1-9db6cf223adb
+INFO:arc_agi.base:Successfully loaded game class Su15 from <proof-checkout>/environment_files/su15/1944f8ab/su15.py
+[replay-backend] cls=Su15 kwargs={} deterministic=yes deepcopy_cache=on

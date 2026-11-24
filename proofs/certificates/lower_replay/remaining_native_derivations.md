@@ -1,0 +1,7 @@
+# Current first and final level bindings
+
+For ar25 L1, native tag `0056icpryeujyf` marks a fixed axis: its movement dispatch is inert and it is excluded from selection. The multi-object enumerator conservatively rejects that tag. The first-level adapter holds the reflection axis fixed and enumerates every bounded endpoint of the single movable shape, using the unchanged archived target-coverage helper. Movement/undo changes one shape coordinate by at most one, so every winning route costs at least its endpoint Manhattan displacement plus any necessary selection. No recorded floor is supplied to the enumerator. The exact current-source result is the minimum over all 361 endpoints.
+
+The remaining lp85 rows (levels 3, 5, 6 and 8) use exactly the sequential grouped-click model, full 4096-pixel alphabet check and complete token BFS described in `exact_math_tracks_derivation.md`. The extension changes supported-level and pinned-prefix inputs only. L8's separate adapter recognizes native WIN on the final level, where the level index remains unchanged. The receipt of the lp85 level 8 run is not included in this folder. The run of ar25 L1 is not included in this folder. Frozen index method-family labels are retained.
+
+The wa30 level 3 bound is stated in `proofs/certificates/lower_bounds/files/wa30_L3.md`. Each record identifies its own source, proof routines, runner version and measured scope.

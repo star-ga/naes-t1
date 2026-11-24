@@ -1,0 +1,440 @@
+{
+ "levels": {
+  "1": {
+   "level": 1,
+   "status": "PROVEN",
+   "floor": 4,
+   "min_path": [
+    "CLK(39,39)",
+    "CLK(39,47)",
+    "CLK(39,55)",
+    "CLK(55,47)"
+   ],
+   "proof_kind": "move_ordering_uniform_cost+lemma",
+   "proof": "uniform-cost layers 1..3 exhausted below the replay-verified 4-move win",
+   "scope": "replay_alphabet",
+   "alphabet_n": 17,
+   "graph_exhausted": false,
+   "route_seeded_win": false,
+   "route_source": "bootstrap",
+   "nodes": 344,
+   "replay_verified": true,
+   "human_best": 17,
+   "f_le_human": true,
+   "route_len": "<word withheld>",
+   "guidance": "nn",
+   "start_source": "cascade_bootstrap",
+   "alphabet_origin": "cascade_trace",
+   "floor_measured_from": "level_start_snapshot",
+   "bootstrap_moves_excluded": 0,
+   "ub": 4,
+   "lb": 4,
+   "scoped_lb": {
+    "scope": "replay_alphabet",
+    "alphabet_n": 17,
+    "value": 4
+   },
+   "lemma": {
+    "dispatch_lemma": "ft09 variant 0d8bbf25, advertised [6] (ft09.py:2306). accepted = {1,2,3,4,5,6,7} (base_game.py:189-232 dispatches every non-RESET id to step(); RESET excluded by F2). fallthrough = noop: in step() (ft09.py:2350-2434) ids 1-5 and 7 set kMO=None, Hzf=None, skip the toggle block (guarded by `if kMO == 5`), evaluate cgj() on an unchanged board and call lpw.lph() (ft09.py:2281-2284, budget-monotone toward lose(), never toward a win); ACTION6 off any Hkx/NTi control returns through complete_action with no mutation (L1 empty cell: cosmetic multi-frame flash of the Ycb sprite within one action, Ycb shares no tag with bsT/Hkx/NTi and cgj never reads it); ACTION7 accepted and identical to ids 1-5 (no undo/history exists). No per-action world update, timer or enemy exists, so a wait cannot change the board. evidence: [ft09.py:2306, ft09.py:2350-2434, ft09.py:2436-2519, ft09.py:2281-2284, base_game.py:189-232, base_game.py:278-279]. probe: {states: 4 (every pre-win state of the 4-click route from acquire_level_starts L1), ids_tested: [1,2,3,4,5,7,6@(0,0),6@(63,63)], probes: 32, semantic_diff_zero: true on key (control colour vector, level_index, score, cgj, state), budget_delta: ids 1-5,7 = -1, id 6 off-control = 0}.",
+    "coverage_lemma": "key: whitebox (control colour index vector; the only mutable state cgj reads). Closed form over the full state space, not an exhaustion: every control click adds a fixed state-independent column of A over GF(2) (Hkx: identity elp [[0,0,0],[0,1,0],[0,0,0]]; NTi: its static 6-pixel mask), so any accepted play reaches base + A\u00b7x (mod 2) and #actions >= sum(x). Win predicate cgj() encoded exactly: engine constraint set (8 bsT-neighbour checks with a control at the exact origin) == script constraint set (8), eq/neq with k=2 linear. tools/gfk_generator.py::_min_weight_gfk enumerates the complete solution set (Gaussian elimination + all 2^|free| nullspace cosets) and returns min sum(x) = 4; x=[1,0,0,1,1,1,0,0]; click_probe: {stride: n/a (all 8 controls enumerated by tag, n_ctrl 8 == n_cells 8; every non-control click is a no-op by dispatch_lemma), validated: true (live re-run 2026-09-20 SELF-CHECK PASS), states_probed: 4, states_expanded: 4}; action7: lemma (see dispatch_lemma). minimality+existence: replay from acquire_level_starts wins at exactly 4, 3-prefix does not win (f_minus_1_not_win true); min_path set equals the fdb2 route set. consistency: docs/prf0_measured/ft09.json (2026-09-20T05:56Z, ft09-0d8bbf25, no other variants) steps 4 = floor 4. artifacts: <path>, <path>, tools/gfk_generator.py:28-61.",
+    "argument_kind": "closed_form",
+    "source_pin": null,
+    "verified": true,
+    "verified_by": "<label withheld>",
+    "<word withheld>": "<label withheld>",
+    "<key withheld>": "<word withheld>"
+   }
+  },
+  "2": {
+   "level": 2,
+   "status": "PROVEN",
+   "floor": 7,
+   "min_path": [
+    "CLK(31,49)",
+    "CLK(23,49)",
+    "CLK(39,25)",
+    "CLK(39,33)",
+    "CLK(23,17)",
+    "CLK(23,33)",
+    "CLK(23,25)"
+   ],
+   "proof_kind": "move_ordering_uniform_cost+lemma",
+   "proof": "uniform-cost layers 1..6 exhausted below the replay-verified 7-move win",
+   "scope": "replay_alphabet",
+   "alphabet_n": 7,
+   "graph_exhausted": false,
+   "route_seeded_win": false,
+   "route_source": "bootstrap",
+   "nodes": 1799,
+   "replay_verified": true,
+   "human_best": 19,
+   "f_le_human": true,
+   "route_len": 7,
+   "guidance": "nn",
+   "start_source": "cascade_bootstrap",
+   "alphabet_origin": "cascade_trace",
+   "floor_measured_from": "level_start_snapshot",
+   "bootstrap_moves_excluded": 4,
+   "ub": 7,
+   "lb": 7,
+   "scoped_lb": {
+    "scope": "replay_alphabet",
+    "alphabet_n": 7,
+    "value": 7
+   },
+   "lemma": {
+    "dispatch_lemma": "ft09 variant 0d8bbf25, advertised [6] (ft09.py:2306); accepted {1,2,3,4,5,6,7} (base_game.py:189-232, RESET excluded by F2). fallthrough = noop: ids 1-5,7 skip the `if kMO == 5` toggle block in step() (ft09.py:2350-2434), leave every Hkx/NTi colour unchanged, evaluate cgj() on the unchanged board and decrement the sve budget (ft09.py:2281-2284; monotone toward lose(), never toward a win); ACTION6 off any control returns via complete_action with no mutation; ACTION7 has no undo/history semantics (identical to ids 1-5). No timer/enemy/per-action world update exists, so waiting cannot alter the board. evidence: [ft09.py:2306, ft09.py:2350-2434, ft09.py:2436-2519, ft09.py:2281-2284, base_game.py:189-232]. probe: {states: 7 (every pre-win state of the 7-click route from acquire_level_starts L2), ids_tested: [1,2,3,4,5,7,6@(0,0),6@(63,63)], probes: 56, semantic_diff_zero: true on (control colour vector, level_index, score, cgj, state)}.",
+    "coverage_lemma": "key: whitebox (control colour index vector, the only mutable input of cgj). Closed form over the full state space: each control click adds a fixed state-independent GF(2) column (identity elp for Hkx; static 6-mask for NTi), so every accepted play reaches base + A\u00b7x (mod 2) and #actions >= sum(x). cgj() encoded exactly: engine constraint set 16 == script constraint set 16 (all neighbour points are exact control origins; no box overlaps), k=2 makes neq linear. _min_weight_gfk (tools/gfk_generator.py:28-61) enumerates the complete solution set and returns min sum(x) = 7, x=[1,0,0,1,1,1,0,1,0,0,1,1,0]. click_probe: {stride: n/a (all 13 controls enumerated by tag, n_ctrl 13 == n_cells 13; every non-control click is a no-op by dispatch_lemma), validated: true (live SELF-CHECK PASS 2026-09-20), states_probed: 7, states_expanded: 7}; action7: lemma. minimality+existence: replay from acquire_level_starts wins at exactly 7, 6-prefix does not win; click set == fdb2 min_path set. consistency: docs/prf0_measured/ft09.json (2026-09-20T05:56Z, ft09-0d8bbf25, no other variants) steps 7 = floor 7. artifacts: <path>, <path>, tools/gfk_generator.py:28-61.",
+    "argument_kind": "closed_form",
+    "source_pin": null,
+    "verified": true,
+    "verified_by": "<label withheld>",
+    "<word withheld>": "<label withheld>",
+    "<key withheld>": "<word withheld>"
+   }
+  },
+  "3": {
+   "level": 3,
+   "status": "PROVEN",
+   "floor": 14,
+   "min_path": [
+    "CLK(31,55)",
+    "CLK(23,55)",
+    "CLK(23,7)",
+    "CLK(31,7)",
+    "CLK(23,15)",
+    "CLK(23,47)",
+    "CLK(39,55)",
+    "CLK(15,31)",
+    "CLK(39,7)",
+    "CLK(31,39)",
+    "CLK(31,23)",
+    "CLK(15,23)",
+    "CLK(47,31)",
+    "CLK(47,39)"
+   ],
+   "proof_kind": "move_ordering_uniform_cost+lemma",
+   "proof": "uniform-cost layers 1..13 exhausted below the replay-verified 14-move win",
+   "scope": "replay_alphabet",
+   "alphabet_n": 14,
+   "graph_exhausted": false,
+   "route_seeded_win": false,
+   "nodes": 860174,
+   "replay_verified": true,
+   "human_best": 15,
+   "f_le_human": true,
+   "route_len": 14,
+   "guidance": "nn",
+   "start_source": "cascade_bootstrap",
+   "alphabet_origin": "cascade_trace",
+   "floor_measured_from": "level_start_snapshot",
+   "bootstrap_moves_excluded": 11,
+   "ub": 14,
+   "lb": 14,
+   "scoped_lb": {
+    "scope": "replay_alphabet",
+    "alphabet_n": 14,
+    "value": 14
+   },
+   "lemma": {
+    "dispatch_lemma": "ft09 variant 0d8bbf25, advertised [6] (ft09.py:2306); accepted {1,2,3,4,5,6,7} (base_game.py:189-232, RESET excluded by F2). fallthrough = noop: ids 1-5,7 skip the `if kMO == 5` toggle block in step() (ft09.py:2350-2434), leave every Hkx/NTi colour unchanged, evaluate cgj() on the unchanged board and decrement the sve budget (ft09.py:2281-2284; monotone toward lose(), never toward a win); ACTION6 off any control returns via complete_action with no mutation; ACTION7 has no undo/history semantics. No timer/enemy/per-action world update exists, so waiting cannot alter the board. evidence: [ft09.py:2306, ft09.py:2350-2434, ft09.py:2436-2519, ft09.py:2281-2284, base_game.py:189-232]. probe: {states: 14 (every pre-win state of the 14-click route from acquire_level_starts L3), ids_tested: [1,2,3,4,5,7,6@(0,0),6@(63,63)], probes: 112, semantic_diff_zero: true on (control colour vector, level_index, score, cgj, state)}.",
+    "coverage_lemma": "key: whitebox (control colour index vector, the only mutable input of cgj). Closed form over the full state space: each control click adds a fixed state-independent GF(2) column (identity elp for Hkx; static 6-mask for NTi), so every accepted play reaches base + A\u00b7x (mod 2) and #actions >= sum(x). cgj() encoded exactly: engine constraint set 32 == script constraint set 32 (all neighbour points are exact control origins; no box overlaps), k=2 makes neq linear. _min_weight_gfk (tools/gfk_generator.py:28-61) enumerates the complete solution set and returns min sum(x) = 14. click_probe: {stride: n/a (all 23 controls enumerated by tag, n_ctrl 23 == n_cells 23; every non-control click is a no-op by dispatch_lemma), validated: true (live SELF-CHECK PASS 2026-09-20), states_probed: 14, states_expanded: 14}; action7: lemma. minimality+existence: replay from acquire_level_starts wins at exactly 14, 13-prefix does not win; click set == fdb2 min_path set. consistency: docs/prf0_measured/ft09.json (2026-09-20T05:56Z, ft09-0d8bbf25, no other variants) steps 14 = floor 14. artifacts: <path>, <path>, tools/gfk_generator.py:28-61.",
+    "argument_kind": "closed_form",
+    "source_pin": null,
+    "verified": true,
+    "verified_by": "<label withheld>",
+    "<word withheld>": "<label withheld>",
+    "<key withheld>": "<word withheld>"
+   }
+  },
+  "4": {
+   "level": 4,
+   "status": "PROVEN",
+   "floor": 16,
+   "proof_kind": "gfk_linear_min_weight",
+   "proof": "Influence matrix A over GF(3) extracted by one click per Hkx/NTi control from acquire_level_starts snapshot; win = 8-neighbour equal/neq colour constraints from each bsT target sprite (engine cgj). Min-weight x solving A x = b (mod k) via Gaussian elim + full nullspace enum = floor 16. Self-check reproduced L1=4,L2=7,L3=14. Replay wins at exactly F; F-1 does not win. start=acquire_level_starts.",
+   "path": [
+    [
+     6,
+     23,
+     17
+    ],
+    [
+     6,
+     23,
+     17
+    ],
+    [
+     6,
+     31,
+     17
+    ],
+    [
+     6,
+     47,
+     17
+    ],
+    [
+     6,
+     31,
+     25
+    ],
+    [
+     6,
+     47,
+     25
+    ],
+    [
+     6,
+     23,
+     33
+    ],
+    [
+     6,
+     23,
+     33
+    ],
+    [
+     6,
+     31,
+     33
+    ],
+    [
+     6,
+     39,
+     33
+    ],
+    [
+     6,
+     23,
+     49
+    ],
+    [
+     6,
+     23,
+     49
+    ],
+    [
+     6,
+     31,
+     49
+    ],
+    [
+     6,
+     31,
+     49
+    ],
+    [
+     6,
+     39,
+     49
+    ],
+    [
+     6,
+     39,
+     49
+    ]
+   ],
+   "replay_verified": true,
+   "independent_check": "build-host fresh-engine replay from acquire_level_starts: wins at exactly 16, does NOT win at 15.",
+   "<key withheld>": "<word withheld>",
+   "source": "<word withheld> 2026-07-25 (<word withheld>)"
+  },
+  "5": {
+   "level": 5,
+   "status": "PROVEN",
+   "floor": 21,
+   "proof_kind": "gfk_linear_min_weight",
+   "proof": "Influence matrix A over GF(2) extracted by one click per Hkx/NTi control from acquire_level_starts snapshot; win = 8-neighbour equal/neq colour constraints from each bsT target sprite (engine cgj). Min-weight x solving A x = b (mod k) via Gaussian elim + full nullspace enum = floor 21. Self-check reproduced L1=4,L2=7,L3=14. Replay wins at exactly F; F-1 does not win. start=acquire_level_starts.",
+   "path": [
+    [
+     6,
+     25,
+     7
+    ],
+    [
+     6,
+     33,
+     7
+    ],
+    [
+     6,
+     17,
+     15
+    ],
+    [
+     6,
+     25,
+     15
+    ],
+    [
+     6,
+     33,
+     15
+    ],
+    [
+     6,
+     17,
+     23
+    ],
+    [
+     6,
+     33,
+     23
+    ],
+    [
+     6,
+     49,
+     23
+    ],
+    [
+     6,
+     17,
+     31
+    ],
+    [
+     6,
+     25,
+     31
+    ],
+    [
+     6,
+     33,
+     31
+    ],
+    [
+     6,
+     17,
+     39
+    ],
+    [
+     6,
+     33,
+     39
+    ],
+    [
+     6,
+     41,
+     39
+    ],
+    [
+     6,
+     49,
+     39
+    ],
+    [
+     6,
+     33,
+     47
+    ],
+    [
+     6,
+     41,
+     47
+    ],
+    [
+     6,
+     49,
+     47
+    ],
+    [
+     6,
+     17,
+     55
+    ],
+    [
+     6,
+     33,
+     55
+    ],
+    [
+     6,
+     41,
+     55
+    ]
+   ],
+   "replay_verified": true,
+   "independent_check": "build-host fresh-engine replay from acquire_level_starts: wins at exactly 21, does NOT win at 20.",
+   "<key withheld>": "<word withheld>",
+   "source": "<word withheld> 2026-07-25 (<word withheld>)"
+  },
+  "6": {
+   "level": 6,
+   "status": "PROVEN",
+   "floor": 13,
+   "proof_kind": "gfk_linear_min_weight",
+   "proof": "Influence matrix A over GF(2) extracted by one click per Hkx/NTi control from acquire_level_starts snapshot; win = 8-neighbour equal/neq colour constraints from each bsT target sprite (engine cgj). Min-weight x solving A x = b (mod k) via Gaussian elim + full nullspace enum = floor 13. Self-check reproduced L1=4,L2=7,L3=14. Replay wins at exactly F; F-1 does not win. start=acquire_level_starts.",
+   "path": [
+    [
+     6,
+     7,
+     9
+    ],
+    [
+     6,
+     7,
+     17
+    ],
+    [
+     6,
+     23,
+     17
+    ],
+    [
+     6,
+     39,
+     17
+    ],
+    [
+     6,
+     15,
+     25
+    ],
+    [
+     6,
+     23,
+     25
+    ],
+    [
+     6,
+     15,
+     33
+    ],
+    [
+     6,
+     31,
+     33
+    ],
+    [
+     6,
+     39,
+     33
+    ],
+    [
+     6,
+     47,
+     33
+    ],
+    [
+     6,
+     23,
+     41
+    ],
+    [
+     6,
+     47,
+     41
+    ],
+    [
+     6,
+     55,
+     41
+    ]
+   ],
+   "replay_verified": true,
+   "independent_check": "build-host fresh-engine replay from acquire_level_starts: wins at exactly 13, does NOT win at 12.",
+   "<key withheld>": "<word withheld>",
+   "source": "<word withheld> 2026-07-25 (<word withheld>)"
+  }
+ }
+}

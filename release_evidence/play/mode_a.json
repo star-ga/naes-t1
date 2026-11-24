@@ -1,0 +1,427 @@
+{
+ "record": "closed-loop replay of the 25 public demo games by the release executable, through the gateway of the official toolkit, offline, competition mode, one play of each game",
+ "date_utc": "2026-11-24",
+ "executable_sha256": "0e0398866f8252a62557b32816b44eac5e036094b42b08e9ccd98bc377f2f61b",
+ "weights_sha256": "fa54f507fdf9a9c74a8bc22d95a1c970e3528b3fe1707b6eb61d74bad2419fec",
+ "toolkit": {
+  "arc-agi": "0.9.9",
+  "arcengine": "0.9.3"
+ },
+ "gateway": "Arcade.listen_and_serve of the toolkit, operation mode OFFLINE, competition_mode true, loopback only",
+ "floors_table": "data/demo25_levels_mmae.csv",
+ "games_complete": 25,
+ "levels_complete": 183,
+ "actions": 5499,
+ "actions_note": "actions exclude the one opening RESET of each game",
+ "all_at_floor": true,
+ "results": [
+  {
+   "game": "ar25-0c556536",
+   "levels": 8,
+   "actions": 253,
+   "opening_resets": 1,
+   "level_actions": [
+    15,
+    11,
+    40,
+    22,
+    28,
+    53,
+    37,
+    47
+   ],
+   "result_line": "!play_result version=1 game=\"ar25-0c556536\" card=\"local\" actions=254 resets=1 levels=8 win_levels=8 state=2 code=0 per_level=[16,11,40,22,28,53,37,47]"
+  },
+  {
+   "game": "bp35-0a0ad940",
+   "levels": 9,
+   "actions": 322,
+   "opening_resets": 1,
+   "level_actions": [
+    15,
+    40,
+    34,
+    19,
+    30,
+    41,
+    43,
+    36,
+    64
+   ],
+   "result_line": "!play_result version=1 game=\"bp35-0a0ad940\" card=\"local\" actions=323 resets=1 levels=9 win_levels=9 state=2 code=0 per_level=[16,40,34,19,30,41,43,36,64]"
+  },
+  {
+   "game": "cd82-fb555c5d",
+   "levels": 6,
+   "actions": 69,
+   "opening_resets": 1,
+   "level_actions": [
+    5,
+    6,
+    16,
+    13,
+    13,
+    16
+   ],
+   "result_line": "!play_result version=1 game=\"cd82-fb555c5d\" card=\"local\" actions=70 resets=1 levels=6 win_levels=6 state=2 code=0 per_level=[6,6,16,13,13,16]"
+  },
+  {
+   "game": "cn04-2fe56bfb",
+   "levels": 6,
+   "actions": 173,
+   "opening_resets": 1,
+   "level_actions": [
+    13,
+    29,
+    20,
+    29,
+    44,
+    38
+   ],
+   "result_line": "!play_result version=1 game=\"cn04-2fe56bfb\" card=\"local\" actions=174 resets=1 levels=6 win_levels=6 state=2 code=0 per_level=[14,29,20,29,44,38]"
+  },
+  {
+   "game": "dc22-fdcac232",
+   "levels": 6,
+   "actions": 416,
+   "opening_resets": 1,
+   "level_actions": [
+    20,
+    42,
+    45,
+    62,
+    108,
+    139
+   ],
+   "result_line": "!play_result version=1 game=\"dc22-fdcac232\" card=\"local\" actions=417 resets=1 levels=6 win_levels=6 state=2 code=0 per_level=[21,42,45,62,108,139]"
+  },
+  {
+   "game": "ft09-0d8bbf25",
+   "levels": 6,
+   "actions": 75,
+   "opening_resets": 1,
+   "level_actions": [
+    4,
+    7,
+    14,
+    16,
+    21,
+    13
+   ],
+   "result_line": "!play_result version=1 game=\"ft09-0d8bbf25\" card=\"local\" actions=76 resets=1 levels=6 win_levels=6 state=2 code=0 per_level=[5,7,14,16,21,13]"
+  },
+  {
+   "game": "g50t-5849a774",
+   "levels": 7,
+   "actions": 274,
+   "opening_resets": 1,
+   "level_actions": [
+    17,
+    31,
+    64,
+    31,
+    50,
+    40,
+    41
+   ],
+   "result_line": "!play_result version=1 game=\"g50t-5849a774\" card=\"local\" actions=275 resets=1 levels=7 win_levels=7 state=2 code=0 per_level=[18,31,64,31,50,40,41]"
+  },
+  {
+   "game": "ka59-38d34dbb",
+   "levels": 7,
+   "actions": 242,
+   "opening_resets": 1,
+   "level_actions": [
+    11,
+    30,
+    33,
+    38,
+    20,
+    45,
+    65
+   ],
+   "result_line": "!play_result version=1 game=\"ka59-38d34dbb\" card=\"local\" actions=243 resets=1 levels=7 win_levels=7 state=2 code=0 per_level=[12,30,33,38,20,45,65]"
+  },
+  {
+   "game": "lf52-271a04aa",
+   "levels": 10,
+   "actions": 641,
+   "opening_resets": 1,
+   "level_actions": [
+    8,
+    34,
+    45,
+    50,
+    83,
+    85,
+    125,
+    68,
+    100,
+    43
+   ],
+   "result_line": "!play_result version=1 game=\"lf52-271a04aa\" card=\"local\" actions=642 resets=1 levels=10 win_levels=10 state=2 code=0 per_level=[9,34,45,50,83,85,125,68,100,43]"
+  },
+  {
+   "game": "lp85-305b61c3",
+   "levels": 8,
+   "actions": 79,
+   "opening_resets": 1,
+   "level_actions": [
+    5,
+    8,
+    16,
+    12,
+    9,
+    19,
+    5,
+    5
+   ],
+   "result_line": "!play_result version=1 game=\"lp85-305b61c3\" card=\"local\" actions=80 resets=1 levels=8 win_levels=8 state=2 code=0 per_level=[6,8,16,12,9,19,5,5]"
+  },
+  {
+   "game": "ls20-9607627b",
+   "levels": 7,
+   "actions": 309,
+   "opening_resets": 1,
+   "level_actions": [
+    13,
+    45,
+    39,
+    43,
+    44,
+    72,
+    53
+   ],
+   "result_line": "!play_result version=1 game=\"ls20-9607627b\" card=\"local\" actions=310 resets=1 levels=7 win_levels=7 state=2 code=0 per_level=[14,45,39,43,44,72,53]"
+  },
+  {
+   "game": "m0r0-492f87ba",
+   "levels": 6,
+   "actions": 179,
+   "opening_resets": 1,
+   "level_actions": [
+    15,
+    23,
+    53,
+    11,
+    39,
+    38
+   ],
+   "result_line": "!play_result version=1 game=\"m0r0-492f87ba\" card=\"local\" actions=180 resets=1 levels=6 win_levels=6 state=2 code=0 per_level=[16,23,53,11,39,38]"
+  },
+  {
+   "game": "r11l-495a7899",
+   "levels": 6,
+   "actions": 57,
+   "opening_resets": 1,
+   "level_actions": [
+    3,
+    7,
+    9,
+    13,
+    12,
+    13
+   ],
+   "result_line": "!play_result version=1 game=\"r11l-495a7899\" card=\"local\" actions=58 resets=1 levels=6 win_levels=6 state=2 code=0 per_level=[4,7,9,13,12,13]"
+  },
+  {
+   "game": "re86-8af5384d",
+   "levels": 8,
+   "actions": 507,
+   "opening_resets": 1,
+   "level_actions": [
+    20,
+    36,
+    47,
+    42,
+    63,
+    46,
+    98,
+    155
+   ],
+   "result_line": "!play_result version=1 game=\"re86-8af5384d\" card=\"local\" actions=508 resets=1 levels=8 win_levels=8 state=2 code=0 per_level=[21,36,47,42,63,46,98,155]"
+  },
+  {
+   "game": "s5i5-18d95033",
+   "levels": 8,
+   "actions": 240,
+   "opening_resets": 1,
+   "level_actions": [
+    13,
+    26,
+    37,
+    30,
+    28,
+    25,
+    45,
+    36
+   ],
+   "result_line": "!play_result version=1 game=\"s5i5-18d95033\" card=\"local\" actions=241 resets=1 levels=8 win_levels=8 state=2 code=0 per_level=[14,26,37,30,28,25,45,36]"
+  },
+  {
+   "game": "sb26-7fbdac44",
+   "levels": 8,
+   "actions": 124,
+   "opening_resets": 1,
+   "level_actions": [
+    9,
+    15,
+    15,
+    15,
+    17,
+    19,
+    17,
+    17
+   ],
+   "result_line": "!play_result version=1 game=\"sb26-7fbdac44\" card=\"local\" actions=125 resets=1 levels=8 win_levels=8 state=2 code=0 per_level=[10,15,15,15,17,19,17,17]"
+  },
+  {
+   "game": "sc25-635fd71a",
+   "levels": 6,
+   "actions": 121,
+   "opening_resets": 1,
+   "level_actions": [
+    13,
+    5,
+    11,
+    21,
+    36,
+    35
+   ],
+   "result_line": "!play_result version=1 game=\"sc25-635fd71a\" card=\"local\" actions=122 resets=1 levels=6 win_levels=6 state=2 code=0 per_level=[14,5,11,21,36,35]"
+  },
+  {
+   "game": "sk48-d8078629",
+   "levels": 8,
+   "actions": 213,
+   "opening_resets": 1,
+   "level_actions": [
+    14,
+    27,
+    33,
+    23,
+    33,
+    36,
+    23,
+    24
+   ],
+   "result_line": "!play_result version=1 game=\"sk48-d8078629\" card=\"local\" actions=214 resets=1 levels=8 win_levels=8 state=2 code=0 per_level=[15,27,33,23,33,36,23,24]"
+  },
+  {
+   "game": "sp80-589a99af",
+   "levels": 6,
+   "actions": 86,
+   "opening_resets": 1,
+   "level_actions": [
+    4,
+    7,
+    10,
+    20,
+    17,
+    28
+   ],
+   "result_line": "!play_result version=1 game=\"sp80-589a99af\" card=\"local\" actions=87 resets=1 levels=6 win_levels=6 state=2 code=0 per_level=[5,7,10,20,17,28]"
+  },
+  {
+   "game": "su15-1944f8ab",
+   "levels": 9,
+   "actions": 61,
+   "opening_resets": 1,
+   "level_actions": [
+    7,
+    8,
+    11,
+    9,
+    5,
+    4,
+    5,
+    5,
+    7
+   ],
+   "result_line": "!play_result version=1 game=\"su15-1944f8ab\" card=\"local\" actions=62 resets=1 levels=9 win_levels=9 state=2 code=0 per_level=[8,8,11,9,5,4,5,5,7]"
+  },
+  {
+   "game": "tn36-ef4dde99",
+   "levels": 7,
+   "actions": 85,
+   "opening_resets": 1,
+   "level_actions": [
+    7,
+    9,
+    9,
+    12,
+    16,
+    16,
+    16
+   ],
+   "result_line": "!play_result version=1 game=\"tn36-ef4dde99\" card=\"local\" actions=86 resets=1 levels=7 win_levels=7 state=2 code=0 per_level=[8,9,9,12,16,16,16]"
+  },
+  {
+   "game": "tr87-cd924810",
+   "levels": 6,
+   "actions": 118,
+   "opening_resets": 1,
+   "level_actions": [
+    14,
+    25,
+    21,
+    21,
+    14,
+    23
+   ],
+   "result_line": "!play_result version=1 game=\"tr87-cd924810\" card=\"local\" actions=119 resets=1 levels=6 win_levels=6 state=2 code=0 per_level=[15,25,21,21,14,23]"
+  },
+  {
+   "game": "tu93-0768757b",
+   "levels": 9,
+   "actions": 185,
+   "opening_resets": 1,
+   "level_actions": [
+    18,
+    10,
+    19,
+    17,
+    29,
+    28,
+    14,
+    21,
+    29
+   ],
+   "result_line": "!play_result version=1 game=\"tu93-0768757b\" card=\"local\" actions=186 resets=1 levels=9 win_levels=9 state=2 code=0 per_level=[19,10,19,17,29,28,14,21,29]"
+  },
+  {
+   "game": "vc33-5430563c",
+   "levels": 7,
+   "actions": 167,
+   "opening_resets": 1,
+   "level_actions": [
+    3,
+    7,
+    23,
+    21,
+    44,
+    20,
+    49
+   ],
+   "result_line": "!play_result version=1 game=\"vc33-5430563c\" card=\"local\" actions=168 resets=1 levels=7 win_levels=7 state=2 code=0 per_level=[4,7,23,21,44,20,49]"
+  },
+  {
+   "game": "wa30-ee6fef47",
+   "levels": 9,
+   "actions": 503,
+   "opening_resets": 1,
+   "level_actions": [
+    26,
+    46,
+    67,
+    43,
+    91,
+    46,
+    36,
+    91,
+    57
+   ],
+   "result_line": "!play_result version=1 game=\"wa30-ee6fef47\" card=\"local\" actions=504 resets=1 levels=9 win_levels=9 state=2 code=0 per_level=[27,46,67,43,91,46,36,91,57]"
+  }
+ ]
+}

@@ -1,0 +1,76 @@
+{
+ "level": 4,
+ "winner_configs": 1,
+ "orders_tried": 6,
+ "witness": [
+  3,
+  [
+   6,
+   39,
+   18
+  ],
+  3,
+  3,
+  3,
+  3,
+  [
+   6,
+   9,
+   30
+  ],
+  2,
+  2,
+  2,
+  2,
+  4,
+  4,
+  4,
+  4,
+  4,
+  4,
+  4,
+  4,
+  5
+ ],
+ "length": 20,
+ "config": [
+  [
+   12,
+   13
+  ],
+  [
+   14,
+   10
+  ],
+  [
+   8,
+   5
+  ],
+  [
+   4,
+   5
+  ],
+  [
+   10,
+   13
+  ]
+ ],
+ "order": [
+  3,
+  2,
+  4
+ ],
+ "replay_fresh": {
+  "won_at": 20,
+  "prefix_wins_before_F": false
+ },
+ "replay_chained": {
+  "prev_levels_replayed": 3,
+  "entry_level_index": 3,
+  "entry_state_equals_fresh_set_level": true,
+  "prev_all_advanced": true,
+  "won_at": 20,
+  "prefix_win": false
+ },
+ "fresh_start_key": "d0683ceb30669c6207f7773f260a849628993e8b1908d83aad710ead03ff6a0b"
+}

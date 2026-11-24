@@ -1,0 +1,360 @@
+{
+ "status": "measured",
+ "basis": "existing recordings recounted at g50t L7 floor 41, su15 L3 floor 11 and wa30 L9 route 57 Re-counted 2026-11-19 against the final floors with sp80 L6 = 28 (release_evidence/certificates/fixed_instance).",
+ "g50t_l7_floor": 41,
+ "nlevels": 183,
+ "nscorecards": 14,
+ "floor_sha256": "dcef9af928f34bfff28cd58d9b60eae1720850240b1874395026218a6ac1a0e7",
+ "recording_inputs": [
+  {
+   "path": "08b98aa0-5df0-42c0-b501-856f553a21e9/summary.json",
+   "sha256": "23ef20b5b8c673b9d32d52223a270347ff9408c9510128d834e24f52d57165e5"
+  },
+  {
+   "path": "08b98aa0-5df0-42c0-b501-856f553a21e9/per_level.json",
+   "sha256": "f2e09aff213f82462aa25f10f6c1967b4597f2b74e7ac9255635f6e155de057e"
+  },
+  {
+   "path": "34ea0a31-21f8-4a34-b5ee-5e26fdfc9a5c/summary.json",
+   "sha256": "3d1454719a418a6df5a25746413dd503a33cc6ef0eef1d01305e2ed346ef84ea"
+  },
+  {
+   "path": "34ea0a31-21f8-4a34-b5ee-5e26fdfc9a5c/per_level.json",
+   "sha256": "ee4267e98db10e5f431d6cfd728da8a475d2cbaa3c051f00d9d236786278220f"
+  },
+  {
+   "path": "35d7852f-bb5c-4d40-b0e0-df501c27ef6f/summary.json",
+   "sha256": "5118df723e0f7d4b285d966296e25528b7132931e1109ad5fc111f151b38f895"
+  },
+  {
+   "path": "35d7852f-bb5c-4d40-b0e0-df501c27ef6f/per_level_resetfix.json",
+   "sha256": "ca9814fe300d3cd2280cbc83b37abba9d17309bdaba20673b5f117b28acffa6e"
+  },
+  {
+   "path": "4793f52c-ae2a-4622-a7e1-a84b06218c97/summary.json",
+   "sha256": "7042f58405ae3d764de7a6586ecaf1214294436ee503c1cdeee4398e86e0137c"
+  },
+  {
+   "path": "4793f52c-ae2a-4622-a7e1-a84b06218c97/per_level.json",
+   "sha256": "57c34c09bd68b9c131a0dce47de6b5f94f8505044b530cedc0c838ec1e016a71"
+  },
+  {
+   "path": "73aaed94-060a-44c6-b851-9997366eb89d/summary.json",
+   "sha256": "a1681c6f39eed77a0a1451c94967164d0bb97c760d4107396de5cc8275d0b7fd"
+  },
+  {
+   "path": "73aaed94-060a-44c6-b851-9997366eb89d/per_level.json",
+   "sha256": "711c72c3110b206121025bf075e7e3a3e76b6b5bb2821bc90aeba4c15f11924f"
+  },
+  {
+   "path": "7433df56-4cde-408e-8c01-c933c3c9aac6/summary.json",
+   "sha256": "69c2c970f6035616ce594ad3463677f53e1bed67d135f248f9f9beacaff44d64"
+  },
+  {
+   "path": "7433df56-4cde-408e-8c01-c933c3c9aac6/per_level.json",
+   "sha256": "eb9109fdfbe5fee78d7710eda3231bee31ac120bc1f00445cd71311884c9c870"
+  },
+  {
+   "path": "745891d9-7efa-414f-8ec4-ec62cbffc316/summary.json",
+   "sha256": "45ab96e1eb6a0939c8bd969d959973838406e07f3b834e0f3cdede719bab5cdf"
+  },
+  {
+   "path": "745891d9-7efa-414f-8ec4-ec62cbffc316/per_level.json",
+   "sha256": "110e6efec565fb31012dccb5fd638f94244dc4567e516662c3bf624e2c113eee"
+  },
+  {
+   "path": "7a511ea0-dfa1-47ed-8a99-52a80f3cdbaa/summary.json",
+   "sha256": "f4fd9f3ef972a9ddb5f450779828322b6840d40a83c994bfcfcff48ce2bec8ec"
+  },
+  {
+   "path": "7a511ea0-dfa1-47ed-8a99-52a80f3cdbaa/per_level.json",
+   "sha256": "45e46785094947aeb3d7ca0039e984f63c15e967da035f12356f4ff3db764940"
+  },
+  {
+   "path": "831c83cf-b969-45fc-a6ce-27f9b3c4105c/summary.json",
+   "sha256": "a99136ed04dd309d1ed646cd31d9090c6791453d429035488117d59290a8411e"
+  },
+  {
+   "path": "831c83cf-b969-45fc-a6ce-27f9b3c4105c/per_level.json",
+   "sha256": "58ef72a473510a1df0e3d125a3371621555a1540a6486e3a327aea22fc6ccf82"
+  },
+  {
+   "path": "9c403765-db5b-40b1-beab-6fa3f40119b0/summary.json",
+   "sha256": "400f819333e2a119c2876c2be9cbf7a06f24111b6f6ad5909865b61a6d5fafc9"
+  },
+  {
+   "path": "9c403765-db5b-40b1-beab-6fa3f40119b0/per_level.json",
+   "sha256": "de242eac2eecd0bffd7230ece5448d767585426c6d46641d6729c57b5f47d97e"
+  },
+  {
+   "path": "ac3eeaf5-6ace-4d2d-bf29-9469fd00a57b/summary.json",
+   "sha256": "0f0e49148ebd65e8672213ba088ea91cc01ffe911530df3bbf8b86b3fed5245b"
+  },
+  {
+   "path": "ac3eeaf5-6ace-4d2d-bf29-9469fd00a57b/per_level.json",
+   "sha256": "877ad186711965f0b5166c0b7719d05d2dacf6472b8d489d76278fdd39fde904"
+  },
+  {
+   "path": "c7147b87-aac6-498d-8916-8b37cf78756f/summary.json",
+   "sha256": "0fb31d1243781122041b9cce375b7d9ac9476ea779e2c4c55cc3114ccbd0b30e"
+  },
+  {
+   "path": "c7147b87-aac6-498d-8916-8b37cf78756f/per_level.json",
+   "sha256": "ea9b3a2dda6c4a036d5ed3b97f33f06e9d0d9fec33da29a5c610287cdd135588"
+  },
+  {
+   "path": "d0895597-2bb5-4191-9b7b-ec97917da1aa/summary.json",
+   "sha256": "8aad1f48659341c55b4a17de1dd050f61dec080bf60593eb6eec1e3e386eb385"
+  },
+  {
+   "path": "d0895597-2bb5-4191-9b7b-ec97917da1aa/per_level.json",
+   "sha256": "12d2601e8731de14ff1e30ad400c4a3f7559b3b57c41cd71c0ce343cee677ef1"
+  },
+  {
+   "path": "dfa3eb8a-2d61-4ed2-9fab-874872d7185f/summary.json",
+   "sha256": "da271440de2e1efc070241219c970987a5d62bdf60922aa359c5f47b1035122d"
+  },
+  {
+   "path": "dfa3eb8a-2d61-4ed2-9fab-874872d7185f/per_level.json",
+   "sha256": "f69efaf9ad37784b510d922d4209b7a008214051ab9e6f20988c9f7f9701f76c"
+  }
+ ],
+ "scorecards": [
+  {
+   "id": "08b98aa0-5df0-42c0-b501-856f553a21e9",
+   "name": "Tycho",
+   "mean_mmae": 0.7504370184519811,
+   "mean_mmae_current": 0.7504370184519811,
+   "at_floor": 63,
+   "below_floor": 0,
+   "levels_won": 183,
+   "legacy_games": []
+  },
+  {
+   "id": "34ea0a31-21f8-4a34-b5ee-5e26fdfc9a5c",
+   "name": "baseline1",
+   "mean_mmae": 0.6680396660923682,
+   "mean_mmae_current": 0.6680396660923682,
+   "at_floor": 50,
+   "below_floor": 0,
+   "levels_won": 183,
+   "legacy_games": []
+  },
+  {
+   "id": "35d7852f-bb5c-4d40-b0e0-df501c27ef6f",
+   "name": "RGB-Agent",
+   "mean_mmae": 0.008836540045184178,
+   "mean_mmae_current": 0.0,
+   "at_floor": 0,
+   "below_floor": 0,
+   "levels_won": 7,
+   "legacy_games": [
+    "vc33"
+   ]
+  },
+  {
+   "id": "4793f52c-ae2a-4622-a7e1-a84b06218c97",
+   "name": "OpenClaw",
+   "mean_mmae": 0.10513933193761031,
+   "mean_mmae_current": 0.10513933193761031,
+   "at_floor": 13,
+   "below_floor": 0,
+   "levels_won": 28,
+   "legacy_games": []
+  },
+  {
+   "id": "73aaed94-060a-44c6-b851-9997366eb89d",
+   "name": "Vision CLv1",
+   "mean_mmae": 0.3962432434543521,
+   "mean_mmae_current": 0.3962432434543521,
+   "at_floor": 19,
+   "below_floor": 0,
+   "levels_won": 133,
+   "legacy_games": []
+  },
+  {
+   "id": "7433df56-4cde-408e-8c01-c933c3c9aac6",
+   "name": "Human Intelligence Harness",
+   "mean_mmae": 0.32714442686237116,
+   "mean_mmae_current": 0.32714442686237116,
+   "at_floor": 7,
+   "below_floor": 0,
+   "levels_won": 183,
+   "legacy_games": []
+  },
+  {
+   "id": "745891d9-7efa-414f-8ec4-ec62cbffc316",
+   "name": "TELL",
+   "mean_mmae": 0.302557436533397,
+   "mean_mmae_current": 0.10331307675981809,
+   "at_floor": 18,
+   "below_floor": 4,
+   "levels_won": 131,
+   "legacy_games": [
+    "ar25",
+    "cn04",
+    "dc22",
+    "ka59",
+    "m0r0",
+    "r11l",
+    "re86",
+    "s5i5",
+    "sc25",
+    "sk48",
+    "sp80",
+    "su15",
+    "tn36",
+    "tu93",
+    "vc33"
+   ]
+  },
+  {
+   "id": "7a511ea0-dfa1-47ed-8a99-52a80f3cdbaa",
+   "name": "NOOA",
+   "mean_mmae": 0.4778424131861258,
+   "mean_mmae_current": 0.4778424131861258,
+   "at_floor": 29,
+   "below_floor": 0,
+   "levels_won": 170,
+   "legacy_games": []
+  },
+  {
+   "id": "831c83cf-b969-45fc-a6ce-27f9b3c4105c",
+   "name": "DreamTeam",
+   "mean_mmae": 0.24634617535818726,
+   "mean_mmae_current": 0.24634617535818726,
+   "at_floor": 15,
+   "below_floor": 0,
+   "levels_won": 98,
+   "legacy_games": []
+  },
+  {
+   "id": "9c403765-db5b-40b1-beab-6fa3f40119b0",
+   "name": "Retrodict",
+   "mean_mmae": 0.6789607695399849,
+   "mean_mmae_current": 0.6789607695399849,
+   "at_floor": 52,
+   "below_floor": 0,
+   "levels_won": 183,
+   "legacy_games": []
+  },
+  {
+   "id": "ac3eeaf5-6ace-4d2d-bf29-9469fd00a57b",
+   "name": "Continual Harness",
+   "mean_mmae": 0.10523032630787701,
+   "mean_mmae_current": 0.10523032630787701,
+   "at_floor": 4,
+   "below_floor": 0,
+   "levels_won": 64,
+   "legacy_games": []
+  },
+  {
+   "id": "c7147b87-aac6-498d-8916-8b37cf78756f",
+   "name": "a-evolve",
+   "mean_mmae": 0.09644984128904144,
+   "mean_mmae_current": 0.032983209855937584,
+   "at_floor": 1,
+   "below_floor": 2,
+   "levels_won": 64,
+   "legacy_games": [
+    "ar25",
+    "cn04",
+    "dc22",
+    "ka59",
+    "m0r0",
+    "r11l",
+    "re86",
+    "s5i5",
+    "sc25",
+    "sk48",
+    "sp80",
+    "su15",
+    "tn36",
+    "tu93",
+    "vc33"
+   ]
+  },
+  {
+   "id": "d0895597-2bb5-4191-9b7b-ec97917da1aa",
+   "name": "Polyphony",
+   "mean_mmae": 0.11919369870611636,
+   "mean_mmae_current": 0.11919369870611636,
+   "at_floor": 9,
+   "below_floor": 0,
+   "levels_won": 59,
+   "legacy_games": []
+  },
+  {
+   "id": "dfa3eb8a-2d61-4ed2-9fab-874872d7185f",
+   "name": "OPINE-World",
+   "mean_mmae": 0.3396190413479717,
+   "mean_mmae_current": 0.3396190413479717,
+   "at_floor": 14,
+   "below_floor": 0,
+   "levels_won": 160,
+   "legacy_games": []
+  }
+ ],
+ "macros": {
+  "community08b98aa05df042c0b501856f553a21e9mmae": "0.750",
+  "community08b98aa05df042c0b501856f553a21e9currentmmae": "0.750",
+  "community08b98aa05df042c0b501856f553a21e9atfloor": "63",
+  "community08b98aa05df042c0b501856f553a21e9belowfloor": "0",
+  "community34ea0a3121f84a34b5ee5e26fdfc9a5cmmae": "0.668",
+  "community34ea0a3121f84a34b5ee5e26fdfc9a5ccurrentmmae": "0.668",
+  "community34ea0a3121f84a34b5ee5e26fdfc9a5catfloor": "50",
+  "community34ea0a3121f84a34b5ee5e26fdfc9a5cbelowfloor": "0",
+  "community35d7852fbb5c4d40b0e0df501c27ef6fmmae": "0.009",
+  "community35d7852fbb5c4d40b0e0df501c27ef6fcurrentmmae": "0.000",
+  "community35d7852fbb5c4d40b0e0df501c27ef6fatfloor": "0",
+  "community35d7852fbb5c4d40b0e0df501c27ef6fbelowfloor": "0",
+  "community4793f52cae2a4622a7e1a84b06218c97mmae": "0.105",
+  "community4793f52cae2a4622a7e1a84b06218c97currentmmae": "0.105",
+  "community4793f52cae2a4622a7e1a84b06218c97atfloor": "13",
+  "community4793f52cae2a4622a7e1a84b06218c97belowfloor": "0",
+  "community73aaed94060a44c6b8519997366eb89dmmae": "0.396",
+  "community73aaed94060a44c6b8519997366eb89dcurrentmmae": "0.396",
+  "community73aaed94060a44c6b8519997366eb89datfloor": "19",
+  "community73aaed94060a44c6b8519997366eb89dbelowfloor": "0",
+  "community7433df564cde408e8c01c933c3c9aac6mmae": "0.327",
+  "community7433df564cde408e8c01c933c3c9aac6currentmmae": "0.327",
+  "community7433df564cde408e8c01c933c3c9aac6atfloor": "7",
+  "community7433df564cde408e8c01c933c3c9aac6belowfloor": "0",
+  "community745891d97efa414f8ec4ec62cbffc316mmae": "0.303",
+  "community745891d97efa414f8ec4ec62cbffc316currentmmae": "0.103",
+  "community745891d97efa414f8ec4ec62cbffc316atfloor": "18",
+  "community745891d97efa414f8ec4ec62cbffc316belowfloor": "4",
+  "community7a511ea0dfa147ed8a9952a80f3cdbaammae": "0.478",
+  "community7a511ea0dfa147ed8a9952a80f3cdbaacurrentmmae": "0.478",
+  "community7a511ea0dfa147ed8a9952a80f3cdbaaatfloor": "29",
+  "community7a511ea0dfa147ed8a9952a80f3cdbaabelowfloor": "0",
+  "community831c83cfb96945fca6ce27f9b3c4105cmmae": "0.246",
+  "community831c83cfb96945fca6ce27f9b3c4105ccurrentmmae": "0.246",
+  "community831c83cfb96945fca6ce27f9b3c4105catfloor": "15",
+  "community831c83cfb96945fca6ce27f9b3c4105cbelowfloor": "0",
+  "community9c403765db5b40b1beab6fa3f40119b0mmae": "0.679",
+  "community9c403765db5b40b1beab6fa3f40119b0currentmmae": "0.679",
+  "community9c403765db5b40b1beab6fa3f40119b0atfloor": "52",
+  "community9c403765db5b40b1beab6fa3f40119b0belowfloor": "0",
+  "communityac3eeaf56ace4d2dbf299469fd00a57bmmae": "0.105",
+  "communityac3eeaf56ace4d2dbf299469fd00a57bcurrentmmae": "0.105",
+  "communityac3eeaf56ace4d2dbf299469fd00a57batfloor": "4",
+  "communityac3eeaf56ace4d2dbf299469fd00a57bbelowfloor": "0",
+  "communityc7147b87aac6498d89168b37cf78756fmmae": "0.096",
+  "communityc7147b87aac6498d89168b37cf78756fcurrentmmae": "0.033",
+  "communityc7147b87aac6498d89168b37cf78756fatfloor": "1",
+  "communityc7147b87aac6498d89168b37cf78756fbelowfloor": "2",
+  "communityd08955972bb541919b7bec97917da1aammae": "0.119",
+  "communityd08955972bb541919b7bec97917da1aacurrentmmae": "0.119",
+  "communityd08955972bb541919b7bec97917da1aaatfloor": "9",
+  "communityd08955972bb541919b7bec97917da1aabelowfloor": "0",
+  "communitydfa3eb8a2d614ed29fab874872d7185fmmae": "0.340",
+  "communitydfa3eb8a2d614ed29fab874872d7185fcurrentmmae": "0.340",
+  "communitydfa3eb8a2d614ed29fab874872d7185fatfloor": "14",
+  "communitydfa3eb8a2d614ed29fab874872d7185fbelowfloor": "0",
+  "bestcommunity": "Tycho",
+  "bestcommunitymmae": "0.750",
+  "bestcommunityatfloor": "63",
+  "nbelowfloorrows": "6"
+ }
+}

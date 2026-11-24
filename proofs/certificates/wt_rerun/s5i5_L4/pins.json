@@ -1,0 +1,13 @@
+{
+  "current_game": "341f85bac1fb5ca7a3315a367405c3c993a57ce4dd0ff01cc8aaa72bf6c6ed34",
+  "historical_game": "4e0c7d1a813cc7f10a28b7c9f168c811450a4330d8717b1badc9bf76143cbfeb",
+  "runtime": "<interp-version>",
+  "engine_version": "0.1.0",
+  "engine_files": {
+    "base_game.py": "5b5f41f3bec4c0c97a727fda7326114991dc0d4a5642d489b40ee4aa87e6b15f",
+    "level.py": "f74db969772b251018b2fcce6ec42f3522adeef4e9c03c036e455d2a35e3215a",
+    "camera.py": "f06e16807b0f97d86cafb5481bb3969213f27768f789d898c6b8b07e957de397"
+  },
+  "prefix_actions": 76,
+  "runner": "2d80a8e1e8b9ce0fc24670c96b51427ef230356676aca60274ae9bcd13a2bec7"
+}

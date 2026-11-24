@@ -1,0 +1,83 @@
+{
+ "game": "ls20",
+ "gid": "ls20-9607627b",
+ "won": 7,
+ "total": 7,
+ "other_variants": [],
+ "mmae_sum": 7.0,
+ "new_legality_hits": 0,
+ "removed_legality_hits": 0,
+ "wall": 210.0,
+ "timing": [
+  {
+   "gid": "ls20-9607627b",
+   "secs": 18.9,
+   "hit_wall": false
+  }
+ ],
+ "legality_now": {
+  "game_id": 0,
+  "white_box": 0,
+  "hidden_dep": 0
+ },
+ "legality_base": {
+  "game_id": 0,
+  "white_box": 0,
+  "hidden_dep": 0
+ },
+ "changed": [],
+ "per_level": [
+  {
+   "level": 1,
+   "steps": 13,
+   "floor": 13,
+   "mmae": 1.0,
+   "refuted": false
+  },
+  {
+   "level": 2,
+   "steps": 45,
+   "floor": 45,
+   "mmae": 1.0,
+   "refuted": false
+  },
+  {
+   "level": 3,
+   "steps": 39,
+   "floor": 39,
+   "mmae": 1.0,
+   "refuted": false
+  },
+  {
+   "level": 4,
+   "steps": 43,
+   "floor": 43,
+   "mmae": 1.0,
+   "refuted": false
+  },
+  {
+   "level": 5,
+   "steps": 44,
+   "floor": 44,
+   "mmae": 1.0,
+   "refuted": false
+  },
+  {
+   "level": 6,
+   "steps": 72,
+   "floor": 72,
+   "mmae": 1.0,
+   "refuted": false
+  },
+  {
+   "level": 7,
+   "steps": 53,
+   "floor": 53,
+   "mmae": 1.0,
+   "refuted": false
+  }
+ ],
+ "measured_at": "2026-09-24T23:15:49+00:00",
+ "source": "prf0 <word withheld>, build-host, idle 100%->100%, parallel <threads>, wall 210, bundle add9e23071dee797",
+ "bundle_hash": "add9e23071dee797"
+}

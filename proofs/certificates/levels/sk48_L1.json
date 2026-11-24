@@ -1,0 +1,111 @@
+{
+  "artifact_sha256": [
+    {
+      "kind": "safe_statement_count_extract",
+      "sha256": "10c1526805c8cc02b842ed437557b076d19eb3c00335aba1fbe06fcc1b573872"
+    },
+    {
+      "kind": "authority_ledger_label",
+      "sha256": "3ff1aea0a610bd39822653f1d172ef96b1979a6ef933a9b05c516e918c7abd7a"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "75c13569a64c36e36d810a2b4c5831d947ef12cf7dd17733a569a084f6799ec3"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "58ae54ba5749fc8057cb5fb8bb2f1ea92c34b4f7fd15b59ef2ed5ae1121157cd"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "99cfaceda3cd94d626133d06b3557936bc8cd8be12a111489b18ad41a0dcf53f"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "37ea11112bd13eee07712353c91bcf336b06d27d7ae0498385cda89130dff7d4"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "36772a64b3bc1645e55e77c87488e9da9a9a160a947811e0b126537d070035e9"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "91e5b47fc746e0929e8b0c9755ad1fcbf8301317bef19510fc7c064d0cb59679"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "7550e01b4853d1c848b8499ac36475a3563e255439327a5bcc3b9503e58fd67d"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "5bdfadaf67099b99d1c40e025d6dce044c22658fc49353919299df2d16921556"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "7884f7bc97f0f4700521b04ac9358e7d3151d3ab108bab8cf2abea113a98c6a4"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "04efcd9f04e32f767a45a7dde8944e84ff0e26fb0694fe57f84d774fda7312d8"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "51cdf248e675610ce0a73f4f0bd6703e220808d2ae4d93bba6f4641303a9915c"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "81f2583b77f9ade0b15bdf07fa3657c9c73b1a279ebd45a198c3d1ba375fc9b3"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "70f72bc7b0a7a3fb3a0f5e85010f68108354d129cf455d9b9563fe760e5ff7b5"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "a78047b734c8be8a8e304bb10bb905f7ff3afcd3cf5851ed107d8e07cb594775"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "e3459217f7c0098d88e588c9fbe63148b1741b8aee9e32654bfd3f874e912cbe"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "a8d95026f6c0b1f36f6b172ecfd42e1bbd8a6a49c21860c42b797922201438d0"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "dc98284fb855cbb255d298279f8e21bf3ee9ac9d2c6d792d013aefec1590d7af"
+    },
+    {
+      "kind": "recorded_replay_command_or_tool",
+      "sha256": "099e4cf8aa28ae5d4aec1cfdf9bb1b7ea204dc46a2983d77bdc6edb905442824"
+    },
+    {
+      "kind": "recorded_replay_command_or_tool",
+      "sha256": "3f8827951757bc1235e33cf55aa63fa10981b1d4063c6d8cea3c0e63fdf4aff7"
+    }
+  ],
+  "floor": 14,
+  "game": "sk48",
+  "game_id": "sk48-d8078629",
+  "game_levels": 8,
+  "level": 1,
+  "lower_bound": {
+    "kind": "complete_finite_state_layers_native_coupling_L1_action_dominance",
+    "statement": "Complete uniform-cost search retains selection, every object position, segment count and dot position; every layer below 14 closes without a goal under the recorded complete action and permutation arguments.",
+    "value": 14
+  },
+  "naes_t1_actions": 14,
+  "proof_class": "Exhaustive search",
+  "proof_detail": "complete_finite_state_layers_native_coupling_L1_action_dominance",
+  "schema_version": 1,
+  "source_certificate_sha256": "42b63610086e16994a43b1bb2850e0fd25326f0a28bac33df7dfe740e853666d",
+  "status": "proven",
+  "upper_bound": {
+    "expected_levels_completed": 1,
+    "length": 14,
+    "opening_reset_counted": false,
+    "route": "4 4 4 1 1 1 4 3 2 2 4 3 1 4",
+    "seed": 0
+  }
+}

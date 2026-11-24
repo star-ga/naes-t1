@@ -1,0 +1,270 @@
+{
+ "old": "old/vc33/9851e02b/vc33.py",
+ "new": "new/vc33/5430563c/vc33.py",
+ "old_tokens": 3147,
+ "new_tokens": 3177,
+ "renamed": 206,
+ "mapped": 302,
+ "n_hunks": 27,
+ "hunks": [
+  {
+   "op": "insert",
+   "where_old": "diu:diu",
+   "where_new": "xbdwxvogip:xbdwxvogip",
+   "old": "BACKGROUND_COLOR = 3 PADDING_COLOR = 4 class diu : cab : Sprite shl :",
+   "new": "BACKGROUND_COLOR = 3 PADDING_COLOR = 4 xbdwxvogip = 7 fqzhkhmfxt = 12 flmcufqvdo = 1 qgrljjqvyn = 0 class kzobdxxpyg : hxvxoxlwtk : Sprite xgwliflosy :",
+   "old_exact": "",
+   "new_exact": "xbdwxvogip = 7 fqzhkhmfxt = 12 flmcufqvdo = 1 qgrljjqvyn = 0"
+  },
+  {
+   "op": "replace",
+   "where_old": "ysn:next",
+   "where_new": "wqemqapjce:xryezihexa",
+   "old": "= syi self . dsl = 0 def next ( self ) -> bool : ZaL =",
+   "new": "= maejydvpzz self . chacnmhmit = 0 def xryezihexa ( self ) -> bool : mxefvazonp =",
+   "old_exact": "next",
+   "new_exact": "xryezihexa"
+  },
+  {
+   "op": "insert",
+   "where_old": "ehv:__init__",
+   "where_new": "xclqwacrmx:xclqwacrmx",
+   "old": "return False class ehv ( RenderableUserDisplay ) : def __init__ ( self , zth : int",
+   "new": "return False class xclqwacrmx ( RenderableUserDisplay ) : \"\"\".\"\"\" def __init__ ( self , dmesyeowwd : int",
+   "old_exact": "",
+   "new_exact": "\"\"\".\"\"\""
+  },
+  {
+   "op": "insert",
+   "where_old": "ehv:__init__",
+   "where_new": "xclqwacrmx:__init__",
+   "old": "( self , zth : int ) : self . lpw = zth self . olv",
+   "new": "( self , dmesyeowwd : int ) : \"\"\".\"\"\" self . dmesyeowwd = dmesyeowwd self . current_steps",
+   "old_exact": "",
+   "new_exact": "\"\"\".\"\"\""
+  },
+  {
+   "op": "insert",
+   "where_old": "ehv:lnu",
+   "where_new": "xclqwacrmx:kzdrzwegyq",
+   "old": ", edj : int ) -> None : self . olv = max ( 0 ,",
+   "new": ", jwqkgpseim : int ) -> None : \"\"\".\"\"\" self . current_steps = max ( 0 ,",
+   "old_exact": "",
+   "new_exact": "\"\"\".\"\"\""
+  },
+  {
+   "op": "insert",
+   "where_old": "ehv:czh",
+   "where_new": "xclqwacrmx:tuvumryrbp",
+   "old": "def czh ( self ) -> bool : if self . olv > 0 : self",
+   "new": "def tuvumryrbp ( self ) -> bool : \"\"\".\"\"\" if self . current_steps > 0 : self",
+   "old_exact": "",
+   "new_exact": "\"\"\".\"\"\""
+  },
+  {
+   "op": "insert",
+   "where_old": "ehv:ivs",
+   "where_new": "xclqwacrmx:mflhbpdcce",
+   "old": "def ivs ( self ) -> None : self . olv = self . lpw def",
+   "new": "def mflhbpdcce ( self ) -> None : \"\"\".\"\"\" self . current_steps = self . dmesyeowwd def",
+   "old_exact": "",
+   "new_exact": "\"\"\".\"\"\""
+  },
+  {
+   "op": "insert",
+   "where_old": "ehv:render_interface",
+   "where_new": "xclqwacrmx:render_interface",
+   "old": ". ndarray ) -> np . ndarray : if self . lpw == 0 : return",
+   "new": ". ndarray ) -> np . ndarray : \"\"\".\"\"\" if self . dmesyeowwd == 0 : return",
+   "old_exact": "",
+   "new_exact": "\"\"\".\"\"\""
+  },
+  {
+   "op": "insert",
+   "where_old": "ehv:render_interface",
+   "where_new": "xclqwacrmx:render_interface",
+   "old": "zuG = round ( 64 * SIq ) for our in range ( 64 ) :",
+   "new": "odvxyoizxg = round ( 64 * xmiochpvpa ) cjicgmvvti = xbdwxvogip for x in range ( 64 ) :",
+   "old_exact": "",
+   "new_exact": "cjicgmvvti = xbdwxvogip"
+  },
+  {
+   "op": "replace",
+   "where_old": "ehv:render_interface",
+   "where_new": "xclqwacrmx:render_interface",
+   "old": ": frame [ 0 , our ] = 7 else : frame [ 0 , our ]",
+   "new": ": frame [ 0 , x ] = cjicgmvvti else : frame [ 0 , x ]",
+   "old_exact": "7",
+   "new_exact": "cjicgmvvti"
+  },
+  {
+   "op": "insert",
+   "where_old": "Vc33:__init__",
+   "where_new": "Vc33:__init__",
+   "old": "self . vrr = ehv ( 0 ) super ( ) . __init__ ( 'vc33' ,",
+   "new": "self . heczcoeosi = xclqwacrmx ( 0 ) xlpbmgyvhdc = Camera ( background = BACKGROUND_COLOR , letter_box = PADDING_COLOR , interfaces = [ self . heczcoeosi ] ) super ( ) . __init__ ( game_id =",
+   "old_exact": "",
+   "new_exact": "xlpbmgyvhdc = Camera ( background = BACKGROUND_COLOR , letter_box = PADDING_COLOR , interfaces = [ self . heczcoeosi ] )"
+  },
+  {
+   "op": "insert",
+   "where_old": "Vc33:__init__",
+   "where_new": "Vc33:__init__",
+   "old": "0 ) super ( ) . __init__ ( 'vc33' , levels , Camera ( 0 ,",
+   "new": "] ) super ( ) . __init__ ( game_id = 'vc33' , levels = levels , camera =",
+   "old_exact": "",
+   "new_exact": "game_id ="
+  },
+  {
+   "op": "insert",
+   "where_old": "Vc33:__init__",
+   "where_new": "Vc33:__init__",
+   "old": "( ) . __init__ ( 'vc33' , levels , Camera ( 0 , 0 , 64",
+   "new": ". __init__ ( game_id = 'vc33' , levels = levels , camera = xlpbmgyvhdc , available_actions = [",
+   "old_exact": "",
+   "new_exact": "= levels"
+  },
+  {
+   "op": "replace",
+   "where_old": "Vc33:__init__",
+   "where_new": "Vc33:__init__",
+   "old": ". __init__ ( 'vc33' , levels , Camera ( 0 , 0 , 64 , 64 , 3",
+   "new": "= 'vc33' , levels = levels , camera = xlpbmgyvhdc , available_actions = [ 6 ] ) def",
+   "old_exact": "( 0",
+   "new_exact": "= xlpbmgyvhdc"
+  },
+  {
+   "op": "delete",
+   "where_old": "Vc33:__init__",
+   "where_new": "Vc33:__init__",
+   "old": "'vc33' , levels , Camera ( 0 , 0 , 64 , 64 , 3 , 4 , [ self . vrr ] ) , False ,",
+   "new": "levels = levels , camera = xlpbmgyvhdc , available_actions = [ 6 ] ) def ztjckgmepu",
+   "old_exact": "0 , 64 , 64 , 3 , 4 , [",
+   "new_exact": ""
+  },
+  {
+   "op": "map_violation",
+   "where_old": "Vc33:__init__",
+   "where_new": "Vc33:__init__",
+   "old": "self",
+   "new": "available_actions",
+   "expected_new": "self"
+  },
+  {
+   "op": "replace",
+   "where_old": "Vc33:__init__",
+   "where_new": "Vc33:__init__",
+   "old": "64 , 3 , 4 , [ self . vrr ] ) , False , 1 , [ 6 ] ) def kbn ( self",
+   "new": "= levels , camera = xlpbmgyvhdc , available_actions = [ 6 ] ) def ztjckgmepu ( self",
+   "old_exact": ". vrr ] ) , False , 1 ,",
+   "new_exact": "="
+  },
+  {
+   "op": "insert",
+   "where_old": "Vc33:kbn",
+   "where_new": "Vc33:ztjckgmepu",
+   "old": "def kbn ( self ) -> None : ULj = self . current_level . get_data (",
+   "new": "def ztjckgmepu ( self ) -> None : \"\"\".\"\"\" rwejtsvefe = self . current_level . get_data (",
+   "old_exact": "",
+   "new_exact": "\"\"\".\"\"\""
+  },
+  {
+   "op": "insert",
+   "where_old": "Vc33:on_set_level",
+   "where_new": "Vc33:on_set_level",
+   "old": ", level : Level ) -> None : self . kbn ( ) self . vai",
+   "new": ", level : Level ) -> None : \"\"\".\"\"\" self . ztjckgmepu ( ) self . bnnqyrupir",
+   "old_exact": "",
+   "new_exact": "\"\"\".\"\"\""
+  },
+  {
+   "op": "insert",
+   "where_old": "Vc33:gug",
+   "where_new": "Vc33:ielczunthe",
+   "old": "def gug ( self ) -> bool : uYR = self . current_level . get_sprites_by_tag (",
+   "new": "def ielczunthe ( self ) -> bool : \"\"\".\"\"\" wdfdpqxtkf = self . current_level . get_sprites_by_tag (",
+   "old_exact": "",
+   "new_exact": "\"\"\".\"\"\""
+  },
+  {
+   "op": "replace",
+   "where_old": "Vc33:pso",
+   "where_new": "Vc33:vktvbwfvhu",
+   "old": ") : pzg . color_remap ( None , 12 ) if pzg . pixels . shape [",
+   "new": ") : xklhcncusa . color_remap ( None , fqzhkhmfxt ) if xklhcncusa . pixels . shape [",
+   "old_exact": "12",
+   "new_exact": "fqzhkhmfxt"
+  },
+  {
+   "op": "replace",
+   "where_old": "Vc33:pso",
+   "where_new": "Vc33:vktvbwfvhu",
+   "old": "else : pzg . color_remap ( None , 1 ) def jcy ( self ) -> None",
+   "new": "else : xklhcncusa . color_remap ( None , flmcufqvdo ) def wpcgsoumbr ( self ) -> None",
+   "old_exact": "1",
+   "new_exact": "flmcufqvdo"
+  },
+  {
+   "op": "replace",
+   "where_old": "Vc33:gel",
+   "where_new": "Vc33:xowbpvmzbd",
+   "old": "pixels . shape [ 1 ] ) , 0 ) if rsi != 0 : pmj .",
+   "new": "pixels . shape [ 1 ] ) , qgrljjqvyn ) if volqrbaomzl != 0 : yvppaekogs .",
+   "old_exact": "0",
+   "new_exact": "qgrljjqvyn"
+  },
+  {
+   "op": "insert",
+   "where_old": "Vc33:step",
+   "where_new": "Vc33:step",
+   "old": "def step ( self ) -> None : if self . vai : if self .",
+   "new": "def step ( self ) -> None : \"\"\".\"\"\" if self . bnnqyrupir : if self .",
+   "old_exact": "",
+   "new_exact": "\"\"\".\"\"\""
+  },
+  {
+   "op": "replace",
+   "where_old": "Vc33:step",
+   "where_new": "Vc33:step",
+   "old": ". vai : if self . vai . next ( ) : self . vai = None",
+   "new": ". bnnqyrupir : if self . bnnqyrupir . xryezihexa ( ) : self . bnnqyrupir = None",
+   "old_exact": "next",
+   "new_exact": "xryezihexa"
+  },
+  {
+   "op": "insert",
+   "where_old": "Vc33:step",
+   "where_new": "Vc33:step",
+   "old": ": return elif self . action . id . value == 6 : self . vrr",
+   "new": ": return elif self . action . id == GameAction . ACTION6 : self . heczcoeosi . tuvumryrbp",
+   "old_exact": "",
+   "new_exact": "== GameAction"
+  },
+  {
+   "op": "delete",
+   "where_old": "Vc33:step",
+   "where_new": "Vc33:step",
+   "old": "elif self . action . id . value == 6 : self . vrr . czh ( )",
+   "new": ". action . id == GameAction . ACTION6 : self . heczcoeosi . tuvumryrbp ( )",
+   "old_exact": "== 6",
+   "new_exact": ""
+  }
+ ],
+ "string_map": {
+  "'vc33'": "'vc33'",
+  "'RoA'": "'StepCounter'",
+  "'TiD'": "'Gravity'",
+  "'ZGd'": "'0022jvmlspyigc'",
+  "'rDn'": "'0043nzrtobajqi'",
+  "'HQB'": "'0016uciqlhjlom'",
+  "'fZK'": "'0010gnulkywfpz'",
+  "'UXg'": "'0025yfyiswdvoh'",
+  "'KEA'": "'0006mfbmvylbss'",
+  "'HPB'": "'0008rybtprnbie'",
+  "'rlV'": "'0007gyluczquhi'",
+  "'zHk'": "'0004sttgkofqwb'",
+  "'WuO'": "'0001symqacyexa'",
+  "'x'": "'x'",
+  "'y'": "'y'"
+ }
+}

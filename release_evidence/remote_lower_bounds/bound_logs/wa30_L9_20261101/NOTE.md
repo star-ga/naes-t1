@@ -1,0 +1,3 @@
+# Prover source digests
+
+`SHA256SUMS_src.txt` lists the prover sources of this run. `release_evidence/remote_lower_bounds/bound_logs/wa30_L9_20261101/src/levels_full.txt`, `release_evidence/remote_lower_bounds/bound_logs/wa30_L9_20261101/src/levels_L.txt` and `release_evidence/remote_lower_bounds/bound_logs/wa30_L9_20261101/src/levels_R.txt` are in the `src/` subfolder of this folder. The other entries are not in the tree: `dls.c`, `e1b_aR.c`, `e1c_aR_cross.c`, `e1_ronly.c`, `e2_lsearch.c`, `h0sched.c`, `r_need.c`, `stepper.c`, `sym2.c`, `sym_l.c`, `eng.h`, `eng_track.h`, `hmap.h`, `hset.h`, `engine_diff.py` and `routes61.json`. They are prover sources and are not included.

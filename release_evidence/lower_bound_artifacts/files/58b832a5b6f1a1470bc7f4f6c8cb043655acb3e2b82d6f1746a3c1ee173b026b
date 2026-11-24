@@ -1,0 +1,233 @@
+{
+  "candidate_sha256": "73ae1947380789d0b031ce8b40ac8f1cd501399e175e85a7665ec5075abccb0b",
+  "engine_sources": {
+    "<path>": "5b5f41f3bec4c0c97a727fda7326114991dc0d4a5642d489b40ee4aa87e6b15f",
+    "<path>": "f06e16807b0f97d86cafb5481bb3969213f27768f789d898c6b8b07e957de397",
+    "<path>": "ea9d3d02c7db0814954134a0e0ea6a3cb9b80066930dbdbfc5865befb54c493f"
+  },
+  "evidence_pins_verified": {
+    "THEOREM.md": "00e28052fbcccd348a40cf2ad8c7ad74b253f5ba286083be57109f7a7eee19f5",
+    "fresh-search-build-host.json": "8512acacc2f0fc2aaa299301f347070014d8789d45ba64ff13aa5dfa4714a6a3",
+    "native-controls-build-host.json": "2c5de7f80988323f82a12ec7358aeb365d14011562b8a6ef2a38c866f3c6d11d",
+    "original-SHA256.json": "9a3132bf40c331375d01aee3dec231ff3a0342b632a76884a2d195b91721bd49",
+    "original/<path>": "d8f960994549edfadf3ee3391d2e1187fa272a4f266f005d3effcb4da073e983",
+    "original/<path>": "8eae5a289ee9dc2b0d88f20f9698e615e2e3102656d79cdb4f95d1df939eb2ca",
+    "original/<path>": "be8e58a437b327f869580ec6c686c06dea085d5e4268e9fdfd0ec1a11af4e985",
+    "original/<path>": "5ea55df30d281287429fb80459efdd4e6a5b2f45103ff7a30fce125aaeadece1",
+    "original/<path>": "a8440e5a68a9c464efb1ad219bfcf967f75a3566e26c1d24e02a0773106e73ee",
+    "reproduce-v3.py": "6f26268bcea57bc2858dcf2593ecb58af8b89228b84301a3bcfca6d6de84521c",
+    "runtime/reproduce.py": "0cc85dc6d373e8ad3374bf956f79fcd6178581ae6ebc27761cad5fab33cfa13c",
+    "source-facts-and-final-jobs.json": "cf3269c100b0577dfb0e6d8658ee9771938a0fce6f58a8c08d2f699da5d0ca50"
+  },
+  "instrumentation": {
+    "actual_failed_end_before_reset": 3260,
+    "instruction_calls": 908020,
+    "mirror_checks": 1816040
+  },
+  "max_rss_kib": "<memory>",
+  "original_manifest_files_verified": 139,
+  "passed": true,
+  "resource_limits": {
+    "RLIMIT_AS": "<memory>",
+    "RLIMIT_CPU": 170,
+    "affinity_cpus": "<cores>"
+  },
+  "rows": {
+    "2": {
+      "canonical_raw_state_equal_across_three_tapes": true,
+      "cross_interpreter_signature_note": "Full-state signature contains lambda bytecode and is <interp>-version-specific; source hashes and final render match producer, while raw serialized states match across all three local tapes.",
+      "floor": 9,
+      "independent_complete_dp": {
+        "EVERY_NONWIN_RUN_RESTORES_PRISTINE": true,
+        "W0": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "best_program": [
+          33,
+          33,
+          33,
+          33
+        ],
+        "distinct_nonwin_end_keys": 1,
+        "edges": 26816,
+        "grouped": false,
+        "key": "source_derived_complete_read_set",
+        "layer_sizes": [
+          1,
+          14,
+          86,
+          318,
+          838
+        ],
+        "level": 2,
+        "min_toggles": 8,
+        "n_min_cost_programs": 1,
+        "n_terminal_states": 838,
+        "n_winning_states": 1,
+        "nbits": [
+          6,
+          6,
+          6,
+          6
+        ],
+        "nslots": 4,
+        "rebuilds": 1,
+        "seconds": 0.9,
+        "words_per_slot": [
+          64,
+          64,
+          64,
+          64
+        ]
+      },
+      "level": 2,
+      "native_controls": {
+        "classes": 29,
+        "classified_pixels": 4096,
+        "native_class_checks": 87,
+        "nonclick_checks": 18,
+        "out_of_range_checks": 6,
+        "reset_checks": 9,
+        "two_failed_runs": true
+      },
+      "starts": {
+        "cascade": {
+          "action_count": 0,
+          "final_frame_sha256": "1d95c4e7a6219cfc887b7c026011e519baf868534529d236487e7e3f1a39cfb3",
+          "state_sha256": "80758b9312d582d2940570d53f1737d83351dc39647d6579325e45c420b90656"
+        },
+        "<label withheld>": {
+          "action_count": 0,
+          "final_frame_sha256": "1d95c4e7a6219cfc887b7c026011e519baf868534529d236487e7e3f1a39cfb3",
+          "state_sha256": "80758b9312d582d2940570d53f1737d83351dc39647d6579325e45c420b90656"
+        },
+        "<label withheld>": {
+          "action_count": 0,
+          "final_frame_sha256": "1d95c4e7a6219cfc887b7c026011e519baf868534529d236487e7e3f1a39cfb3",
+          "state_sha256": "80758b9312d582d2940570d53f1737d83351dc39647d6579325e45c420b90656"
+        }
+      },
+      "witnesses": [
+        {
+          "F_minus_1_nonwin": true,
+          "first_completion": 9,
+          "name": "<label withheld>",
+          "witness_sha256": "aaf8e63418cd1b42e3e7f6874f24bc8f9029cdbce91d3d175389658caf87b1bf"
+        },
+        {
+          "F_minus_1_nonwin": true,
+          "first_completion": 9,
+          "name": "canonical_min_path",
+          "witness_sha256": "3768a814321b08eae9152bd0eec444d2086c776390bccd35155af0bf37c56d36"
+        }
+      ]
+    },
+    "3": {
+      "canonical_raw_state_equal_across_three_tapes": true,
+      "cross_interpreter_signature_note": "Full-state signature contains lambda bytecode and is <interp>-version-specific; source hashes and final render match producer, while raw serialized states match across all three local tapes.",
+      "floor": 9,
+      "independent_complete_dp": {
+        "EVERY_NONWIN_RUN_RESTORES_PRISTINE": true,
+        "W0": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "best_program": [
+          0,
+          0,
+          33,
+          10,
+          10,
+          33
+        ],
+        "distinct_nonwin_end_keys": 1,
+        "edges": 145728,
+        "grouped": false,
+        "key": "source_derived_complete_read_set",
+        "layer_sizes": [
+          1,
+          13,
+          74,
+          254,
+          631,
+          1304,
+          2416
+        ],
+        "level": 3,
+        "min_toggles": 8,
+        "n_min_cost_programs": 1,
+        "n_terminal_states": 2416,
+        "n_winning_states": 1,
+        "nbits": [
+          6,
+          6,
+          6,
+          6,
+          6,
+          6
+        ],
+        "nslots": 6,
+        "rebuilds": 1,
+        "seconds": 25.0,
+        "words_per_slot": [
+          64,
+          64,
+          64,
+          64,
+          64,
+          64
+        ]
+      },
+      "level": 3,
+      "native_controls": {
+        "classes": 43,
+        "classified_pixels": 4096,
+        "native_class_checks": 129,
+        "nonclick_checks": 18,
+        "out_of_range_checks": 6,
+        "reset_checks": 9,
+        "two_failed_runs": true
+      },
+      "starts": {
+        "cascade": {
+          "action_count": 0,
+          "final_frame_sha256": "b3747b11754d75613676d5818a508daa4d49fbfebf47d6bba5e5ce17b12cbc53",
+          "state_sha256": "edf00f09208e2efd8ce9584aa581eca7746fe29d384166bb9c30eab731bd5b60"
+        },
+        "<label withheld>": {
+          "action_count": 0,
+          "final_frame_sha256": "b3747b11754d75613676d5818a508daa4d49fbfebf47d6bba5e5ce17b12cbc53",
+          "state_sha256": "edf00f09208e2efd8ce9584aa581eca7746fe29d384166bb9c30eab731bd5b60"
+        },
+        "<label withheld>": {
+          "action_count": 0,
+          "final_frame_sha256": "b3747b11754d75613676d5818a508daa4d49fbfebf47d6bba5e5ce17b12cbc53",
+          "state_sha256": "edf00f09208e2efd8ce9584aa581eca7746fe29d384166bb9c30eab731bd5b60"
+        }
+      },
+      "witnesses": [
+        {
+          "F_minus_1_nonwin": true,
+          "first_completion": 9,
+          "name": "<label withheld>",
+          "witness_sha256": "4e8ad6cfb1682e5d9150ddf385056c42a65e56ea789c0094e98c0ad17d75473c"
+        },
+        {
+          "F_minus_1_nonwin": true,
+          "first_completion": 9,
+          "name": "canonical_min_path",
+          "witness_sha256": "42885fbebb6fde9534886db8e058a414d930704f41611cc5f2ad9155bb1e1de0"
+        }
+      ]
+    }
+  },
+  "seconds": 43.612,
+  "source_sha256": "fd6d5d7dc503ab82e0bb607a6683cd3b2c701cbbc91ee21860e0e97f80f0da73"
+}

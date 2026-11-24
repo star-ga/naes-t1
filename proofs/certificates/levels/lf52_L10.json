@@ -1,0 +1,47 @@
+{
+  "artifact_sha256": [
+    {
+      "kind": "safe_statement_count_extract",
+      "sha256": "c26d67fd9b7314a9101b233cfed1ebf939e1c875cdf5fa0a6d0ceba10a875cf0"
+    },
+    {
+      "kind": "authority_ledger_label",
+      "sha256": "8b18e172873279fe21983bd535ad2cf7428b690a3710dfb272aaa30055e20e16"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "cb6a48eb2a88e1a955b4d97e82cef43529b7cae7a19304aebab6f137608da553"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "ce1e9684ca44a16428d21793c40948b7529053161ae3c737c15da67ca393fcca"
+    },
+    {
+      "kind": "historical_method_or_search_output",
+      "sha256": "64b49bc5faa21ff3eb478292284033d5eba0ef4ef4c227f613a581b9ebb20f24"
+    }
+  ],
+  "floor": 43,
+  "game": "lf52",
+  "game_id": "lf52-271a04aa",
+  "game_levels": 10,
+  "level": 10,
+  "lower_bound": {
+    "kind": "astar_consistent_h_pdb_plus_structural_lb",
+    "statement": "Exact A* exhausts all f-values below 43 over 342640 complete states. The ordered-pair pattern distance is exact in an over-approximation; its maximum with the merge-count bound remains consistent. The proof astar_consistent_h_pdb_plus_structural_lb establishes lower bound 43, equal to the floor.",
+    "value": 43
+  },
+  "naes_t1_actions": 43,
+  "proof_class": "A*",
+  "proof_detail": "astar_consistent_h_pdb_plus_structural_lb",
+  "schema_version": 1,
+  "source_certificate_sha256": "c7fe16c7e7f82720c7a622aa2a39a47fb9260fa5c870c38e294ea0fb158c536f",
+  "status": "proven",
+  "upper_bound": {
+    "expected_levels_completed": 10,
+    "length": 43,
+    "opening_reset_counted": false,
+    "route": "1 1 1 1 1 1 1 1 4 3 2 3 3 3 6@32,6 6@32,18 3 1 3 3 6@20,12 6@8,12 2 2 2 2 2 4 4 6@20,42 6@32,42 6@26,42 6@38,42 6@32,42 6@32,54 6@38,36 6@38,48 6@38,42 6@38,54 6@32,54 6@44,54 6@44,60 6@44,48",
+    "seed": 0
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "status": "PASS",
+  "<word withheld>_sha256": "e3459217f7c0098d88e588c9fbe63148b1741b8aee9e32654bfd3f874e912cbe",
+  "manifest_files_verified": 37,
+  "receipt_pins_verified": 6,
+  "native_trust_base_current_canonical_matches": 6,
+  "exact_source_current_matches": true,
+  "complete_parent_states": 599,
+  "exact_edges": 2396,
+  "root_bound_to_canonical_start": true,
+  "all_preterminal_successors_present_at_no_greater_depth": true,
+  "every_nonroot_parent_has_incoming_edge": true,
+  "first_native_goal_edge_depth": 14
+}

@@ -1,0 +1,44 @@
+{
+ "total": {
+  "levels": 9,
+  "ref_levels": 9,
+  "actions": 504,
+  "ref_actions": 504,
+  "games_full": 1,
+  "games": 1,
+  "perturb": 0
+ },
+ "games": [
+  {
+   "game": "wa30-ee6fef47",
+   "levels": 9,
+   "ref_levels": 9,
+   "actions": 504,
+   "ref_actions": 504,
+   "per_level": [
+    27,
+    46,
+    67,
+    43,
+    91,
+    46,
+    36,
+    91,
+    57
+   ],
+   "ref_per_level": [
+    26,
+    46,
+    67,
+    43,
+    91,
+    46,
+    36,
+    91,
+    57
+   ],
+   "resets": 1,
+   "over_ref_levels": []
+  }
+ ]
+}

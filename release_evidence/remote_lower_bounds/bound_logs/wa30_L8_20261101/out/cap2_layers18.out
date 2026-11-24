@@ -1,0 +1,28 @@
+CAP2 layer 0 states=1 n(CAP2>h)=0 n(capH>h)=0 max(CAP2-h)=-8 mean_h=23.00 mean_CAP2=15.00
+CAP2 layer 1 states=5 n(CAP2>h)=0 n(capH>h)=0 max(CAP2-h)=-7 mean_h=23.00 mean_CAP2=14.80
+CAP2 layer 2 states=14 n(CAP2>h)=0 n(capH>h)=0 max(CAP2-h)=-7 mean_h=22.00 mean_CAP2=14.36
+CAP2 layer 3 states=21 n(CAP2>h)=0 n(capH>h)=0 max(CAP2-h)=-6 mean_h=22.00 mean_CAP2=14.00
+CAP2 layer 4 states=27 n(CAP2>h)=0 n(capH>h)=0 max(CAP2-h)=-7 mean_h=22.00 mean_CAP2=13.44
+C6_EXAMPLE box 0 (5,4)->(5,3) BG 7->6 enemy 0 at (5,4)
+CAP2 layer 5 states=34 n(CAP2>h)=0 n(capH>h)=0 max(CAP2-h)=-8 mean_h=22.00 mean_CAP2=12.79
+CAP2 layer 6 states=45 n(CAP2>h)=0 n(capH>h)=0 max(CAP2-h)=-9 mean_h=22.00 mean_CAP2=12.11
+CAP2 layer 7 states=58 n(CAP2>h)=0 n(capH>h)=0 max(CAP2-h)=-8 mean_h=23.00 mean_CAP2=12.71
+CAP2 layer 8 states=89 n(CAP2>h)=0 n(capH>h)=0 max(CAP2-h)=-8 mean_h=23.11 mean_CAP2=12.82
+CAP2 layer 9 states=156 n(CAP2>h)=0 n(capH>h)=0 max(CAP2-h)=-8 mean_h=23.32 mean_CAP2=12.76
+CAP2 layer 10 states=311 n(CAP2>h)=0 n(capH>h)=0 max(CAP2-h)=-7 mean_h=23.32 mean_CAP2=13.59
+CAP2 layer 11 states=596 n(CAP2>h)=0 n(capH>h)=0 max(CAP2-h)=-6 mean_h=23.48 mean_CAP2=14.22
+CAP2 layer 12 states=1122 n(CAP2>h)=0 n(capH>h)=0 max(CAP2-h)=-6 mean_h=23.56 mean_CAP2=14.28
+CAP2 layer 13 states=2081 n(CAP2>h)=0 n(capH>h)=0 max(CAP2-h)=-6 mean_h=23.64 mean_CAP2=14.08
+CAP2 layer 14 states=3851 n(CAP2>h)=0 n(capH>h)=0 max(CAP2-h)=-6 mean_h=23.43 mean_CAP2=13.83
+CAP2 layer 15 states=7545 n(CAP2>h)=0 n(capH>h)=0 max(CAP2-h)=-5 mean_h=23.11 mean_CAP2=13.60
+CAP2 layer 16 states=15021 n(CAP2>h)=0 n(capH>h)=0 max(CAP2-h)=-5 mean_h=23.02 mean_CAP2=13.50
+CAP2 layer 17 states=30008 n(CAP2>h)=0 n(capH>h)=0 max(CAP2-h)=-4 mean_h=22.84 mean_CAP2=13.56
+CAP2 layer 18 states=58611 n(CAP2>h)=0 n(capH>h)=1 max(CAP2-h)=-4 mean_h=22.87 mean_CAP2=13.65
+LAYERS MUT=0
+  L1 enemy-grab off-egoal                  checks=232967 violations=0
+  L2 enemy-loss egoal|P|kill               checks=83971 violations=0
+  L3 helper-grab unheld off-goal           checks=2542 violations=0
+  L4 helper-loss goal|P|enemy              checks=94872 violations=0
+  L5 box <=1 cell/tick                     checks=7773740 violations=0
+  C6 enemy carry BG non-decreasing         checks=329001 violations=21130
+  C7 H1 stays bottom while bottom work     checks=597980 violations=0

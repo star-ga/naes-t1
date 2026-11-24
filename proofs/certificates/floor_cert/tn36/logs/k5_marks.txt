@@ -1,0 +1,40 @@
+CHECK runs 2 table 144 bad 0 extra 0
+CHECK runs 3 table 1728 bad 0 extra 0
+START 6
+ORIGINS 13
+MINIMAX {"2": 11, "3": 12, "4": 13, "5": 14, "6": 15, "7": 16, "8": 17}
+TUPLES runs 4 n 294 truncated 0 limit 11
+TABLE runs 4 limit 11
+TABLE sec 0.2 entries 20510
+RUNS 4 capped 0 best None sec 1.277
+TUPLES runs 5 n 1454 truncated 0 limit 10
+TABLE runs 5 limit 10
+TABLE sec 1.4 entries 188500
+RUNS 5 capped 0 best None sec 9.181
+TUPLES runs 6 n 3656 truncated 0 limit 9
+TABLE runs 6 limit 9
+TABLE sec 11.9 entries 893764
+RUNS 6 capped 0 best None sec 54.675
+SKIP runs 7 minimax 16
+LEVEL 6 CLOSED open []
+START 7
+ORIGINS 16
+MINIMAX {"2": 13, "3": 11, "4": 12, "5": 13, "6": 14, "7": 15, "8": 19}
+TUPLES runs 4 n 320 truncated 0 limit 11
+TABLE runs 4 limit 11
+TABLE sec 0.3 entries 20510
+RUNS 4 capped 0 best None sec 2.811
+TUPLES runs 5 n 2400 truncated 0 limit 10
+TABLE runs 5 limit 10
+TABLE sec 1.6 entries 188500
+RUNS 5 capped 0 best None sec 28.295
+TUPLES runs 6 n 10512 truncated 0 limit 9
+TABLE runs 6 limit 9
+TABLE sec 19.6 entries 893764
+RUNS 6 capped 0 best None sec 77.81
+TUPLES runs 7 n 25052 truncated 0 limit 8
+TABLE runs 7 limit 8
+TABLE sec 10.5 entries 2025667
+RUNS 7 capped 0 best None sec 161.465
+LEVEL 7 CLOSED open []
+WROTE

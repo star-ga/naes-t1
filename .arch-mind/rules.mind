@@ -1,0 +1,21 @@
+// NAES-T1 architecture policy. Thresholds are raw scores in [0, 10000].
+// See SPEC.md for scope, bootstrap semantics and the policy ruling.
+module naes_t1_architecture {
+    [arch_scope(product)]
+    const PRODUCT: str = "src/mind"
+
+    // Gate tooling, CI and the community check and fetch programs at the root.
+    [arch_scope(tooling)]
+    const TOOLING: str = ".arch-mind, .github, check_community*.mind, fetch_recordings*.mind, std_*.mind"
+
+    [arch_scope(exclude)]
+    const ARTIFACTS: str = "data, docs, figures, model, proofs, results"
+
+    // An import cycle is never an allowed program dependency.
+    [arch_rule(acyclicity_q16, eq)]
+    const NO_IMPORT_CYCLES: i32 = 10000
+
+    // Source-derived gateway bypass findings must remain absent.
+    [arch_rule(gateway_bypass_q16, eq)]
+    const NO_GATEWAY_BYPASS: i32 = 10000
+}

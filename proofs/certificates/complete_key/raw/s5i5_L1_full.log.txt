@@ -1,0 +1,14 @@
+LAYER level=1 depth=1 frontier=6 visited=7 edges=4103 t=11.4
+LAYER level=1 depth=2 frontier=7 visited=14 edges=28721 t=78.9
+LAYER level=1 depth=3 frontier=8 visited=22 edges=57442 t=157.5
+LAYER level=1 depth=4 frontier=8 visited=30 edges=90266 t=248.5
+LAYER level=1 depth=5 frontier=9 visited=39 edges=123090 t=329.4
+LAYER level=1 depth=6 frontier=10 visited=49 edges=160017 t=424.7
+LAYER level=1 depth=7 frontier=11 visited=60 edges=201047 t=511.0
+LAYER level=1 depth=8 frontier=12 visited=72 edges=246180 t=578.5
+LAYER level=1 depth=9 frontier=13 visited=85 edges=295416 t=649.4
+LAYER level=1 depth=10 frontier=13 visited=98 edges=348755 t=731.4
+LAYER level=1 depth=11 frontier=11 visited=109 edges=402094 t=812.3
+LAYER level=1 depth=12 frontier=9 visited=118 edges=447227 t=863.0
+RESULT game=s5i5 level=1 verdict=CONFIRMED states=118 edges=447227 seconds=863.015
+rc=0

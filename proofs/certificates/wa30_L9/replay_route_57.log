@@ -1,0 +1,3 @@
+sha256 ok 0c8b63caee2d092d6c0750fd74e417de682d09973b549046394dadf0437b1477
+full: L=9 len=57 lc_before=8 completed_at_action=57 lc_after=9 state=WIN
+drop_last: L=9 len=56 lc_before=8 completed_at_action=None lc_after=8 state=NOT_FINISHED

@@ -1,0 +1,87 @@
+{
+  "record": {
+    "bundle_hash": "8cddf965282e113a",
+    "changed": [],
+    "game": "ka59",
+    "gid": "ka59-9f096b4a",
+    "legality_base": {
+      "game_id": 0,
+      "hidden_dep": 0,
+      "white_box": 0
+    },
+    "legality_now": {
+      "game_id": 0,
+      "hidden_dep": 0,
+      "white_box": 0
+    },
+    "measured_at": "2026-09-22T06:27:02+00:00",
+    "mmae_sum": "<word withheld>",
+    "new_legality_hits": 0,
+    "other_variants": [],
+    "per_level": [
+      {
+        "floor": "<word withheld>",
+        "level": 1,
+        "mmae": "<word withheld>",
+        "refuted": false,
+        "steps": 11
+      },
+      {
+        "floor": "<word withheld>",
+        "level": 2,
+        "mmae": "<word withheld>",
+        "refuted": "<word withheld>",
+        "steps": "<word withheld>"
+      },
+      {
+        "floor": 33,
+        "level": 3,
+        "mmae": 1.0,
+        "refuted": false,
+        "steps": 33
+      },
+      {
+        "floor": 38,
+        "level": 4,
+        "mmae": 1.0,
+        "refuted": false,
+        "steps": 38
+      },
+      {
+        "floor": "<word withheld>",
+        "level": 5,
+        "mmae": "<word withheld>",
+        "refuted": false,
+        "steps": 20
+      },
+      {
+        "floor": 45,
+        "level": 6,
+        "mmae": 1.0,
+        "refuted": false,
+        "steps": 45
+      },
+      {
+        "floor": 65,
+        "level": 7,
+        "mmae": 1.0,
+        "refuted": false,
+        "steps": 65
+      }
+    ],
+    "removed_legality_hits": 0,
+    "source": "prf0 <word withheld>, wall 210, bundle 8cddf965282e113a",
+    "timing": [
+      {
+        "gid": "ka59-9f096b4a",
+        "hit_wall": false,
+        "secs": 51.3
+      }
+    ],
+    "total": 7,
+    "wall": 210.0,
+    "won": 7
+  },
+  "sha256": "3291bd7d2c6d330cf79e5083d8e578ffa846afa3b4059aea5c68405d0f7e16f8",
+  "source": "<path>"
+}

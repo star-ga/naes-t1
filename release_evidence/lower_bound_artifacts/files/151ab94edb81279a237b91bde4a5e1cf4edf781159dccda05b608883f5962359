@@ -1,0 +1,229 @@
+{
+  "status": "<word withheld>",
+  "floor": 11,
+  "exhausted_through": 10,
+  "nodes": 7853,
+  "edges": 22039,
+  "seconds": 184.19610270671546,
+  "layers": [
+    {
+      "depth": 1,
+      "new_states": 5,
+      "total_states": 6,
+      "edges": 5,
+      "seconds": 0.057
+    },
+    {
+      "depth": 2,
+      "new_states": 15,
+      "total_states": 21,
+      "edges": 30,
+      "seconds": 0.282
+    },
+    {
+      "depth": 3,
+      "new_states": 33,
+      "total_states": 54,
+      "edges": 105,
+      "seconds": 0.975
+    },
+    {
+      "depth": 4,
+      "new_states": 60,
+      "total_states": 114,
+      "edges": 270,
+      "seconds": 2.454
+    },
+    {
+      "depth": 5,
+      "new_states": 103,
+      "total_states": 217,
+      "edges": 570,
+      "seconds": 5.018
+    },
+    {
+      "depth": 6,
+      "new_states": 192,
+      "total_states": 409,
+      "edges": 1085,
+      "seconds": 9.344
+    },
+    {
+      "depth": 7,
+      "new_states": 394,
+      "total_states": 803,
+      "edges": 2045,
+      "seconds": 17.342
+    },
+    {
+      "depth": 8,
+      "new_states": 782,
+      "total_states": 1585,
+      "edges": 4015,
+      "seconds": 33.887
+    },
+    {
+      "depth": 9,
+      "new_states": 1439,
+      "total_states": 3024,
+      "edges": 7925,
+      "seconds": 66.647
+    },
+    {
+      "depth": 10,
+      "new_states": 2455,
+      "total_states": 5479,
+      "edges": 15120,
+      "seconds": 127.248
+    }
+  ],
+  "route": [
+    [
+      4,
+      null,
+      null
+    ],
+    [
+      4,
+      null,
+      null
+    ],
+    [
+      4,
+      null,
+      null
+    ],
+    [
+      3,
+      null,
+      null
+    ],
+    [
+      2,
+      null,
+      null
+    ],
+    [
+      3,
+      null,
+      null
+    ],
+    [
+      3,
+      null,
+      null
+    ],
+    [
+      3,
+      null,
+      null
+    ],
+    [
+      6,
+      42,
+      30
+    ],
+    [
+      1,
+      null,
+      null
+    ],
+    [
+      4,
+      null,
+      null
+    ]
+  ],
+  "attainment": {
+    "length": 11,
+    "first_advance": 11,
+    "prefix_advanced": false,
+    "route_sha256": "85d779f36d585caba5345b3517bb1364bc21ee331554d9f90e27d6259ce2f028",
+    "native_remaining_steps_at_prefix": 90,
+    "exact": true
+  },
+  "runtime_noop_checks": 8816,
+  "level": 1,
+  "controls": {
+    "canonical_source": "original cached cascade replayed on fresh native engine, seed=0",
+    "cascade_actions": 0,
+    "cascade_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "start_key_sha256": "3160e16b500603e3c657232aa940caa74ecc5d94dbafaedb7e43f1e34c75a98a",
+    "direct_set_level_same_gameplay_key": true,
+    "source_sha256": "d60295f9614c659f5fcf0625b95ad645e13b457c5c06745cdeb41dd5697a536c",
+    "engine_sha256": "5b5f41f3bec4c0c97a727fda7326114991dc0d4a5642d489b40ee4aa87e6b15f",
+    "budget": 100,
+    "action_ids": [
+      1,
+      2,
+      3,
+      4,
+      6
+    ],
+    "noops": {
+      "(5, None, None)": {
+        "same_gameplay_key": true,
+        "budget_delta": 0,
+        "advanced": false
+      },
+      "(7, None, None)": {
+        "same_gameplay_key": true,
+        "budget_delta": 0,
+        "advanced": false
+      },
+      "(6, -100, -100)": {
+        "same_gameplay_key": true,
+        "budget_delta": -1,
+        "advanced": false
+      },
+      "(6, 999, 999)": {
+        "same_gameplay_key": true,
+        "budget_delta": -1,
+        "advanced": false
+      },
+      "(6, 0, 0)": {
+        "same_gameplay_key": true,
+        "budget_delta": -1,
+        "advanced": false
+      }
+    },
+    "all_4096_start_click_classes": [
+      {
+        "class": "miss",
+        "pixels": 4078,
+        "representative": [
+          0,
+          0
+        ],
+        "selected_after": 1
+      },
+      {
+        "class": "1",
+        "pixels": 9,
+        "representative": [
+          18,
+          30
+        ],
+        "selected_after": 1
+      },
+      {
+        "class": "2",
+        "pixels": 9,
+        "representative": [
+          27,
+          30
+        ],
+        "selected_after": 2
+      }
+    ],
+    "original_route_replay": {
+      "length": 11,
+      "first_advance": 11,
+      "prefix_advanced": false,
+      "route_sha256": "eb26a05ea427825f802dcfe15dcd23e5adf0b39bf3c79ece42b84c646160f4c3",
+      "native_remaining_steps_at_prefix": 90,
+      "exact": true
+    }
+  },
+  "verifier_sha256": "4fd03d0ba52b5c06ae878b8d87678f07ecd319658193f84d376651b55a18e83d"
+}

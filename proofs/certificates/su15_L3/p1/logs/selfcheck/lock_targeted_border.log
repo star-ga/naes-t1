@@ -1,0 +1,3 @@
+CMD python lock_targeted.py 41 15 border
+LOCK_TARGETED kind border seed 41 states 15 clicks 61440 mismatch 0 {'ok': 6261, 'noop': 54597, 'fail': 582, 'win': 0} lossy_clicks 0 piece_click_pairs_at_distance_exactly_8 406 sec 38
+rc=0

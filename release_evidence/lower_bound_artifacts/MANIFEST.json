@@ -1,0 +1,49 @@
+{
+ "artifact_count": 627,
+ "bundled_count": 270,
+ "extract_count": 28,
+ "extract_dir": "proofs/certificates/lower_bounds/extracts/",
+ "private_count": 326,
+ "executable_count": 3,
+ "by_reason": {
+  "internal note": 78,
+  "over 800 lines": 116,
+  "internal record": 77,
+  "program source": 55
+ },
+ "shipped_by_scrub": {
+  "unchanged": 163,
+  "paths replaced": 30,
+  "tokens replaced": 41,
+  "paths and tokens replaced": 36
+ },
+ "bundled_dir": "files/",
+ "digest_list": "SHA256SUMS",
+ "original_digest_list": "SHA256SUMS.originals",
+ "<key withheld>": "MANIFEST.md",
+ "reconciliation": "COUNT_RECONCILIATION.md",
+ "note": "The pack record lists 627 external lower-bound artifacts. 270 are included under files/, one file per pack digest, named by that digest. 28 are published as source extracts under proofs/certificates/lower_bounds/extracts/, named by their pack digest. 326 are held in the withheld set and are identified here by digest; by_reason gives the reason for each. The 3 compiled search executables are identified by digest and are not included. SHA256SUMS verifies the included bytes (cd release_evidence/lower_bound_artifacts/files && sha256sum -c ../SHA256SUMS); SHA256SUMS.originals lists the 627 pack digests; MANIFEST.md maps each pack digest to its outcome.",
+ "compiled_executables": [
+  {
+   "sha256": "451f6e819b0e8ac8ba33e61ae742b21b620511ea960805c2e88e497392e3f323",
+   "label": "wa30l9h",
+   "levels": "-",
+   "bytes": 72736,
+   "reason": "compiled search executable"
+  },
+  {
+   "sha256": "a91f0b49c398d42c713459e0e66b427ee24fafbac8ceb1f8a04ff55744da6ffb",
+   "label": "wa30r",
+   "levels": "wa30_L8",
+   "bytes": 321376,
+   "reason": "compiled search executable"
+  },
+  {
+   "sha256": "b36275df27179798209cdde07637d34f4dc18cee6a49446b5b60ac60e2b751a6",
+   "label": "bfs",
+   "levels": "su15_L6",
+   "bytes": 36784,
+   "reason": "compiled search executable"
+  }
+ ]
+}

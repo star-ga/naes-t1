@@ -1,0 +1,67 @@
+{
+  "artifact_sha256": [
+    {
+      "kind": "safe_statement_count_extract",
+      "sha256": "2fe0af47394839c289c114b59e1f96c4d1f082208f053c5137d022a97667ecb4"
+    },
+    {
+      "kind": "authority_ledger_label",
+      "sha256": "1829e0215cabe49836f79dcd2d94901f7d646c1a55acdab4ebe31e5146f60171"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "867b7dcaa4ffde6bf6c844431aae94e12ae1eab4d1b7b4036ae10475c662eee0"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "5bdfadaf67099b99d1c40e025d6dce044c22658fc49353919299df2d16921556"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "02e70ac439b6a35e3c39cfe434a9a9d0f6e8096a4785e84870894a79977e3be5"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "74d949f6513cf45fd5e0dd71fee892a7bcd6a039b87427a86e8f69405d1236f0"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "7ae8b97b8a2977f5c3e91c876a70eae0f12033c726910e4a9c5133575093751c"
+    },
+    {
+      "kind": "historical_method_or_search_output",
+      "sha256": "01b65f6282f16a23949ebfd8e5518f086b38ba614753fe5ad04fada6245112f1"
+    },
+    {
+      "kind": "record: proofs/certificates/su15_L1/engine_bfs_L1.log",
+      "sha256": "965bdc821c4f430aaecd2bc3aebedfaef3e17044c4f4663aace41eba52ab182d"
+    },
+    {
+      "kind": "record: proofs/certificates/su15_L1/README.md",
+      "sha256": "967063592e4c511a98ea1de97ce1774aa96ec1b0acdbd5e379b8e8882901baeb"
+    }
+  ],
+  "floor": 7,
+  "game": "su15",
+  "game_id": "su15-1944f8ab",
+  "game_levels": 9,
+  "level": 1,
+  "lower_bound": {
+    "kind": "click_bfs_plus_undo_dominance",
+    "statement": "The recorded complete uniform-cost search excludes every cost below 7; click effects and state sufficiency are explicit source obligations. The proof click_bfs_plus_undo_dominance establishes lower bound 7, equal to the floor. Record: proofs/certificates/su15_L1 (breadth-first search on the official engine from the level start; every state at depths 0 to 6 is fully expanded and none wins; the first win is at depth 7; the route replays to a level completion at action 7).",
+    "value": 7
+  },
+  "naes_t1_actions": 7,
+  "proof_class": "Exhaustive search",
+  "proof_detail": "click_bfs_plus_undo_dominance",
+  "schema_version": 1,
+  "source_certificate_sha256": "fb2caef1dd370ee7747e5e6bbeccb2f0ebcf28dc6294e5ae3cc970b04f147238",
+  "status": "proven",
+  "upper_bound": {
+    "expected_levels_completed": 1,
+    "length": 7,
+    "opening_reset_counted": false,
+    "route": "6@10,53 6@16,47 6@22,41 6@28,35 6@34,29 6@40,23 6@46,17",
+    "seed": 0
+  }
+}

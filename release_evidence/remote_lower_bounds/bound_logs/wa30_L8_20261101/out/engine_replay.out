@@ -1,0 +1,7 @@
+ENGINE wa30.py sha256 0c8b63caee2d092d6c0750fd74e417de682d09973b549046394dadf0437b1477
+ROUTE len=91 sha256=f9f9f68e219da793 win_at=91 prefix90_win_at=None PASS
+ROUTE len=91 sha256=4cbbb004179692dd win_at=91 prefix90_win_at=None PASS
+ROUTE len=91 sha256=586d78bd568530f0 win_at=91 prefix90_win_at=None PASS
+ROUTE len=91 sha256=fd6921539b32712d win_at=91 prefix90_win_at=None PASS
+ROUTE len=95 sha256=b2b261d24fa64fb2 win_at=95 prefix94_win_at=None PASS
+ENGINE_REPLAY PASS

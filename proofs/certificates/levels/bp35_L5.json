@@ -1,0 +1,43 @@
+{
+  "artifact_sha256": [
+    {
+      "kind": "safe_statement_count_extract",
+      "sha256": "b6295e2e484c2bc9ca8ae0c33b0ae997a9ff50a20870bec0009158db0f5efc6f"
+    },
+    {
+      "kind": "authority_ledger_label",
+      "sha256": "f9bbb436cc4caeb471392dbef3bc788609f3585e543c7c92394e67b479fdb83b"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "cb6a48eb2a88e1a955b4d97e82cef43529b7cae7a19304aebab6f137608da553"
+    },
+    {
+      "kind": "historical_method_or_search_output",
+      "sha256": "3b47b86d43686583a860489b6bb6a0dadc8e0b9dc63dd976f7e747b73e8e7340"
+    }
+  ],
+  "floor": 30,
+  "game": "bp35",
+  "game_id": "bp35-0a0ad940",
+  "game_levels": 9,
+  "level": 5,
+  "lower_bound": {
+    "kind": "astar_complete_alphabet_bnb_gated_model",
+    "statement": "A* with reopening exhausts every f-value below 30: 396577 expanded nodes, 452331 keys and 3037094 edges. The heuristic relaxes orientation and required digs. The proof astar_complete_alphabet_bnb_gated_model establishes lower bound 30, equal to the floor.",
+    "value": 30
+  },
+  "naes_t1_actions": 30,
+  "proof_class": "A*",
+  "proof_detail": "astar_complete_alphabet_bnb_gated_model",
+  "schema_version": 1,
+  "source_certificate_sha256": "3424ea1b86a544dc5eb705bf7f3fa4be1e8cf6541fbf6c30eb50975ebde65541",
+  "status": "proven",
+  "upper_bound": {
+    "expected_levels_completed": 5,
+    "length": 30,
+    "opening_reset_counted": false,
+    "route": "4 4 4 6@51,39 6@45,35 4 4 6@51,35 3 3 3 3 3 6@21,5 6@51,53 3 4 4 4 4 4 4 4 6@57,33 6@51,39 3 6@45,39 3 3 3",
+    "seed": 0
+  }
+}

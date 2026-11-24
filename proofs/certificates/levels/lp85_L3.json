@@ -1,0 +1,43 @@
+{
+  "artifact_sha256": [
+    {
+      "kind": "safe_statement_count_extract",
+      "sha256": "8e71a24754b28856026f2111bb70843b5aea1e6f206a3cdab81c71c6c2c29f98"
+    },
+    {
+      "kind": "authority_ledger_label",
+      "sha256": "b5f95e224296893b6d8b9f8981712f7677784fc6db52abf58e77dc707a4a065d"
+    },
+    {
+      "kind": "replay receipt on the current pinned game file (proofs/certificates/lower_replay)",
+      "sha256": "f7efee16b9affe94173fb9678eba98ae75479819452a92d2df13df6494b982ef"
+    },
+    {
+      "kind": "raw output of that replay",
+      "sha256": "19a9de59cd5ec37372315382f379ab84bd07f657325f5520ab1807687c4b9100"
+    }
+  ],
+  "floor": 16,
+  "game": "lp85",
+  "game_id": "lp85-305b61c3",
+  "game_levels": 8,
+  "level": 3,
+  "lower_bound": {
+    "kind": "rotation_group_state_graph_exhaustion_button_alphabet",
+    "statement": "Complete unit-cost search over the cyclic-track configuration and the complete button-effect alphabet closes every cost below 16; shared track-transfer effects are retained. The proof rotation_group_state_graph_exhaustion_button_alphabet establishes lower bound 16, equal to the floor. A replay on the current pinned game file obtained the bound 16 (verdict MATCH; proofs/certificates/lower_replay/lp85_L3.json). Scope of that replay: Current pinned public game and canonical prefix; archived complete grouped-click token BFS, complete pixel-alphabet coverage check, and native attaining witness replay. Token-model sufficiency and transition correspondence remain proof obligations.",
+    "value": 16
+  },
+  "naes_t1_actions": 16,
+  "proof_class": "Exhaustive search",
+  "proof_detail": "rotation_group_state_graph_exhaustion_button_alphabet",
+  "schema_version": 1,
+  "source_certificate_sha256": "dc172250fd43d0d91e9ec3f06531e18b2d3195283020c31cb93c39b97ce5d227",
+  "status": "proven",
+  "upper_bound": {
+    "expected_levels_completed": 3,
+    "length": 16,
+    "opening_reset_counted": false,
+    "route": "6@23,41 6@23,41 6@23,41 6@23,41 6@35,41 6@35,41 6@35,41 6@35,41 6@23,41 6@23,41 6@23,41 6@23,41 6@23,41 6@35,41 6@23,41 6@35,41",
+    "seed": 0
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "files": {
+    "arcengine/__init__.py": "538961ed7fcd09401dc7157c5611ee9f1fdaa177eae751a4b61b16844ab4304b",
+    "arcengine/base_game.py": "5b5f41f3bec4c0c97a727fda7326114991dc0d4a5642d489b40ee4aa87e6b15f",
+    "arcengine/camera.py": "f06e16807b0f97d86cafb5481bb3969213f27768f789d898c6b8b07e957de397",
+    "arcengine/enums.py": "94ebef48f6fe950a18679a1b991c366e8e28c32ab58c9335f385e19bea21950e",
+    "arcengine/interfaces.py": "0cfc24178e9f1102fb4ccb5892141d91c3a9eec88eccab3402b9777a76532cd8",
+    "arcengine/level.py": "f74db969772b251018b2fcce6ec42f3522adeef4e9c03c036e455d2a35e3215a",
+    "arcengine/sprites.py": "ea9d3d02c7db0814954134a0e0ea6a3cb9b80066930dbdbfc5865befb54c493f",
+    "environment_files/m0r0/dadda488/m0r0.py": "bf9a9e0dcda04a59f2cf9226bd373605830f224f20b2e7e743210fe26ae07bef",
+    "environment_files/m0r0/dadda488/metadata.json": "c4cc9e989ad39fe3873ec9865a7754815ff5d319e6154f067c719208fbbc958e",
+    "<path>": "6abe2f41a9c0f7265da4e74b98c1e826b0e4a23b1dfe86440fc70f65f3a08323",
+    "<path>": "94bbdd81fd64cf0930eb69f25ea4273d11340fd95460200e80f3648e341533f4",
+    "<path>": "4030d41dbf2878e2c649867388c97e81ad90ca79220123da1ec1aba9fef6ec92",
+    "<path>": "0fcf940fd8d6f88822f3e3d111c09b233c419c1c315e671d6627fec4b869ee9c",
+    "<path>": "0fd0482fbdf73de76bfb63d3e63f5c78c3094922c73c26ae4323a05b5f4a8da9",
+    "<path>": "7ad45846954107116cf4d79a260dadbec1bffa79cb3f89665e36111a82c8f45e",
+    "<path>": "3f6fef016cea44943ec474eaf870933fa47382099d672696b5ef0f994387f002",
+    "<path>": "d1f4d9108f378175e35677ca5e76a11d1b04a8c30989bdba94effec43f9346d2",
+    "<path>": "33f65b8b2111a5be0627e4b5e321fb447744786b032bb0e80a845b69a1479ccf",
+    "<path>": "a6ac7ab36c34999744e8e510df5dbe03281a5feb5151871de34279be5383948d",
+    "<path>": "df6f6261c16bcd0516ce58545c64aec4f68c2e4cf1d555166d029a510f1f76f3",
+    "<path>": "e52b728dbe82f3713f536e6391d831bf374a9b233a3e9bc7141a6d2a39c679f1",
+    "<path>": "cb6f434646ed73f06c72c4f5ab59269c49901464ee11cbdbdf75467d6d9272e6",
+    "tools/mmae_minimum.py": "28bf4afb6666aa19a3a00cf79c2557f7943afec559f203e89c8abca69f30c41b"
+  },
+  "canonical_source": "environment_files/m0r0/dadda488/m0r0.py",
+  "game_id": "m0r0-dadda488",
+  "levels": [
+    1,
+    2,
+    4,
+    5
+  ]
+}

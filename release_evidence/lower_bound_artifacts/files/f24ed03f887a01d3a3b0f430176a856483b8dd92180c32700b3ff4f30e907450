@@ -1,0 +1,132 @@
+INFO:arc_agi.scorecard:Initialized ScorecardManager with idle_for=0:15:00 and max_open_for=3 days, 0:00:00
+2026-09-22 11:54:48 | INFO | Created new scorecard: 15f32ad7-2801-4cb9-a24a-85e3adc1207a
+2026-09-22 11:54:49 | INFO | Successfully loaded game class Re86 from <path>
+{
+  "game_id": "re86-4e57566e",
+  "advertised": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "deepcopy_ok": true,
+  "source_sha256": {
+    "re86.py": "f497400a2039dabed6adf56808d35ee963584de219064a8e05a567ba2ae33f3e",
+    "mmae_minimum.py": "28bf4afb6666aa19a3a00cf79c2557f7943afec559f203e89c8abca69f30c41b"
+  },
+  "engine_sha256": {
+    "base_game.py": "5b5f41f3bec4c0c97a727fda7326114991dc0d4a5642d489b40ee4aa87e6b15f",
+    "level.py": "f74db969772b251018b2fcce6ec42f3522adeef4e9c03c036e455d2a35e3215a",
+    "camera.py": "f06e16807b0f97d86cafb5481bb3969213f27768f789d898c6b8b07e957de397",
+    "sprites.py": "ea9d3d02c7db0814954134a0e0ea6a3cb9b80066930dbdbfc5865befb54c493f",
+    "enums.py": "94ebef48f6fe950a18679a1b991c366e8e28c32ab58c9335f385e19bea21950e"
+  },
+  "start_level_index": 0,
+  "start_action_count": 0,
+  "state_bytes": 99982,
+  "start_key_sha256": "9279227bb5580bf7e7bf9b4ff3af70dfe7d454e19e84b7786c007ddc4cbc454c",
+  "replay_win_at_F": 20,
+  "replay_win_at_Fminus1": null,
+  "replay_control_s": 0.02,
+  "min_path_ids": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    4,
+    4,
+    4,
+    4,
+    1,
+    1,
+    5,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    3,
+    3
+  ],
+  "deepcopy_act_per_s": 747.1,
+  "key_per_s": 3085.0,
+  "restore_pure_10_per_s": 171.91,
+  "coord_probes": [
+    {
+      "tape_len": 0,
+      "distinct_action6_child_keys": 1,
+      "action6_child_key": "e8e6e0a3dc196c5efc7cecb45c3c958f4b13fe4779b7f176921badb47ad936a9",
+      "coords_tested": 4096,
+      "action6_equals_parent": false,
+      "action7_child_key": "e8e6e0a3dc196c5efc7cecb45c3c958f4b13fe4779b7f176921badb47ad936a9",
+      "action7_equals_parent": false,
+      "action7_equals_action6": true,
+      "reset_child_key": "9279227bb5580bf7e7bf9b4ff3af70dfe7d454e19e84b7786c007ddc4cbc454c",
+      "reset_equals_start": true
+    },
+    {
+      "tape_len": 1,
+      "distinct_action6_child_keys": 1,
+      "action6_child_key": "7e4568448aede1d39b4a4bfbd17ca0974dbe8da52051b7bc0c83eb338149420d",
+      "coords_tested": 4096,
+      "action6_equals_parent": false,
+      "action7_child_key": "7e4568448aede1d39b4a4bfbd17ca0974dbe8da52051b7bc0c83eb338149420d",
+      "action7_equals_parent": false,
+      "action7_equals_action6": true,
+      "reset_child_key": "4fd75b730a5be34b1e43d762304278d1dc7e53ebb2083a79c9f76fe96f8103fb",
+      "reset_equals_start": false
+    },
+    {
+      "tape_len": 5,
+      "distinct_action6_child_keys": 1,
+      "action6_child_key": "01e3dda210f6a255271df1f1e00c80086298c9962218a00e5e88edbe8682d1aa",
+      "coords_tested": 4096,
+      "action6_equals_parent": false,
+      "action7_child_key": "01e3dda210f6a255271df1f1e00c80086298c9962218a00e5e88edbe8682d1aa",
+      "action7_equals_parent": false,
+      "action7_equals_action6": true,
+      "reset_child_key": "4fd75b730a5be34b1e43d762304278d1dc7e53ebb2083a79c9f76fe96f8103fb",
+      "reset_equals_start": false
+    },
+    {
+      "tape_len": 11,
+      "distinct_action6_child_keys": 1,
+      "action6_child_key": "02017f3c45ccde0b52b9fac93535f1bd027b195de1dc069fcecfb52e97a47411",
+      "coords_tested": 4096,
+      "action6_equals_parent": false,
+      "action7_child_key": "02017f3c45ccde0b52b9fac93535f1bd027b195de1dc069fcecfb52e97a47411",
+      "action7_equals_parent": false,
+      "action7_equals_action6": true,
+      "reset_child_key": "4fd75b730a5be34b1e43d762304278d1dc7e53ebb2083a79c9f76fe96f8103fb",
+      "reset_equals_start": false
+    },
+    {
+      "tape_len": 12,
+      "distinct_action6_child_keys": 1,
+      "action6_child_key": "014e6751a17da77fff479bd4f28f5149fc4fa6285baa59c1b432415775747ea7",
+      "coords_tested": 4096,
+      "action6_equals_parent": false,
+      "action7_child_key": "014e6751a17da77fff479bd4f28f5149fc4fa6285baa59c1b432415775747ea7",
+      "action7_equals_parent": false,
+      "action7_equals_action6": true,
+      "reset_child_key": "4fd75b730a5be34b1e43d762304278d1dc7e53ebb2083a79c9f76fe96f8103fb",
+      "reset_equals_start": false
+    },
+    {
+      "tape_len": 19,
+      "distinct_action6_child_keys": 1,
+      "action6_child_key": "1807f1d9deef59836711e789b0766cdee715c9cd3e9f713bf711223cd8066315",
+      "coords_tested": 4096,
+      "action6_equals_parent": false,
+      "action7_child_key": "1807f1d9deef59836711e789b0766cdee715c9cd3e9f713bf711223cd8066315",
+      "action7_equals_parent": false,
+      "action7_equals_action6": true,
+      "reset_child_key": "4fd75b730a5be34b1e43d762304278d1dc7e53ebb2083a79c9f76fe96f8103fb",
+      "reset_equals_start": false
+    }
+  ],
+  "coord_probe_s": 41.0
+}

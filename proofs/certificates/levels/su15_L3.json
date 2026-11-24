@@ -1,0 +1,51 @@
+{
+  "artifact_sha256": [
+    {
+      "kind": "proof_record_p1",
+      "sha256": "3e2c61a9e9fe1e93bdd2e34b262bda63fdbd0f61573eaa3aa548bb9a1b09321f"
+    },
+    {
+      "kind": "proof_record_p2",
+      "sha256": "42fc5ab76fb00123b66b4ec8bf9a919ce91278557d07e9d179ad7a23ffaecba7"
+    },
+    {
+      "kind": "independent_check_note",
+      "sha256": "5c5eb614be4d5479b10c50d3616522d3e38f9068f7b21660fed744bea510b104"
+    },
+    {
+      "kind": "independent_check_record",
+      "sha256": "a82bf8e57cd5bf869a8ee2a6f9764323174a933290daaff77ac0332e2ad9b971"
+    },
+    {
+      "kind": "engine_replay_of_certificate_route",
+      "sha256": "91ecaafe5db85203536f7719d5c89c1b83172984d49b6e0235eae69ef94ed158"
+    },
+    {
+      "kind": "record_summary",
+      "sha256": "431ca902a4a736b56f26c41f03fc02d77466747e00abd1eecb2f80d599982595"
+    }
+  ],
+  "floor": 11,
+  "game": "su15",
+  "game_id": "su15-1944f8ab",
+  "game_levels": 9,
+  "level": 3,
+  "lower_bound": {
+    "kind": "lineage_relaxation_lower_bound_plus_bound_10_exhaustion_machine_checked",
+    "statement": "The exact optimum of the lineage relaxation at the start state is 11 (three independent codes), and the bound-10 exhaustion prunes all 992 children of the start state (relaxed value at least 10, with 9 clicks left), so no win exists in 10 clicks or fewer. The winning route of 11 clicks replays on the engine. The lower bound 11 equals the floor.",
+    "value": 11
+  },
+  "naes_t1_actions": 11,
+  "proof_class": "Matching bounds",
+  "proof_detail": "lineage_relaxation_lower_bound_plus_bound_10_exhaustion_machine_checked",
+  "schema_version": 1,
+  "source_certificate_sha256": "4f0113ce88f87c0e5c5b4b0c690eb07f5762fc35948c307530f13a3d83f1f284",
+  "status": "proven",
+  "upper_bound": {
+    "expected_levels_completed": 3,
+    "length": 11,
+    "opening_reset_counted": false,
+    "route": "6@57,29 6@48,29 6@5,23 6@40,33 6@28,21 6@26,27 6@33,39 6@13,23 6@19,30 6@23,38 6@27,46",
+    "seed": 0
+  }
+}

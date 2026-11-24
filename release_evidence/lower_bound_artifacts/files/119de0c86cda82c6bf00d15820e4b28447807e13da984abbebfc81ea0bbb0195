@@ -1,0 +1,712 @@
+{
+  "authority_changed": false,
+  "cpu_affinity": "<cores>",
+  "input_files_verified": 23,
+  "levels": [
+    {
+      "canonical_prefix_actions": 0,
+      "direct_set_level_full_gameplay_equal": true,
+      "floor": 11,
+      "fresh_witnesses": [
+        {
+          "first_forward_advance": 11,
+          "kind": "historical",
+          "no_game_over": true,
+          "one_short_nonwin": true,
+          "trace": [
+            {
+              "action": 1,
+              "level_index": 0,
+              "score": 0,
+              "state": "GameState.NOT_FINISHED"
+            },
+            {
+              "action": 2,
+              "level_index": 0,
+              "score": 0,
+              "state": "GameState.NOT_FINISHED"
+            },
+            {
+              "action": 3,
+              "level_index": 0,
+              "score": 0,
+              "state": "GameState.NOT_FINISHED"
+            },
+            {
+              "action": 4,
+              "level_index": 0,
+              "score": 0,
+              "state": "GameState.NOT_FINISHED"
+            },
+            {
+              "action": 5,
+              "level_index": 0,
+              "score": 0,
+              "state": "GameState.NOT_FINISHED"
+            },
+            {
+              "action": 6,
+              "level_index": 0,
+              "score": 0,
+              "state": "GameState.NOT_FINISHED"
+            },
+            {
+              "action": 7,
+              "level_index": 0,
+              "score": 0,
+              "state": "GameState.NOT_FINISHED"
+            },
+            {
+              "action": 8,
+              "level_index": 0,
+              "score": 0,
+              "state": "GameState.NOT_FINISHED"
+            },
+            {
+              "action": 9,
+              "level_index": 0,
+              "score": 0,
+              "state": "GameState.NOT_FINISHED"
+            },
+            {
+              "action": 10,
+              "level_index": 0,
+              "score": 0,
+              "state": "GameState.NOT_FINISHED"
+            },
+            {
+              "action": 11,
+              "level_index": 1,
+              "score": 1,
+              "state": "GameState.NOT_FINISHED"
+            }
+          ]
+        },
+        {
+          "first_forward_advance": 11,
+          "kind": "fresh_BFS",
+          "no_game_over": true,
+          "one_short_nonwin": true,
+          "trace": [
+            {
+              "action": 1,
+              "level_index": 0,
+              "score": 0,
+              "state": "GameState.NOT_FINISHED"
+            },
+            {
+              "action": 2,
+              "level_index": 0,
+              "score": 0,
+              "state": "GameState.NOT_FINISHED"
+            },
+            {
+              "action": 3,
+              "level_index": 0,
+              "score": 0,
+              "state": "GameState.NOT_FINISHED"
+            },
+            {
+              "action": 4,
+              "level_index": 0,
+              "score": 0,
+              "state": "GameState.NOT_FINISHED"
+            },
+            {
+              "action": 5,
+              "level_index": 0,
+              "score": 0,
+              "state": "GameState.NOT_FINISHED"
+            },
+            {
+              "action": 6,
+              "level_index": 0,
+              "score": 0,
+              "state": "GameState.NOT_FINISHED"
+            },
+            {
+              "action": 7,
+              "level_index": 0,
+              "score": 0,
+              "state": "GameState.NOT_FINISHED"
+            },
+            {
+              "action": 8,
+              "level_index": 0,
+              "score": 0,
+              "state": "GameState.NOT_FINISHED"
+            },
+            {
+              "action": 9,
+              "level_index": 0,
+              "score": 0,
+              "state": "GameState.NOT_FINISHED"
+            },
+            {
+              "action": 10,
+              "level_index": 0,
+              "score": 0,
+              "state": "GameState.NOT_FINISHED"
+            },
+            {
+              "action": 11,
+              "level_index": 1,
+              "score": 1,
+              "state": "GameState.NOT_FINISHED"
+            }
+          ]
+        }
+      ],
+      "initial_click_classes": 3,
+      "initial_reset_full_reset_to_level1": true,
+      "level": 1,
+      "level_reset_checks": [
+        {
+          "full_reset": false,
+          "prefix": [
+            [
+              1,
+              null,
+              null
+            ]
+          ],
+          "same_full_gameplay_including_budget": true
+        },
+        {
+          "full_reset": false,
+          "prefix": [
+            [
+              2,
+              null,
+              null
+            ]
+          ],
+          "same_full_gameplay_including_budget": true
+        },
+        {
+          "full_reset": false,
+          "prefix": [
+            [
+              3,
+              null,
+              null
+            ]
+          ],
+          "same_full_gameplay_including_budget": true
+        },
+        {
+          "full_reset": false,
+          "prefix": [
+            [
+              4,
+              null,
+              null
+            ]
+          ],
+          "same_full_gameplay_including_budget": true
+        },
+        {
+          "full_reset": false,
+          "prefix": [
+            [
+              4,
+              null,
+              null
+            ],
+            [
+              4,
+              null,
+              null
+            ],
+            [
+              4,
+              null,
+              null
+            ]
+          ],
+          "same_full_gameplay_including_budget": true
+        },
+        {
+          "full_reset": false,
+          "prefix": [
+            [
+              4,
+              null,
+              null
+            ],
+            [
+              4,
+              null,
+              null
+            ],
+            [
+              4,
+              null,
+              null
+            ],
+            [
+              3,
+              null,
+              null
+            ],
+            [
+              2,
+              null,
+              null
+            ],
+            [
+              3,
+              null,
+              null
+            ]
+          ],
+          "same_full_gameplay_including_budget": true
+        },
+        {
+          "full_reset": false,
+          "prefix": [
+            [
+              6,
+              0,
+              0
+            ]
+          ],
+          "same_full_gameplay_including_budget": true
+        },
+        {
+          "full_reset": false,
+          "prefix": [
+            [
+              6,
+              18,
+              30
+            ]
+          ],
+          "same_full_gameplay_including_budget": true
+        },
+        {
+          "full_reset": false,
+          "prefix": [
+            [
+              6,
+              27,
+              30
+            ]
+          ],
+          "same_full_gameplay_including_budget": true
+        }
+      ],
+      "producer_result_sha256": "151ab94edb81279a237b91bde4a5e1cf4edf781159dccda05b608883f5962359",
+      "receipt_lower_layers_complete": true,
+      "selectable_count": 2
+    },
+    {
+      "canonical_prefix_actions": "<word withheld>",
+      "direct_set_level_full_gameplay_equal": true,
+      "floor": 20,
+      "fresh_witnesses": [
+        {
+          "first_forward_advance": 20,
+          "kind": "historical",
+          "no_game_over": true,
+          "one_short_nonwin": true,
+          "trace": [
+            {
+              "action": 1,
+              "level_index": 4,
+              "score": 4,
+              "state": "GameState.NOT_FINISHED"
+            },
+            {
+              "action": 2,
+              "level_index": 4,
+              "score": 4,
+              "state": "GameState.NOT_FINISHED"
+            },
+            {
+              "action": 3,
+              "level_index": 4,
+              "score": 4,
+              "state": "GameState.NOT_FINISHED"
+            },
+            {
+              "action": 4,
+              "level_index": 4,
+              "score": 4,
+              "state": "GameState.NOT_FINISHED"
+            },
+            {
+              "action": 5,
+              "level_index": 4,
+              "score": 4,
+              "state": "GameState.NOT_FINISHED"
+            },
+            {
+              "action": 6,
+              "level_index": 4,
+              "score": 4,
+              "state": "GameState.NOT_FINISHED"
+            },
+            {
+              "action": 7,
+              "level_index": 4,
+              "score": 4,
+              "state": "GameState.NOT_FINISHED"
+            },
+            {
+              "action": 8,
+              "level_index": 4,
+              "score": 4,
+              "state": "GameState.NOT_FINISHED"
+            },
+            {
+              "action": 9,
+              "level_index": 4,
+              "score": 4,
+              "state": "GameState.NOT_FINISHED"
+            },
+            {
+              "action": 10,
+              "level_index": 4,
+              "score": 4,
+              "state": "GameState.NOT_FINISHED"
+            },
+            {
+              "action": 11,
+              "level_index": 4,
+              "score": 4,
+              "state": "GameState.NOT_FINISHED"
+            },
+            {
+              "action": 12,
+              "level_index": 4,
+              "score": 4,
+              "state": "GameState.NOT_FINISHED"
+            },
+            {
+              "action": 13,
+              "level_index": 4,
+              "score": 4,
+              "state": "GameState.NOT_FINISHED"
+            },
+            {
+              "action": 14,
+              "level_index": 4,
+              "score": 4,
+              "state": "GameState.NOT_FINISHED"
+            },
+            {
+              "action": 15,
+              "level_index": 4,
+              "score": 4,
+              "state": "GameState.NOT_FINISHED"
+            },
+            {
+              "action": 16,
+              "level_index": 4,
+              "score": 4,
+              "state": "GameState.NOT_FINISHED"
+            },
+            {
+              "action": 17,
+              "level_index": 4,
+              "score": 4,
+              "state": "GameState.NOT_FINISHED"
+            },
+            {
+              "action": 18,
+              "level_index": 4,
+              "score": 4,
+              "state": "GameState.NOT_FINISHED"
+            },
+            {
+              "action": 19,
+              "level_index": 4,
+              "score": 4,
+              "state": "GameState.NOT_FINISHED"
+            },
+            {
+              "action": 20,
+              "level_index": 5,
+              "score": 5,
+              "state": "GameState.NOT_FINISHED"
+            }
+          ]
+        },
+        {
+          "first_forward_advance": 20,
+          "kind": "fresh_BFS",
+          "no_game_over": true,
+          "one_short_nonwin": true,
+          "trace": [
+            {
+              "action": 1,
+              "level_index": 4,
+              "score": 4,
+              "state": "GameState.NOT_FINISHED"
+            },
+            {
+              "action": 2,
+              "level_index": 4,
+              "score": 4,
+              "state": "GameState.NOT_FINISHED"
+            },
+            {
+              "action": 3,
+              "level_index": 4,
+              "score": 4,
+              "state": "GameState.NOT_FINISHED"
+            },
+            {
+              "action": 4,
+              "level_index": 4,
+              "score": 4,
+              "state": "GameState.NOT_FINISHED"
+            },
+            {
+              "action": 5,
+              "level_index": 4,
+              "score": 4,
+              "state": "GameState.NOT_FINISHED"
+            },
+            {
+              "action": 6,
+              "level_index": 4,
+              "score": 4,
+              "state": "GameState.NOT_FINISHED"
+            },
+            {
+              "action": 7,
+              "level_index": 4,
+              "score": 4,
+              "state": "GameState.NOT_FINISHED"
+            },
+            {
+              "action": 8,
+              "level_index": 4,
+              "score": 4,
+              "state": "GameState.NOT_FINISHED"
+            },
+            {
+              "action": 9,
+              "level_index": 4,
+              "score": 4,
+              "state": "GameState.NOT_FINISHED"
+            },
+            {
+              "action": 10,
+              "level_index": 4,
+              "score": 4,
+              "state": "GameState.NOT_FINISHED"
+            },
+            {
+              "action": 11,
+              "level_index": 4,
+              "score": 4,
+              "state": "GameState.NOT_FINISHED"
+            },
+            {
+              "action": 12,
+              "level_index": 4,
+              "score": 4,
+              "state": "GameState.NOT_FINISHED"
+            },
+            {
+              "action": 13,
+              "level_index": 4,
+              "score": 4,
+              "state": "GameState.NOT_FINISHED"
+            },
+            {
+              "action": 14,
+              "level_index": 4,
+              "score": 4,
+              "state": "GameState.NOT_FINISHED"
+            },
+            {
+              "action": 15,
+              "level_index": 4,
+              "score": 4,
+              "state": "GameState.NOT_FINISHED"
+            },
+            {
+              "action": 16,
+              "level_index": 4,
+              "score": 4,
+              "state": "GameState.NOT_FINISHED"
+            },
+            {
+              "action": 17,
+              "level_index": 4,
+              "score": 4,
+              "state": "GameState.NOT_FINISHED"
+            },
+            {
+              "action": 18,
+              "level_index": 4,
+              "score": 4,
+              "state": "GameState.NOT_FINISHED"
+            },
+            {
+              "action": 19,
+              "level_index": 4,
+              "score": 4,
+              "state": "GameState.NOT_FINISHED"
+            },
+            {
+              "action": 20,
+              "level_index": 5,
+              "score": 5,
+              "state": "GameState.NOT_FINISHED"
+            }
+          ]
+        }
+      ],
+      "initial_click_classes": 2,
+      "initial_reset_full_reset_to_level1": true,
+      "level": 5,
+      "level_reset_checks": [
+        {
+          "full_reset": false,
+          "prefix": [
+            [
+              1,
+              null,
+              null
+            ]
+          ],
+          "same_full_gameplay_including_budget": true
+        },
+        {
+          "full_reset": false,
+          "prefix": [
+            [
+              2,
+              null,
+              null
+            ]
+          ],
+          "same_full_gameplay_including_budget": true
+        },
+        {
+          "full_reset": false,
+          "prefix": [
+            [
+              3,
+              null,
+              null
+            ]
+          ],
+          "same_full_gameplay_including_budget": true
+        },
+        {
+          "full_reset": false,
+          "prefix": [
+            [
+              4,
+              null,
+              null
+            ]
+          ],
+          "same_full_gameplay_including_budget": true
+        },
+        {
+          "full_reset": false,
+          "prefix": [
+            [
+              1,
+              null,
+              null
+            ],
+            [
+              1,
+              null,
+              null
+            ],
+            [
+              1,
+              null,
+              null
+            ]
+          ],
+          "same_full_gameplay_including_budget": true
+        },
+        {
+          "full_reset": false,
+          "prefix": [
+            [
+              1,
+              null,
+              null
+            ],
+            [
+              1,
+              null,
+              null
+            ],
+            [
+              1,
+              null,
+              null
+            ],
+            [
+              1,
+              null,
+              null
+            ],
+            [
+              1,
+              null,
+              null
+            ],
+            [
+              1,
+              null,
+              null
+            ]
+          ],
+          "same_full_gameplay_including_budget": true
+        },
+        {
+          "full_reset": false,
+          "prefix": [
+            [
+              6,
+              0,
+              0
+            ]
+          ],
+          "same_full_gameplay_including_budget": true
+        },
+        {
+          "full_reset": false,
+          "prefix": [
+            [
+              6,
+              27,
+              48
+            ]
+          ],
+          "same_full_gameplay_including_budget": true
+        }
+      ],
+      "producer_result_sha256": "fd6e535dd88908d05dd6f76b6adfd945cd4fbc22c5d3bc9601dfae3d4da634eb",
+      "receipt_lower_layers_complete": true,
+      "selectable_count": 1
+    }
+  ],
+  "memory_limit_bytes": "<memory>",
+  "native_class_self_attribute_stores": [
+    "ascpmvdpwj",
+    "msbtawvatm",
+    "osqsnogokn",
+    "rciyayewnv",
+    "zglbibxjth",
+    "zhcrzgpwcp"
+  ],
+  "producer_files_changed": false,
+  "producer_proposal_sha256": "f3e8e4950d4f37e8357d9e7a69664a83d39d5e39d32caff805bbc6be3fdd59d3",
+  "search_performed": false,
+  "seconds": 1.794,
+  "status": "PASS"
+}

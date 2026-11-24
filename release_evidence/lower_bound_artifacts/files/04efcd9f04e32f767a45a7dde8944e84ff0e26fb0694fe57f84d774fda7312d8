@@ -1,0 +1,36 @@
+{
+ "old": "old/sk48/41055498/sk48.py",
+ "new": "new/sk48/d8078629/sk48.py",
+ "old_tokens": 3192,
+ "new_tokens": 3173,
+ "renamed": 0,
+ "mapped": 273,
+ "n_hunks": 1,
+ "hunks": [
+  {
+   "op": "delete",
+   "where_old": "Sk48:on_set_level",
+   "where_new": "Sk48:on_set_level",
+   "old": "= { } for bcwsrdcswp in uiomqroshp : if not bcwsrdcswp . name . startswith ( 'wallBase' ) : bcwsrdcswp . tags . append ( 'sys_click' ) if bcwsrdcswp . y < fzjeqdahvs : pphvqzjirf",
+   "new": "= { } for bcwsrdcswp in uiomqroshp : if bcwsrdcswp . y < fzjeqdahvs : pphvqzjirf",
+   "old_exact": "if not bcwsrdcswp . name . startswith ( 'wallBase' ) : bcwsrdcswp . tags . append ( 'sys_click' )",
+   "new_exact": ""
+  }
+ ],
+ "string_map": {
+  "'Sk48'": "'Sk48'",
+  "'sk48'": "'sk48'",
+  "'yukipuenar'": "'yukipuenar'",
+  "'epdquznwmq'": "'epdquznwmq'",
+  "'elmjchdqcn'": "'elmjchdqcn'",
+  "'kevthtkmzm'": "'kevthtkmzm'",
+  "'jtteddgeyl'": "'jtteddgeyl'",
+  "'x'": "'x'",
+  "'y'": "'y'",
+  "'sys_click'": "'sys_click'",
+  "'qtjqovumxf'": "'qtjqovumxf'",
+  "'irkeobngyh'": "'irkeobngyh'",
+  "'pkzxknabii'": "'pkzxknabii'",
+  "'mkgqjopcjn'": "'mkgqjopcjn'"
+ }
+}

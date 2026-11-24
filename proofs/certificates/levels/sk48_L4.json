@@ -1,0 +1,103 @@
+{
+  "artifact_sha256": [
+    {
+      "kind": "safe_statement_count_extract",
+      "sha256": "65b44c68ba859ba5c08f56e8cb17d6814fc3dfa27ab40afcca8a5bc6318a99f1"
+    },
+    {
+      "kind": "authority_ledger_label",
+      "sha256": "3ff1aea0a610bd39822653f1d172ef96b1979a6ef933a9b05c516e918c7abd7a"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "1a1012759e87f8a43b9d5201ae388f58a2323fe0515ea86cae90b4e8cd7aa1aa"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "fef665d7d399b61fc3d3669ff894758fbbfa6bdc6ba277c7593554418eb54ac8"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "3dbfba908460bdff8452aea13ed28dab037a6a3ba04afe31bc0eee8bb3c9b848"
+    },
+    {
+      "kind": "per_level_certificate_record",
+      "sha256": "dcbbcda272a96c53bc9d383eb803972975b935ea4805455084e8be5d5328effa"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "91e5b47fc746e0929e8b0c9755ad1fcbf8301317bef19510fc7c064d0cb59679"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "81f2583b77f9ade0b15bdf07fa3657c9c73b1a279ebd45a198c3d1ba375fc9b3"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "70f72bc7b0a7a3fb3a0f5e85010f68108354d129cf455d9b9563fe760e5ff7b5"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "36772a64b3bc1645e55e77c87488e9da9a9a160a947811e0b126537d070035e9"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "a78047b734c8be8a8e304bb10bb905f7ff3afcd3cf5851ed107d8e07cb594775"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "e3459217f7c0098d88e588c9fbe63148b1741b8aee9e32654bfd3f874e912cbe"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "58ae54ba5749fc8057cb5fb8bb2f1ea92c34b4f7fd15b59ef2ed5ae1121157cd"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "a8d95026f6c0b1f36f6b172ecfd42e1bbd8a6a49c21860c42b797922201438d0"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "dc98284fb855cbb255d298279f8e21bf3ee9ac9d2c6d792d013aefec1590d7af"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "99cfaceda3cd94d626133d06b3557936bc8cd8be12a111489b18ad41a0dcf53f"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "37ea11112bd13eee07712353c91bcf336b06d27d7ae0498385cda89130dff7d4"
+    },
+    {
+      "kind": "record: proofs/certificates/sk48-l4-sp80-l6/sk48_L4_fixed_instance.json",
+      "sha256": "749d755f417afc2865365dbd79d673599e7624a959fc100f8eef6900943f5d9b"
+    },
+    {
+      "kind": "record: proofs/certificates/sk48-l4-sp80-l6/MANIFEST.md",
+      "sha256": "e5887893a9e3de7e1513b350d5667d73b2d8452dea0a5f3991f5b064c8f255fc"
+    }
+  ],
+  "floor": 23,
+  "game": "sk48",
+  "game_id": "sk48-d8078629",
+  "game_levels": 8,
+  "level": 4,
+  "lower_bound": {
+    "kind": "fixed_instance_bfs_depth_22_win_at_23",
+    "statement": "Record: proofs/certificates/sk48-l4-sp80-l6 (fixed-instance record). sk48 level 4, floor 23. The fixed graph is one snake: the only clickable base is not in a pair, so a click cannot change selection. Breadth-first search of the four move directions expanded every state through depth 22 (10,353,367 states; the depth-22 layer has 3,203,814) and the first win has length 23. The official engine replays that route as a win. The 23-action route matches the same model on every step, including the winning positions. Forty random walks (600 steps) also matched the engine. No shorter win is found.",
+    "value": 23
+  },
+  "naes_t1_actions": 23,
+  "proof_class": "Exhaustive search",
+  "proof_detail": "fixed_instance_bfs_depth_22_win_at_23",
+  "schema_version": 1,
+  "source_certificate_sha256": "2ffac0359d59ab3c873967969218bcb7d7fb4d47d43014ac50f5e1ce773d1c0e",
+  "status": "proven",
+  "upper_bound": {
+    "expected_levels_completed": 4,
+    "length": 23,
+    "opening_reset_counted": false,
+    "route": "1 1 3 1 3 3 3 4 4 2 4 4 2 4 1 1 3 3 1 4 2 3 1",
+    "seed": 0
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "artifact_sha256": [
+    {
+      "kind": "safe_statement_count_extract",
+      "sha256": "9abbe80326520c2d23f97748eab533082aeadfc8df3bf40f750b311ea182b513"
+    },
+    {
+      "kind": "authority_ledger_label",
+      "sha256": "f9bbb436cc4caeb471392dbef3bc788609f3585e543c7c92394e67b479fdb83b"
+    }
+  ],
+  "floor": 64,
+  "game": "bp35",
+  "game_id": "bp35-0a0ad940",
+  "game_levels": 9,
+  "level": 9,
+  "lower_bound": {
+    "kind": "sat_bmc_unsat_at_F_minus_1",
+    "statement": "The recorded bounded encoding is UNSAT at horizon 63; with its complete action and transition assumptions this excludes every win of at most 63 actions.",
+    "value": 64
+  },
+  "naes_t1_actions": 64,
+  "proof_class": "Bounded SAT",
+  "proof_detail": "sat_bmc_unsat_at_F_minus_1",
+  "schema_version": 1,
+  "source_certificate_sha256": "399d82d72332ddeea85e95085d1ffc2fb0e6f8292a558af70ded6b192f7cead5",
+  "status": "proven",
+  "upper_bound": {
+    "expected_levels_completed": 9,
+    "length": 64,
+    "opening_reset_counted": false,
+    "route": "6@3,27 6@3,17 4 6@39,15 4 6@33,33 6@27,39 3 6@27,9 6@27,33 6@27,33 6@27,33 6@27,33 6@27,33 6@27,33 6@27,33 6@27,33 6@27,33 6@27,33 6@33,39 4 6@39,39 4 6@3,63 6@39,35 6@39,35 6@45,29 4 6@51,29 4 6@57,29 4 6@3,17 6@57,33 6@57,33 6@57,33 6@3,9 6@3,5 6@57,33 6@57,33 6@57,33 6@57,33 6@51,39 3 6@45,39 3 6@45,33 6@45,33 6@39,39 3 6@33,39 3 6@27,39 3 6@21,39 3 6@15,39 3 6@9,39 3 3 6@9,3 4 4",
+    "seed": 0
+  }
+}

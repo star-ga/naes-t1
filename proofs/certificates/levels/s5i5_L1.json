@@ -1,0 +1,103 @@
+{
+  "artifact_sha256": [
+    {
+      "kind": "safe_statement_count_extract",
+      "sha256": "b90eed4ea8f5542db11603108cda9b1876a2de5a482efde1263a123aa80e53fa"
+    },
+    {
+      "kind": "authority_ledger_label",
+      "sha256": "c84c3b22750cffa0afffe00d7486950e06c23da19128771b03e0da84fb950c92"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "0bbc6f1173db066b5befeec7b4931e7458eab3b93b6d06c3a6bb2772195746cb"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "66a2e4516a3068a618e1725db0c8f50e0acc9f31f3077f4c8ed1c886e349f6cc"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "5bdfadaf67099b99d1c40e025d6dce044c22658fc49353919299df2d16921556"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "61dd664cc97193b7cd6831a5c932482af6995ec8d48cb553bc96f05199e8d72c"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "d05f3ce8171db52a487f95c8a9389e1fd01d7910e8a9a442d7db495d97954e1b"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "ae0a049a336f5ab958283713311ada8b8ee928d6ec5dabbc90e4ecc5014fd2f0"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "27cd0d22c87950c7514f06f63139b6cef0f0c336b71c23b44945fddf589d6fba"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "c2d54638061868249f1d821dfedb3515bcf52eecc29777e59d9d235638b60ef6"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "dbb08a06fc112d20361dd49d1c6c77ca5534a1903e02a79a47b0d50e6a340677"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "16a47aeec396c013cafe1cc5cd8b7c502665a3d24c4a552c79c1882354416fa2"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "1c59f2ceee82c40e9c3d8e88a0ebdb3b9dac1d2ad59b3cda638272cfe4d67583"
+    },
+    {
+      "kind": "recorded_replay_command_or_tool",
+      "sha256": "c1aea388a98023063698351635742a674adce525219c771716b1eb912205f7fb"
+    },
+    {
+      "kind": "recorded_replay_command_or_tool",
+      "sha256": "a70a04ead00fc010cd3fa88b0e99acb6daf0f3678f9635e09a36251ba96d809c"
+    },
+    {
+      "kind": "recorded_evidence",
+      "sha256": "72664e665aaf0f1ad0cee06edc060ec1dc69b24a97eb92e19e3b3a39c934881b"
+    },
+    {
+      "kind": "record: proofs/certificates/complete_key/SUMMARY.md",
+      "sha256": "0b1c423fd94163e8622b093016f91f76ef8544e028443b60ef15db4b3ae41df0"
+    },
+    {
+      "kind": "record: proofs/certificates/complete_key/levels.json",
+      "sha256": "718ed7ce83f378c3c0c281db152050a33f8fc6b7b867d407f89e74bec182eacb"
+    },
+    {
+      "kind": "record: proofs/certificates/complete_key/READSITES.json",
+      "sha256": "bb014ca1fb5f9f8df7a89eb44fd2e4d255a393dd2ec08b967bd181c1b427575c"
+    }
+  ],
+  "floor": 13,
+  "game": "s5i5",
+  "game_id": "s5i5-18d95033",
+  "game_levels": 8,
+  "level": 1,
+  "lower_bound": {
+    "kind": "engine_bfs_whole_object_key",
+    "statement": "Record: proofs/certificates/complete_key (verdict CONFIRMED, claim code C). Exhaustive breadth-first search on the official engine; the state key is a digest of the whole game object, and every omitted field and merged click is justified by the read-site certificate of the official files (alphabet: every display pixel at every state). mode full: 118 states, 447227 edges; mode classes: 118 states, 1526 edges. No state at depth floor-1 or less wins, the recorded route wins at the floor, and its prefix does not.",
+    "value": 13
+  },
+  "naes_t1_actions": 13,
+  "proof_class": "Exhaustive search",
+  "proof_detail": "engine_bfs_whole_object_key",
+  "schema_version": 1,
+  "source_certificate_sha256": "8152d141db5a06ce2a3fb76c8474d2f8eec5dc22d7172ed2e88b7f1bb8b0eb67",
+  "status": "proven",
+  "upper_bound": {
+    "expected_levels_completed": 1,
+    "length": 13,
+    "opening_reset_counted": false,
+    "route": "6@45,21 6@45,21 6@45,21 6@45,21 6@45,21 6@45,21 6@45,21 6@24,44 6@24,44 6@24,44 6@24,44 6@24,44 6@24,44",
+    "seed": 0
+  }
+}

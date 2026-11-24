@@ -1,0 +1,59 @@
+{
+  "artifact_sha256": [
+    {
+      "kind": "safe_statement_count_extract",
+      "sha256": "94fe942d260f31de341e0665bdac8aa32869819ee144cb38cd6d5eb21e86044c"
+    },
+    {
+      "kind": "authority_ledger_label",
+      "sha256": "1829e0215cabe49836f79dcd2d94901f7d646c1a55acdab4ebe31e5146f60171"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "706ee23494c9ca0c8eed20d22818506bc35abbabde6b99fc09e585d4b369ccbd"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "867b7dcaa4ffde6bf6c844431aae94e12ae1eab4d1b7b4036ae10475c662eee0"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "5bdfadaf67099b99d1c40e025d6dce044c22658fc49353919299df2d16921556"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "02e70ac439b6a35e3c39cfe434a9a9d0f6e8096a4785e84870894a79977e3be5"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "74d949f6513cf45fd5e0dd71fee892a7bcd6a039b87427a86e8f69405d1236f0"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "7ae8b97b8a2977f5c3e91c876a70eae0f12033c726910e4a9c5133575093751c"
+    }
+  ],
+  "floor": 7,
+  "game": "su15",
+  "game_id": "su15-1944f8ab",
+  "game_levels": 9,
+  "level": 9,
+  "lower_bound": {
+    "kind": "complete_state_ucs_licensed_alphabet",
+    "statement": "A uniform-cost search on the engine over the click and undo actions exhausts layers 1 to 6 with no win (3,830,080 nodes). Actions 1 to 5 were applied at every state of the verified 7-action route (40 state-action pairs on this level, 350 on levels 1 to 9) and changed no sprite name, position, size or visibility and no level count; they only raise the action counter, which the win test does not read, so deleting them from a winning play keeps it winning and makes it shorter. No play of 6 or fewer actions wins. The 7-action route replays to a win on the engine and its 6-, 5-, 4- and 3-action prefixes do not.",
+    "value": 7
+  },
+  "naes_t1_actions": 7,
+  "proof_class": "Exhaustive search",
+  "proof_detail": "complete_state_ucs_licensed_alphabet",
+  "schema_version": 1,
+  "source_certificate_sha256": "94e6b1025750b5ca0e06c957bcf307239ac20c3ad033ffb123fcf8abebe1fa3e",
+  "status": "proven",
+  "upper_bound": {
+    "expected_levels_completed": 9,
+    "length": 7,
+    "opening_reset_counted": false,
+    "route": "6@15,53 6@46,44 6@40,47 6@15,31 6@33,39 6@24,43 6@14,41",
+    "seed": 0
+  }
+}

@@ -1,0 +1,217 @@
+{
+ "n_levels_old": 8,
+ "n_levels_new": 8,
+ "levels": [
+  {
+   "level": 1,
+   "verdict": "ORDER_ONLY",
+   "n_sprites": [
+    10,
+    10
+   ],
+   "diffs": [],
+   "order_changed_layers": [],
+   "first_order_difference_index": 0
+  },
+  {
+   "level": 2,
+   "verdict": "ORDER_ONLY",
+   "n_sprites": [
+    12,
+    12
+   ],
+   "diffs": [],
+   "order_changed_layers": [
+    0,
+    2
+   ],
+   "first_order_difference_index": 0
+  },
+  {
+   "level": 3,
+   "verdict": "ORDER_ONLY",
+   "n_sprites": [
+    20,
+    20
+   ],
+   "diffs": [],
+   "order_changed_layers": [
+    0,
+    2
+   ],
+   "first_order_difference_index": 0
+  },
+  {
+   "level": 4,
+   "verdict": "ORDER_ONLY",
+   "n_sprites": [
+    17,
+    17
+   ],
+   "diffs": [],
+   "order_changed_layers": [
+    0,
+    2
+   ],
+   "first_order_difference_index": 0
+  },
+  {
+   "level": 5,
+   "verdict": "ORDER_ONLY",
+   "n_sprites": [
+    18,
+    18
+   ],
+   "diffs": [],
+   "order_changed_layers": [
+    0,
+    2
+   ],
+   "first_order_difference_index": 0
+  },
+  {
+   "level": 6,
+   "verdict": "ORDER_ONLY",
+   "n_sprites": [
+    12,
+    12
+   ],
+   "diffs": [],
+   "order_changed_layers": [
+    0,
+    2
+   ],
+   "first_order_difference_index": 0
+  },
+  {
+   "level": 7,
+   "verdict": "CHANGED",
+   "n_sprites": [
+    20,
+    20
+   ],
+   "diffs": [
+    "data {\"Children\": [[\"pcsdhoeqqs\", \"0058exfukigofv\"], [\"0059xvflfxsfdj\", \"0060dfuyhhnifq\"], [\"0060dfuyhhnifq\", \"0061zkkjucxyoq\"], [\"0061zkkjucxyoq\", \"0062xugehusbvg\"]], \"StepCounter\": 200} -> {\"Children\": [[\"0097ztkgxhznul\", \"0058exfukigofv\"], [\"0059xvflfxsfdj\", \"0060dfuyhhnifq\"], [\"0060dfuyhhnifq\", \"0061zkkjucxyoq\"], [\"0061zkkjucxyoq\", \"0062xugehusbvg\"]], \"StepCounter\": 200}"
+   ]
+  },
+  {
+   "level": 8,
+   "verdict": "ORDER_ONLY",
+   "n_sprites": [
+    24,
+    24
+   ],
+   "diffs": [],
+   "order_changed_layers": [
+    0,
+    2
+   ],
+   "first_order_difference_index": 0
+  }
+ ],
+ "string_map_conflicts": {},
+ "string_map": {
+  "bnbtbmhoct": "0069zlulamypif",
+  "gdgcpukdrl": "0066ghlkyvdbgg",
+  "dlyghqvdlr": "0063ylopfyonpu",
+  "zylvdxoiuq": "0064ocqkuqacti",
+  "gcvdxoxnwv": "0000amgeiiukhc",
+  "agujdcrunq": "0001qwdmnlybkb",
+  "nwtrqgdsmb": "0086sibroshteg",
+  "cpdhnkdobh": "0087vvmblxkzdi",
+  "pdzhitfvow": "0070lwmhddtryt",
+  "shbgiallgn": "0002ljvyffrskg",
+  "zphfioubwk": "0016dewzzopnkn",
+  "dobbqgqkqm": "0067ahrmdjqjop",
+  "dwgllpjrka": "0012crwxeydock",
+  "jbhfimpvgt": "0014tpoctdfauu",
+  "nthzregkli": "0068ydjiylapcv",
+  "sacxfjdztm": "0013kvmyzvckoy",
+  "sswrhmndwx": "0010ehvemtyoae",
+  "tmvmrsvvke": "0015wwehnzddzo",
+  "tzaqdgvkkk": "0065jkudrrwgvq",
+  "wtdgqjyuek": "0017yztiwzvtwj",
+  "alrureofol": "0072edqxureewm",
+  "amfbhanllb": "0073dwhziqcjmg",
+  "eqtxuzjmtj": "0074bhyufiyfes",
+  "ftjvxuejja": "0018qklpsmydjq",
+  "gfjkihuvil": "0034tuzbxbhmbg",
+  "ilmeegdqae": "0026bokkfjoiwr",
+  "instimfkuq": "0084yphfxddnql",
+  "qaiufefgvs": "0044emrudmkkoq",
+  "rzkqifogln": "0041tdjpgyjmaq",
+  "vmgdnqtxsp": "0046onylimitkw",
+  "xkfyibfspw": "0083wycmaaripl",
+  "xzljlcucab": "0042qloprzsaga",
+  "zdzrlogohr": "0020pmmlfmamas",
+  "bovrbuxzml": "0045eprpmkhgut",
+  "crizqgtspi": "0053rxigosibxw",
+  "efimqcucuz": "0023dgvmmlzvhk",
+  "gdgaedmejp": "0058exfukigofv",
+  "mvfzjgigjc": "0024klsqgegbjp",
+  "ozleyfpipy": "0025octeklibnr",
+  "pkxlhmidfi": "0056yyfguxmmae",
+  "uurtduofts": "0022qbzwaqpvxx",
+  "vcjjjmwpuk": "0057gtvndqjlpb",
+  "ytjfamials": "0071ogcspsoiwl",
+  "zrwegmmtib": "0021gquopahybt",
+  "bugouggabo": "0035qdadblembq",
+  "jrqapndtos": "0038hvlutvjmha",
+  "mjqbzaxxvz": "0011exqpzeybro",
+  "nqfjqnibax": "0081qcyhnubdbe",
+  "nurpoywvho": "0039mtxvmbvziv",
+  "nzskdqpisy": "0040samrumtier",
+  "qukdkhalyj": "0075alcxsczxjl",
+  "rohuffupmm": "0003znpvrvrizs",
+  "snpntdhtic": "0077dketvcncpc",
+  "umhgoiayzk": "0036dggtcilvtg",
+  "xxctmacvll": "0078vkisbwvycx",
+  "ymgcciqorb": "0019hybguzfxgj",
+  "yxqzzpbnam": "0037tcqktqgoqg",
+  "zmohjixbwr": "0009ozitdvcuwj",
+  "eduyudjgpz": "0049svrvmqfnbi",
+  "kuttnuxntg": "0047czdulyldbv",
+  "nnecwlirhw": "0088vigzkrxqiq",
+  "myzmclysbl": "0089rvqdprjwpz",
+  "pirstcnafa": "0092ausyycrnfd",
+  "ssqccvgvna": "0090cqbqfgcmbt",
+  "tksrscbnck": "0048bdnoblvafx",
+  "waytmreihe": "0005mxqpczyega",
+  "anedvgcwyu": "0062xugehusbvg",
+  "dgwpklkyik": "0093ofzydsesyx",
+  "eyulammwvk": "0094pogidzgfcf",
+  "idnjtkatxu": "0096cmatymifsm",
+  "iqfzjqrfyu": "0061zkkjucxyoq",
+  "ixutsglnhs": "0076qqbsfdqbrm",
+  "oupeuxupuy": "0059xvflfxsfdj",
+  "pcovmzgxdv": "0007ronybdlipn",
+  "qivjsoaoda": "0006vwqootnonz",
+  "qwaikxfvfx": "0060dfuyhhnifq",
+  "ruktfcnnju": "0008iqvkanhnxj",
+  "vgaakxnsja": "0091rynbvqsvxe",
+  "aqqxzqvfzz": "0085lrybbtqnvv",
+  "csewylpqnh": "0054mgzyyjkvzb",
+  "cuykgjlznu": "0043dhmhlmzfqb",
+  "dxgsplbcdi": "0051pxvxhqyquq",
+  "fpqwzzjifs": "0028elpsnkgolf",
+  "kkxxwxgizv": "0055wumowrljqt",
+  "kuvfhdmqbz": "0029thgetggxyf",
+  "nlektsynju": "0033fwanefxhic",
+  "oxlmzkxlwo": "0032zfdfkedeqx",
+  "pfqqmzqpef": "0004cbvwphczed",
+  "qnuxeaowwc": "0050niyswwmhla",
+  "tvidpllbtw": "0027viwvygcybo",
+  "uhngzgwqzz": "0052hbubznogez",
+  "vgzxuhvxge": "0031immzrhxnsz",
+  "wqhmalmqtu": "0079pntksijnoo",
+  "wqirrbwlfv": "0080jfwwcqjuqn",
+  "xipfwfleij": "0030oikwxwrsql",
+  ".": ".",
+  "s5i5": "s5i5",
+  "Children": "Children",
+  "StepCounter": "StepCounter",
+  "x": "x",
+  "y": "y"
+ },
+ "non_injective": {}
+}

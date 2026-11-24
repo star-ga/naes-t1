@@ -1,0 +1,477 @@
+{
+ "date": "2026-11-19",
+ "weights_sha256": "fa54f507fdf9a9c74a8bc22d95a1c970e3528b3fe1707b6eb61d74bad2419fec",
+ "fixture_sha256": "a2dc9485252ddd922d742f7e36191fa92a20bbdb7680a2ca1c378874ecd7b925",
+ "fixture_bytes": 45091812,
+ "decision_stream_sha256": "4d2d98f711a1209eace8f3841952e39d4d75870d48079c3175b361bba9746396",
+ "levels": 183,
+ "ref_levels": 183,
+ "note": "Totals: decisions = 5499 is the number of actions without the opening RESET of each game. The per-game entries keep both counts.",
+ "decisions": 5499,
+ "games_complete": 25,
+ "runs": 3,
+ "runs_identical": true,
+ "stream_sha256": "c8749c520a4e993edcf64ef4199c1764a09da75ba9e3bf5e2c21716b7ffbfcf1",
+ "selftest_sha256": "e0c8ae9167d99b37b00194fb3bdf5d545952ae4fc223e0c2d5be3382708d7444",
+ "records_manifest_sha256": "8c3c5fa9bd7b2e1305cbd9a3f20e8130b22466a9294026d0788794a8ce602589",
+ "games": [
+  {
+   "game": "ar25-0c556536",
+   "levels": 8,
+   "ref_levels": 8,
+   "actions": 254,
+   "ref_actions": 254,
+   "decisions": 253,
+   "per_level_without_reset": [
+    15,
+    11,
+    40,
+    22,
+    28,
+    53,
+    37,
+    47
+   ],
+   "stream_sha256": "7083fd4c4cde36a397ef44a9033b2dc66a4357e31aaa8c6a2d7af3fdb8d3252c"
+  },
+  {
+   "game": "bp35-0a0ad940",
+   "levels": 9,
+   "ref_levels": 9,
+   "actions": 323,
+   "ref_actions": 323,
+   "decisions": 322,
+   "per_level_without_reset": [
+    15,
+    40,
+    34,
+    19,
+    30,
+    41,
+    43,
+    36,
+    64
+   ],
+   "stream_sha256": "9a524e939ab688f8cbe5d5ca80add856c281a13f7ccda275f1613e238e30e847"
+  },
+  {
+   "game": "cd82-fb555c5d",
+   "levels": 6,
+   "ref_levels": 6,
+   "actions": 70,
+   "ref_actions": 70,
+   "decisions": 69,
+   "per_level_without_reset": [
+    5,
+    6,
+    16,
+    13,
+    13,
+    16
+   ],
+   "stream_sha256": "6b07f9bc3afe0765f6c7427b9647a00b7fe06d908378af8b662657bdc4c2d0db"
+  },
+  {
+   "game": "cn04-2fe56bfb",
+   "levels": 6,
+   "ref_levels": 6,
+   "actions": 174,
+   "ref_actions": 174,
+   "decisions": 173,
+   "per_level_without_reset": [
+    13,
+    29,
+    20,
+    29,
+    44,
+    38
+   ],
+   "stream_sha256": "f17cc73c2208d6ed5f67ee7bec72a27c965a51c6f1ec0cf754b8bb08390d1217"
+  },
+  {
+   "game": "dc22-fdcac232",
+   "levels": 6,
+   "ref_levels": 6,
+   "actions": 417,
+   "ref_actions": 417,
+   "decisions": 416,
+   "per_level_without_reset": [
+    20,
+    42,
+    45,
+    62,
+    108,
+    139
+   ],
+   "stream_sha256": "0e9b8d23a137b0f50fa1bdbe451730baaee0b575d560d946dbc86b5970d29795"
+  },
+  {
+   "game": "ft09-0d8bbf25",
+   "levels": 6,
+   "ref_levels": 6,
+   "actions": 76,
+   "ref_actions": 76,
+   "decisions": 75,
+   "per_level_without_reset": [
+    4,
+    7,
+    14,
+    16,
+    21,
+    13
+   ],
+   "stream_sha256": "67eecd3249667c7a680154122a5661e2de722282c2b0a17e215ba7c85310d5d8"
+  },
+  {
+   "game": "g50t-5849a774",
+   "levels": 7,
+   "ref_levels": 7,
+   "actions": 275,
+   "ref_actions": 275,
+   "decisions": 274,
+   "per_level_without_reset": [
+    17,
+    31,
+    64,
+    31,
+    50,
+    40,
+    41
+   ],
+   "stream_sha256": "3c22f8cbbc84bae9ee321ab3d5339f864237ecccf53a0409cb8ce7c3a5bb5aa3"
+  },
+  {
+   "game": "ka59-38d34dbb",
+   "levels": 7,
+   "ref_levels": 7,
+   "actions": 243,
+   "ref_actions": 243,
+   "decisions": 242,
+   "per_level_without_reset": [
+    11,
+    30,
+    33,
+    38,
+    20,
+    45,
+    65
+   ],
+   "stream_sha256": "132da1c3fd13bb9ae3d65a3de5aa68dcf47c99185f90703ee7e45f93b361d2ff"
+  },
+  {
+   "game": "lf52-271a04aa",
+   "levels": 10,
+   "ref_levels": 10,
+   "actions": 642,
+   "ref_actions": 642,
+   "decisions": 641,
+   "per_level_without_reset": [
+    8,
+    34,
+    45,
+    50,
+    83,
+    85,
+    125,
+    68,
+    100,
+    43
+   ],
+   "stream_sha256": "4eb67b3d4433ee79d12eaf349031611144a8a274abe9dd13aab74581e4b7d478"
+  },
+  {
+   "game": "lp85-305b61c3",
+   "levels": 8,
+   "ref_levels": 8,
+   "actions": 80,
+   "ref_actions": 80,
+   "decisions": 79,
+   "per_level_without_reset": [
+    5,
+    8,
+    16,
+    12,
+    9,
+    19,
+    5,
+    5
+   ],
+   "stream_sha256": "ec109c1bf20534054f27a6c3630571c51fd34b5d229358726f675a7d3a112d04"
+  },
+  {
+   "game": "ls20-9607627b",
+   "levels": 7,
+   "ref_levels": 7,
+   "actions": 310,
+   "ref_actions": 310,
+   "decisions": 309,
+   "per_level_without_reset": [
+    13,
+    45,
+    39,
+    43,
+    44,
+    72,
+    53
+   ],
+   "stream_sha256": "abaf46a31b18cba3acf268224796bdc650f2fb4dc81f5e16b4a3b65e216ec4f5"
+  },
+  {
+   "game": "m0r0-492f87ba",
+   "levels": 6,
+   "ref_levels": 6,
+   "actions": 180,
+   "ref_actions": 180,
+   "decisions": 179,
+   "per_level_without_reset": [
+    15,
+    23,
+    53,
+    11,
+    39,
+    38
+   ],
+   "stream_sha256": "c47db18897853342d134e819b82f810b408fbd4bba7655a2d20fd4ab7c72a827"
+  },
+  {
+   "game": "r11l-495a7899",
+   "levels": 6,
+   "ref_levels": 6,
+   "actions": 58,
+   "ref_actions": 58,
+   "decisions": 57,
+   "per_level_without_reset": [
+    3,
+    7,
+    9,
+    13,
+    12,
+    13
+   ],
+   "stream_sha256": "7fa54fbdd575aadfa1ecd72419a8dc10b9177b4171381ebe54e1a3f76427f8e5"
+  },
+  {
+   "game": "re86-8af5384d",
+   "levels": 8,
+   "ref_levels": 8,
+   "actions": 508,
+   "ref_actions": 508,
+   "decisions": 507,
+   "per_level_without_reset": [
+    20,
+    36,
+    47,
+    42,
+    63,
+    46,
+    98,
+    155
+   ],
+   "stream_sha256": "45a4a32f8360ff1facdc8369e97ebfeeda4c70e39ea870c1c4e89c831bee0d29"
+  },
+  {
+   "game": "s5i5-18d95033",
+   "levels": 8,
+   "ref_levels": 8,
+   "actions": 241,
+   "ref_actions": 241,
+   "decisions": 240,
+   "per_level_without_reset": [
+    13,
+    26,
+    37,
+    30,
+    28,
+    25,
+    45,
+    36
+   ],
+   "stream_sha256": "f3f0f7e6ff07179fdd2507c3f3379a456412cd3bffec6f74040a9a7e516d2b28"
+  },
+  {
+   "game": "sb26-7fbdac44",
+   "levels": 8,
+   "ref_levels": 8,
+   "actions": 125,
+   "ref_actions": 125,
+   "decisions": 124,
+   "per_level_without_reset": [
+    9,
+    15,
+    15,
+    15,
+    17,
+    19,
+    17,
+    17
+   ],
+   "stream_sha256": "038544e35f8a4ad40e512116a8c38a3d26acb380771a539978bdd96189ed2d1f"
+  },
+  {
+   "game": "sc25-635fd71a",
+   "levels": 6,
+   "ref_levels": 6,
+   "actions": 122,
+   "ref_actions": 122,
+   "decisions": 121,
+   "per_level_without_reset": [
+    13,
+    5,
+    11,
+    21,
+    36,
+    35
+   ],
+   "stream_sha256": "d6bd67e17d9a2a55bdecc72c83377436b491e6e3cb674a78e7351d9b93a94e0e"
+  },
+  {
+   "game": "sk48-d8078629",
+   "levels": 8,
+   "ref_levels": 8,
+   "actions": 214,
+   "ref_actions": 214,
+   "decisions": 213,
+   "per_level_without_reset": [
+    14,
+    27,
+    33,
+    23,
+    33,
+    36,
+    23,
+    24
+   ],
+   "stream_sha256": "87742c875aa638baeb97f086730004352ae703178f14c35be620a4a53f2b73c1"
+  },
+  {
+   "game": "sp80-589a99af",
+   "levels": 6,
+   "ref_levels": 6,
+   "actions": 87,
+   "ref_actions": 87,
+   "decisions": 86,
+   "per_level_without_reset": [
+    4,
+    7,
+    10,
+    20,
+    17,
+    28
+   ],
+   "stream_sha256": "4b4b36c43ac068531611043b1bb46361a0e55181191e856f4020c6c0a1d13f69"
+  },
+  {
+   "game": "su15-1944f8ab",
+   "levels": 9,
+   "ref_levels": 9,
+   "actions": 62,
+   "ref_actions": 62,
+   "decisions": 61,
+   "per_level_without_reset": [
+    7,
+    8,
+    11,
+    9,
+    5,
+    4,
+    5,
+    5,
+    7
+   ],
+   "stream_sha256": "752f9dca410c419de5b15e784ac47f6972da41c24883fa832a2f3003fddc58de"
+  },
+  {
+   "game": "tn36-ef4dde99",
+   "levels": 7,
+   "ref_levels": 7,
+   "actions": 86,
+   "ref_actions": 86,
+   "decisions": 85,
+   "per_level_without_reset": [
+    7,
+    9,
+    9,
+    12,
+    16,
+    16,
+    16
+   ],
+   "stream_sha256": "e8f19b13ddd116108c26ee50ae44f87c1b74bbc59d7aaa7b8009f31876275b25"
+  },
+  {
+   "game": "tr87-cd924810",
+   "levels": 6,
+   "ref_levels": 6,
+   "actions": 119,
+   "ref_actions": 119,
+   "decisions": 118,
+   "per_level_without_reset": [
+    14,
+    25,
+    21,
+    21,
+    14,
+    23
+   ],
+   "stream_sha256": "f0f4a6b8e214d8283c90887e45b176db418d236c9811c83f53800dc43d64ca0a"
+  },
+  {
+   "game": "tu93-0768757b",
+   "levels": 9,
+   "ref_levels": 9,
+   "actions": 186,
+   "ref_actions": 186,
+   "decisions": 185,
+   "per_level_without_reset": [
+    18,
+    10,
+    19,
+    17,
+    29,
+    28,
+    14,
+    21,
+    29
+   ],
+   "stream_sha256": "ba8faabb4076a1d1c96621cdc920358535408d680b10d2cbda2691a0a95c2150"
+  },
+  {
+   "game": "vc33-5430563c",
+   "levels": 7,
+   "ref_levels": 7,
+   "actions": 168,
+   "ref_actions": 168,
+   "decisions": 167,
+   "per_level_without_reset": [
+    3,
+    7,
+    23,
+    21,
+    44,
+    20,
+    49
+   ],
+   "stream_sha256": "b5841c8d8e212723eaf96d6141be50d821fc3c68cc6cf8db0d58c8b9472bb89f"
+  },
+  {
+   "game": "wa30-ee6fef47",
+   "levels": 9,
+   "ref_levels": 9,
+   "actions": 504,
+   "ref_actions": 504,
+   "decisions": 503,
+   "per_level_without_reset": [
+    26,
+    46,
+    67,
+    43,
+    91,
+    46,
+    36,
+    91,
+    57
+   ],
+   "stream_sha256": "84b2c5dce5f30a3674b3ba0728b49fdb203727967860045863249225119bb373"
+  }
+ ]
+}

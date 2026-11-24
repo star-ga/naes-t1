@@ -1,0 +1,44 @@
+{
+  "artifact_sha256": [
+    {
+      "kind": "engine_replay_of_certificate_route_and_control",
+      "sha256": "73407cf155eccd37570679e4056bd2adae79407f2dd40d08a519d457ca83905c"
+    },
+    {
+      "kind": "recorded_lower_bound_run_published_copy",
+      "sha256": "2da1be59b00322567ec8a4d82a6c73da1b28f4fc50fa915d16b1065ad81d4faa"
+    },
+    {
+      "kind": "record_summary",
+      "sha256": "025dbeb45cf48f114aa05391755e4568e772214451e3696705dbb908f162a4fb"
+    },
+    {
+      "kind": "recorded_lower_bound_run_original",
+      "sha256": "b5f73e65e0e0cd4097e617a547c1c2e10436982f98c2be1e95a90b587a271caf"
+    }
+  ],
+  "floor": 57,
+  "game": "wa30",
+  "game_id": "wa30-ee6fef47",
+  "game_levels": 9,
+  "game_source_sha256": "0c8b63caee2d092d6c0750fd74e417de682d09973b549046394dadf0437b1477",
+  "level": 9,
+  "lower_bound": {
+    "kind": "ida_star_recorded_bound_exhaustion",
+    "statement": "Recorded exhaustive IDA* runs close every bound through 49, giving lower bound 50. The upper witness has 57 actions. This floor is proven by empirical proof.",
+    "value": 50
+  },
+  "naes_t1_actions": 57,
+  "proof_class": "Empirical",
+  "proof_detail": "replay_verified_route_upper_bound; sound lower bound 50",
+  "schema_version": 1,
+  "source_certificate_sha256": "025dbeb45cf48f114aa05391755e4568e772214451e3696705dbb908f162a4fb",
+  "status": "empirical",
+  "upper_bound": {
+    "expected_levels_completed": 9,
+    "length": 57,
+    "opening_reset_counted": false,
+    "route": "4 4 4 4 4 5 1 1 5 3 3 1 5 1 1 5 2 2 2 4 5 1 4 5 3 2 3 2 3 3 1 3 3 3 3 3 3 5 4 4 5 2 3 5 3 3 5 4 4 4 4 4 4 1 1 1 5",
+    "seed": 0
+  }
+}

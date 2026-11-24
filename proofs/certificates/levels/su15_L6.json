@@ -1,0 +1,115 @@
+{
+  "artifact_sha256": [
+    {
+      "kind": "safe_statement_count_extract",
+      "sha256": "d1a00bf28f6db514d5a598e919d811373ebfe0413eb6cb0b58d49b85920c2097"
+    },
+    {
+      "kind": "authority_ledger_label",
+      "sha256": "1829e0215cabe49836f79dcd2d94901f7d646c1a55acdab4ebe31e5146f60171"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "b972fb6ade74037997a89c24fb26cea5e7f311c1ec01d97e2e6e8ca65a4c5f40"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "3e352aab81009d9242feccf4b25794a7464813a60b031891bd86ffb498b2f7dc"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "55055fdc9539fc957574cdc402cb6c2a1e45ef370367ced4af3fdc13507721ec"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "f545d50fd099c07fd31ed10721f8872cb585aaca0156f9e5b1ba6060a175dbc6"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "867b7dcaa4ffde6bf6c844431aae94e12ae1eab4d1b7b4036ae10475c662eee0"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "5bdfadaf67099b99d1c40e025d6dce044c22658fc49353919299df2d16921556"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "02e70ac439b6a35e3c39cfe434a9a9d0f6e8096a4785e84870894a79977e3be5"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "74d949f6513cf45fd5e0dd71fee892a7bcd6a039b87427a86e8f69405d1236f0"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "7ae8b97b8a2977f5c3e91c876a70eae0f12033c726910e4a9c5133575093751c"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "697d80922370e11a4d6f6aae5f94a51c1dca44a5de21dc1116bd2fb2c4066927"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "bd505aa618a72b09049bff2ba509bef1d9c5d266754710c129150a4d575d0331"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "824dba826730305539f8d696c8aa555f2cbc03502799d074a27787352bc295d1"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "874ea175ebcaccc6c79afb3ba68499809da25d41d5ba37e04831629f1a2795cc"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "6db30267434c7794e49b1e17c2f3d0fb83dff8bc7712ddd33f58409132153ec1"
+    },
+    {
+      "kind": "recorded_replay_command_or_tool",
+      "sha256": "e01aa292606127e22ec7380beaf4c34705b830665aa62899bd555dbc5520b762"
+    },
+    {
+      "kind": "recorded_replay_command_or_tool",
+      "sha256": "b33f755377351085601d1dd15b00ac3391a41e48f46151d417bca56807c7242f"
+    },
+    {
+      "kind": "recorded_replay_command_or_tool",
+      "sha256": "cfe7fdcb2d8f17da3adf131abf225e08bf0867af873798eacba3a4dc2600d02c"
+    },
+    {
+      "kind": "recorded_evidence",
+      "sha256": "b36275df27179798209cdde07637d34f4dc18cee6a49446b5b60ac60e2b751a6"
+    },
+    {
+      "kind": "recorded_evidence",
+      "sha256": "e31dc6a2210f9c6daf3865b9be1573e107c8c1c6ac25d8d8836ad224bb53bf9c"
+    },
+    {
+      "kind": "recorded_evidence",
+      "sha256": "075c3d9f6fb4bb32b765bdef1253eb666fe0452d55bd72b31bb30dea47fb9f3a"
+    }
+  ],
+  "floor": 4,
+  "game": "su15",
+  "game_id": "su15-1944f8ab",
+  "game_levels": 9,
+  "level": 6,
+  "lower_bound": {
+    "kind": "complete_layout_bfs_full_click_alphabet",
+    "statement": "Ordered-layout BFS closes depths 0 through 2: 24414 layouts, 99999744 click edges. Every layout covers all 4096 payloads; recorded no-op and undo arguments lift the result to all accepted actions. No win below 4.",
+    "value": 4
+  },
+  "naes_t1_actions": 4,
+  "proof_class": "Exhaustive search",
+  "proof_detail": "complete_layout_bfs_full_click_alphabet",
+  "schema_version": 1,
+  "source_certificate_sha256": "1eff394b95a4cc368e007fe7d63f8b3945c82bba0049d19087155ae5a71d8ca9",
+  "status": "proven",
+  "upper_bound": {
+    "expected_levels_completed": 6,
+    "length": 4,
+    "opening_reset_counted": false,
+    "route": "6@26,29 6@21,19 6@19,21 6@6,10",
+    "seed": 0
+  }
+}

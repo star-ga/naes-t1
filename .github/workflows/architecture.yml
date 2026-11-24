@@ -1,0 +1,214 @@
+name: Architecture
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  architecture:
+    # A pull request from a fork skips this job: the scanner image is not public.
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      packages: read
+    env:
+      ARCH_MIND_IMAGE: ghcr.io/star-ga/arch-mind@sha256:c63d54d8f2aa9914402f8c8b37381438ebfb2189f383052de722b44377e7772d
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: target
+          fetch-depth: 0
+      - name: Pull the pinned scanner image and unpack it for the host
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+          root="$RUNNER_TEMP/arch-mind-scanner"
+          rm -rf "$root"
+          mkdir -p "$root"
+          if ! docker pull "$ARCH_MIND_IMAGE"; then
+            echo "::error::cannot pull the pinned scanner image; this repository needs read access to the package (package settings, Manage Actions access). The gate fails closed." >&2
+            exit 1
+          fi
+          cid="$(docker create "$ARCH_MIND_IMAGE")"
+          docker cp "$cid:/opt/arch-mind/." "$root/"
+          docker rm "$cid"
+          # SHA-256 of four tool files inside the pinned image digest; another image or a changed file stops the gate here.
+          {
+            echo "dee77ff9b2263a395d01fecc44f177276cf64c01efd608af0ce5652d011cc8d1  $root/tools/arch_mind_cli.py"
+            echo "3d128ee4b72e23db0a7ab0d10f0aeaecfbbf0e04f9756d9ebeede9b5ba97b026  $root/tools/mind_reflect.py"
+            echo "60956668517452a5cf13d5ac85cd19023d0d508b8ab8350cc3d048a60f27a50b  $root/tools/rules_engine.py"
+            echo "b571fc9e3a9742b6f9f6834b84e0a65b178c395ecff8810405b7b5e45c2affa3  $root/sidecar/target/release/arch-mind-sidecar"
+          } | sha256sum -c -
+          test -x "$root/bin/arch-mind"
+          echo "ARCH_MIND_BIN=$root/bin/arch-mind" >> "$GITHUB_ENV"
+      - name: Enforce architecture
+        id: gate
+        working-directory: target
+        shell: bash
+        run: |
+          set -euo pipefail
+          tool_bin="${ARCH_MIND_BIN:?set ARCH_MIND_BIN to the pinned scanner wrapper}"
+          test -x "$tool_bin"
+          mkdir -p .arch-mind
+          count=$(python3 - <<'PY'
+          import pathlib
+          import subprocess
+          import sys
+          paths = set(subprocess.check_output([
+              "git", "ls-files", "--cached", "--others", "--exclude-standard", "-z"
+          ]).decode().split("\0"))
+          paths.update(p.as_posix() for p in pathlib.Path(".").rglob("*.mind"))
+          for path in pathlib.Path("src/mind").rglob("*"):
+              if path.is_symlink():
+                  raise SystemExit(f"symlink under product source root: {path}")
+          if pathlib.Path("src").is_symlink() or pathlib.Path("src/mind").is_symlink():
+              raise SystemExit("symlink in product source root")
+          # Named non-product source, see SPEC.md "Named non-product source". Root MIND
+          # files are admitted by exact name: a new unit needs a reviewed edit here.
+          COMMUNITY = {
+              "check_community.mind",
+              "check_community_csv.mind",
+              "check_community_rec.mind",
+              "check_community_report.mind",
+              "check_community_score.mind",
+              "fetch_recordings.mind",
+              "fetch_recordings_hash.mind",
+              "fetch_recordings_main.mind",
+              "fetch_recordings_manifest.mind",
+              "fetch_recordings_plan.mind",
+              "std_fs.mind",
+              "std_fs_io.mind",
+              "std_fs_path.mind",
+              "std_json_dump.mind",
+              "std_json_free.mind",
+              "std_json_lexer.mind",
+              "std_json_parse.mind",
+              "std_json_read.mind",
+              "std_json_scan.mind",
+              "std_json_values.mind",
+              "std_sha256.mind",
+              "std_sha256_compress.mind",
+          }
+          missing = sorted(n for n in COMMUNITY if n not in paths or not pathlib.Path(n).is_file())
+          if missing:
+              raise SystemExit(f"named community program missing: {', '.join(missing)}")
+          def named_class(name):
+              path = pathlib.PurePosixPath(name)
+              if name == ".arch-mind/rules.mind":
+                  return "architecture policy"
+              if name in COMMUNITY:
+                  return "community check and fetch programs and their std units"
+              if name == ".github/scripts/selftest-build.sh":
+                  return "CI build script"
+              if path.suffix == ".py" and path.parent.as_posix() == "figures/src":
+                  return "figure generators"
+              if path.suffix == ".py" and name.startswith("proofs/certificates/"):
+                  return "certificate check scripts"
+              return None
+          product = set()
+          named = {}
+          for name in sorted(filter(None, paths)):
+              path = pathlib.Path(name)
+              if path.suffix not in {".py", ".sh", ".ts", ".mind"}:
+                  continue
+              if path.suffix == ".mind" and name.startswith("src/mind/"):
+                  if any(p.is_symlink() for p in [path, *path.parents]):
+                      raise SystemExit(f"symlink in product source path: {name}")
+                  if not path.is_file():
+                      raise SystemExit(f"missing product source: {name}")
+                  product.add(name)
+                  continue
+              kind = named_class(name)
+              if kind is None:
+                  if path.suffix == ".mind":
+                      raise SystemExit(f"MIND source outside src/mind: {name}")
+                  raise SystemExit(f"forbidden scripting source: {name}")
+              if path.is_symlink() or not path.is_file():
+                  raise SystemExit(f"named non-product source is not a regular file: {name}")
+              named[kind] = named.get(kind, 0) + 1
+          for kind, n in sorted(named.items()):
+              print(f"CENSUS: {n} {kind} (named, not product)", file=sys.stderr)
+          print(f"CENSUS: {len(product)} product MIND source(s) under src/mind", file=sys.stderr)
+          print(len(product))
+          PY
+          )
+          if [ "$count" -eq 0 ]; then
+            echo "BOOTSTRAP: zero product sources; dependency metrics are vacuous"
+            empty_root=$(mktemp -d)
+            "$tool_bin" sidecar-scan --repo "$empty_root" --lang mind --no-scope \
+              --out "$PWD/.arch-mind/last_summary.json"
+            python3 - <<'PY'
+          import json
+          from pathlib import Path
+          summary = json.loads(Path(".arch-mind/last_summary.json").read_text())
+          totals = summary["_aggregated_for_phase_a"]
+          assert totals["module_count"] == 0 and totals["total_edges"] == 0, totals
+          PY
+          else
+            echo "PRODUCT: scanning $count MIND source file(s)"
+            "$tool_bin" sidecar-scan --repo . --lang mind \
+              --out .arch-mind/last_summary.json
+            python3 - "$count" <<'PY'
+          import json
+          import sys
+          from pathlib import Path
+          fixture = json.loads(Path(".arch-mind/last_summary.json").read_text())
+          assert fixture["_scope"]["files_in_scope"]["mind"] == int(sys.argv[1])
+          PY
+          fi
+          "$tool_bin" baseline --fixture .arch-mind/last_summary.json \
+            --out .arch-mind/last_scan.json
+          "$tool_bin" check-rules --repo . --fixture .arch-mind/last_summary.json \
+            --rules .arch-mind/rules.mind --mode enforce
+      - name: Session evidence
+        working-directory: target
+        shell: bash
+        run: |
+          set -euo pipefail
+          tool_bin="${ARCH_MIND_BIN:?}"
+          "$tool_bin" session-start --repo . --fixture .arch-mind/last_summary.json --agent architecture-ci
+          "$tool_bin" session-end --repo . --fixture .arch-mind/last_summary.json
+          "$tool_bin" check-rules --repo . --fixture .arch-mind/last_summary.json \
+            --mode enforce --verify-chain
+      - name: Base policy against proposed sources
+        if: github.event_name == 'pull_request'
+        working-directory: target
+        env:
+          BASE_REVISION: ${{ github.event.pull_request.base.sha }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if ! git cat-file -e "$BASE_REVISION:.github/workflows/architecture.yml" 2>/dev/null; then
+            echo "BOOTSTRAP: base revision has no architecture policy"
+            exit 0
+          fi
+          git show "$BASE_REVISION:.github/workflows/architecture.yml" > "$RUNNER_TEMP/base-architecture.yml"
+          git show "$BASE_REVISION:.arch-mind/rules.mind" > .arch-mind/rules.mind
+          python3 -m pip install --disable-pip-version-check PyYAML==6.0.3
+          python3 - <<'PY'
+          import os
+          import pathlib
+          import subprocess
+          import yaml
+          workflow = yaml.safe_load(pathlib.Path(os.environ["RUNNER_TEMP"], "base-architecture.yml").read_text())
+          image = workflow["jobs"]["architecture"]["env"]["ARCH_MIND_IMAGE"]
+          assert image.startswith("ghcr.io/star-ga/arch-mind@sha256:"), image
+          root = pathlib.Path(os.environ["RUNNER_TEMP"], "arch-mind-base")
+          root.mkdir(parents=True, exist_ok=True)
+          subprocess.run(["docker", "pull", image], check=True)
+          cid = subprocess.run(["docker", "create", image], check=True, capture_output=True, text=True).stdout.strip()
+          subprocess.run(["docker", "cp", f"{cid}:/opt/arch-mind/.", str(root)], check=True)
+          subprocess.run(["docker", "rm", cid], check=True)
+          wrapper = root / "bin/arch-mind"
+          assert wrapper.is_file(), wrapper
+          gate = next(s for s in workflow["jobs"]["architecture"]["steps"] if s.get("id") == "gate")
+          env = dict(os.environ, ARCH_MIND_BIN=str(wrapper))
+          subprocess.run(["bash", "-c", gate["run"]], env=env, check=True)
+          PY

@@ -1,0 +1,261 @@
+// 32-bit plane form of the multi-worker block walk (p32_* functions), part 3.
+// Entry points: p32_block_run, p32_stem, p32_heads_last.
+
+fn p32_block_run(w4: i64, p: i64, lay: i64, plan: i64, last: i64, desc: i64) -> i64 {
+    let cg: i64 = ld(w4, w4_cg());
+    let dil: i64 = ld(lay, 3);
+    let plane: i64 = ld(p, 1);
+    let ring: i64 = ld(p, 2);
+    let k: i64 = ld(p, 3);
+    let zrow: i64 = ld(p, 4) + 128;
+    let stage: i64 = ld(p, 5);
+    let recs: i64 = ld(p, 12);
+    let tb: i64 = clock4(w4);
+    st(w4, w4_dil(), dil);
+    if mw_erec_layer(w4, __mind_load_i64(lay + 40), __mind_load_i64(lay + 48), __mind_load_i64(lay + 56)) == 0 || dil < 1 {
+        return 0 - 2;
+    }
+    p32_recs(recs, ld(w4, mw_w4_erec()), stage);
+    if last == 1 {
+        zero_i64(ld(p, 9), 512);
+    }
+    let nseg: i64 = ld(plan, pl_nseg());
+    let bank: i64 = ld(w4, w4_bank());
+    let bank32: i64 = ld(w4, w4_bank32());
+    let starts: i64 = ld(plan, pl_starts());
+    rows_bind_layer(desc, ld(plan, 6));
+    let offs: i64 = ld(plan, 6);
+    let hp: i64 = k3_half(plan);
+    let mut hoffs: i64 = 0;
+    let mut hst: i64 = 0;
+    if hp != 0 {
+        hoffs = ld(hp, 6);
+        hst = ld(hp, pl_starts());
+    }
+    let hbank: i64 = (cg / 2) * 13 * 384;
+    let fp: i64 = k3_full(plan);
+    let mut foffs: i64 = 0;
+    let mut fsts: i64 = 0;
+    if fp != 0 {
+        foffs = ld(fp, 6);
+        fsts = ld(fp, pl_starts());
+    }
+    let tf: i64 = terms_flags();
+    let mut k3on: i64 = 0;
+    if dil <= k3_max_dil() || k3_force_i32() == 1 {
+        k3on = 1;
+    }
+    let arow: i64 = p32_arow();
+    let mut wide_left: i64 = k3_wide_fails();
+    if k3on == 0 || ld(ld(w4, w4_census()), 5) == 0 || k3_force_i32() == 1 {
+        wide_left = 0;
+    }
+    let mut r: i64 = 0;
+    while r < dil && r < 64 {
+        let mut sy: i64 = r;
+        while sy < 64 {
+            let ya: i64 = sy - dil;
+            let mut rb: i64 = 0;
+            if sy + dil >= 64 {
+                rb = 1;
+            }
+            if ya >= 0 {
+                p32_widen_rows(plane + ya * p32_rs(), stage, k);
+                if p32_force_early() == 1 {
+                    p32_narrow_rows(stage, plane + ya * p32_rs(), k);
+                }
+            }
+            if rb == 1 {
+                p32_widen_rows(plane + sy * p32_rs(), stage + 32768, k);
+            }
+            let mut all: i64 = 0;
+            if wide_left > 0 {
+                all = p32_pick_all(w4, plan, plane, nseg, sy, dil, k);
+                wide_left = wide_left + all - 1;
+            }
+            let mut nrun: i64 = nseg;
+            let mut bcg: i64 = cg;
+            if all == 1 && fp != 0 {
+                nrun = 1;
+                bcg = cg * 3;
+            }
+            let mut seg: i64 = 0;
+            while seg < nrun {
+                let mut path: i64 = all;
+                if k3on == 1 && all == 0 {
+                    path = p32_pick(w4, plan, plane, seg, sy, dil, k);
+                }
+                let mut bnk: i64 = bank;
+                let mut ntile: i64 = 2;
+                let mut wide: i64 = 0;
+                let mut pb: i64 = 0;
+                let mut off: i64 = offs;
+                let mut st_seg: i64 = starts + start_index(seg, 0, 0) * 8;
+                let mut ostep: i64 = 256;
+                let mut bstep: i64 = 256;
+                let mut sstep: i64 = 0;
+                if path >= 1 {
+                    bnk = bank32;
+                    ntile = 1;
+                    wide = 4;
+                    pb = 1;
+                }
+                if nrun != nseg {
+                    off = foffs;
+                    st_seg = fsts;
+                }
+                if path == 2 {
+                    ntile = 2;
+                    off = hoffs;
+                    st_seg = hst + start_index(2 * seg, 0, 0) * 8;
+                    ostep = 0;
+                    bstep = hbank;
+                    sstep = 4608;
+                }
+                let mut t0: i64 = 0;
+                if sy % 16 == 0 {
+                    t0 = clock4(w4);
+                }
+                p32_bank_build(plane, bnk, sy, seg, bcg, zrow, pb, k);
+                bank_ns4s(w4, t0);
+                let mut tile: i64 = 0;
+                while tile < ntile {
+                    let mut ky: i64 = 0;
+                    while ky < 3 {
+                        let y: i64 = sy - (ky - 1) * dil;
+                        if y >= 0 && y < 64 {
+                            let mut flags: i64 = 1 | tf | wide;
+                            if seg == 0 && (path != 2 || tile == 0) && ((ky == 0 && y >= dil) || (ky == 1 && y < dil)) {
+                                flags = tf | wide;
+                            }
+                            let mut tl: i64 = 0;
+                            if seg == nrun - 1 && (path != 2 || tile == 1) && (ky == 2 || (ky == 1 && y + dil >= 64)) {
+                                tl = 1;
+                                flags = flags | 32;
+                                let mut t: i64 = 0;
+                                if ky == 1 {
+                                    t = 2;
+                                }
+                                if path == 0 {
+                                    t = t + tile;
+                                }
+                                __mind_store_i64(desc + 64, recs + t * 4096);
+                            }
+                            let out: i64 = ring + p32_slot(y, dil) * arow;
+                            __mind_store_i64(desc, out + tile * ostep);
+                            __mind_store_i64(desc + 16, bnk + tile * bstep);
+                            __mind_store_i64(desc + 24, off);
+                            __mind_store_i64(desc + 32, st_seg + tile * sstep + ky * 24);
+                            __mind_store_i64(desc + 56, flags);
+                            __mind_group_accrows_i64(desc);
+                            if tl == 1 && __mind_load_i64(desc + 72) != 0 {
+                                return 0 - 2;
+                            }
+                            if path == 1 && k3_force_zext() == 1 {
+                                k3_zext_row(out);
+                            }
+                        }
+                        ky = ky + 1;
+                    }
+                    tile = tile + 1;
+                }
+                seg = seg + 1;
+            }
+            if ya >= 0 && p32_force_early() == 0 {
+                p32_finish(w4, p, stage, ya, last);
+            }
+            if rb == 1 {
+                p32_finish(w4, p, stage + 32768, sy, last);
+            }
+            sy = sy + dil;
+        }
+        r = r + 1;
+    }
+    split_end4(w4, tb, clock4(w4))
+}
+
+fn p32_stem(w4: i64, p: i64, rec: i64) -> i64 {
+    let ws: i64 = ld(w4, w4_ws());
+    let tabs: i64 = ld(w4, w4_tabs());
+    let planes: i64 = ld(w4, w4_planes());
+    let scratch: i64 = ld(w4, w4_scratch());
+    let zero: i64 = ld(w4, w4_zero());
+    mw_encode4(planes, rec);
+    if scratch == 0 || zero == 0 || tabs == 0 || ws == 0 {
+        return 0 - 1;
+    }
+    if stem_params_ok(tabs) == 0 {
+        return 0 - 1;
+    }
+    let n: i64 = 66 * 66;
+    let pa: i64 = __mind_load_i64(planes + n * 5);
+    let run: i64 = __mind_load_i64(planes + n * 5 + 8);
+    if pa < 0 || pa > 7 || run < 0 || run > 7 {
+        return 0 - 1;
+    }
+    stem_fill_splats(tabs, pa, run);
+    let ctx: i64 = tabs + mw_off_ctx();
+    __mind_store_i64(ctx, tabs + off_counts());
+    __mind_store_i64(ctx + 40, 0);
+    __mind_store_i64(ctx + 48, __mind_load_i64(planes + n * 5 + 16));
+    __mind_store_i64(ctx + 56, __mind_load_i64(planes + n * 5 + 24));
+    __mind_store_i64(ctx + 72, tabs + off_masks());
+    __mind_store_i64(ctx + 88, tabs + off_fixed());
+    __mind_store_i64(ctx + 104, scratch + 64);
+    __mind_store_i64(ctx + 112, __mind_load_i64(planes + n * 5 + 32));
+    __mind_store_i64(ctx + 120, zero);
+    let sbuf: i64 = ld(p, 7);
+    let k: i64 = ld(p, 3);
+    let plane: i64 = ld(p, 1);
+    let mut o: i64 = 0;
+    while o < 64 {
+        __mind_store_i64(ctx + 8, sbuf);
+        __mind_store_i64(ctx + 16, planes);
+        __mind_store_i64(ctx + 24, tabs + off_pal() + o * 9 * 64);
+        __mind_store_i64(ctx + 32, tabs + off_spl() + o * 9 * 32);
+        __mind_store_i64(ctx + 40, tabs + off_click() + o * 9);
+        __mind_store_i64(ctx + 64, tabs + off_params() + o * 128);
+        if mw_stem_lut_o(ctx) != 0 {
+            return 0 - 1;
+        }
+        p32_narrow_chan(sbuf, plane + o * p32_cs(), k);
+        if p32_guard_ok(k) == 0 {
+            return 0 - 2;
+        }
+        o = o + 1;
+    }
+    0
+}
+
+fn p32_heads_last(model: i64, w4: i64, p: i64) -> i64 {
+    let ws: i64 = ld(w4, w4_ws());
+    let scratch: i64 = ld(w4, w4_scratch());
+    let pool: i64 = ld(p, 9);
+    let sums: i64 = ld(ws, ws_sum());
+    let maxs: i64 = ld(ws, ws_max());
+    let mut c: i64 = 0;
+    while c < 64 {
+        let mx: i64 = pool_max4(pool + c * 64 + 32);
+        if mx >= mw_act_limit() {
+            return 0 - 2;
+        }
+        st(sums, c, pool_sum4(pool + c * 64));
+        st(maxs, c, mx);
+        c = c + 1;
+    }
+    let action: i64 = mw_act_head(model, ws, 64);
+    st(ws, ws_cell(), 0 - 1);
+    if action == 6 {
+        let lay: i64 = mw_model_layer(model, __mind_load_i64(model + 8) + 2);
+        let m: i64 = ld(__mind_load_i64(lay + 40), 0);
+        let mut dir: i64 = 1;
+        if m < 0 {
+            dir = 0 - 1;
+        }
+        if m == 0 {
+            dir = 0;
+        }
+        st(ws, ws_cell(), mw_best_cell4v(ld(ws, ws_acc()), scratch, dir));
+    }
+    action
+}

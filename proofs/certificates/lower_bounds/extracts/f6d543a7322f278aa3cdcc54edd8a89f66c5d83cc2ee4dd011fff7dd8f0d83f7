@@ -1,0 +1,207 @@
+"""cn04 closed-form floor lower bound — fast version.
+
+See prove.py docstring for the theorem. This file is the mechanised, pruned
+implementation: incremental union-find over joint matchings + numpy minimisation
+over each connected component's free translation.
+"""
+import sys, itertools
+import numpy as np
+from collections import deque
+sys.path.insert(0, "<path>")
+import sim as S
+
+GRID = S.GRID
+INF = float("inf")
+
+
+def object_dist(model, gi):
+    grp = model.groups[gi]
+    if len(grp) == 1:
+        i = grp[0]
+        start = (model.pos0[i][0], model.pos0[i][1], model.rot0[i])
+
+        def succ(m):
+            x, y, r = m
+            R = model.R[i, r]
+            out = []
+            for dx, dy in ((0, -1), (0, 1), (-1, 0), (1, 0)):
+                nx, ny = x + dx, y + dy
+                if nx >= 0 and ny >= 0 and nx + R["w"] <= GRID and ny + R["h"] <= GRID:
+                    out.append((nx, ny, r))
+            r2 = (r + 90) % 360
+            cx, cy = S.clamp(model, i, r2, x, y)
+            out.append((cx, cy, r2))
+            return out
+    else:
+        vis0 = [m for m in grp if model.vis0[m]]
+        assert len(vis0) == 1, f"carousel {grp}: {len(vis0)} visible at start"
+        k0 = grp.index(vis0[0])
+        start = (model.pos0[vis0[0]][0], model.pos0[vis0[0]][1], k0)
+
+        def succ(m):
+            x, y, k = m
+            i = grp[k]
+            R = model.R[i, model.rot0[i]]
+            out = []
+            for dx, dy in ((0, -1), (0, 1), (-1, 0), (1, 0)):
+                nx, ny = x + dx, y + dy
+                if nx >= 0 and ny >= 0 and nx + R["w"] <= GRID and ny + R["h"] <= GRID:
+                    out.append((nx, ny, k))
+            for k2 in (k - 1, k + 1):
+                if 0 <= k2 < len(grp):
+                    j = grp[k2]
+                    out.append((x, y, k2))
+                    cx, cy = S.clamp(model, j, model.rot0[j], x, y)
+                    out.append((cx, cy, k2))
+            return out
+
+    dist = {start: 0}
+    q = deque([start])
+    while q:
+        m = q.popleft()
+        d = dist[m] + 1
+        for n in succ(m):
+            if n not in dist:
+                dist[n] = d
+                q.append(n)
+    return dist, start
+
+
+def idents(model, gi):
+    grp = model.groups[gi]
+    if len(grp) == 1:
+        return [(r, grp[0], r) for r in (0, 90, 180, 270)]
+    return [(k, grp[k], model.rot0[grp[k]]) for k in range(len(grp))]
+
+
+def build_cost_planes(model):
+    """cost[gi][ident] -> padded 60x60 array C with C[20+x,20+y] = d + (mode!=start),
+    inf elsewhere; plus a parallel 'is_start' plane and the o0 index."""
+    ng = len(model.groups)
+    dists, starts = [], []
+    for gi in range(ng):
+        d, s = object_dist(model, gi)
+        dists.append(d); starts.append(s)
+    planes = []
+    startplanes = []
+    for gi in range(ng):
+        pg, sg = {}, {}
+        for (ident, sp, rot) in idents(model, gi):
+            C = np.full((60, 60), INF)
+            B = np.zeros((60, 60), dtype=bool)
+            for (x, y, idt), d in dists[gi].items():
+                if idt != ident:
+                    continue
+                C[20 + x, 20 + y] = d + (0 if (x, y, idt) == starts[gi] else 1)
+                B[20 + x, 20 + y] = ((x, y, idt) == starts[gi])
+            pg[ident] = C
+            sg[ident] = B
+        planes.append(pg); startplanes.append(sg)
+    return planes, startplanes, dists, starts
+
+
+def closed_form_lb(model, report=None):
+    ng = len(model.groups)
+    planes, startplanes, dists, starts = build_cost_planes(model)
+    o0 = model.gof[model.sel0] if model.sel0 is not None else None
+    best = INF
+    best_info = None
+    stats = {"ident_combos": 0, "consistent_configs": 0}
+
+    for combo in itertools.product(*[idents(model, gi) for gi in range(ng)]):
+        # joint lists under this identity choice
+        J = {8: [], 13: []}
+        for gi, (ident, sp, rot) in enumerate(combo):
+            R = model.R[sp, rot]
+            for (lx, ly) in R["j8"]:
+                J[8].append((gi, lx, ly))
+            for (lx, ly) in R["j13"]:
+                J[13].append((gi, lx, ly))
+        if len(J[8]) % 2 or len(J[13]) % 2:
+            continue
+        stats["ident_combos"] += 1
+        items = [(8, t) for t in J[8]] + [(13, t) for t in J[13]]
+        # incremental union-find matching search
+        parent = list(range(ng)); off = [(0, 0)] * ng
+
+        def find(g, parent, off):
+            root = g; ox = oy = 0
+            while parent[root] != root:
+                ox += off[root][0]; oy += off[root][1]
+                root = parent[root]
+            return root, (ox, oy)
+
+        results = []
+
+        def rec(rem8, rem13, parent, off):
+            if not rem8 and not rem13:
+                results.append((list(parent), list(off)))
+                return
+            if rem8:
+                pool, kind = rem8, 8
+            else:
+                pool, kind = rem13, 13
+            a = pool[0]
+            ga, ax, ay = J[kind][a]
+            for jj in range(1, len(pool)):
+                b = pool[jj]
+                gb, bx, by = J[kind][b]
+                if gb == ga:
+                    continue
+                dx, dy = ax - bx, ay - by          # t_b - t_a = (dx,dy)
+                p2 = list(parent); o2 = list(off)
+                ra, oa = find(ga, p2, o2)
+                rb, ob = find(gb, p2, o2)
+                if ra == rb:
+                    if (ob[0] - oa[0], ob[1] - oa[1]) != (dx, dy):
+                        continue
+                else:
+                    p2[rb] = ra
+                    o2[rb] = (oa[0] + dx - ob[0], oa[1] + dy - ob[1])
+                nrem = pool[1:jj] + pool[jj + 1:]
+                if kind == 8:
+                    rec(nrem, rem13, p2, o2)
+                else:
+                    rec(rem8, nrem, p2, o2)
+
+        rec(list(range(len(J[8]))), list(range(len(J[13]))), parent, off)
+
+        for (p2, o2) in results:
+            stats["consistent_configs"] += 1
+            res = [find(g, p2, o2) for g in range(ng)]
+            comps = {}
+            for gi in range(ng):
+                comps.setdefault(res[gi][0], []).append(gi)
+            total = 0.0
+            chosen = {}
+            for r, members in comps.items():
+                acc = np.zeros((GRID, GRID))
+                startacc = np.ones((GRID, GRID), dtype=bool) if o0 in members else None
+                ok = True
+                for gi in members:
+                    ox, oy = res[gi][1]
+                    if not (-20 <= ox <= 20 and -20 <= oy <= 20):
+                        ok = False; break
+                    C = planes[gi][combo[gi][0]][20 + ox:40 + ox, 20 + oy:40 + oy]
+                    acc = acc + C
+                    if o0 is not None and gi == o0:
+                        B = startplanes[gi][combo[gi][0]][20 + ox:40 + ox, 20 + oy:40 + oy]
+                        startacc = B
+                if not ok:
+                    total = INF; break
+                if startacc is not None:
+                    acc = acc - np.where(startacc, 0.0, 1.0)
+                m = float(np.min(acc))
+                if not np.isfinite(m):
+                    total = INF; break
+                total += m
+                if report is not None:
+                    k = int(np.argmin(acc))
+                    tx, ty = divmod(k, GRID)
+                    for gi in members:
+                        ox, oy = res[gi][1]
+                        chosen[gi] = (tx + ox, ty + oy, combo[gi][0])
+            if total < best:
+                best = total
+                best_info = (tuple(c[0] for c in combo), dict(chosen))
+    return best, best_info, stats

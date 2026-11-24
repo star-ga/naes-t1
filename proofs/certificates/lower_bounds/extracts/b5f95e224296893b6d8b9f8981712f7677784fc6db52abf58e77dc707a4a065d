@@ -1,0 +1,490 @@
+{
+ "levels": {
+  "1": {
+   "level": 1,
+   "status": "PROVEN",
+   "floor": 5,
+   "min_path": [
+    "CLK(4,33)",
+    "CLK(4,33)",
+    "CLK(4,33)",
+    "CLK(4,33)",
+    "CLK(4,33)"
+   ],
+   "proof_kind": "move_ordering_uniform_cost+lemma",
+   "proof": "uniform-cost layers 1..4 exhausted below the replay-verified 5-move win [graph fully closed]",
+   "scope": "replay_alphabet",
+   "alphabet_n": 25,
+   "graph_exhausted": true,
+   "route_seeded_win": false,
+   "route_source": "bootstrap",
+   "nodes": 130,
+   "replay_verified": true,
+   "human_best": 33,
+   "f_le_human": true,
+   "route_len": 5,
+   "guidance": "nn",
+   "start_source": "replay_oracle",
+   "alphabet_origin": "replay_oracle",
+   "floor_measured_from": "level_start_snapshot",
+   "bootstrap_moves_excluded": 0,
+   "ub": 5,
+   "lb": 5,
+   "<key withheld>": "<word withheld>",
+   "scoped_lb": {
+    "scope": "replay_alphabet",
+    "alphabet_n": 25,
+    "value": 5
+   },
+   "lemma": {
+    "dispatch_lemma": "lp85 variant 305b61c3. advertised [6] (lp85.py:21352); accepted = ACTION6 only. step() (:21394-21441) branches solely on GameAction.ACTION6; every other id and every ACTION6 whose display pixel maps to no 'button'-tagged covering sprite reaches `if not vctdsvnwjd: complete_action(); return` (:21431-21433) and mutates nothing \u2014 the step-counter decrement xsfawdkqoi() (:21438) is inside the button branch, and there is no per-tick world advance anywhere outside it, so a 'wait' in lp85 is inert rather than merely unadvertised. fallthrough: noop. The only residue is base_game.py:279 `_action_count += 1`, read only by handle_reset (:313); RESET restarts the level (base_game.py:305-330) so no RESET-bearing play is shorter. probe: {states: 1 (level start), ids_tested: [1,2,3,4,5,6,7], non_button_cells_tested: 584, oob_pixels_tested: 40, semantic_diff_zero: true} under key = all sprite positions + current_steps + level_index + state.",
+    "coverage_lemma": "Button sprites are never at a track cell and are never moved by step() (the only set_position calls target sprites found by ttawusezqc at track-cell positions, :21379), so the grid-cell\u2192button-cover map is state-invariant and one representative click per distinct cover tuple is a complete accepted alphabet: 2 effect classes on L1. key: whitebox (all sprite positions + current_steps). click_probe: {stride: 1 grid cell, validated: true by display_to_grid round-trip on every representative, states_probed == states_expanded for the no-op class by the state-invariance argument above}. action7: noop by dispatch_lemma. Layered uniform-cost exhaustion on the live engine over those 2 classes: layers 1-4 fully closed (15 states), first win at depth 5; replay-verified win at exactly 5. lb = 5, scope: accepted_alphabet.",
+    "argument_kind": "licensed_alphabet",
+    "source_pin": null,
+    "verified": true
+   }
+  },
+  "2": {
+   "level": 2,
+   "status": "PROVEN",
+   "floor": 8,
+   "min_path": [
+    "CLK(39,18)",
+    "CLK(48,36)",
+    "CLK(39,18)",
+    "CLK(39,18)",
+    "CLK(48,36)",
+    "CLK(39,18)",
+    "CLK(48,36)",
+    "CLK(48,36)"
+   ],
+   "proof_kind": "move_ordering_uniform_cost+lemma",
+   "proof": "uniform-cost layers 1..7 exhausted below the replay-verified 8-move win",
+   "scope": "replay_alphabet",
+   "alphabet_n": 25,
+   "graph_exhausted": false,
+   "route_seeded_win": false,
+   "route_source": "bootstrap",
+   "nodes": 6408,
+   "replay_verified": true,
+   "human_best": 22,
+   "f_le_human": true,
+   "route_len": 13,
+   "guidance": "nn",
+   "start_source": "replay_oracle",
+   "alphabet_origin": "replay_oracle",
+   "floor_measured_from": "level_start_snapshot",
+   "bootstrap_moves_excluded": 5,
+   "ub": 8,
+   "lb": 8,
+   "<key withheld>": "<word withheld>",
+   "scoped_lb": {
+    "scope": "replay_alphabet",
+    "alphabet_n": 25,
+    "value": 8
+   },
+   "lemma": {
+    "dispatch_lemma": "lp85 variant 305b61c3, as for L1 \u2014 accepted = ACTION6 only; all other ids and all non-button clicks are exact no-ops by lp85.py:21394-21441 (:21431-21433 fall-through, :21438 decrement inside the button branch), with no per-tick advance and therefore no live 'wait'; RESET excluded by base_game.py:305-330. probe: {states: 1 (level start), ids_tested: [1,2,3,4,5,6,7], non_button_cells_tested: 1609, oob_pixels_tested: 40, semantic_diff_zero: true}.",
+    "coverage_lemma": "Buttons are static (never at a track cell, unmoved over 60 clicks), so one representative click per distinct button-cover tuple is complete: 6 effect classes on L2. key: reduced:[goal-tile positions], gated by the argument that khartslnwa reads only tag-filtered get_sprite_at and that a goal tile's successor depends only on its cell and its map. click_probe: {stride: 1 grid cell, validated: true via display_to_grid round-trip, states_probed == states_expanded}. action7: noop by dispatch_lemma. Live-engine layered exhaustion over all 6 classes: layers 1-7 fully closed (225 states), first win at exactly depth 8; independent abstract model agrees (185 states, replay-verified win at exactly 8). lb = 8, scope: accepted_alphabet.",
+    "argument_kind": "licensed_alphabet",
+    "source_pin": null,
+    "verified": true
+   }
+  },
+  "3": {
+   "level": 3,
+   "status": "PROVEN",
+   "floor": 16,
+   "proof_kind": "rotation_group_state_graph_exhaustion_button_alphabet",
+   "proof": "lp85 L3 has 2 independent cyclic tracks A,B (N=16 each) with shared cells {(18,6),(18,18)} enabling track transfer. Complete button alphabet has 4 actions (A_L,A_R,B_L,B_R); non-button clicks are pure no-ops. Uniform-cost BFS over goal positions with sequential chmfaflqhy transitions exhausts all configs at depths 1..15 with no win; first win at depth 16. Cross-validated: same abstract BFS reproduces known PROVEN floors L1=5,L2=8,L4=12,L7=5,L8=5. Engine replay advances level_index 2->3. nodes=3163.",
+   "path": [
+    [
+     6,
+     35,
+     42
+    ],
+    [
+     6,
+     35,
+     42
+    ],
+    [
+     6,
+     35,
+     42
+    ],
+    [
+     6,
+     35,
+     42
+    ],
+    [
+     6,
+     23,
+     42
+    ],
+    [
+     6,
+     23,
+     42
+    ],
+    [
+     6,
+     23,
+     42
+    ],
+    [
+     6,
+     23,
+     42
+    ],
+    [
+     6,
+     35,
+     42
+    ],
+    [
+     6,
+     35,
+     42
+    ],
+    [
+     6,
+     35,
+     42
+    ],
+    [
+     6,
+     35,
+     42
+    ],
+    [
+     6,
+     35,
+     42
+    ],
+    [
+     6,
+     35,
+     42
+    ],
+    [
+     6,
+     23,
+     42
+    ],
+    [
+     6,
+     23,
+     42
+    ]
+   ],
+   "replay_verified": true,
+   "graph_exhausted": true,
+   "independent_check": "host A fresh-engine replay: wins at exactly 16, does NOT win at 15. Method cross-validated by reproducing known L1=5, L2=8."
+  },
+  "4": {
+   "level": 4,
+   "status": "PROVEN",
+   "floor": 12,
+   "min_path": [
+    "CLK(16,25)",
+    "CLK(16,25)",
+    "CLK(16,25)",
+    "CLK(16,25)",
+    "CLK(6,16)",
+    "CLK(6,16)",
+    "CLK(6,16)",
+    "CLK(6,16)",
+    "CLK(6,16)",
+    "CLK(6,16)",
+    "CLK(6,16)",
+    "CLK(6,16)"
+   ],
+   "proof_kind": "move_ordering_uniform_cost+lemma",
+   "proof": "uniform-cost layers 1..11 exhausted below the replay-verified 12-move win",
+   "scope": "replay_alphabet",
+   "alphabet_n": 25,
+   "graph_exhausted": false,
+   "route_seeded_win": false,
+   "route_source": "bootstrap",
+   "nodes": 102412,
+   "replay_verified": true,
+   "human_best": 23,
+   "f_le_human": true,
+   "route_len": 41,
+   "guidance": "nn",
+   "start_source": "replay_oracle",
+   "alphabet_origin": "replay_oracle",
+   "floor_measured_from": "level_start_snapshot",
+   "bootstrap_moves_excluded": 47,
+   "ub": 12,
+   "lb": 12,
+   "<key withheld>": "<word withheld>",
+   "scoped_lb": {
+    "scope": "replay_alphabet",
+    "alphabet_n": 25,
+    "value": 12
+   },
+   "lemma": {
+    "dispatch_lemma": "lp85 variant 305b61c3 \u2014 accepted = ACTION6 only; all other ids and all non-button clicks are exact no-ops (lp85.py:21394-21441; fall-through :21431-21433 mutates nothing, decrement :21438 sits inside the button branch; no per-tick advance, so no live 'wait'); RESET excluded by base_game.py:305-330, its only residue _action_count (base_game.py:279) being read solely by handle_reset (:313). probe: {states: 1 (level start), ids_tested: [1,2,3,4,5,6,7], non_button_cells_tested: 3057, oob_pixels_tested: 36, semantic_diff_zero: true}.",
+    "coverage_lemma": "Buttons static (16 sprites, none at a track cell, unmoved), so distinct button-cover tuples are a complete accepted alphabet: 4 effect classes on L4. key: reduced:[goal-tile positions], justified by the tag-filtered win predicate and cell-local tile motion. click_probe: {stride: 1 grid cell, validated: true, states_probed == states_expanded}. action7: noop by dispatch_lemma. Live-engine layered exhaustion over all 4 classes: layers 1-11 fully closed (1147 states), first win at exactly depth 12; independent abstract model agrees (1142 states, replay-verified win at exactly 12). lb = 12, ub = 12, scope: accepted_alphabet.",
+    "argument_kind": "licensed_alphabet",
+    "source_pin": null,
+    "verified": true
+   }
+  },
+  "5": {
+   "level": 5,
+   "status": "PROVEN",
+   "floor": 9,
+   "proof_kind": "rotation_group_state_graph_exhaustion_button_alphabet",
+   "proof": "lp85 L5 tracks A(N=21),B(N=5); 4-button alphabet; goals share A/B cells so pure per-track modular form fails. Uniform-cost BFS on goal positions under sequential track rotations: no win depths 1..8; first win at 9. Cross-validated on proven levels. Engine replay level_index 4->5. nodes=433.",
+   "path": [
+    [
+     6,
+     37,
+     38
+    ],
+    [
+     6,
+     37,
+     38
+    ],
+    [
+     6,
+     51,
+     8
+    ],
+    [
+     6,
+     11,
+     38
+    ],
+    [
+     6,
+     9,
+     8
+    ],
+    [
+     6,
+     11,
+     38
+    ],
+    [
+     6,
+     11,
+     38
+    ],
+    [
+     6,
+     11,
+     38
+    ],
+    [
+     6,
+     11,
+     38
+    ]
+   ],
+   "replay_verified": true,
+   "graph_exhausted": true,
+   "independent_check": "host A fresh-engine replay: wins at exactly 9, does NOT win at 8. Method cross-validated by reproducing known L1=5, L2=8."
+  },
+  "6": {
+   "level": 6,
+   "status": "PROVEN",
+   "floor": 19,
+   "proof_kind": "compound_rotation_state_graph_exhaustion_button_alphabet",
+   "proof": "lp85 L6 has 36 tracks with compound multi-track buttons (7 distinct click sites, up to 8 tracks per click). Sequential multi-track apply matches engine step(). Uniform-cost BFS over goal positions on the complete button alphabet: no win depths 1..18; first win at 19. Cross-validated on proven L1,2,4,7,8. Engine replay level_index 5->6. nodes=87733.",
+   "path": [
+    [
+     6,
+     57,
+     16
+    ],
+    [
+     6,
+     57,
+     16
+    ],
+    [
+     6,
+     42,
+     46
+    ],
+    [
+     6,
+     42,
+     46
+    ],
+    [
+     6,
+     27,
+     16
+    ],
+    [
+     6,
+     27,
+     16
+    ],
+    [
+     6,
+     30,
+     59
+    ],
+    [
+     6,
+     30,
+     59
+    ],
+    [
+     6,
+     30,
+     59
+    ],
+    [
+     6,
+     30,
+     59
+    ],
+    [
+     6,
+     30,
+     59
+    ],
+    [
+     6,
+     30,
+     59
+    ],
+    [
+     6,
+     15,
+     29
+    ],
+    [
+     6,
+     15,
+     29
+    ],
+    [
+     6,
+     45,
+     29
+    ],
+    [
+     6,
+     45,
+     29
+    ],
+    [
+     6,
+     45,
+     29
+    ],
+    [
+     6,
+     45,
+     29
+    ],
+    [
+     6,
+     54,
+     55
+    ]
+   ],
+   "replay_verified": true,
+   "graph_exhausted": true,
+   "independent_check": "host A fresh-engine replay: wins at exactly 19, does NOT win at 18. Method cross-validated by reproducing known L1=5, L2=8."
+  },
+  "7": {
+   "level": 7,
+   "status": "PROVEN",
+   "floor": 5,
+   "min_path": [
+    "CLK(33,43)",
+    "CLK(21,20)",
+    "CLK(29,43)",
+    "CLK(21,33)",
+    "CLK(29,43)"
+   ],
+   "proof_kind": "move_ordering_uniform_cost+lemma",
+   "proof": "uniform-cost layers 1..4 exhausted below the replay-verified 5-move win",
+   "scope": "replay_alphabet",
+   "alphabet_n": 25,
+   "graph_exhausted": false,
+   "route_seeded_win": false,
+   "route_source": "bootstrap",
+   "nodes": 3255,
+   "replay_verified": true,
+   "human_best": 73,
+   "f_le_human": true,
+   "route_len": 74,
+   "guidance": "nn",
+   "start_source": "replay_oracle",
+   "alphabet_origin": "replay_oracle",
+   "floor_measured_from": "level_start_snapshot",
+   "bootstrap_moves_excluded": 207,
+   "ub": 5,
+   "lb": 5,
+   "<key withheld>": "<word withheld>",
+   "scoped_lb": {
+    "scope": "replay_alphabet",
+    "alphabet_n": 25,
+    "value": 5
+   },
+   "lemma": {
+    "dispatch_lemma": "lp85 variant 305b61c3 \u2014 accepted = ACTION6 only; every other id and every non-button click is an exact no-op (lp85.py:21394-21441, fall-through :21431-21433, decrement :21438 inside the button branch); no per-tick world advance anywhere outside the button branch, so no live 'wait' exists on this game; RESET excluded by base_game.py:305-330. probe: {states: 1 (level start), ids_tested: [1,2,3,4,5,6,7], non_button_cells_tested: 1680, oob_pixels_tested: 40, semantic_diff_zero: true}.",
+    "coverage_lemma": "Buttons static (6 sprites, none at a track cell, unmoved over 60 clicks), so the distinct button-cover tuples over the level grid are a complete accepted alphabet: 4 effect classes on L7. key: whitebox (all sprite positions + current_steps). click_probe: {stride: 1 grid cell, validated: true via display_to_grid round-trip, states_probed == states_expanded}. action7: noop by dispatch_lemma. Live-engine layered exhaustion over all 4 classes from the level-start snapshot: layers 1-4 fully closed (348 states), first win at exactly depth 5; independent abstract model agrees (20 states, replay-verified win at exactly 5). lb = 5, scope: accepted_alphabet.",
+    "argument_kind": "licensed_alphabet",
+    "source_pin": null,
+    "verified": true
+   }
+  },
+  "8": {
+   "level": 8,
+   "status": "PROVEN",
+   "floor": 5,
+   "min_path": [
+    "CLK(53,35)",
+    "CLK(53,30)",
+    "CLK(53,30)",
+    "CLK(53,35)",
+    "CLK(30,59)"
+   ],
+   "proof_kind": "move_ordering_uniform_cost+lemma",
+   "proof": "uniform-cost layers 1..4 exhausted below the replay-verified 5-move win",
+   "scope": "replay_alphabet",
+   "alphabet_n": 25,
+   "graph_exhausted": false,
+   "route_seeded_win": false,
+   "route_source": "bootstrap",
+   "nodes": 4505,
+   "replay_verified": true,
+   "human_best": 173,
+   "f_le_human": true,
+   "route_len": 79,
+   "guidance": "nn",
+   "start_source": "replay_oracle",
+   "alphabet_origin": "replay_oracle",
+   "floor_measured_from": "level_start_snapshot",
+   "bootstrap_moves_excluded": 281,
+   "ub": 5,
+   "lb": 5,
+   "<key withheld>": "<word withheld>",
+   "scoped_lb": {
+    "scope": "replay_alphabet",
+    "alphabet_n": 25,
+    "value": 5
+   },
+   "lemma": {
+    "dispatch_lemma": "lp85 variant 305b61c3 \u2014 accepted = ACTION6 only; all other ids and all non-button clicks are exact no-ops (lp85.py:21394-21441; fall-through :21431-21433 mutates nothing, the step-counter decrement :21438 is inside the button branch), and step() has no per-tick world advance outside that branch, so lp85 has no live 'wait' to smuggle in; the only residue of a no-op is base_game.py:279 _action_count, read solely by handle_reset (:313), and RESET restarts the level (base_game.py:305-330) so no RESET-bearing play can be shorter. probe: {states: 1 (level start), ids_tested: [1,2,3,4,5,6,7], non_button_cells_tested: 3873, oob_pixels_tested: 19, semantic_diff_zero: true}.",
+    "coverage_lemma": "Buttons static (12 sprites, none at a track cell, unmoved over 60 clicks), so distinct button-cover tuples \u2014 including stacked covers, which the engine applies as an ordered multi-map rotation with no break \u2014 form a complete accepted alphabet: 8 effect classes on L8. key: whitebox (all sprite positions + current_steps). click_probe: {stride: 1 grid cell, validated: true via display_to_grid round-trip on every representative, states_probed == states_expanded}. action7: noop by dispatch_lemma. Live-engine layered exhaustion over all 8 classes: layers 1-4 fully closed (2201 states), first win at exactly depth 5; the independent abstract model agrees (267 states) and was checked against the engine step-for-step, reaching GameState.WIN at exactly 5. lb = 5, scope: accepted_alphabet. Gate note: replay() reports verified=False on L8 only because it tests for a level_index increment and L8 is the terminal level \u2014 check GameState.WIN instead.",
+    "argument_kind": "licensed_alphabet",
+    "source_pin": null,
+    "verified": true
+   }
+  }
+ }
+}

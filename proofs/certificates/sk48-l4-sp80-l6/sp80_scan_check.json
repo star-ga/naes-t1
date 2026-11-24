@@ -1,0 +1,19 @@
+{
+  "trace_win": true,
+  "trace_mismatch": null,
+  "start_win": false,
+  "numba_win": 1,
+  "numba_start": 0,
+  "numba_compared": 200,
+  "numba_mismatch": 0,
+  "engine_samples": 82,
+  "engine_mismatch": [],
+  "win_dists": [
+    13,
+    2,
+    6,
+    5
+  ],
+  "win_cost": 29,
+  "seconds": 6.33
+}

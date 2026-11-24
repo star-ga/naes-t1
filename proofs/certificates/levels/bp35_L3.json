@@ -1,0 +1,43 @@
+{
+  "artifact_sha256": [
+    {
+      "kind": "safe_statement_count_extract",
+      "sha256": "412977c564f5243742db4063c0351e714739bad6037ad14b73b3f3332355a420"
+    },
+    {
+      "kind": "authority_ledger_label",
+      "sha256": "f9bbb436cc4caeb471392dbef3bc788609f3585e543c7c92394e67b479fdb83b"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "cb6a48eb2a88e1a955b4d97e82cef43529b7cae7a19304aebab6f137608da553"
+    },
+    {
+      "kind": "historical_method_or_search_output",
+      "sha256": "f2e5699d62e148e6dcf39bcf33ba56067212239b5d05f13926dab448fc5c1310"
+    }
+  ],
+  "floor": 34,
+  "game": "bp35",
+  "game_id": "bp35-0a0ad940",
+  "game_levels": 9,
+  "level": 3,
+  "lower_bound": {
+    "kind": "astar_complete_alphabet_bnb_gated_model",
+    "statement": "A* over the complete effect alphabet, with reopening and an admissible relaxed movement heuristic, terminates when the minimum open f-value reaches 34. The proof astar_complete_alphabet_bnb_gated_model establishes lower bound 34, equal to the floor.",
+    "value": 34
+  },
+  "naes_t1_actions": 34,
+  "proof_class": "A*",
+  "proof_detail": "astar_complete_alphabet_bnb_gated_model",
+  "schema_version": 1,
+  "source_certificate_sha256": "c44ba69a76d2476cd9209bc98ac35f712fbe5f81885c3247ef76f33e44c01c58",
+  "status": "proven",
+  "upper_bound": {
+    "expected_levels_completed": 3,
+    "length": 34,
+    "opening_reset_counted": false,
+    "route": "4 6@33,39 4 4 6@39,33 6@21,33 6@33,33 3 6@27,33 3 3 3 4 4 6@33,39 6@39,39 6@33,33 4 6@39,33 4 4 6@27,33 6@21,33 6@33,33 6@39,33 3 3 3 3 4 6@33,39 4 4 4",
+    "seed": 0
+  }
+}

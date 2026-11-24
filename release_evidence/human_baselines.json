@@ -1,0 +1,12 @@
+{
+  "column": "human_baseline",
+  "table": "data/demo25_levels_mmae.csv",
+  "provenance": "Human baselines are the baseline_actions field of GET https://three.arcprize.org/api/games (ARC Prize API).",
+  "retrieval_date": "2026-11-06T23:09:53Z",
+  "endpoint": "GET https://three.arcprize.org/api/games",
+  "field": "baseline_actions",
+  "comparison": "archive/human_baselines/comparison.tsv: 183 rows, 183 equal, sums 17135 and 17135",
+  "api_response": "archive/human_baselines/api_games.json",
+  "sha256": "9be40c55cccb0e39f3a884d42f9284c717999fe4eb2f710313b6a812d182be64",
+  "serialization": "the 183 values of column human_baseline in table order, one decimal integer per line, each line newline-terminated (LF)"
+}

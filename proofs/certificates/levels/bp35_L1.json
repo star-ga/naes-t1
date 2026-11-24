@@ -1,0 +1,51 @@
+{
+  "artifact_sha256": [
+    {
+      "kind": "safe_statement_count_extract",
+      "sha256": "fdd75b4f9fb96f8bb8c50c16ace5113b45bef5f9acf6d2b91bfee20161458b83"
+    },
+    {
+      "kind": "authority_ledger_label",
+      "sha256": "f9bbb436cc4caeb471392dbef3bc788609f3585e543c7c92394e67b479fdb83b"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "d325d3c4ae41be2afed743852122b14423aeb886a8dac9cfcbb70099f622a8a2"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "7c8022542f68545dfdf04b16cce610a8133cacb37c5fc5d8256c9e7cb71af725"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "3184fedddacb0dfd1920e0ae7430c5874fa8efa04831cff6f075ff930e4aaf27"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "1fb34bc00e9d0e00153f88741352a260d39f7837c753c46fd6e2c3bc77196d6d"
+    }
+  ],
+  "floor": 15,
+  "game": "bp35",
+  "game_id": "bp35-0a0ad940",
+  "game_levels": 9,
+  "level": 1,
+  "lower_bound": {
+    "kind": "move_ordering_uniform_cost+lemma",
+    "statement": "Uniform-cost layers 1 through 14 were exhausted without a win.",
+    "value": 15
+  },
+  "naes_t1_actions": 15,
+  "proof_class": "Exhaustive search",
+  "proof_detail": "move_ordering_uniform_cost+lemma",
+  "schema_version": 1,
+  "source_certificate_sha256": "551993c66316077c5e19797b0c5213e214a63477ca8c025e9486e225a9f8b20b",
+  "status": "proven",
+  "upper_bound": {
+    "expected_levels_completed": 1,
+    "length": 15,
+    "opening_reset_counted": false,
+    "route": "4 4 4 4 6@45,33 3 3 6@27,39 3 6@27,33 6@27,33 6@33,33 4 3 3",
+    "seed": 0
+  }
+}

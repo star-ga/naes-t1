@@ -1,0 +1,250 @@
+// naes_t1_dns_resolve.mind — resolver configuration, transaction ids and
+// the query/retry loop for naes_t1_dns.mind.
+//
+// Files are opened and closed through the transport seam (naes_dns_fd_open,
+// naes_dns_fd_close: the two backends name the open differently) and read
+// with __mind_read; the UDP exchange is the seam's naes_dns_udp_xchg (naes_t1_dns_udp.mind on the default backend,
+// naes_t1_dns_udp_stub.mind on the native lane). Transaction ids come from
+// /dev/urandom, fresh per attempt and distinct for the A and AAAA queries;
+// the question echoed by each response is matched by naes_dns_collect. The
+// A and the AAAA query retry on their own; naes_dns_resolve_at also takes a
+// scripted transport so the selftest can lose single datagrams.
+// ---- /etc/resolv.conf -------------------------------------------------------
+fn naes_dns_lit_resolv() -> i64 {
+    let b: i64 = __mind_alloc(24);
+    __mind_store_i64(b, 8315177834867090735);
+    __mind_store_i64(b + 8, 7380959311078780015);
+    __mind_store_i64(b + 16, 0);
+    b
+}
+fn naes_dns_kw_ns(p: i64) -> i64 {
+    if __mind_load_i64(p) != 8534995790117822830 { return 0; }
+    if __mind_load_i8(p + 8) != 101 || __mind_load_i8(p + 9) != 114 { return 0; }
+    1
+}
+fn naes_dns_parse_v4(s: i64, n: i64, out: i64) -> i64 {
+    let mut parts: i64 = 0;
+    let mut val: i64 = 0;
+    let mut dig: i64 = 0;
+    let mut i: i64 = 0;
+    while i < n {
+        let c: i64 = __mind_load_i8(s + i);
+        if c == 46 {
+            if dig == 0 || parts == 3 || val > 255 { return 0; }
+            __mind_store_i8(out + 8 + parts, val);
+            parts = parts + 1;
+            val = 0;
+            dig = 0;
+        } else {
+            if c < 48 || c > 57 || dig == 3 { return 0; }
+            val = val * 10 + c - 48;
+            dig = dig + 1;
+        }
+        i = i + 1;
+    }
+    if dig == 0 || parts != 3 || val > 255 { return 0; }
+    __mind_store_i8(out + 8 + parts, val);
+    __mind_store_i64(out, 2);
+    __mind_store_i64(out + 16, 0);
+    2
+}
+// First nameserver (IPv4 dotted quad) in a resolv.conf image -> out.
+// Returns family 2 or a negative error.
+pub fn naes_dns_parse_resolv(buf: i64, buf_n: i64, out: i64) -> i64 {
+    if buf == 0 || out == 0 || buf_n < 12 { return naes_dns_err_param(); }
+    let mut p: i64 = 0;
+    while p + 11 <= buf_n {
+        let mut e: i64 = p;
+        while e < buf_n && __mind_load_i8(buf + e) != 10 { e = e + 1; }
+        if e - p >= 11 {
+            if naes_dns_kw_ns(buf + p) == 1 {
+                let mut k: i64 = p + 10;
+                if k < e {
+                    let c: i64 = __mind_load_i8(buf + k);
+                    if c == 32 || c == 9 {
+                        while k < e && (__mind_load_i8(buf + k) == 32 || __mind_load_i8(buf + k) == 9) { k = k + 1; }
+                        let mut t: i64 = k;
+                        while t < e && __mind_load_i8(buf + t) != 32 && __mind_load_i8(buf + t) != 9 && __mind_load_i8(buf + t) != 13 { t = t + 1; }
+                        let fam: i64 = naes_dns_parse_v4(buf + k, t - k, out);
+                        if fam > 0 { return fam; }
+                    }
+                }
+            }
+        }
+        p = e + 1;
+    }
+    naes_dns_err_io()
+}
+// Read up to `cap` bytes of the file at the NUL-terminated `path` into buf.
+// Returns the byte count or a negative error.
+fn naes_dns_read_file(path: i64, buf: i64, cap: i64) -> i64 {
+    if path == 0 || buf == 0 || cap < 1 { return naes_dns_err_param(); }
+    let fd: i64 = naes_dns_fd_open(path);
+    if fd < 0 { return naes_dns_err_io(); }
+    let got: i64 = __mind_read(fd, buf, cap, 0 - 1);
+    let _c: i64 = naes_dns_fd_close(fd);
+    if got < 0 { return naes_dns_err_io(); }
+    got
+}
+// Open /etc/resolv.conf and parse its first nameserver into out.
+pub fn naes_dns_read_resolv(out: i64) -> i64 {
+    let path: i64 = naes_dns_lit_resolv();
+    let buf: i64 = __mind_alloc(4096);
+    let mut rc: i64 = naes_dns_err_param();
+    if path != 0 && buf != 0 {
+        let got: i64 = naes_dns_read_file(path, buf, 4096);
+        rc = naes_dns_err_io();
+        if got > 0 { rc = naes_dns_parse_resolv(buf, got, out); }
+    }
+    let _rpath: i64 = naes_dns_release(path);
+    let _rbuf: i64 = naes_dns_release(buf);
+    rc
+}
+// ---- transaction ids ----------------------------------------------------------
+fn naes_dns_lit_urandom() -> i64 {
+    let b: i64 = __mind_alloc(16);
+    __mind_store_i64(b, 7021803615734293551);
+    __mind_store_i64(b + 8, 1836016750);
+    b
+}
+// Two unpredictable 16-bit transaction ids from /dev/urandom: the A id in
+// bits 0..15 and the AAAA id in bits 16..31 of the result; a negative error
+// when the kernel source cannot be read (no fixed fallback id).
+pub fn naes_dns_random_ids() -> i64 {
+    let path: i64 = naes_dns_lit_urandom();
+    let b: i64 = __mind_alloc(8);
+    let ids: i64 = naes_dns_random_ids_at(path, b);
+    let _rpath: i64 = naes_dns_release(path);
+    let _rb: i64 = naes_dns_release(b);
+    ids
+}
+// The same draw into caller-owned buffers (path literal, 8-byte scratch), so
+// a retry loop allocates nothing per attempt.
+fn naes_dns_random_ids_at(path: i64, b: i64) -> i64 {
+    if path == 0 || b == 0 { return naes_dns_err_param(); }
+    if naes_dns_read_file(path, b, 4) != 4 { return naes_dns_err_io(); }
+    naes_dns_ids_from(b)
+}
+// The id pair packed from four random bytes at b; distinct ids keep an A
+// answer from being taken as the AAAA answer.
+pub fn naes_dns_ids_from(b: i64) -> i64 {
+    let id_a: i64 = naes_dns_rd16(b, 0);
+    let mut id_b: i64 = naes_dns_rd16(b, 2);
+    if id_b == id_a { id_b = (id_a + 1) & 65535; }
+    id_a + id_b * 65536
+}
+// The urandom read. tx+80, when non-zero, is a NUL-terminated path used
+// instead of `given` (production passes tx == 0 and /dev/urandom). The
+// scratch is filled with ones first so the four bytes naes_dns_ids_from
+// sees are bytes the file read wrote. Every caller, including the selftest,
+// goes through naes_dns_random_ids_at.
+fn naes_dns_random_ids_tx(tx: i64, given: i64, b: i64) -> i64 {
+    let mut path: i64 = given;
+    if b != 0 { __mind_store_i64(b, 0 - 1); }
+    if tx != 0 {
+        let alt: i64 = __mind_load_i64(tx + 80);
+        if alt != 0 { path = alt; }
+    }
+    naes_dns_random_ids_at(path, b)
+}
+// ---- exchange dispatch ---------------------------------------------------------
+// tx == 0 is the live seam (naes_dns_udp_xchg, 5 s timeout). A non-zero tx is
+// a scripted transport for the selftest's fault injection; naes_dns_resolve
+// always passes 0. Script block (i64 cells, 104 bytes): +0 exchanges made,
+// +8 loss mask (bit k set: exchange k gets no reply), +16/+24 A reply and
+// length, +32/+40 AAAA reply and length, +48 + 8k: qtype * 65536 + id of
+// exchange k (k < 4). +80 is 0 to read the path naes_dns_ask passed
+// (/dev/urandom), or a NUL-terminated path to read instead. A reply is
+// copied with the query's id written over its own.
+fn naes_dns_xchg(tx: i64, q: i64, q_n: i64, r: i64, r_cap: i64, ns: i64, fam: i64) -> i64 {
+    if tx == 0 { return naes_dns_udp_xchg(q, q_n, r, r_cap, ns, fam, 5); }
+    let k: i64 = __mind_load_i64(tx);
+    __mind_store_i64(tx, k + 1);
+    let qtype: i64 = naes_dns_rd16(q, q_n - 4);
+    if k < 4 { __mind_store_i64(tx + 48 + k * 8, qtype * 65536 + naes_dns_rd16(q, 0)); }
+    if ((__mind_load_i64(tx + 8) >> k) & 1) == 1 { return naes_dns_err_transport(); }
+    let mut slot: i64 = tx + 16;
+    if qtype == 28 { slot = tx + 32; }
+    let n: i64 = __mind_load_i64(slot + 8);
+    if n < 12 || n > r_cap { return naes_dns_err_transport(); }
+    let _c: i64 = naes_dns_copy(r, __mind_load_i64(slot), n);
+    let _w: i64 = naes_dns_wr16(r, 0, naes_dns_rd16(q, 0));
+    n
+}
+// ---- resolve -------------------------------------------------------------------
+// One query (qtype 1 = A, 28 = AAAA) with its own retry: up to two exchanges,
+// each with a fresh random id (the low half of the draw for A, the high half
+// for AAAA; an id equal to the lost attempt's or to `avoid` (the A id for
+// AAAA, -1 for A) steps up until it is neither). The id
+// of the answered exchange is stored at idc. Returns the reply length, or
+// err_transport when neither exchange got a reply.
+fn naes_dns_ask(tx: i64, q: i64, r: i64, name: i64, name_n: i64, qtype: i64, ns: i64, fam: i64, idc: i64, avoid: i64) -> i64 {
+    let path: i64 = naes_dns_lit_urandom();
+    let b: i64 = __mind_alloc(8);
+    let mut rc: i64 = naes_dns_err_param();
+    if path != 0 && b != 0 { rc = naes_dns_ask_at(tx, q, r, name, name_n, qtype, ns, fam, idc, avoid, path, b); }
+    let _rpath: i64 = naes_dns_release(path);
+    let _rb: i64 = naes_dns_release(b);
+    rc
+}
+// naes_dns_ask with the /dev/urandom path literal and the 8-byte id scratch
+// owned by the caller.
+fn naes_dns_ask_at(tx: i64, q: i64, r: i64, name: i64, name_n: i64, qtype: i64, ns: i64, fam: i64, idc: i64, avoid: i64, path: i64, b: i64) -> i64 {
+    let mut prev: i64 = 0 - 1;
+    let mut attempt: i64 = 0;
+    while attempt < 2 {
+        let ids: i64 = naes_dns_random_ids_tx(tx, path, b);
+        if ids < 0 { return ids; }
+        let mut id: i64 = ids & 65535;
+        if qtype == 28 { id = (ids >> 16) & 65535; }
+        while id == prev || id == avoid { id = (id + 1) & 65535; }
+        prev = id;
+        let q_n: i64 = naes_dns_build_query(q, 512, name, name_n, qtype, id);
+        if q_n < 0 { return q_n; }
+        let r_n: i64 = naes_dns_xchg(tx, q, q_n, r, 2048, ns, fam);
+        if r_n == naes_dns_err_param() { return r_n; }
+        if r_n >= 0 { __mind_store_i64(idc, id); return r_n; }
+        attempt = attempt + 1;
+    }
+    naes_dns_err_transport()
+}
+// Resolve `name` to A and AAAA addresses: read the resolver from
+// /etc/resolv.conf, then naes_dns_resolve_at over the live seam. Returns the
+// address count or a negative error.
+pub fn naes_dns_resolve(name: i64, name_n: i64, out: i64, out_max: i64) -> i64 {
+    if name == 0 || name_n < 1 || name_n > 253 || out == 0 || out_max < 1 { return naes_dns_err_param(); }
+    let ns: i64 = __mind_alloc(24);
+    if ns == 0 { return naes_dns_err_param(); }
+    let mut rc: i64 = naes_dns_read_resolv(ns);
+    if rc > 0 { rc = naes_dns_resolve_at(0, ns, rc, name, name_n, out, out_max); }
+    let _rns: i64 = naes_dns_release(ns);
+    rc
+}
+// The A query and the AAAA query each retry on their own (naes_dns_ask): a
+// lost A datagram is asked again even when the AAAA reply arrived. A query
+// that never got a reply makes the result err_transport, never err_nx: "no
+// address" is only reported from two replies that carry none.
+pub fn naes_dns_resolve_at(tx: i64, ns: i64, fam: i64, name: i64, name_n: i64, out: i64, out_max: i64) -> i64 {
+    if ns == 0 || name == 0 || name_n < 1 || name_n > 253 || out == 0 || out_max < 1 { return naes_dns_err_param(); }
+    let q: i64 = __mind_alloc(512);
+    let ra: i64 = __mind_alloc(2048);
+    let rb: i64 = __mind_alloc(2048);
+    let ids: i64 = __mind_alloc(16);
+    let mut rc: i64 = naes_dns_err_param();
+    if q != 0 && ra != 0 && rb != 0 && ids != 0 { rc = naes_dns_query_pair(tx, ns, fam, name, name_n, out, out_max, q, ra, rb, ids); }
+    let _rq: i64 = naes_dns_release(q);
+    let _rra: i64 = naes_dns_release(ra);
+    let _rrb: i64 = naes_dns_release(rb);
+    let _rids: i64 = naes_dns_release(ids);
+    rc
+}
+// The A and the AAAA exchange and the merge of naes_dns_resolve_at, on
+// caller-owned buffers (query 512, two replies 2048, ids 16 bytes).
+fn naes_dns_query_pair(tx: i64, ns: i64, fam: i64, name: i64, name_n: i64, out: i64, out_max: i64, q: i64, ra: i64, rb: i64, ids: i64) -> i64 {
+    let ra_n: i64 = naes_dns_ask(tx, q, ra, name, name_n, 1, ns, fam, ids, 0 - 1);
+    if ra_n < 0 { return ra_n; }
+    let id_a: i64 = __mind_load_i64(ids);
+    let rb_n: i64 = naes_dns_ask(tx, q, rb, name, name_n, 28, ns, fam, ids + 8, id_a);
+    if rb_n < 0 { return rb_n; }
+    naes_dns_collect(ra, ra_n, rb, rb_n, id_a, __mind_load_i64(ids + 8), name, name_n, out, out_max)
+}

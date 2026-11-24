@@ -1,0 +1,55 @@
+{
+  "instance": "tu93-2b534c15",
+  "levels": {
+    "2": {
+      "A_recorded_tape": {
+        "reached_level_index": 1,
+        "action_count": 0,
+        "score": 1,
+        "differing_fields_vs_A": [],
+        "tape_len": 18
+      },
+      "B_three_noop_ACTION5_prefix": {
+        "reached_level_index": 1,
+        "action_count": 0,
+        "score": 1,
+        "differing_fields_vs_A": [],
+        "tape_len": 21
+      },
+      "C_reset_prefix": {
+        "reached_level_index": 1,
+        "action_count": 0,
+        "score": 1,
+        "differing_fields_vs_A": [],
+        "tape_len": 20
+      },
+      "prefix_dependent_fields": [],
+      "game_state_prefix_independent": true
+    },
+    "7": {
+      "A_recorded_tape": {
+        "reached_level_index": 6,
+        "action_count": 0,
+        "score": 6,
+        "differing_fields_vs_A": [],
+        "tape_len": 121
+      },
+      "B_three_noop_ACTION5_prefix": {
+        "reached_level_index": 6,
+        "action_count": 0,
+        "score": 6,
+        "differing_fields_vs_A": [],
+        "tape_len": 124
+      },
+      "C_reset_prefix": {
+        "reached_level_index": 6,
+        "action_count": 0,
+        "score": 6,
+        "differing_fields_vs_A": [],
+        "tape_len": 123
+      },
+      "prefix_dependent_fields": [],
+      "game_state_prefix_independent": true
+    }
+  }
+}

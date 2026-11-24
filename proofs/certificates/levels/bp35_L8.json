@@ -1,0 +1,39 @@
+{
+  "artifact_sha256": [
+    {
+      "kind": "safe_statement_count_extract",
+      "sha256": "2bea0baeaa5123050cb733883c2ac3671c2f47c7a67beae63e0cc2027ad6aaae"
+    },
+    {
+      "kind": "authority_ledger_label",
+      "sha256": "f9bbb436cc4caeb471392dbef3bc788609f3585e543c7c92394e67b479fdb83b"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "af7ae672dfe4e84faebcb85a6b3fa602718bc3e2bb83d76c53ac4a2b6b4770ba"
+    }
+  ],
+  "floor": 36,
+  "game": "bp35",
+  "game_id": "bp35-0a0ad940",
+  "game_levels": 9,
+  "level": 8,
+  "lower_bound": {
+    "kind": "sat_bmc_unsat_at_F_minus_1",
+    "statement": "The recorded bounded encoding is UNSAT at horizon 35; with its complete action and transition assumptions this excludes every win of at most 35 actions.",
+    "value": 36
+  },
+  "naes_t1_actions": 36,
+  "proof_class": "Bounded SAT",
+  "proof_detail": "sat_bmc_unsat_at_F_minus_1",
+  "schema_version": 1,
+  "source_certificate_sha256": "544bc597c2e52a64afda271b7b624e7e8f1ef736296e7b755a2ac21c242dd73c",
+  "status": "proven",
+  "upper_bound": {
+    "expected_levels_completed": 8,
+    "length": 36,
+    "opening_reset_counted": false,
+    "route": "6@15,21 6@21,21 6@27,21 6@33,21 6@39,21 4 4 4 4 4 6@45,39 3 3 6@21,9 6@27,9 6@33,9 6@39,33 6@39,33 6@39,33 6@33,45 6@39,33 6@39,33 6@39,33 6@39,33 6@39,33 6@39,33 6@39,33 6@39,33 6@39,33 6@33,3 6@45,29 4 6@51,29 6@51,35 4 4",
+    "seed": 0
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "bundle": "rhae3",
+  "rows": [
+    {
+      "artifact_sha256": "a0ad2a91ae823ae88eba56b0e62de6dfbd26dc278fb9d25ef2fe9f4d1da8b1de",
+      "depth_exhausted": 17,
+      "floor": 18,
+      "game": "tu93",
+      "level": 1,
+      "method": "Official-engine breadth-first search to depth 17. State key is the current-level sprites (name, x, y, rotation, interaction, tags, pixels) plus score, GameState, next-level flag, camera box, and every non-underscore game field. Actions are 1, 2, 3, 4, 5, 7 and three click tripwires. Each depth also applies all 4096 display clicks on the first node. RESET's successor at this start is that same click successor.",
+      "nodes": 530,
+      "time_s": 441.6,
+      "upper_win_at": 18,
+      "verdict": "CONFIRMED",
+      "wins": 0
+    },
+    {
+      "artifact_sha256": "bf4945c2ec50865ebb8ce98ba9c553f819c46e5cd748a67e111a96416d576298",
+      "depth_exhausted": 13,
+      "floor": 14,
+      "game": "tu93",
+      "level": 7,
+      "method": "Official-engine breadth-first search to depth 13 with RESET in the alphabet. Same state key as level 1. A level reset returns to the start key. A full reset at action count 0 sets score to 0 and leaves the step budget at 30.",
+      "nodes": 486,
+      "time_s": 303.3,
+      "upper_win_at": 14,
+      "verdict": "CONFIRMED",
+      "wins": 0
+    },
+    {
+      "artifact_sha256": "6bbe67b4c45bf74608a0bb9de98c7254f589ebab7df197868c1c8eb20a07a3ec",
+      "floor": 17,
+      "game": "sb26",
+      "level": 8,
+      "method": "Official step() on every injection of at most 7 of the 8 pieces onto the 8 walk slots, plus click, swap, undo, and reset lemmas measured on the official handlers. A state BFS on this level reached frontier 7449 at depth 4.",
+      "time_s": 1777.5,
+      "upper_win_at": 17,
+      "verdict": "CONFIRMED",
+      "wins": 0
+    }
+  ],
+  "sb26_sha256": "dbb4877853a8d30f84e28d26f4a3d6ad7d2d1018602e82ccb5a62284043984f3",
+  "tu93_sha256": "80e41888f9f7b1a0c03e02c0aff3814e0fd68eb5b35ef22bb3649c87fc60a23f"
+}

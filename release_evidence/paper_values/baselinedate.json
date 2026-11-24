@@ -1,0 +1,16 @@
+{
+ "macro": "baselinedate",
+ "endpoint": "GET https://three.arcprize.org/api/games",
+ "header": "X-Api-Key (value not stored); Accept: application/json",
+ "field": "baseline_actions (list per game; index 0 is level 1)",
+ "retrieval_utc": "2026-11-06T23:09:53Z",
+ "value": "6 November 2026",
+ "csv_rows": 183,
+ "row_match": 183,
+ "row_mismatch_or_missing": 0,
+ "sum_csv_human_baseline": 17135,
+ "sum_api_baseline_actions": 17135,
+ "column_sha256": "9be40c55cccb0e39f3a884d42f9284c717999fe4eb2f710313b6a812d182be64",
+ "api_games_sha256": "2199031c67ae84afa9c728aad6964edf3519eecbbcdadf1fb2d51bfaa4049485",
+ "comparison_sha256": "c8308dd738805f4f0b49bc0a73308cfc060d0c4b068a3b96e336f33565f438b4"
+}

@@ -1,0 +1,9 @@
+{
+  "walks": 40,
+  "steps": 600,
+  "wins": 0,
+  "mismatches": 0,
+  "seed": 0,
+  "max_depth": 15,
+  "actions": [1, 2, 3, 4]
+}

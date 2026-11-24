@@ -1,0 +1,107 @@
+{
+  "artifact_sha256": [
+    {
+      "kind": "safe_statement_count_extract",
+      "sha256": "7c6b0242a117bce175205b660f5a9b048857c41e0671b1f12f1fbffa0351578a"
+    },
+    {
+      "kind": "authority_ledger_label",
+      "sha256": "c84c3b22750cffa0afffe00d7486950e06c23da19128771b03e0da84fb950c92"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "f06b363dbe9c62cc3b26ccf8f20da994bc1ace17585745277ae459ba78a4f5a3"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "66a2e4516a3068a618e1725db0c8f50e0acc9f31f3077f4c8ed1c886e349f6cc"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "5bdfadaf67099b99d1c40e025d6dce044c22658fc49353919299df2d16921556"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "61dd664cc97193b7cd6831a5c932482af6995ec8d48cb553bc96f05199e8d72c"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "d05f3ce8171db52a487f95c8a9389e1fd01d7910e8a9a442d7db495d97954e1b"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "ae0a049a336f5ab958283713311ada8b8ee928d6ec5dabbc90e4ecc5014fd2f0"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "4bf901757c2a707de4f497782be8f4f1126f855aa849167f88ec85078263bdeb"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "8f9405f25f72ff1df244f850e67bd09425533f4d3f29ba9c54ca564db077f5ff"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "467873d26b9b5bb608c9d3ee60c8758d8c5bf6605cab24ffdd84ac3f0a4c6300"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "319b515ac79dc7a55199e96df696fe30fa5407eadc922fe3890baa7427584134"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "6811f53d10f82586a7b51c304a08f05e4522a5bf63055f1f4dc7b46a2c3b4306"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "1891c0ac5b2cca5ae32ae0b25537ad92b32fd8b05271ab01612d7241831db6a5"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "8e60c67bba329f287e999b75f3c4c9e45b258eac20b877daefa3b0997e6049e8"
+    },
+    {
+      "kind": "recorded_replay_command_or_tool",
+      "sha256": "9fae7f942d5ce50f4d9d290cd6b6fb4808a2ec7495b4014a1c95acebda8318ae"
+    },
+    {
+      "kind": "recorded_replay_command_or_tool",
+      "sha256": "f0aa5187faa46d8a45c43e8885791d042e957b733ab45fc8b106e6eda7a5f1d6"
+    },
+    {
+      "kind": "record: proofs/certificates/complete_key/SUMMARY.md",
+      "sha256": "0b1c423fd94163e8622b093016f91f76ef8544e028443b60ef15db4b3ae41df0"
+    },
+    {
+      "kind": "record: proofs/certificates/complete_key/levels.json",
+      "sha256": "718ed7ce83f378c3c0c281db152050a33f8fc6b7b867d407f89e74bec182eacb"
+    },
+    {
+      "kind": "record: proofs/certificates/complete_key/READSITES.json",
+      "sha256": "bb014ca1fb5f9f8df7a89eb44fd2e4d255a393dd2ec08b967bd181c1b427575c"
+    }
+  ],
+  "floor": 28,
+  "game": "s5i5",
+  "game_id": "s5i5-18d95033",
+  "game_levels": 8,
+  "level": 5,
+  "lower_bound": {
+    "kind": "engine_bfs_whole_object_key",
+    "statement": "Record: proofs/certificates/complete_key (verdict CONFIRMED, claim code C). Exhaustive breadth-first search on the official engine; the state key is a digest of the whole game object, and every omitted field and merged click is justified by the read-site certificate of the official files (alphabet: click classes recomputed at every state, each checked at its last pixel). mode classes: 3751 states, 71160 edges. No state at depth floor-1 or less wins, the recorded route wins at the floor, and its prefix does not.",
+    "value": 28
+  },
+  "naes_t1_actions": 28,
+  "proof_class": "Exhaustive search",
+  "proof_detail": "engine_bfs_whole_object_key",
+  "schema_version": 1,
+  "source_certificate_sha256": "ef4a5f48d930aca81afff3c7ae10843973627bbae92022ba22dd80a86bc71756",
+  "status": "proven",
+  "upper_bound": {
+    "expected_levels_completed": 5,
+    "length": 28,
+    "opening_reset_counted": false,
+    "route": "6@51,57 6@6,57 6@27,57 6@27,57 6@27,57 6@42,57 6@51,57 6@42,57 6@42,57 6@42,57 6@6,57 6@6,57 6@6,57 6@6,57 6@36,57 6@36,57 6@36,57 6@27,57 6@27,57 6@27,57 6@27,57 6@27,57 6@27,57 6@42,57 6@42,57 6@42,57 6@57,57 6@57,57",
+    "seed": 0
+  }
+}

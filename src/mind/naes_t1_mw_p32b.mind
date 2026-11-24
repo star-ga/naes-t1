@@ -1,0 +1,338 @@
+// 32-bit plane form of the multi-worker block walk (p32_* functions), part 2.
+// Entry points: p32_b32_group, p32_b64_group, p32_widen_rows, p32_narrow_rows.
+
+fn p32_b32_group(a: i64, b: i64, c: i64, d: i64) -> i64 {
+    let mut q: i64 = 0;
+    while q < 256 {
+        __mind_ymm_vmovdqu_ld(0, a + q, 0);
+        __mind_ymm_vmovdqu_ld(1, b + q, 0);
+        __mind_ymm_vmovdqu_ld(2, c + q, 0);
+        let r: i64 = d + q;
+        __mind_ymm_vmovdqu_st(2, r, 0);
+        __mind_ymm_vpsubd_i32x8_r(3, 1, 2);
+        __mind_ymm_vmovdqu_st(3, r, 384);
+        __mind_ymm_vmovdqu_st(1, r, 768);
+        __mind_ymm_vpaddd_i32x8_r(3, 1, 2);
+        __mind_ymm_vmovdqu_st(3, r, 1152);
+        __mind_ymm_vpsubd_i32x8_r(5, 0, 1);
+        __mind_ymm_vmovdqu_st(5, r, 1920);
+        __mind_ymm_vpsubd_i32x8_r(3, 5, 2);
+        __mind_ymm_vmovdqu_st(3, r, 1536);
+        __mind_ymm_vpaddd_i32x8_r(3, 5, 2);
+        __mind_ymm_vmovdqu_st(3, r, 2304);
+        __mind_ymm_vpsubd_i32x8_r(3, 0, 2);
+        __mind_ymm_vmovdqu_st(3, r, 2688);
+        __mind_ymm_vmovdqu_st(0, r, 3072);
+        __mind_ymm_vpaddd_i32x8_r(3, 0, 2);
+        __mind_ymm_vmovdqu_st(3, r, 3456);
+        __mind_ymm_vpaddd_i32x8_r(5, 0, 1);
+        __mind_ymm_vmovdqu_st(5, r, 4224);
+        __mind_ymm_vpsubd_i32x8_r(3, 5, 2);
+        __mind_ymm_vmovdqu_st(3, r, 3840);
+        __mind_ymm_vpaddd_i32x8_r(3, 5, 2);
+        __mind_ymm_vmovdqu_st(3, r, 4608);
+        q = q + 32;
+    }
+    0
+}
+
+fn p32_b64_group(a8: i64, b8: i64, c8: i64, d: i64, k: i64) -> i64 {
+    __mind_ymm_vmovdqu_ld(8, k, 0);
+    let mut q: i64 = 0;
+    while q < 256 {
+        __mind_ymm_vmovdqu_ld(0, a8 + q, 0);
+        __mind_ymm_vpshufb_i8x32_r(0, 0, 8);
+        __mind_ymm_vmovdqu_ld(1, b8 + q, 0);
+        __mind_ymm_vpshufb_i8x32_r(1, 1, 8);
+        __mind_ymm_vmovdqu_ld(2, c8 + q, 0);
+        __mind_ymm_vpshufb_i8x32_r(2, 2, 8);
+        let r: i64 = d + q + q;
+        __mind_ymm_vmovdqu_st(2, r, 0);
+        __mind_ymm_vpsubq_i64x4_r(3, 1, 2);
+        __mind_ymm_vmovdqu_st(3, r, 768);
+        __mind_ymm_vmovdqu_st(1, r, 1536);
+        __mind_ymm_vpaddq_i64x4_r(3, 1, 2);
+        __mind_ymm_vmovdqu_st(3, r, 2304);
+        __mind_ymm_vpsubq_i64x4_r(5, 0, 1);
+        __mind_ymm_vmovdqu_st(5, r, 3840);
+        __mind_ymm_vpsubq_i64x4_r(3, 5, 2);
+        __mind_ymm_vmovdqu_st(3, r, 3072);
+        __mind_ymm_vpaddq_i64x4_r(3, 5, 2);
+        __mind_ymm_vmovdqu_st(3, r, 4608);
+        __mind_ymm_vpsubq_i64x4_r(3, 0, 2);
+        __mind_ymm_vmovdqu_st(3, r, 5376);
+        __mind_ymm_vmovdqu_st(0, r, 6144);
+        __mind_ymm_vpaddq_i64x4_r(3, 0, 2);
+        __mind_ymm_vmovdqu_st(3, r, 6912);
+        __mind_ymm_vpaddq_i64x4_r(5, 0, 1);
+        __mind_ymm_vmovdqu_st(5, r, 8448);
+        __mind_ymm_vpsubq_i64x4_r(3, 5, 2);
+        __mind_ymm_vmovdqu_st(3, r, 7680);
+        __mind_ymm_vpaddq_i64x4_r(3, 5, 2);
+        __mind_ymm_vmovdqu_st(3, r, 9216);
+        q = q + 16;
+    }
+    0
+}
+
+fn p32_widen_rows(prow0: i64, st: i64, k: i64) -> i64 {
+    __mind_ymm_vmovdqu_ld(8, k, 0);
+    let mut r: i64 = prow0 - 8;
+    let mut d: i64 = st;
+    let e: i64 = st + 32768;
+    while d < e {
+        __mind_ymm_vmovdqu_ld(0, r, 0);
+        __mind_ymm_vmovdqu_ld(1, r, 16);
+        __mind_ymm_vmovdqu_ld(2, r, 32);
+        __mind_ymm_vmovdqu_ld(3, r, 48);
+        __mind_ymm_vmovdqu_ld(4, r, 64);
+        __mind_ymm_vmovdqu_ld(5, r, 80);
+        __mind_ymm_vmovdqu_ld(6, r, 96);
+        __mind_ymm_vmovdqu_ld(7, r, 112);
+        __mind_ymm_vpshufb_i8x32_r(0, 0, 8);
+        __mind_ymm_vpshufb_i8x32_r(1, 1, 8);
+        __mind_ymm_vpshufb_i8x32_r(2, 2, 8);
+        __mind_ymm_vpshufb_i8x32_r(3, 3, 8);
+        __mind_ymm_vpshufb_i8x32_r(4, 4, 8);
+        __mind_ymm_vpshufb_i8x32_r(5, 5, 8);
+        __mind_ymm_vpshufb_i8x32_r(6, 6, 8);
+        __mind_ymm_vpshufb_i8x32_r(7, 7, 8);
+        __mind_ymm_vmovdqu_st(0, d, 0);
+        __mind_ymm_vmovdqu_st(1, d, 32);
+        __mind_ymm_vmovdqu_st(2, d, 64);
+        __mind_ymm_vmovdqu_st(3, d, 96);
+        __mind_ymm_vmovdqu_st(4, d, 128);
+        __mind_ymm_vmovdqu_st(5, d, 160);
+        __mind_ymm_vmovdqu_st(6, d, 192);
+        __mind_ymm_vmovdqu_st(7, d, 224);
+        __mind_ymm_vmovdqu_ld(0, r, 128);
+        __mind_ymm_vmovdqu_ld(1, r, 144);
+        __mind_ymm_vmovdqu_ld(2, r, 160);
+        __mind_ymm_vmovdqu_ld(3, r, 176);
+        __mind_ymm_vmovdqu_ld(4, r, 192);
+        __mind_ymm_vmovdqu_ld(5, r, 208);
+        __mind_ymm_vmovdqu_ld(6, r, 224);
+        __mind_ymm_vmovdqu_ld(7, r, 240);
+        __mind_ymm_vpshufb_i8x32_r(0, 0, 8);
+        __mind_ymm_vpshufb_i8x32_r(1, 1, 8);
+        __mind_ymm_vpshufb_i8x32_r(2, 2, 8);
+        __mind_ymm_vpshufb_i8x32_r(3, 3, 8);
+        __mind_ymm_vpshufb_i8x32_r(4, 4, 8);
+        __mind_ymm_vpshufb_i8x32_r(5, 5, 8);
+        __mind_ymm_vpshufb_i8x32_r(6, 6, 8);
+        __mind_ymm_vpshufb_i8x32_r(7, 7, 8);
+        __mind_ymm_vmovdqu_st(0, d, 256);
+        __mind_ymm_vmovdqu_st(1, d, 288);
+        __mind_ymm_vmovdqu_st(2, d, 320);
+        __mind_ymm_vmovdqu_st(3, d, 352);
+        __mind_ymm_vmovdqu_st(4, d, 384);
+        __mind_ymm_vmovdqu_st(5, d, 416);
+        __mind_ymm_vmovdqu_st(6, d, 448);
+        __mind_ymm_vmovdqu_st(7, d, 480);
+        r = r + 16448;
+        d = d + 512;
+    }
+    0
+}
+
+fn p32_narrow_rows(st: i64, prow0: i64, k: i64) -> i64 {
+    __mind_ymm_vmovdqu_ld(13, k, 224);
+    __mind_ymm_vmovdqu_ld(14, k, 256);
+    __mind_ymm_vmovdqu_ld(12, k, 288);
+    let mut s: i64 = st;
+    let mut d: i64 = prow0;
+    let e: i64 = st + 32768;
+    while s < e {
+        __mind_ymm_vmovdqu_ld(0, s, 0);
+        __mind_ymm_vmovdqu_ld(1, s, 16);
+        __mind_ymm_vmovdqu_ld(2, s, 32);
+        __mind_ymm_vmovdqu_ld(3, s, 64);
+        __mind_ymm_vmovdqu_ld(4, s, 80);
+        __mind_ymm_vmovdqu_ld(5, s, 96);
+        __mind_ymm_vpshufb_i8x32_r(0, 0, 13);
+        __mind_ymm_vpshufb_i8x32_r(1, 1, 14);
+        __mind_ymm_vpshufb_i8x32_r(2, 2, 12);
+        __mind_ymm_vpshufb_i8x32_r(3, 3, 13);
+        __mind_ymm_vpshufb_i8x32_r(4, 4, 14);
+        __mind_ymm_vpshufb_i8x32_r(5, 5, 12);
+        __mind_ymm_vpor_i64x4_r(0, 0, 1);
+        __mind_ymm_vpor_i64x4_r(0, 0, 2);
+        __mind_ymm_vpor_i64x4_r(3, 3, 4);
+        __mind_ymm_vpor_i64x4_r(3, 3, 5);
+        __mind_ymm_vmovdqu_st(0, d, 0);
+        __mind_ymm_vmovdqu_st(3, d, 32);
+        __mind_ymm_vmovdqu_ld(0, s, 128);
+        __mind_ymm_vmovdqu_ld(1, s, 144);
+        __mind_ymm_vmovdqu_ld(2, s, 160);
+        __mind_ymm_vmovdqu_ld(3, s, 192);
+        __mind_ymm_vmovdqu_ld(4, s, 208);
+        __mind_ymm_vmovdqu_ld(5, s, 224);
+        __mind_ymm_vpshufb_i8x32_r(0, 0, 13);
+        __mind_ymm_vpshufb_i8x32_r(1, 1, 14);
+        __mind_ymm_vpshufb_i8x32_r(2, 2, 12);
+        __mind_ymm_vpshufb_i8x32_r(3, 3, 13);
+        __mind_ymm_vpshufb_i8x32_r(4, 4, 14);
+        __mind_ymm_vpshufb_i8x32_r(5, 5, 12);
+        __mind_ymm_vpor_i64x4_r(0, 0, 1);
+        __mind_ymm_vpor_i64x4_r(0, 0, 2);
+        __mind_ymm_vpor_i64x4_r(3, 3, 4);
+        __mind_ymm_vpor_i64x4_r(3, 3, 5);
+        __mind_ymm_vmovdqu_st(0, d, 64);
+        __mind_ymm_vmovdqu_st(3, d, 96);
+        __mind_ymm_vmovdqu_ld(0, s, 256);
+        __mind_ymm_vmovdqu_ld(1, s, 272);
+        __mind_ymm_vmovdqu_ld(2, s, 288);
+        __mind_ymm_vmovdqu_ld(3, s, 320);
+        __mind_ymm_vmovdqu_ld(4, s, 336);
+        __mind_ymm_vmovdqu_ld(5, s, 352);
+        __mind_ymm_vpshufb_i8x32_r(0, 0, 13);
+        __mind_ymm_vpshufb_i8x32_r(1, 1, 14);
+        __mind_ymm_vpshufb_i8x32_r(2, 2, 12);
+        __mind_ymm_vpshufb_i8x32_r(3, 3, 13);
+        __mind_ymm_vpshufb_i8x32_r(4, 4, 14);
+        __mind_ymm_vpshufb_i8x32_r(5, 5, 12);
+        __mind_ymm_vpor_i64x4_r(0, 0, 1);
+        __mind_ymm_vpor_i64x4_r(0, 0, 2);
+        __mind_ymm_vpor_i64x4_r(3, 3, 4);
+        __mind_ymm_vpor_i64x4_r(3, 3, 5);
+        __mind_ymm_vmovdqu_st(0, d, 128);
+        __mind_ymm_vmovdqu_st(3, d, 160);
+        __mind_ymm_vmovdqu_ld(0, s, 384);
+        __mind_ymm_vmovdqu_ld(1, s, 400);
+        __mind_ymm_vmovdqu_ld(2, s, 416);
+        __mind_ymm_vmovdqu_ld(3, s, 448);
+        __mind_ymm_vmovdqu_ld(4, s, 464);
+        __mind_ymm_vmovdqu_ld(5, s, 480);
+        __mind_ymm_vpshufb_i8x32_r(0, 0, 13);
+        __mind_ymm_vpshufb_i8x32_r(1, 1, 14);
+        __mind_ymm_vpshufb_i8x32_r(2, 2, 12);
+        __mind_ymm_vpshufb_i8x32_r(3, 3, 13);
+        __mind_ymm_vpshufb_i8x32_r(4, 4, 14);
+        __mind_ymm_vpshufb_i8x32_r(5, 5, 12);
+        __mind_ymm_vpor_i64x4_r(0, 0, 1);
+        __mind_ymm_vpor_i64x4_r(0, 0, 2);
+        __mind_ymm_vpor_i64x4_r(3, 3, 4);
+        __mind_ymm_vpor_i64x4_r(3, 3, 5);
+        __mind_ymm_vmovdqu_st(0, d, 192);
+        __mind_ymm_vmovdqu_st(3, d, 224);
+        s = s + 512;
+        d = d + 16448;
+    }
+    0
+}
+
+fn p32_narrow_chan(src: i64, dst: i64, k: i64) -> i64 {
+    __mind_ymm_vmovdqu_ld(13, k, 224);
+    __mind_ymm_vmovdqu_ld(14, k, 256);
+    __mind_ymm_vmovdqu_ld(12, k, 288);
+    __mind_ymm_vpsubq_i64x4_r(4, 4, 4);
+    let mut s: i64 = src;
+    let mut d: i64 = dst;
+    let e: i64 = dst + 16384;
+    while d < e {
+        let mut c: i64 = 0;
+        while c < 512 {
+            __mind_ymm_vmovdqu_ld(0, s + c, 0);
+            __mind_ymm_vmovdqu_ld(1, s + c, 16);
+            __mind_ymm_vmovdqu_ld(2, s + c, 32);
+            __mind_ymm_vpor_i64x4_r(4, 4, 0);
+            __mind_ymm_vpor_i64x4_r(4, 4, 2);
+            __mind_ymm_vpshufb_i8x32_r(0, 0, 13);
+            __mind_ymm_vpshufb_i8x32_r(1, 1, 14);
+            __mind_ymm_vpshufb_i8x32_r(2, 2, 12);
+            __mind_ymm_vpor_i64x4_r(0, 0, 1);
+            __mind_ymm_vpor_i64x4_r(0, 0, 2);
+            __mind_ymm_vmovdqu_st(0, d, 0);
+            d = d + 32;
+            c = c + 64;
+        }
+        s = s + 768;
+    }
+    __mind_ymm_vmovdqu_st(4, k, 416);
+    0
+}
+
+fn p32_pool_o(s: i64, pp: i64, heat: i64, w: i64) -> i64 {
+    __mind_ymm_vmovdqu_ld(0, pp, 0);
+    __mind_ymm_vmovdqu_ld(1, pp, 32);
+    let mut q: i64 = 0;
+    if w == 1 {
+        while q < 512 {
+            __mind_ymm_vmovdqu_ld(2, s + q, 0);
+            __mind_ymm_vpaddq_i64x4_r(0, 0, 2);
+            __mind_ymm_vpcmpgtq_i64x4_r(3, 2, 1);
+            __mind_ymm_vpsubq_i64x4_r(4, 2, 1);
+            __mind_ymm_vpand_i64x4_r(4, 4, 3);
+            __mind_ymm_vpaddq_i64x4_r(1, 1, 4);
+            __mind_ymm_vpaddq_i64x4_m(2, heat + q, 0);
+            __mind_ymm_vmovdqu_st(2, heat + q, 0);
+            q = q + 32;
+        }
+    } else {
+        if w == 0 - 1 {
+            while q < 512 {
+                __mind_ymm_vmovdqu_ld(2, s + q, 0);
+                __mind_ymm_vpaddq_i64x4_r(0, 0, 2);
+                __mind_ymm_vpcmpgtq_i64x4_r(3, 2, 1);
+                __mind_ymm_vpsubq_i64x4_r(4, 2, 1);
+                __mind_ymm_vpand_i64x4_r(4, 4, 3);
+                __mind_ymm_vpaddq_i64x4_r(1, 1, 4);
+                __mind_ymm_vmovdqu_ld(5, heat + q, 0);
+                __mind_ymm_vpsubq_i64x4_r(5, 5, 2);
+                __mind_ymm_vmovdqu_st(5, heat + q, 0);
+                q = q + 32;
+            }
+        } else {
+            while q < 512 {
+                __mind_ymm_vmovdqu_ld(2, s + q, 0);
+                __mind_ymm_vpaddq_i64x4_r(0, 0, 2);
+                __mind_ymm_vpcmpgtq_i64x4_r(3, 2, 1);
+                __mind_ymm_vpsubq_i64x4_r(4, 2, 1);
+                __mind_ymm_vpand_i64x4_r(4, 4, 3);
+                __mind_ymm_vpaddq_i64x4_r(1, 1, 4);
+                q = q + 32;
+            }
+        }
+    }
+    __mind_ymm_vmovdqu_st(0, pp, 0);
+    __mind_ymm_vmovdqu_st(1, pp, 32);
+    0
+}
+
+fn p32_slot(y: i64, dil: i64) -> i64 {
+    if p32_force_ring2() == 1 {
+        return (y / dil) % 2;
+    }
+    (y / dil) % 3
+}
+
+fn p32_block(w4: i64, p: i64, lay: i64, plan: i64, b: i64, last: i64) -> i64 {
+    let desc: i64 = ld(w4, w4_desc());
+    if desc == 0 {
+        return 0 - 2;
+    }
+    let mut lim: i64 = p32_lim();
+    if last == 1 {
+        lim = mw_act_limit() - 1;
+    }
+    __mind_store_i64(desc + 80, lim);
+    let rc: i64 = p32_block_run(w4, p, lay, plan, last, desc);
+    __mind_store_i64(desc + 80, mw_act_limit() - 1);
+    rc
+}
+
+fn p32_finish(w4: i64, p: i64, sb: i64, y: i64, last: i64) -> i64 {
+    if last == 0 {
+        return p32_narrow_rows(sb, ld(p, 1) + y * p32_rs(), ld(p, 3));
+    }
+    let heat: i64 = ld(ld(w4, w4_ws()), ws_acc()) + y * 512;
+    zero_i64(heat, 64);
+    let pool: i64 = ld(p, 9);
+    let wts: i64 = ld(p, 11);
+    let mut o: i64 = 0;
+    while o < 64 {
+        p32_pool_o(sb + o * 512, pool + o * 64, heat, ld(wts, o));
+        o = o + 1;
+    }
+    0
+}

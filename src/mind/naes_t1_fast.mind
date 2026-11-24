@@ -1,0 +1,37 @@
+// Seam between the program and the grouped-sum kernel. play, verify, serve
+// without --trace, and bench call these four functions.
+// Entry points: fast_cfg, fast_prepare, fast_decide, fast_cell.
+
+// Kernel configuration: groups of 3 input channels, 8 groups per segment,
+// tiles of 32 rows, epilogue mode 2, one worker.
+fn fast_cfg() -> i64 {
+    let cfg: i64 = alloc_zero(16);
+    if cfg == 0 {
+        return 0;
+    }
+    st(cfg, cf_group(), 3);
+    st(cfg, cf_cg(), 8);
+    st(cfg, cf_tile(), 32);
+    st(cfg, cf_workers(), 1);
+    st(cfg, cf_epi(), 2);
+    cfg
+}
+
+// Kernel workspace for a model of load_model. Returns 0 on failure.
+fn fast_prepare(model: i64) -> i64 {
+    let cfg: i64 = fast_cfg();
+    if cfg == 0 {
+        return 0;
+    }
+    prepare4(model, cfg)
+}
+
+// One decision: action 1..7, or -1 when an activation guard trips. The click
+// cell of action 6 is fast_cell(w4); it is -1 for other actions.
+fn fast_decide(model: i64, w4: i64, rec: i64) -> i64 {
+    decide4(model, w4, rec)
+}
+
+fn fast_cell(w4: i64) -> i64 {
+    result_cell(ld(w4, w4_ws()))
+}

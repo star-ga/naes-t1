@@ -1,0 +1,651 @@
+[
+ {
+  "status": "PROVEN",
+  "floor": 15,
+  "path": [
+   [
+    1,
+    null,
+    null
+   ],
+   [
+    3,
+    null,
+    null
+   ],
+   [
+    1,
+    null,
+    null
+   ],
+   [
+    1,
+    null,
+    null
+   ],
+   [
+    3,
+    null,
+    null
+   ],
+   [
+    1,
+    null,
+    null
+   ],
+   [
+    1,
+    null,
+    null
+   ],
+   [
+    1,
+    null,
+    null
+   ],
+   [
+    1,
+    null,
+    null
+   ],
+   [
+    4,
+    null,
+    null
+   ],
+   [
+    1,
+    null,
+    null
+   ],
+   [
+    4,
+    null,
+    null
+   ],
+   [
+    4,
+    null,
+    null
+   ],
+   [
+    4,
+    null,
+    null
+   ],
+   [
+    1,
+    null,
+    null
+   ]
+  ],
+  "nodes": 4536,
+  "seen": 642,
+  "layers_exhausted": 14,
+  "secs": 59.9,
+  "inert_actions": [],
+  "live_actions": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   7
+  ],
+  "live_click_class_histogram": {
+   "2": 1,
+   "0": 566
+  },
+  "level": 1,
+  "ub_cascade_trace": 15,
+  "replay_won_at": 15,
+  "replay_won_at_F_minus_1": null,
+  "replay_verified": true,
+  "path_named": [
+   "U",
+   "L",
+   "U",
+   "U",
+   "L",
+   "U",
+   "U",
+   "U",
+   "U",
+   "R",
+   "U",
+   "R",
+   "R",
+   "R",
+   "U"
+  ]
+ },
+ {
+  "status": "PROVEN",
+  "floor": 11,
+  "path": [
+   [
+    6,
+    29,
+    29
+   ],
+   [
+    3,
+    null,
+    null
+   ],
+   [
+    3,
+    null,
+    null
+   ],
+   [
+    2,
+    null,
+    null
+   ],
+   [
+    6,
+    4,
+    4
+   ],
+   [
+    1,
+    null,
+    null
+   ],
+   [
+    4,
+    null,
+    null
+   ],
+   [
+    2,
+    null,
+    null
+   ],
+   [
+    2,
+    null,
+    null
+   ],
+   [
+    4,
+    null,
+    null
+   ],
+   [
+    4,
+    null,
+    null
+   ]
+  ],
+  "nodes": 34173,
+  "seen": 5982,
+  "layers_exhausted": 10,
+  "secs": 368.2,
+  "inert_actions": [
+   5,
+   7
+  ],
+  "live_actions": [
+   1,
+   2,
+   3,
+   4
+  ],
+  "live_click_class_histogram": {
+   "1": 2494,
+   "2": 1303
+  },
+  "level": 4,
+  "ub_cascade_trace": "<word withheld>",
+  "replay_won_at": 11,
+  "replay_won_at_F_minus_1": null,
+  "replay_verified": true,
+  "path_named": [
+   "CLK(29,29)",
+   "L",
+   "L",
+   "D",
+   "CLK(4,4)",
+   "U",
+   "R",
+   "D",
+   "D",
+   "R",
+   "R"
+  ]
+ },
+ {
+  "status": "PROVEN",
+  "floor": 23,
+  "path": [
+   [
+    3,
+    null,
+    null
+   ],
+   [
+    3,
+    null,
+    null
+   ],
+   [
+    3,
+    null,
+    null
+   ],
+   [
+    2,
+    null,
+    null
+   ],
+   [
+    2,
+    null,
+    null
+   ],
+   [
+    2,
+    null,
+    null
+   ],
+   [
+    2,
+    null,
+    null
+   ],
+   [
+    4,
+    null,
+    null
+   ],
+   [
+    4,
+    null,
+    null
+   ],
+   [
+    1,
+    null,
+    null
+   ],
+   [
+    4,
+    null,
+    null
+   ],
+   [
+    4,
+    null,
+    null
+   ],
+   [
+    2,
+    null,
+    null
+   ],
+   [
+    2,
+    null,
+    null
+   ],
+   [
+    2,
+    null,
+    null
+   ],
+   [
+    2,
+    null,
+    null
+   ],
+   [
+    2,
+    null,
+    null
+   ],
+   [
+    2,
+    null,
+    null
+   ],
+   [
+    4,
+    null,
+    null
+   ],
+   [
+    4,
+    null,
+    null
+   ],
+   [
+    4,
+    null,
+    null
+   ],
+   [
+    1,
+    null,
+    null
+   ],
+   [
+    3,
+    null,
+    null
+   ]
+  ],
+  "nodes": 7104,
+  "seen": 1092,
+  "layers_exhausted": 22,
+  "secs": 147.8,
+  "inert_actions": [
+   5,
+   7
+  ],
+  "live_actions": [
+   1,
+   2,
+   3,
+   4
+  ],
+  "live_click_class_histogram": {
+   "0": 888
+  },
+  "level": 2,
+  "ub_cascade_trace": "<word withheld>",
+  "replay_won_at": 23,
+  "replay_won_at_F_minus_1": null,
+  "replay_verified": true,
+  "path_named": [
+   "L",
+   "L",
+   "L",
+   "D",
+   "D",
+   "D",
+   "D",
+   "R",
+   "R",
+   "U",
+   "R",
+   "R",
+   "D",
+   "D",
+   "D",
+   "D",
+   "D",
+   "D",
+   "R",
+   "R",
+   "R",
+   "U",
+   "L"
+  ]
+ },
+ {
+  "status": "PROVEN",
+  "floor": 39,
+  "path": [
+   [
+    3,
+    null,
+    null
+   ],
+   [
+    3,
+    null,
+    null
+   ],
+   [
+    1,
+    null,
+    null
+   ],
+   [
+    1,
+    null,
+    null
+   ],
+   [
+    1,
+    null,
+    null
+   ],
+   [
+    1,
+    null,
+    null
+   ],
+   [
+    3,
+    null,
+    null
+   ],
+   [
+    1,
+    null,
+    null
+   ],
+   [
+    4,
+    null,
+    null
+   ],
+   [
+    4,
+    null,
+    null
+   ],
+   [
+    4,
+    null,
+    null
+   ],
+   [
+    1,
+    null,
+    null
+   ],
+   [
+    4,
+    null,
+    null
+   ],
+   [
+    1,
+    null,
+    null
+   ],
+   [
+    3,
+    null,
+    null
+   ],
+   [
+    3,
+    null,
+    null
+   ],
+   [
+    3,
+    null,
+    null
+   ],
+   [
+    3,
+    null,
+    null
+   ],
+   [
+    3,
+    null,
+    null
+   ],
+   [
+    1,
+    null,
+    null
+   ],
+   [
+    1,
+    null,
+    null
+   ],
+   [
+    1,
+    null,
+    null
+   ],
+   [
+    3,
+    null,
+    null
+   ],
+   [
+    1,
+    null,
+    null
+   ],
+   [
+    1,
+    null,
+    null
+   ],
+   [
+    1,
+    null,
+    null
+   ],
+   [
+    4,
+    null,
+    null
+   ],
+   [
+    4,
+    null,
+    null
+   ],
+   [
+    1,
+    null,
+    null
+   ],
+   [
+    1,
+    null,
+    null
+   ],
+   [
+    1,
+    null,
+    null
+   ],
+   [
+    1,
+    null,
+    null
+   ],
+   [
+    1,
+    null,
+    null
+   ],
+   [
+    3,
+    null,
+    null
+   ],
+   [
+    1,
+    null,
+    null
+   ],
+   [
+    1,
+    null,
+    null
+   ],
+   [
+    3,
+    null,
+    null
+   ],
+   [
+    3,
+    null,
+    null
+   ],
+   [
+    3,
+    null,
+    null
+   ]
+  ],
+  "nodes": 32168,
+  "seen": 4243,
+  "layers_exhausted": 38,
+  "secs": 799.3,
+  "inert_actions": [
+   5,
+   7
+  ],
+  "live_actions": [
+   1,
+   2,
+   3,
+   4
+  ],
+  "live_click_class_histogram": {
+   "0": 4021
+  },
+  "level": 5,
+  "ub_cascade_trace": "<word withheld>",
+  "replay_won_at": 39,
+  "replay_won_at_F_minus_1": null,
+  "replay_verified": true,
+  "path_named": [
+   "L",
+   "L",
+   "U",
+   "U",
+   "U",
+   "U",
+   "L",
+   "U",
+   "R",
+   "R",
+   "R",
+   "U",
+   "R",
+   "U",
+   "L",
+   "L",
+   "L",
+   "L",
+   "L",
+   "U",
+   "U",
+   "U",
+   "L",
+   "U",
+   "U",
+   "U",
+   "R",
+   "R",
+   "U",
+   "U",
+   "U",
+   "U",
+   "U",
+   "L",
+   "U",
+   "U",
+   "L",
+   "L",
+   "L"
+  ]
+ }
+]

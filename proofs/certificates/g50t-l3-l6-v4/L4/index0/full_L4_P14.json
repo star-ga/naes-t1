@@ -1,0 +1,29 @@
+{
+ "kind": "grid_index0",
+ "mode": "full",
+ "tag": "L4",
+ "level": 4,
+ "k": 30,
+ "K": 2,
+ "P": 14,
+ "T": 3,
+ "budget": 16,
+ "status": "UNSAT",
+ "solver": "cadical195",
+ "target_count": 14,
+ "started_utc": "2026-11-05T12:57:30.302429+00:00",
+ "finished_utc": "2026-11-05T12:57:33.429153+00:00",
+ "seconds": 3.127,
+ "hashes": {
+  "<path>/g50t_bmc3.py": "1b6ea6a032a32fc7d40b27b32b3a1b4ec81060f499539c1afa2e58f763548b41",
+  "<path>/g50t_bmc2.py": "9044d5866aa64b654e38ae04d24e610bf1986fa9e1637754e190d6bf0526b6cb",
+  "<path>/g50t_sim.py": "2a1e65e601bf3bc9d8d8deae4dd592c37ee6b2e13b9a7bb7975cc110a73f511f",
+  "<path>/g50t.py": "6f21f2065744e484ac38534f940158034e69f39add3b10a3d9fd258de7293aa9",
+  "<path>/g50t_model.json": "3e1eb93df7cc6df06134afa5d91016d071a65ef34a4d53225f2d65cf0cc8ee5d"
+ },
+ "instrumentation_sha256": "1cfec5c68ffb310e75b163fc81284e598fb244237abb82809f57442807b2307d",
+ "source_sha256": "c940435f9507f41bddd0a1943fdc078884d3227c3f9355897bea0038dce48c74",
+ "variables": 117742,
+ "clauses": 455169,
+ "command": "<path> index0 <path> 4 30 14 full cadical195 L4"
+}

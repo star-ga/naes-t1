@@ -1,0 +1,171 @@
+{
+ "n_levels_old": 9,
+ "n_levels_new": 9,
+ "levels": [
+  {
+   "level": 1,
+   "verdict": "CHANGED",
+   "n_sprites": [
+    3,
+    3
+   ],
+   "diffs": [
+    "grid (39, 38) -> (39, 39)"
+   ]
+  },
+  {
+   "level": 2,
+   "verdict": "ORDER_ONLY",
+   "n_sprites": [
+    4,
+    4
+   ],
+   "diffs": [],
+   "order_changed_layers": [
+    0
+   ],
+   "first_order_difference_index": 1
+  },
+  {
+   "level": 3,
+   "verdict": "ORDER_ONLY",
+   "n_sprites": [
+    6,
+    6
+   ],
+   "diffs": [],
+   "order_changed_layers": [
+    0
+   ],
+   "first_order_difference_index": 0
+  },
+  {
+   "level": 4,
+   "verdict": "ORDER_ONLY",
+   "n_sprites": [
+    5,
+    5
+   ],
+   "diffs": [],
+   "order_changed_layers": [
+    0
+   ],
+   "first_order_difference_index": 0
+  },
+  {
+   "level": 5,
+   "verdict": "CHANGED",
+   "n_sprites": [
+    8,
+    8
+   ],
+   "diffs": [
+    "geometry: 1 sprites only-old [(2, 7, -1)], 1 only-new [(2, 7, 0)]"
+   ]
+  },
+  {
+   "level": 6,
+   "verdict": "ORDER_ONLY",
+   "n_sprites": [
+    11,
+    11
+   ],
+   "diffs": [],
+   "order_changed_layers": [
+    0
+   ],
+   "first_order_difference_index": 1
+  },
+  {
+   "level": 7,
+   "verdict": "ORDER_ONLY",
+   "n_sprites": [
+    5,
+    5
+   ],
+   "diffs": [],
+   "order_changed_layers": [
+    0
+   ],
+   "first_order_difference_index": 0
+  },
+  {
+   "level": 8,
+   "verdict": "ORDER_ONLY",
+   "n_sprites": [
+    5,
+    5
+   ],
+   "diffs": [],
+   "order_changed_layers": [
+    0
+   ],
+   "first_order_difference_index": 1
+  },
+  {
+   "level": 9,
+   "verdict": "ORDER_ONLY",
+   "n_sprites": [
+    9,
+    9
+   ],
+   "diffs": [],
+   "order_changed_layers": [
+    0
+   ],
+   "first_order_difference_index": 0
+  }
+ ],
+ "string_map_conflicts": {},
+ "string_map": {
+  "advckbbctt": "0004iwcrtzivmj",
+  "vhlesexlqd": "0005uvnhiglpvh",
+  "mcrwthchct": "0016ihgrljrgpq",
+  "albwnmiahg": "0017unajnymcki",
+  "xtivqldqva": "0014mzhhvzrazi",
+  "xboyuzuyxv": "0015msvpvzxhqf",
+  "brszdbeosn": "0006fwxohroqxn",
+  "kxiutgppmt": "0018rquzkxccdu",
+  "vllvfeggte": "0001haidilggfh",
+  "cgxpypzvev": "0032zcbhxrrroo",
+  "gtklxebphp": "0007vtaknfevqg",
+  "ntmztjafro": "0034rappuyignq",
+  "psrdkitxxm": "0033eukabosjzd",
+  "bddyedlpub": "0040blywvvvuan",
+  "mivgxwpflv": "0019zkgjxlirss",
+  "zzuxulcort": "0020npxxteirsg",
+  "udqmltazlr": "0009jedajjfevg",
+  "iwawirbnxl": "0000npnrdhvwvh",
+  "kndyleqrkw": "0036nktgxrgjkv",
+  "nittvfnhzg": "0035nffqdtkciw",
+  "woawzicyis": "0037qjfixcauxo",
+  "ayinstebts": "0010uxxexcpyyf",
+  "cvcykawwvn": "0028qkjwicfuwp",
+  "fifgqtcmkj": "0031hzftzrplwi",
+  "sbarnmpjpm": "0027patvtodrhy",
+  "sjwurrpact": "0030rogwqxweux",
+  "tciltoqihp": "0042sepylaqted",
+  "wsaxbozuoh": "0041gemuvllyjk",
+  "zdorjsnggl": "0039ytgteazaqh",
+  "iyplkijgol": "0022ckngtnvkgw",
+  "natiyqayts": "0023otenflmryc",
+  "qgamkwcgto": "0026qkitwpxffj",
+  "uusnwexoqh": "0011bpufuobdim",
+  "kxuptismsp": "0012kpozcbzyzg",
+  "uqxhtswcue": "0024hmajmehnex",
+  "vxqrqqcnyf": "0025jhrmsjfkrv",
+  "cjplklyfag": "0043vmvutotusu",
+  "hfobzpnztv": "0044zdcudlfrzv",
+  "hgvhiprods": "0047bbqjglpaxo",
+  "imoxtwqezq": "0046qgoslkakks",
+  "makkrfiwqg": "0013uhpqpfyizb",
+  "ptunqyictb": "0048xxvrxuknux",
+  "qfbnkdxpdo": "0045wwgilbryqo",
+  ".": ".",
+  "tu93": "tu93",
+  "StepCounter": "StepCounter",
+  "rlkxuujqdr": "0002ebnnauydmr",
+  "qfgklunikd": "0003zgknydacap"
+ },
+ "non_injective": {}
+}

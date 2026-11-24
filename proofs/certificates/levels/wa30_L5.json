@@ -1,0 +1,92 @@
+{
+  "artifact_sha256": [
+    {
+      "kind": "safe_statement_count_extract",
+      "sha256": "b206a023fffd33fee82cd4321d6476bf9294db3dd03c8de62d0305f8b6ab7c3b"
+    },
+    {
+      "kind": "authority_ledger_label",
+      "sha256": "f293e6b784fcfa1c342aa241b3b4fcf122ac8786d0566afc35cf41fa770babad",
+      "status": "withheld"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "8f9d4dab54cacc393165f3b9b344d4031ffefd7a4ffe4b5cc2d88516440ce733"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "74fde749266c79580cfd7147f6f4b82f84028a698aa0924e3a3176c1d44f651f"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "83fe10c553dffd912e292186733d86c68e7a2d23e91d319e10b3709540b9bbb2"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "d19e41cf32b664a119f3ae895bf4f94d284ff4bb70ee90cfa9e42b903c8c7e0f"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "4dd5c0147d9aafad6ca4211b7bcd42edc7eb4973a27d776f3eb983dc80830c8c"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "9825682990cbec554fbe6a03ea56eab57ea70ea34b4e77673a3dee91ae37dbbc"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "6b064239300f77836660d0f8597c34199bc759e69f85c0ab719b563f0584604b"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "240aae2b3f4fe5b8e069a442058d518cf1725df649bcd5f90da6a8dea869446e"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "c11852b03393365b7f2eb2ed27df5e767defa5a30e0fed0f0f0ef96f4c219541"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "5e7481f208ce5aee8129ee644b58116c59df60a61939bd84ca7e8a9ca5dd4cd2"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "e75d3dbfe0aa58fb766d4fc2344d71286ca0889e13c04d8ba9778a06e681cabd"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "a132a8c6a847db5808310a1cc6ca2d1057f465f5d29261835a6bf4dd79e3a7fa"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "adb45bced682f6eeecf1017d391485d7cd8f3f3d25cdc157787a8ab888a5ac1d"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "edcb066d84408bccb8aa5f4e882372dd48c312d8a3a945fcadde0f339b5205a8"
+    }
+  ],
+  "floor": 91,
+  "game": "wa30",
+  "game_id": "wa30-ee6fef47",
+  "game_levels": 9,
+  "level": 5,
+  "lower_bound": {
+    "kind": "idastar_bound_exhaustion_pdb_h0_82",
+    "statement": "The recorded final closure reports every admissible contour below 91 complete without a win, beginning from the root pattern bound 82.",
+    "value": 91
+  },
+  "naes_t1_actions": 91,
+  "proof_class": "A*",
+  "proof_detail": "idastar_bound_exhaustion_pdb_h0_82",
+  "schema_version": 1,
+  "source_certificate_sha256": "2cd35e494ee168ca6ee1dcce4f232324465a960dc9196d582cfeab0e82478033",
+  "status": "proven",
+  "upper_bound": {
+    "expected_levels_completed": 5,
+    "length": 91,
+    "opening_reset_counted": false,
+    "route": "2 4 4 2 5 1 1 1 1 3 3 3 3 3 3 3 3 2 3 3 3 5 4 1 5 3 5 4 4 4 4 4 4 4 4 2 2 2 2 4 2 5 1 1 1 1 5 4 2 2 4 4 4 2 5 1 1 1 1 1 3 3 3 3 5 1 1 1 1 1 4 4 5 2 2 2 2 2 3 3 3 3 3 3 3 3 3 1 3 3 5",
+    "seed": 0
+  }
+}

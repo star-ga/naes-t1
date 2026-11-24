@@ -1,0 +1,51 @@
+{
+ "level": 3,
+ "W": 21,
+ "H": 21,
+ "n_targets": 26,
+ "shapes": [
+  {
+   "name": "0027crpzfdutil",
+   "x0": 4,
+   "y0": 7,
+   "w": 4,
+   "h": 4,
+   "n_px": 7
+  },
+  {
+   "name": "0053vnfodarlql",
+   "x0": 15,
+   "y0": 9,
+   "w": 4,
+   "h": 2,
+   "n_px": 6
+  }
+ ],
+ "ay0": 16,
+ "ax0": null,
+ "init_sel": "0002nuguepuujf",
+ "configs_enumerated": 2449440,
+ "winning_configs": 1,
+ "min_cost": 40,
+ "cost_hist_winning": {
+  "40": 1
+ },
+ "optimal_configs": [
+  {
+   "ax": null,
+   "ay": 9,
+   "s0": [
+    11,
+    14
+   ],
+   "build-host": [
+    3,
+    14
+   ]
+  }
+ ],
+ "wins_with_cost_le_F_minus_1": 0,
+ "F_target": 40,
+ "runtime_s": 0.1,
+ "source_sha256": "b965d2faaa4a4d9119c20eb51af0fb2b657fb52fb9884919863a48f2230c4272"
+}

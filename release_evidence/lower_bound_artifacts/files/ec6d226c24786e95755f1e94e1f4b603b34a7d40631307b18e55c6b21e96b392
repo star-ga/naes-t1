@@ -1,0 +1,32 @@
+{
+ "old": "old/tu93/2b534c15/tu93.py",
+ "new": "new/tu93/0768757b/tu93.py",
+ "old_tokens": 3019,
+ "new_tokens": 3019,
+ "renamed": 141,
+ "mapped": 287,
+ "n_hunks": 1,
+ "hunks": [
+  {
+   "op": "map_violation",
+   "where_old": "Tu93:__init__",
+   "where_new": "Tu93:__init__",
+   "old": "Camera",
+   "new": "helhhqxnwe",
+   "expected_new": "Camera"
+  }
+ ],
+ "string_map": {
+  "\"\"\".\"\"\"": "\"\"\".\"\"\"",
+  "'tu93'": "'tu93'",
+  "'StepCounter'": "'StepCounter'",
+  "'vhlesexlqd'": "'0005uvnhiglpvh'",
+  "'vllvfeggte'": "'0001haidilggfh'",
+  "'zzuxulcort'": "'0020npxxteirsg'",
+  "'natiyqayts'": "'0023otenflmryc'",
+  "'albwnmiahg'": "'0017unajnymcki'",
+  "'rlkxuujqdr'": "'0002ebnnauydmr'",
+  "'qfgklunikd'": "'0003zgknydacap'",
+  "'xboyuzuyxv'": "'0015msvpvzxhqf'"
+ }
+}

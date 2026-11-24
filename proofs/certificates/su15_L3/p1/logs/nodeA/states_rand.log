@@ -1,0 +1,1 @@
+CHK_STATES set=rand states=300000 clicks=1228800000 |S|0=1010052866 |S|1=138114335 |S|2same=11424098 |S|2diff=32364131 |S|>=3=34622028 win_clicks=2222542 lossy_clicks=1552563 class_violations=0 mass_violations=0

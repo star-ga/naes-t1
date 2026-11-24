@@ -1,0 +1,365 @@
+fn main() -> i64 {
+    let mut comm_p: i64 = 0;
+    let mut comm_n: i64 = 0;
+    let mut out_p: i64 = 0;
+    let mut out_n: i64 = 0;
+    let mut have_out: i64 = 0;
+    let mut man_p: i64 = 0;
+    let mut man_n: i64 = 0;
+    let mut have_man: i64 = 0;
+    let mut dry: i64 = 0;
+    let mut ver: i64 = 0;
+    let only_p: i64 = __mind_alloc(32 * 8);
+    let only_n: i64 = __mind_alloc(32 * 8);
+    let mut n_only: i64 = 0;
+    let argc: i64 = fr_argc();
+    let mut i: i64 = 1;
+    while i < argc {
+        let a: String = fr_argv(i);
+        if fr_streq(a, "--community") == 1 {
+            if i + 1 >= argc {
+                return fr_usage();
+            }
+            let v: String = fr_argv(i + 1);
+            comm_p = string_addr(v);
+            comm_n = string_len(v);
+            i = i + 2;
+        } else {
+            if fr_starts(a, "--community=") == 1 {
+                let v: String = fr_after(a, "--community=");
+                comm_p = string_addr(v);
+                comm_n = string_len(v);
+                i = i + 1;
+            } else {
+                if fr_streq(a, "--out") == 1 {
+                    if i + 1 >= argc {
+                        return fr_usage();
+                    }
+                    let v: String = fr_argv(i + 1);
+                    out_p = string_addr(v);
+                    out_n = string_len(v);
+                    have_out = 1;
+                    i = i + 2;
+                } else {
+                    if fr_starts(a, "--out=") == 1 {
+                        let v: String = fr_after(a, "--out=");
+                        out_p = string_addr(v);
+                        out_n = string_len(v);
+                        have_out = 1;
+                        i = i + 1;
+                    } else {
+                        if fr_streq(a, "--manifest") == 1 {
+                            if i + 1 >= argc {
+                                return fr_usage();
+                            }
+                            let v: String = fr_argv(i + 1);
+                            man_p = string_addr(v);
+                            man_n = string_len(v);
+                            have_man = 1;
+                            i = i + 2;
+                        } else {
+                            if fr_starts(a, "--manifest=") == 1 {
+                                let v: String = fr_after(a, "--manifest=");
+                                man_p = string_addr(v);
+                                man_n = string_len(v);
+                                have_man = 1;
+                                i = i + 1;
+                            } else {
+                                if fr_streq(a, "--only") == 1 {
+                                    if i + 1 >= argc {
+                                        return fr_usage();
+                                    }
+                                    if n_only >= 32 {
+                                        return fr_usage();
+                                    }
+                                    let v: String = fr_argv(i + 1);
+                                    __mind_store_i64(only_p + n_only * 8, string_addr(v));
+                                    __mind_store_i64(only_n + n_only * 8, string_len(v));
+                                    n_only = n_only + 1;
+                                    i = i + 2;
+                                } else {
+                                    if fr_starts(a, "--only=") == 1 {
+                                        if n_only >= 32 {
+                                            return fr_usage();
+                                        }
+                                        let v: String = fr_after(a, "--only=");
+                                        __mind_store_i64(only_p + n_only * 8, string_addr(v));
+                                        __mind_store_i64(only_n + n_only * 8, string_len(v));
+                                        n_only = n_only + 1;
+                                        i = i + 1;
+                                    } else {
+                                        if fr_streq(a, "--delay") == 1 {
+                                            if i + 1 >= argc {
+                                                return fr_usage();
+                                            }
+                                            i = i + 2;
+                                        } else {
+                                            if fr_starts(a, "--delay=") == 1 {
+                                                i = i + 1;
+                                            } else {
+                                                if fr_streq(a, "--dry-run") == 1 {
+                                                    dry = 1;
+                                                    i = i + 1;
+                                                } else {
+                                                    if fr_streq(a, "--verify") == 1 {
+                                                        ver = 1;
+                                                        i = i + 1;
+                                                    } else {
+                                                        return fr_usage();
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    let cbuf: i64 = fr_bnew(4096);
+    if comm_n == 0 {
+        let _d: i64 = fr_default_community(cbuf);
+        if fr_blen(cbuf) == 0 {
+            return 1;
+        }
+        comm_p = fr_bdata(cbuf);
+        comm_n = fr_blen(cbuf);
+    }
+    let cap: i64 = 512;
+    let slots: i64 = __mind_alloc(8 * 8);
+    let mut s: i64 = 0;
+    while s < 8 {
+        __mind_store_i64(slots + s * 8, __mind_alloc(cap * 8));
+        s = s + 1;
+    }
+    let nrecs: i64 = fr_plan(comm_p, comm_n, only_p, only_n, n_only, slots, cap);
+    if nrecs < 0 {
+        return 1;
+    }
+    if dry == 1 {
+        let mut cards: i64 = 0;
+        let mut seen: i64 = 0;
+        let mut prev_p: i64 = 0;
+        let mut prev_n: i64 = 0;
+        let mut r: i64 = 0;
+        while r < nrecs {
+            let sc_p: i64 = fr_at(slots, 0, r);
+            let sc_n: i64 = fr_at(slots, 1, r);
+            let line: i64 = fr_bnew(comm_n + out_n + sc_n + 256);
+            let mut lb: i64 = fr_bmem(line, sc_p, sc_n);
+            lb = fr_bpush(lb, 9);
+            lb = fr_bmem(lb, fr_at(slots, 6, r), fr_at(slots, 7, r));
+            lb = fr_bpush(lb, 9);
+            let dest: i64 = fr_dest(comm_p, comm_n, out_p, out_n, have_out, sc_p, sc_n, fr_at(slots, 2, r), fr_at(slots, 3, r), fr_at(slots, 4, r), fr_at(slots, 5, r));
+            lb = fr_bmem(lb, fr_bdata(dest), fr_blen(dest));
+            lb = fr_bpush(lb, 10);
+            let _e: i64 = fr_emit(line);
+            if seen == 0 {
+                cards = cards + 1;
+                seen = 1;
+                prev_p = sc_p;
+                prev_n = sc_n;
+            } else {
+                if fr_eq(sc_p, sc_n, prev_p, prev_n) == 0 {
+                    cards = cards + 1;
+                    prev_p = sc_p;
+                    prev_n = sc_n;
+                }
+            }
+            r = r + 1;
+        }
+        let fin: i64 = fr_bnew(80);
+        let mut f: i64 = fr_bstr(fin, "# ");
+        f = fr_bpush_i64(f, nrecs);
+        f = fr_bstr(f, " recordings in ");
+        f = fr_bpush_i64(f, cards);
+        f = fr_bstr(f, " scorecards (dry run: no network)\n");
+        let _fe: i64 = fr_emit(fin);
+        return 0;
+    }
+    if ver == 1 {
+        if have_man == 0 {
+            return fr_need_manifest();
+        }
+        let mb: i64 = fr_bnew(man_n + 1);
+        let _mm: i64 = fr_bmem(mb, man_p, man_n);
+        let mslots: i64 = __mind_alloc(8 * 8);
+        s = 0;
+        while s < 8 {
+            __mind_store_i64(mslots + s * 8, __mind_alloc(cap * 8));
+            s = s + 1;
+        }
+        let nrows: i64 = fr_load_manifest(fr_cstr(mb), mslots, cap);
+        if nrows < 0 {
+            return 1;
+        }
+        let mut bad: i64 = 0;
+        let mut r: i64 = 0;
+        while r < nrecs {
+            let sc_p: i64 = fr_at(slots, 0, r);
+            let sc_n: i64 = fr_at(slots, 1, r);
+            let g_p: i64 = fr_at(slots, 2, r);
+            let g_n: i64 = fr_at(slots, 3, r);
+            let id_p: i64 = fr_at(slots, 4, r);
+            let id_n: i64 = fr_at(slots, 5, r);
+            let dest: i64 = fr_dest(comm_p, comm_n, out_p, out_n, have_out, sc_p, sc_n, g_p, g_n, id_p, id_n);
+            let dc: i64 = fr_cstr(dest);
+            let row: i64 = fr_find_row(mslots, nrows, sc_p, sc_n, g_p, g_n, id_p, id_n);
+            if row < 0 {
+                let bl: i64 = fr_bnew(fr_blen(dest) + 32);
+                let mut b: i64 = fr_bstr(bl, "NOT-IN-MANIFEST\t");
+                b = fr_bmem(b, fr_bdata(dest), fr_blen(dest));
+                b = fr_bpush(b, 10);
+                let _e: i64 = fr_emit(bl);
+                bad = bad + 1;
+            } else {
+                if exists(dc) == 0 {
+                    let bl: i64 = fr_bnew(fr_blen(dest) + 16);
+                    let mut b: i64 = fr_bstr(bl, "MISSING\t");
+                    b = fr_bmem(b, fr_bdata(dest), fr_blen(dest));
+                    b = fr_bpush(b, 10);
+                    let _e: i64 = fr_emit(bl);
+                    bad = bad + 1;
+                } else {
+                    let hashed: i64 = fr_hash_file(dc);
+                    if __mind_load_i64(hashed + 24) == 0 {
+                        return 1;
+                    }
+                    let hexb: i64 = fr_bnew(80);
+                    let _hx: i64 = fr_bpush_hex(hexb, __mind_load_i64(hashed + 0), 32);
+                    let want_p: i64 = fr_at(mslots, 6, row);
+                    let want_n: i64 = fr_at(mslots, 7, row);
+                    if fr_eq(fr_bdata(hexb), fr_blen(hexb), want_p, want_n) == 0 {
+                        let bl: i64 = fr_bnew(fr_blen(dest) + 160);
+                        let mut b: i64 = fr_bstr(bl, "MISMATCH\t");
+                        b = fr_bmem(b, fr_bdata(dest), fr_blen(dest));
+                        b = fr_bstr(b, "\tgot ");
+                        b = fr_bmem(b, fr_bdata(hexb), fr_blen(hexb));
+                        b = fr_bstr(b, "\twant ");
+                        b = fr_bmem(b, want_p, want_n);
+                        b = fr_bpush(b, 10);
+                        let _e: i64 = fr_emit(bl);
+                        bad = bad + 1;
+                    }
+                }
+            }
+            r = r + 1;
+        }
+        let fin: i64 = fr_bnew(64);
+        let mut f: i64 = fr_bstr(fin, "# verified ");
+        f = fr_bpush_i64(f, nrecs - bad);
+        f = fr_bpush(f, 47);
+        f = fr_bpush_i64(f, nrecs);
+        f = fr_bpush(f, 10);
+        let _fe: i64 = fr_emit(fin);
+        if bad == 0 { 0 } else { 1 }
+    } else {
+        if have_man == 0 {
+            return fr_need_manifest();
+        }
+        let body: i64 = fr_bnew(4096);
+        let mut bb: i64 = fr_bstr(body, "scorecard_id\tgame_id\tguid\turl\tbytes\tlines\tsha256\tretrieved_utc\n");
+        let mut failed: i64 = 0;
+        let mut wrote: i64 = 0;
+        let mut r: i64 = 0;
+        while r < nrecs {
+            let sc_p: i64 = fr_at(slots, 0, r);
+            let sc_n: i64 = fr_at(slots, 1, r);
+            let g_p: i64 = fr_at(slots, 2, r);
+            let g_n: i64 = fr_at(slots, 3, r);
+            let id_p: i64 = fr_at(slots, 4, r);
+            let id_n: i64 = fr_at(slots, 5, r);
+            let u_p: i64 = fr_at(slots, 6, r);
+            let u_n: i64 = fr_at(slots, 7, r);
+            let dest: i64 = fr_dest(comm_p, comm_n, out_p, out_n, have_out, sc_p, sc_n, g_p, g_n, id_p, id_n);
+            let dc: i64 = fr_cstr(dest);
+            if exists(dc) == 0 {
+                let eb: i64 = fr_bnew(u_n + 64);
+                let mut e: i64 = fr_bstr(eb, "FAIL\t");
+                e = fr_bmem(e, u_p, u_n);
+                e = fr_bstr(e, "\tdownload unsupported\n");
+                let _er: i64 = fr_err(eb);
+                failed = failed + 1;
+            } else {
+                let hashed: i64 = fr_hash_file(dc);
+                if __mind_load_i64(hashed + 24) == 0 {
+                    let eb: i64 = fr_bnew(u_n + 64);
+                    let mut e: i64 = fr_bstr(eb, "FAIL\t");
+                    e = fr_bmem(e, u_p, u_n);
+                    e = fr_bstr(e, "\thash failed\n");
+                    let _er: i64 = fr_err(eb);
+                    failed = failed + 1;
+                } else {
+                    let nbytes: i64 = __mind_load_i64(hashed + 8);
+                    let nlines: i64 = __mind_load_i64(hashed + 16);
+                    let hexb: i64 = fr_bnew(80);
+                    let _hx: i64 = fr_bpush_hex(hexb, __mind_load_i64(hashed + 0), 32);
+                    bb = fr_bmem(bb, sc_p, sc_n);
+                    bb = fr_bpush(bb, 9);
+                    bb = fr_bmem(bb, g_p, g_n);
+                    bb = fr_bpush(bb, 9);
+                    bb = fr_bmem(bb, id_p, id_n);
+                    bb = fr_bpush(bb, 9);
+                    bb = fr_bmem(bb, u_p, u_n);
+                    bb = fr_bpush(bb, 9);
+                    bb = fr_bpush_i64(bb, nbytes);
+                    bb = fr_bpush(bb, 9);
+                    bb = fr_bpush_i64(bb, nlines);
+                    bb = fr_bpush(bb, 9);
+                    bb = fr_bmem(bb, fr_bdata(hexb), fr_blen(hexb));
+                    bb = fr_bpush(bb, 9);
+                    bb = fr_utc(dc, bb);
+                    bb = fr_bpush(bb, 10);
+                    let show: i64 = fr_bnew(160);
+                    let mut sh: i64 = fr_bpush(show, 91);
+                    sh = fr_bpush_i64(sh, r + 1);
+                    sh = fr_bpush(sh, 47);
+                    sh = fr_bpush_i64(sh, nrecs);
+                    sh = fr_bstr(sh, "] ");
+                    let mut sn: i64 = sc_n;
+                    if sn > 8 {
+                        sn = 8;
+                    }
+                    sh = fr_bmem(sh, sc_p, sn);
+                    sh = fr_bpush(sh, 32);
+                    sh = fr_bmem(sh, g_p, g_n);
+                    sh = fr_bpush(sh, 32);
+                    sh = fr_bpush_i64(sh, nbytes);
+                    sh = fr_bstr(sh, " B ");
+                    let mut hn: i64 = fr_blen(hexb);
+                    if hn > 12 {
+                        hn = 12;
+                    }
+                    sh = fr_bmem(sh, fr_bdata(hexb), hn);
+                    sh = fr_bpush(sh, 10);
+                    let _se: i64 = fr_emit(show);
+                    wrote = wrote + 1;
+                }
+            }
+            r = r + 1;
+        }
+        if wrote == 0 {
+            bb = fr_bpush(bb, 10);
+        }
+        let _mk: i64 = fr_parent_mkdir(man_p, man_n);
+        let mb: i64 = fr_bnew(man_n + 1);
+        let _mp: i64 = fr_bmem(mb, man_p, man_n);
+        let wr: i64 = write_string(fr_cstr(mb), fr_bdata(body), fr_blen(body));
+        if wr == 0 {
+            return 1;
+        }
+        let fin: i64 = fr_bnew(man_n + 64);
+        let mut f: i64 = fr_bstr(fin, "# wrote ");
+        f = fr_bpush_i64(f, wrote);
+        f = fr_bstr(f, " rows, ");
+        f = fr_bpush_i64(f, failed);
+        f = fr_bstr(f, " failures -> ");
+        f = fr_bmem(f, man_p, man_n);
+        f = fr_bpush(f, 10);
+        let _fe: i64 = fr_emit(fin);
+        if failed == 0 { 0 } else { 1 }
+    }
+}

@@ -1,0 +1,38 @@
+{
+ "<key withheld>": {
+  "old_direct": {
+   "won_at": "<word withheld>",
+   "len": "<word withheld>"
+  },
+  "new_direct": {
+   "won_at": "<word withheld>",
+   "len": "<word withheld>"
+  },
+  "old_chain": {
+   "won_at": "<word withheld>",
+   "len": "<word withheld>"
+  },
+  "new_chain": {
+   "won_at": "<word withheld>",
+   "len": "<word withheld>"
+  }
+ },
+ "drop_first_click": {
+  "old_direct": {
+   "won_at": null,
+   "len": 30
+  },
+  "new_direct": {
+   "won_at": 30,
+   "len": 30
+  },
+  "old_chain": {
+   "won_at": null,
+   "len": 30
+  },
+  "new_chain": {
+   "won_at": 30,
+   "len": 30
+  }
+ }
+}

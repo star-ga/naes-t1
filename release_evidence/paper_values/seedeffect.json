@@ -1,0 +1,14 @@
+{
+ "macro": "seedeffect",
+ "value": "nothing in the running game: the game constructor accepts no seed, the loader drops it, the engine stores it unread, and seeds 0 and 11 give the same reset frame, sprite digest and win frame, both winning g50t L7 at 41 actions",
+ "seed_replay": "seed_pin/g50t_L7_seed.json",
+ "seed_replay_sha256": "932abb1728f950937561102eb411a0c742905c4313ac0cb52b0629d326af2a0e",
+ "quotes": "seed_pin/QUOTES.md",
+ "quotes_sha256": "58c071f7410b69da14aa8e57ee30a1b769f680af52ddddae6287679c92b0c98f",
+ "g50t_py_sha256": "6f21f2065744e484ac38534f940158034e69f39add3b10a3d9fd258de7293aa9",
+ "seeds_compared": [
+  0,
+  11
+ ],
+ "win_actions": 41
+}

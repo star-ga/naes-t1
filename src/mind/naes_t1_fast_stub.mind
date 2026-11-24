@@ -1,0 +1,37 @@
+// naes_t1_fast_stub.mind: the decision entry points for the MLIR unit.
+//
+// The unit built with the MLIR backend has no grouped-sum kernel. These four
+// functions keep the names and the arguments of the kernel entry points and
+// run the reference walk, so every decision is the same as in the native unit.
+// The bench mode exists only in the x86-64 native build.
+
+// No kernel configuration is needed on the reference walk.
+fn fast_cfg() -> i64 {
+    0
+}
+
+// Workspace for a model returned by load_model. Returns 0 on failure.
+fn fast_prepare(model: i64) -> i64 {
+    prepare(model)
+}
+
+// One decision: action 1..7, or -1 when an activation guard trips.
+fn fast_decide(model: i64, ws: i64, rec: i64) -> i64 {
+    decide(model, ws, rec, 0)
+}
+
+// The click cell of the last decision, -1 when action 6 was not chosen.
+fn fast_cell(ws: i64) -> i64 {
+    result_cell(ws)
+}
+
+fn bench_main(argc: i64, argv: i64) -> i64 {
+    die(2, "naes_t1: bench needs the x86-64 native build\n")
+}
+
+// The multi-worker bench entry (--threads 2 to 24) of the native unit keeps its
+// name and arguments here. This build has no multi-worker kernel: one plain
+// line, exit code 2.
+fn mw_bench_run(cfg: i64, threads: i64) -> i64 {
+    die(2, "naes_t1: multi-worker bench needs the x86-64 native build\n")
+}

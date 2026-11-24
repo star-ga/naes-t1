@@ -1,0 +1,234 @@
+fn fr_only_ok(name_p: i64, name_n: i64, only_p: i64, only_n: i64, n_only: i64) -> i64 {
+    if n_only == 0 {
+        return 1;
+    }
+    let mut i: i64 = 0;
+    while i < n_only {
+        let pp: i64 = __mind_load_i64(only_p + i * 8);
+        let pn: i64 = __mind_load_i64(only_n + i * 8);
+        if name_n >= pn {
+            if fr_eq(name_p, pn, pp, pn) == 1 {
+                return 1;
+            }
+        }
+        i = i + 1;
+    }
+    0
+}
+
+fn fr_parse_url(p: i64, n: i64, out: i64) -> i64 {
+    let marker: String = "/api/recordings/";
+    let mp: i64 = string_addr(marker);
+    let mn: i64 = string_len(marker);
+    let mut at: i64 = 0 - 1;
+    let mut i: i64 = 0;
+    let mut done: i64 = 0;
+    while done == 0 {
+        if i + mn > n {
+            done = 1;
+        } else {
+            if fr_eq(p + i, mn, mp, mn) == 1 {
+                at = i;
+                done = 1;
+            } else {
+                i = i + 1;
+            }
+        }
+    }
+    if at < 0 {
+        return 0;
+    }
+    let g: i64 = at + mn;
+    let mut gend: i64 = g;
+    let mut gdone: i64 = 0;
+    while gdone == 0 {
+        if gend >= n {
+            gdone = 1;
+        } else {
+            if (__mind_load_i8(p + gend) & 255) == 47 {
+                gdone = 1;
+            } else {
+                gend = gend + 1;
+            }
+        }
+    }
+    if gend >= n {
+        return 0;
+    }
+    if gend == g {
+        return 0;
+    }
+    let guid: i64 = gend + 1;
+    let mut idend: i64 = guid;
+    let mut idone: i64 = 0;
+    while idone == 0 {
+        if idend >= n {
+            idone = 1;
+        } else {
+            if (__mind_load_i8(p + idend) & 255) == 47 {
+                idone = 1;
+            } else {
+                idend = idend + 1;
+            }
+        }
+    }
+    if idend == guid {
+        return 0;
+    }
+    __mind_store_i64(out + 0, g);
+    __mind_store_i64(out + 8, gend - g);
+    __mind_store_i64(out + 16, guid);
+    __mind_store_i64(out + 24, idend - guid);
+    1
+}
+
+fn fr_take_line(base: i64, n: i64, pos: i64, out: i64) -> i64 {
+    // out: [next_pos, line_off, line_len]
+    let mut end: i64 = pos;
+    let mut hit: i64 = 0;
+    while end < n {
+        if hit == 0 {
+            if (__mind_load_i8(base + end) & 255) == 10 {
+                hit = 1;
+            } else {
+                end = end + 1;
+            }
+        } else {
+            end = n + end;
+        }
+    }
+    if hit == 1 {
+        end = end - n;
+    }
+    let mut use_n: i64 = end - pos;
+    if use_n > 0 {
+        if (__mind_load_i8(base + pos + use_n - 1) & 255) == 13 {
+            use_n = use_n - 1;
+        }
+    }
+    let mut next: i64 = n;
+    if hit == 1 {
+        next = end + 1;
+    }
+    __mind_store_i64(out + 0, next);
+    __mind_store_i64(out + 8, pos);
+    __mind_store_i64(out + 16, use_n);
+    0
+}
+
+fn fr_plan(comm_p: i64, comm_n: i64, only_p: i64, only_n: i64, n_only: i64, slots: i64, cap: i64) -> i64 {
+    let cbuf: i64 = fr_bnew(comm_n + 1);
+    let _cm: i64 = fr_bmem(cbuf, comm_p, comm_n);
+    let dirs: i64 = read_dir(fr_cstr(cbuf));
+    let nd: i64 = dir_vec_len(dirs);
+    if nd > 256 {
+        return 0 - 1;
+    }
+    let idx: i64 = __mind_alloc((nd + 1) * 8);
+    let mut nd_use: i64 = 0;
+    let mut di: i64 = 0;
+    while di < nd {
+        let e: i64 = dir_vec_get(dirs, di);
+        if direntry_is_dir(e) == 1 {
+            __mind_store_i64(idx + nd_use * 8, di);
+            nd_use = nd_use + 1;
+        }
+        di = di + 1;
+    }
+    let mut si: i64 = 1;
+    while si < nd_use {
+        let key: i64 = __mind_load_i64(idx + si * 8);
+        let ke: i64 = dir_vec_get(dirs, key);
+        let mut sj: i64 = si - 1;
+        let mut moving: i64 = 1;
+        while moving == 1 {
+            if sj < 0 {
+                moving = 0;
+            } else {
+                let oe: i64 = dir_vec_get(dirs, __mind_load_i64(idx + sj * 8));
+                if fr_name_less(direntry_name_addr(ke), direntry_name_len(ke), direntry_name_addr(oe), direntry_name_len(oe)) == 1 {
+                    __mind_store_i64(idx + (sj + 1) * 8, __mind_load_i64(idx + sj * 8));
+                    sj = sj - 1;
+                } else {
+                    moving = 0;
+                }
+            }
+        }
+        __mind_store_i64(idx + (sj + 1) * 8, key);
+        si = si + 1;
+    }
+    let mut nrecs: i64 = 0;
+    let mut k: i64 = 0;
+    while k < nd_use {
+        let e: i64 = dir_vec_get(dirs, __mind_load_i64(idx + k * 8));
+        let np: i64 = direntry_name_addr(e);
+        let nn: i64 = direntry_name_len(e);
+        if fr_only_ok(np, nn, only_p, only_n, n_only) == 1 {
+            let lb: i64 = fr_bnew(comm_n + nn + 16);
+            let mut lp: i64 = fr_bmem(lb, comm_p, comm_n);
+            lp = fr_bpush(lp, 47);
+            lp = fr_bmem(lp, np, nn);
+            lp = fr_bstr(lp, "/links.md");
+            if exists(fr_cstr(lb)) == 1 {
+                let text: i64 = read_to_string(fr_cstr(lb));
+                let base: i64 = __mind_load_i64(text + 0);
+                let tlen: i64 = __mind_load_i64(text + 8);
+                let mut pos: i64 = 0;
+                while pos < tlen {
+                    let info: i64 = __mind_alloc(24);
+                    let _tl: i64 = fr_take_line(base, tlen, pos, info);
+                    pos = __mind_load_i64(info + 0);
+                    let off: i64 = __mind_load_i64(info + 8);
+                    let ln: i64 = __mind_load_i64(info + 16);
+                    if ln > 0 {
+                        let a: i64 = fr_ltrim(base + off, ln);
+                        let b: i64 = fr_rtrim(base + off, ln);
+                        if b > a {
+                            let raw_p: i64 = base + off + a;
+                            let raw_n: i64 = b - a;
+                            let mut url_p: i64 = raw_p;
+                            let mut url_n: i64 = raw_n;
+                            if fr_starts_http(raw_p, raw_n) == 0 {
+                                let host: String = "https://arcprize.org/";
+                                let mut cut: i64 = 0;
+                                if raw_n > 0 {
+                                    if (__mind_load_i8(raw_p) & 255) == 47 {
+                                        cut = 1;
+                                    }
+                                }
+                                let hb: i64 = fr_bnew(string_len(host) + raw_n + 1);
+                                let mut hu: i64 = fr_bstr(hb, host);
+                                hu = fr_bmem(hu, raw_p + cut, raw_n - cut);
+                                url_p = fr_bdata(hb);
+                                url_n = fr_blen(hb);
+                            }
+                            let parsed: i64 = __mind_alloc(32);
+                            if fr_parse_url(url_p, url_n, parsed) == 1 {
+                                if nrecs >= cap {
+                                    return 0 - 1;
+                                }
+                                let stable: i64 = fr_copy(url_p, url_n);
+                                let g_off: i64 = __mind_load_i64(parsed + 0);
+                                let g_len: i64 = __mind_load_i64(parsed + 8);
+                                let id_off: i64 = __mind_load_i64(parsed + 16);
+                                let id_len: i64 = __mind_load_i64(parsed + 24);
+                                let _p0: i64 = fr_put(slots, 0, nrecs, np);
+                                let _p1: i64 = fr_put(slots, 1, nrecs, nn);
+                                let _p2: i64 = fr_put(slots, 2, nrecs, stable + g_off);
+                                let _p3: i64 = fr_put(slots, 3, nrecs, g_len);
+                                let _p4: i64 = fr_put(slots, 4, nrecs, stable + id_off);
+                                let _p5: i64 = fr_put(slots, 5, nrecs, id_len);
+                                let _p6: i64 = fr_put(slots, 6, nrecs, stable);
+                                let _p7: i64 = fr_put(slots, 7, nrecs, url_n);
+                                nrecs = nrecs + 1;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        k = k + 1;
+    }
+    nrecs
+}
+

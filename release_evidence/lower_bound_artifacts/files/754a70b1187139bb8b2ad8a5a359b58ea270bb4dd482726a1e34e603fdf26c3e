@@ -1,0 +1,232 @@
+{
+  "schema": "ar25-early-endpoint-recovery.v1",
+  "rows": [
+    {
+      "instance": "ar25-e3c63847",
+      "level": 1,
+      "floor": 15,
+      "start": {
+        "shape": [
+          6,
+          5
+        ],
+        "axis": [
+          10,
+          0
+        ],
+        "selected": "shape",
+        "history": [],
+        "level_index": 0
+      },
+      "canonical_prefix": [],
+      "all_native_endpoint_goal_checks": 361,
+      "winning_endpoints": [
+        {
+          "shape": [
+            1,
+            15
+          ],
+          "axis": [
+            10,
+            0
+          ],
+          "movement": 15,
+          "selections": 0,
+          "lower_bound": 15
+        }
+      ],
+      "minimum_endpoint_lower_bound": 15,
+      "no_endpoint_below_floor": true,
+      "witness": [
+        "D",
+        "D",
+        "D",
+        "D",
+        "D",
+        "D",
+        "D",
+        "D",
+        "D",
+        "L",
+        "L",
+        "L",
+        "L",
+        "L",
+        "D"
+      ],
+      "fresh_native_first_completion": 15,
+      "source_sha256": "5533cb51677292d28909b9ea754c49a4692f1730104b3715a374e7d0df55e08b"
+    },
+    {
+      "instance": "ar25-e3c63847",
+      "level": 2,
+      "floor": 11,
+      "start": {
+        "shape": [
+          15,
+          6
+        ],
+        "axis": [
+          12,
+          -3
+        ],
+        "selected": "axis",
+        "history": [],
+        "level_index": 1
+      },
+      "canonical_prefix": [
+        "D",
+        "D",
+        "D",
+        "D",
+        "D",
+        "D",
+        "D",
+        "D",
+        "D",
+        "L",
+        "L",
+        "L",
+        "L",
+        "L",
+        "D"
+      ],
+      "all_native_endpoint_goal_checks": 6426,
+      "winning_endpoints": [
+        {
+          "shape": [
+            1,
+            14
+          ],
+          "axis": [
+            3,
+            -3
+          ],
+          "movement": 31,
+          "selections": 1,
+          "lower_bound": 32
+        },
+        {
+          "shape": [
+            3,
+            14
+          ],
+          "axis": [
+            4,
+            -3
+          ],
+          "movement": 28,
+          "selections": 1,
+          "lower_bound": 29
+        },
+        {
+          "shape": [
+            5,
+            14
+          ],
+          "axis": [
+            5,
+            -3
+          ],
+          "movement": 25,
+          "selections": 1,
+          "lower_bound": 26
+        },
+        {
+          "shape": [
+            7,
+            14
+          ],
+          "axis": [
+            6,
+            -3
+          ],
+          "movement": 22,
+          "selections": 1,
+          "lower_bound": 23
+        },
+        {
+          "shape": [
+            9,
+            14
+          ],
+          "axis": [
+            7,
+            -3
+          ],
+          "movement": 19,
+          "selections": 1,
+          "lower_bound": 20
+        },
+        {
+          "shape": [
+            11,
+            14
+          ],
+          "axis": [
+            8,
+            -3
+          ],
+          "movement": 16,
+          "selections": 1,
+          "lower_bound": 17
+        },
+        {
+          "shape": [
+            13,
+            14
+          ],
+          "axis": [
+            9,
+            -3
+          ],
+          "movement": 13,
+          "selections": 1,
+          "lower_bound": 14
+        },
+        {
+          "shape": [
+            15,
+            14
+          ],
+          "axis": [
+            10,
+            -3
+          ],
+          "movement": 10,
+          "selections": 1,
+          "lower_bound": 11
+        }
+      ],
+      "minimum_endpoint_lower_bound": 11,
+      "no_endpoint_below_floor": true,
+      "witness": [
+        "L",
+        "L",
+        "A5",
+        "D",
+        "D",
+        "D",
+        "D",
+        "D",
+        "D",
+        "D",
+        "D"
+      ],
+      "fresh_native_first_completion": 11,
+      "source_sha256": "5533cb51677292d28909b9ea754c49a4692f1730104b3715a374e7d0df55e08b"
+    }
+  ],
+  "source": "environment_files/ar25/e3c63847/ar25.py",
+  "source_sha256": "5533cb51677292d28909b9ea754c49a4692f1730104b3715a374e7d0df55e08b",
+  "prover_sha256": "62317e95eb2dc334084a1d9339b9b4531c7cff80ff490b4721810f21cfa20176",
+  "source_theorem": {
+    "moves": "A1..4 move one selected element by one grid unit or are no-ops. Shape bounds and movable vertical-axis x bounds are exhaustive in the enumeration.",
+    "selection": "A5 and every A6 payload only change selection. Each finally displaced element must have been selected for a forward move. Except the initially selected element, each needs at least one selection action, distinct from movement actions.",
+    "undo": "Only an effective unit movement pushes the complete position vector. Selection never changes positions or history. With no rotation, induction on movement/push and undo/pop shows each undo reverses one unit edge. No history-depth cap is used in the bound.",
+    "win": "One unfiltered shape and one vertical reflection axis, no rotations. Goal success depends only on direct/reflected occupied pixels; it is verified against native etzeptsuxx at every enumerated endpoint.",
+    "budget": "Ignoring move budget and animation restrictions enlarges reachability and is safe for a lower bound. Fresh canonical replay attains both bounds with actual progression.",
+    "scope": "Non-RESET action IDs1..7; all display click coordinates. Initial native RESET plus a legal earlier-level prefix establishes the canonical start. Research proof only, no runtime PRF0 claim."
+  },
+  "elapsed_seconds": 0.4008258600078989
+}

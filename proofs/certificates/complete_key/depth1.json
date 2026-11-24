@@ -1,0 +1,299 @@
+{
+ "program_sha256": "5806a0b8b52bde31679d2cec2a59dd42b736b0336505ec339318f7e8852dbb4b",
+ "games": [
+  {
+   "game": "ar25",
+   "official_game_sha256": "b965d2faaa4a4d9119c20eb51af0fb2b657fb52fb9884919863a48f2230c4272",
+   "legal_single_actions": 4102,
+   "level1_wins_at_depth_one": [],
+   "null_coordinate_probe": {
+    "exception": "TypeError",
+    "message": "unsupported operand type(s) for -: 'NoneType' and 'int'",
+    "levels_completed_after": 0,
+    "state_after": "NOT_FINISHED"
+   }
+  },
+  {
+   "game": "bp35",
+   "official_game_sha256": "e9aecb52c629c3e742276c2db04b81f91555051d8617b6cbc58bac410824867f",
+   "legal_single_actions": 4102,
+   "level1_wins_at_depth_one": [],
+   "null_coordinate_probe": {
+    "exception": "TypeError",
+    "message": "unsupported operand type(s) for +: 'NoneType' and 'int'",
+    "levels_completed_after": 0,
+    "state_after": "NOT_FINISHED"
+   }
+  },
+  {
+   "game": "cd82",
+   "official_game_sha256": "dafeabff60a3a99b5c93629f8da0d8f555b873ef16a522247d6197b1b3addbcb",
+   "legal_single_actions": 4102,
+   "level1_wins_at_depth_one": [],
+   "null_coordinate_probe": {
+    "exception": "TypeError",
+    "message": "unsupported operand type(s) for -: 'NoneType' and 'int'",
+    "levels_completed_after": 0,
+    "state_after": "NOT_FINISHED"
+   }
+  },
+  {
+   "game": "cn04",
+   "official_game_sha256": "29977e145a0374b5842d360507f045029c3f4b22373612152e713c14691e01dc",
+   "legal_single_actions": 4102,
+   "level1_wins_at_depth_one": [],
+   "null_coordinate_probe": {
+    "exception": "TypeError",
+    "message": "int() argument must be a string, a bytes-like object or a real number, not 'NoneType'",
+    "levels_completed_after": 0,
+    "state_after": "NOT_FINISHED"
+   }
+  },
+  {
+   "game": "dc22",
+   "official_game_sha256": "74abe3523bd6bc8a0948991caa0ca71855e38542ba2123653a03485e064f252e",
+   "legal_single_actions": 4102,
+   "level1_wins_at_depth_one": [],
+   "null_coordinate_probe": {
+    "exception": "TypeError",
+    "message": "unsupported operand type(s) for -: 'NoneType' and 'int'",
+    "levels_completed_after": 0,
+    "state_after": "NOT_FINISHED"
+   }
+  },
+  {
+   "game": "ft09",
+   "official_game_sha256": "aa5b54f48a29da9f276c3df0dc04de728002f523384ab868c85d56d819cd0783",
+   "legal_single_actions": 4102,
+   "level1_wins_at_depth_one": [],
+   "null_coordinate_probe": {
+    "exception": "TypeError",
+    "message": "unsupported operand type(s) for -: 'NoneType' and 'int'",
+    "levels_completed_after": 0,
+    "state_after": "NOT_FINISHED"
+   }
+  },
+  {
+   "game": "g50t",
+   "official_game_sha256": "6f21f2065744e484ac38534f940158034e69f39add3b10a3d9fd258de7293aa9",
+   "legal_single_actions": 4102,
+   "level1_wins_at_depth_one": [],
+   "null_coordinate_probe": {
+    "exception": null,
+    "levels_completed": 0,
+    "state": "NOT_FINISHED"
+   }
+  },
+  {
+   "game": "ka59",
+   "official_game_sha256": "3e8341f4c317ceb9992ca54e8ad453ee4e8a04547b27a907f4a560a9a30d857e",
+   "legal_single_actions": 4102,
+   "level1_wins_at_depth_one": [],
+   "null_coordinate_probe": {
+    "exception": "TypeError",
+    "message": "unsupported operand type(s) for -: 'NoneType' and 'int'",
+    "levels_completed_after": 0,
+    "state_after": "NOT_FINISHED"
+   }
+  },
+  {
+   "game": "lf52",
+   "official_game_sha256": "a6b01973a0905a447f6b92d77745719ebb001f9f94ff5bb0076200ef16839030",
+   "legal_single_actions": 4102,
+   "level1_wins_at_depth_one": [],
+   "null_coordinate_probe": {
+    "exception": "TypeError",
+    "message": "unsupported operand type(s) for /: 'NoneType' and 'float'",
+    "levels_completed_after": 0,
+    "state_after": "NOT_FINISHED"
+   }
+  },
+  {
+   "game": "lp85",
+   "official_game_sha256": "7d10baec7dd29d07e574bd47ee1ec7912542a72632077a5446798221f41c4ae9",
+   "legal_single_actions": 4102,
+   "level1_wins_at_depth_one": [],
+   "null_coordinate_probe": {
+    "exception": "TypeError",
+    "message": "unsupported operand type(s) for -: 'NoneType' and 'int'",
+    "levels_completed_after": 0,
+    "state_after": "NOT_FINISHED"
+   }
+  },
+  {
+   "game": "ls20",
+   "official_game_sha256": "298c810da2850d557c95d92a2cbd846df29a45d7134e20888617bedf5dafcd92",
+   "legal_single_actions": 4102,
+   "level1_wins_at_depth_one": [],
+   "null_coordinate_probe": {
+    "exception": null,
+    "levels_completed": 0,
+    "state": "NOT_FINISHED"
+   }
+  },
+  {
+   "game": "m0r0",
+   "official_game_sha256": "fc3954236f712759c2a5baaada09bb3244e217e022086dc9ec8f6e6fe101d797",
+   "legal_single_actions": 4102,
+   "level1_wins_at_depth_one": [],
+   "null_coordinate_probe": {
+    "exception": "TypeError",
+    "message": "unsupported operand type(s) for -: 'NoneType' and 'int'",
+    "levels_completed_after": 0,
+    "state_after": "NOT_FINISHED"
+   }
+  },
+  {
+   "game": "r11l",
+   "official_game_sha256": "95d58ebaa8c758e905821bb4f5881d47166c8f5aec158bfea7585902c01040d0",
+   "legal_single_actions": 4102,
+   "level1_wins_at_depth_one": [],
+   "null_coordinate_probe": {
+    "exception": "TypeError",
+    "message": "unsupported operand type(s) for -: 'NoneType' and 'int'",
+    "levels_completed_after": 0,
+    "state_after": "NOT_FINISHED"
+   }
+  },
+  {
+   "game": "re86",
+   "official_game_sha256": "cf3c1520e17f0b70e7a3cea0e680601a591befce306b4dd1926c735a7d3b65e8",
+   "legal_single_actions": 4102,
+   "level1_wins_at_depth_one": [],
+   "null_coordinate_probe": {
+    "exception": null,
+    "levels_completed": 0,
+    "state": "NOT_FINISHED"
+   }
+  },
+  {
+   "game": "s5i5",
+   "official_game_sha256": "341f85bac1fb5ca7a3315a367405c3c993a57ce4dd0ff01cc8aaa72bf6c6ed34",
+   "legal_single_actions": 4102,
+   "level1_wins_at_depth_one": [],
+   "null_coordinate_probe": {
+    "exception": "TypeError",
+    "message": "unsupported operand type(s) for -: 'NoneType' and 'int'",
+    "levels_completed_after": 0,
+    "state_after": "NOT_FINISHED"
+   }
+  },
+  {
+   "game": "sb26",
+   "official_game_sha256": "dbb4877853a8d30f84e28d26f4a3d6ad7d2d1018602e82ccb5a62284043984f3",
+   "legal_single_actions": 4102,
+   "level1_wins_at_depth_one": [],
+   "null_coordinate_probe": {
+    "exception": "TypeError",
+    "message": "'>=' not supported between instances of 'NoneType' and 'int'",
+    "levels_completed_after": 0,
+    "state_after": "NOT_FINISHED"
+   }
+  },
+  {
+   "game": "sc25",
+   "official_game_sha256": "871a507cf340d1e4a3271205a71bb5433f20c2b0e427f7ce40da47060cdd4392",
+   "legal_single_actions": 4102,
+   "level1_wins_at_depth_one": [],
+   "null_coordinate_probe": {
+    "exception": null,
+    "levels_completed": 0,
+    "state": "NOT_FINISHED"
+   }
+  },
+  {
+   "game": "sk48",
+   "official_game_sha256": "b6ca05eed7ba81fe5a6a26c58410fa7daddf2039d3d1c42f600aaf9f6f0111e3",
+   "legal_single_actions": 4102,
+   "level1_wins_at_depth_one": [],
+   "null_coordinate_probe": {
+    "exception": "TypeError",
+    "message": "'>=' not supported between instances of 'NoneType' and 'int'",
+    "levels_completed_after": 0,
+    "state_after": "NOT_FINISHED"
+   }
+  },
+  {
+   "game": "sp80",
+   "official_game_sha256": "2306d62311a3cc027250217d86cb4e012898edc7647a7c291ade23f36c9b9715",
+   "legal_single_actions": 4102,
+   "level1_wins_at_depth_one": [],
+   "null_coordinate_probe": {
+    "exception": "TypeError",
+    "message": "unsupported operand type(s) for -: 'NoneType' and 'int'",
+    "levels_completed_after": 0,
+    "state_after": "NOT_FINISHED"
+   }
+  },
+  {
+   "game": "su15",
+   "official_game_sha256": "a5f91f7c963d6ca6447dae0ab21342b48a3f511601c40dfa8e972bdc59b4651e",
+   "legal_single_actions": 4102,
+   "level1_wins_at_depth_one": [],
+   "null_coordinate_probe": {
+    "exception": "TypeError",
+    "message": "unsupported operand type(s) for -: 'NoneType' and 'int'",
+    "levels_completed_after": 0,
+    "state_after": "NOT_FINISHED"
+   }
+  },
+  {
+   "game": "tn36",
+   "official_game_sha256": "43c30052cdeb230017eb1ec23877050d96297756b86071417868ec61138c9fb7",
+   "legal_single_actions": 4102,
+   "level1_wins_at_depth_one": [],
+   "null_coordinate_probe": {
+    "exception": "TypeError",
+    "message": "unsupported operand type(s) for -: 'NoneType' and 'int'",
+    "levels_completed_after": 0,
+    "state_after": "NOT_FINISHED"
+   }
+  },
+  {
+   "game": "tr87",
+   "official_game_sha256": "3274657a6499af5c7a52390d58a5c5441497ed70b84388e418fdfa6c9601e305",
+   "legal_single_actions": 4102,
+   "level1_wins_at_depth_one": [],
+   "null_coordinate_probe": {
+    "exception": null,
+    "levels_completed": 0,
+    "state": "NOT_FINISHED"
+   }
+  },
+  {
+   "game": "tu93",
+   "official_game_sha256": "80e41888f9f7b1a0c03e02c0aff3814e0fd68eb5b35ef22bb3649c87fc60a23f",
+   "legal_single_actions": 4102,
+   "level1_wins_at_depth_one": [],
+   "null_coordinate_probe": {
+    "exception": null,
+    "levels_completed": 0,
+    "state": "NOT_FINISHED"
+   }
+  },
+  {
+   "game": "vc33",
+   "official_game_sha256": "8afa9f55054b2a2460b6c44ec5c66e120f6d6f4c2289e24d50832a68d1e3fcfd",
+   "legal_single_actions": 4102,
+   "level1_wins_at_depth_one": [],
+   "null_coordinate_probe": {
+    "exception": "TypeError",
+    "message": "unsupported operand type(s) for -: 'NoneType' and 'int'",
+    "levels_completed_after": 0,
+    "state_after": "NOT_FINISHED"
+   }
+  },
+  {
+   "game": "wa30",
+   "official_game_sha256": "0c8b63caee2d092d6c0750fd74e417de682d09973b549046394dadf0437b1477",
+   "legal_single_actions": 4102,
+   "level1_wins_at_depth_one": [],
+   "null_coordinate_probe": {
+    "exception": null,
+    "levels_completed": 0,
+    "state": "NOT_FINISHED"
+   }
+  }
+ ],
+ "games_with_a_depth_one_win": 0
+}

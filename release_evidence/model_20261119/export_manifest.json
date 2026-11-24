@@ -1,0 +1,22 @@
+{
+  "<key withheld>": "<word withheld>",
+  "wrong_actions": 0,
+  "wrong_clicks": 0,
+  "decisions": 5499,
+  "click_decisions": 1636,
+  "layers": 11,
+  "ternary_values_compared": 324096,
+  "scale_bias_binary32_values_compared": 1168,
+  "lossless": true,
+  "format": "NAEST1W",
+  "version": 1,
+  "games": 25,
+  "fixture_record_bytes": 8200,
+  "fixture_bytes": 45091812,
+  "<key withheld>": "<word withheld>",
+  "sha256": {
+    "released_weights": "fa54f507fdf9a9c74a8bc22d95a1c970e3528b3fe1707b6eb61d74bad2419fec",
+    "fixture_bin": "a2dc9485252ddd922d742f7e36191fa92a20bbdb7680a2ca1c378874ecd7b925",
+    "decision_stream": "4d2d98f711a1209eace8f3841952e39d4d75870d48079c3175b361bba9746396"
+  }
+}

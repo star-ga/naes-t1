@@ -1,0 +1,378 @@
+fn cc_usage() -> i64 {
+    let m: String = "check_community: error: unrecognised argument\n";
+    let _w: i64 = __mind_write(2, string_addr(m), string_len(m), 0 - 1);
+    2
+}
+
+fn main() -> i64 {
+    let mut community_p: i64 = 0;
+    let mut community_n: i64 = 0;
+    let mut csv_p: i64 = 0;
+    let mut csv_n: i64 = 0;
+    let mut rec_p: i64 = 0;
+    let mut rec_n: i64 = 0;
+    let mut have_rec: i64 = 0;
+    let argc: i64 = cc_argc();
+    let mut i: i64 = 1;
+    while i < argc {
+        let a: String = cc_argv(i);
+        if cc_streq(a, "--community") == 1 {
+            if i + 1 >= argc {
+                return cc_usage();
+            }
+            let v: String = cc_argv(i + 1);
+            community_p = string_addr(v);
+            community_n = string_len(v);
+            i = i + 2;
+        } else {
+            if cc_starts(a, "--community=") == 1 {
+                community_p = string_addr(a) + 12;
+                community_n = string_len(a) - 12;
+                i = i + 1;
+            } else {
+                if cc_streq(a, "--csv") == 1 {
+                    if i + 1 >= argc {
+                        return cc_usage();
+                    }
+                    let v: String = cc_argv(i + 1);
+                    csv_p = string_addr(v);
+                    csv_n = string_len(v);
+                    i = i + 2;
+                } else {
+                    if cc_starts(a, "--csv=") == 1 {
+                        csv_p = string_addr(a) + 6;
+                        csv_n = string_len(a) - 6;
+                        i = i + 1;
+                    } else {
+                        if cc_streq(a, "--recordings") == 1 {
+                            if i + 1 >= argc {
+                                return cc_usage();
+                            }
+                            let v: String = cc_argv(i + 1);
+                            rec_p = string_addr(v);
+                            rec_n = string_len(v);
+                            have_rec = 1;
+                            i = i + 2;
+                        } else {
+                            if cc_starts(a, "--recordings=") == 1 {
+                                rec_p = string_addr(a) + 13;
+                                rec_n = string_len(a) - 13;
+                                have_rec = 1;
+                                i = i + 1;
+                            } else {
+                                return cc_usage();
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    let cbuf: i64 = cc_bnew(4096);
+    if community_n == 0 {
+        let _d: i64 = cc_default_community(cbuf);
+        if cc_blen(cbuf) == 0 {
+            return 1;
+        }
+        community_p = cc_bdata(cbuf);
+        community_n = cc_blen(cbuf);
+    }
+    if csv_n == 0 {
+        let dflt: String = "data/demo25_levels_mmae.csv";
+        csv_p = string_addr(dflt);
+        csv_n = string_len(dflt);
+    }
+    let csv_b: i64 = cc_bnew(csv_n + 1);
+    let _cb: i64 = cc_bmem(csv_b, csv_p, csv_n);
+    let csv_text: i64 = cc_load(cc_cstr(csv_b));
+    let csv_addr: i64 = __mind_load_i64(csv_text + 0);
+    let csv_len: i64 = __mind_load_i64(csv_text + 8);
+    if csv_len <= 0 {
+        return 1;
+    }
+    let capf: i64 = 256;
+    let gaddr: i64 = __mind_alloc(capf * 8);
+    let glen: i64 = __mind_alloc(capf * 8);
+    let glv: i64 = __mind_alloc(capf * 8);
+    let gfl: i64 = __mind_alloc(capf * 8);
+    let hs: i64 = __mind_alloc(32 * 8);
+    let hl: i64 = __mind_alloc(32 * 8);
+    let mut pos: i64 = 0;
+    let mut nfloors: i64 = 0;
+    let mut row: i64 = 0;
+    let mut col_game: i64 = 0 - 1;
+    let mut col_level: i64 = 0 - 1;
+    let mut col_floor: i64 = 0 - 1;
+    while pos < csv_len {
+        let start: i64 = pos;
+        let mut end: i64 = pos;
+        let mut hit: i64 = 0;
+        while end < csv_len {
+            if hit == 0 {
+                if __mind_load_i8(csv_addr + end) == 10 {
+                    hit = 1;
+                } else {
+                    end = end + 1;
+                }
+            } else {
+                end = end;
+                hit = 1;
+                end = csv_len + end;
+            }
+        }
+        if hit == 1 {
+            // end is csv_len + newline_index. Recover.
+            end = end - csv_len;
+        }
+        let mut use_n: i64 = end - start;
+        if use_n > 0 {
+            if __mind_load_i8(csv_addr + start + use_n - 1) == 13 {
+                use_n = use_n - 1;
+            }
+        }
+        if use_n > 0 {
+            let fs: i64 = __mind_alloc(32 * 8);
+            let fl: i64 = __mind_alloc(32 * 8);
+            let nfields: i64 = cc_csv_fields(csv_addr + start, use_n, fs, fl, 32);
+            if row == 0 {
+                col_game = cc_col(fs, fl, nfields, "game");
+                col_level = cc_col(fs, fl, nfields, "level");
+                col_floor = cc_col(fs, fl, nfields, "proven_floor");
+                if col_game < 0 || col_level < 0 || col_floor < 0 {
+                    return 1;
+                }
+            } else {
+                if nfloors < capf {
+                    if col_game < nfields {
+                        if col_level < nfields {
+                            if col_floor < nfields {
+                                __mind_store_i64(gaddr + nfloors * 8, __mind_load_i64(fs + col_game * 8));
+                                __mind_store_i64(glen + nfloors * 8, __mind_load_i64(fl + col_game * 8));
+                                let lp: i64 = __mind_load_i64(fs + col_level * 8);
+                                let ln: i64 = __mind_load_i64(fl + col_level * 8);
+                                let fp: i64 = __mind_load_i64(fs + col_floor * 8);
+                                let fnn: i64 = __mind_load_i64(fl + col_floor * 8);
+                                __mind_store_i64(glv + nfloors * 8, cc_span_int(lp, ln));
+                                __mind_store_i64(gfl + nfloors * 8, cc_span_int(fp, fnn));
+                                nfloors = nfloors + 1;
+                            }
+                        }
+                    }
+                }
+            }
+            row = row + 1;
+        }
+        if hit == 1 {
+            pos = (end) + 1;
+        } else {
+            pos = csv_len;
+        }
+    }
+    if nfloors != 183 {
+        return 1;
+    }
+    let cdir: i64 = cc_cstr(cc_bmem(cc_bnew(community_n + 1), community_p, community_n));
+    let dirs: i64 = read_dir(cdir);
+    let nd: i64 = dir_vec_len(dirs);
+    let idx: i64 = __mind_alloc((nd + 1) * 8);
+    let mut nd_use: i64 = 0;
+    let mut di: i64 = 0;
+    while di < nd {
+        let e: i64 = dir_vec_get(dirs, di);
+        if direntry_is_dir(e) == 1 {
+            let np: i64 = direntry_name_addr(e);
+            let nn: i64 = direntry_name_len(e);
+            let jb: i64 = cc_bnew(community_n + nn + 24);
+            let mut jp: i64 = cc_bmem(jb, community_p, community_n);
+            jp = cc_bpush(jp, 47);
+            jp = cc_bmem(jp, np, nn);
+            jp = cc_bstr(jp, "/summary.json");
+            if exists(cc_cstr(jp)) == 1 {
+                __mind_store_i64(idx + nd_use * 8, di);
+                nd_use = nd_use + 1;
+            }
+        }
+        di = di + 1;
+    }
+    // insertion sort indices by directory name
+    let mut si: i64 = 1;
+    while si < nd_use {
+        let key: i64 = __mind_load_i64(idx + si * 8);
+        let ke: i64 = dir_vec_get(dirs, key);
+        let mut sj: i64 = si - 1;
+        let mut moving: i64 = 1;
+        while moving == 1 {
+            if sj < 0 {
+                moving = 0;
+            } else {
+                let oe: i64 = dir_vec_get(dirs, __mind_load_i64(idx + sj * 8));
+                if cc_name_less(direntry_name_addr(ke), direntry_name_len(ke), direntry_name_addr(oe), direntry_name_len(oe)) == 1 {
+                    __mind_store_i64(idx + (sj + 1) * 8, __mind_load_i64(idx + sj * 8));
+                    sj = sj - 1;
+                } else {
+                    moving = 0;
+                }
+            }
+        }
+        __mind_store_i64(idx + (sj + 1) * 8, key);
+        si = si + 1;
+    }
+    let mut bad: i64 = 0;
+    let mut k: i64 = 0;
+    while k < nd_use {
+        let e: i64 = dir_vec_get(dirs, __mind_load_i64(idx + k * 8));
+        let np: i64 = direntry_name_addr(e);
+        let nn: i64 = direntry_name_len(e);
+        let base: i64 = cc_bnew(community_n + nn + 4);
+        let mut bp: i64 = cc_bmem(base, community_p, community_n);
+        bp = cc_bpush(bp, 47);
+        bp = cc_bmem(bp, np, nn);
+        let sum_b: i64 = cc_bnew(cc_blen(base) + 20);
+        let _s1: i64 = cc_bmem(sum_b, cc_bdata(base), cc_blen(base));
+        let _s2: i64 = cc_bstr(sum_b, "/summary.json");
+        let root: i64 = cc_parse_file(cc_cstr(sum_b));
+        if root == 0 {
+            return 1;
+        }
+        let name_h: i64 = cc_get(root, "name");
+        if name_h == 0 {
+            return 1;
+        }
+        let name_p: i64 = jv_s_addr(name_h);
+        let name_n: i64 = jv_s_len(name_h);
+        let is_rgb: i64 = cc_eq(name_p, name_n, string_addr("RGB-Agent"), 9);
+        let has_page: i64 = if cc_get(root, "page_score") != 0 { 1 } else { 0 };
+        let leg_p: i64 = __mind_alloc(64 * 8);
+        let leg_n: i64 = __mind_alloc(64 * 8);
+        let mut nleg: i64 = 0;
+        let mut want_won: i64 = 0;
+        let mut want_at: i64 = 0;
+        let mut want_mean: f64 = 0.0;
+        let mut want_cur: f64 = 0.0;
+        if is_rgb == 1 {
+            let r: i64 = cc_get(root, "resetfix_recount");
+            if r == 0 {
+                return 1;
+            }
+            want_won = cc_int(cc_get(r, "levels_won"));
+            want_mean = cc_num(cc_get(r, "mean_mmae_183"));
+            want_at = cc_int(cc_get(r, "levels_at_proven_floor"));
+            want_cur = cc_num(cc_get(r, "mean_mmae_183_current_version_games_only"));
+            nleg = cc_fill_legacy(cc_get(root, "legacy_game_versions"), leg_p, leg_n);
+        } else {
+            if has_page == 1 {
+                want_won = cc_int(cc_get(root, "levels_won_from_recordings"));
+                want_mean = cc_num(cc_get(root, "mean_mmae_over_183"));
+                want_at = cc_int(cc_get(root, "levels_at_proven_floor"));
+                let cur_h: i64 = cc_get(root, "mean_mmae_183_current_version_games_only_legacy_counted_0");
+                if cur_h == 0 {
+                    want_cur = want_mean;
+                } else {
+                    want_cur = cc_num(cur_h);
+                }
+            } else {
+                want_won = cc_int(cc_get(root, "levels_won"));
+                want_mean = cc_num(cc_get(root, "mean_mmae_183"));
+                want_at = cc_int(cc_get(root, "levels_at_proven_floor"));
+                let cur_h: i64 = cc_get(root, "mean_mmae_183_current_version_games_only_legacy_counted_0");
+                if cur_h == 0 {
+                    want_cur = want_mean;
+                } else {
+                    want_cur = cc_num(cur_h);
+                }
+                nleg = cc_fill_legacy(cc_get(root, "legacy_game_versions"), leg_p, leg_n);
+            }
+        }
+        let pl_b: i64 = cc_bnew(cc_blen(base) + 32);
+        let _p1: i64 = cc_bmem(pl_b, cc_bdata(base), cc_blen(base));
+        if is_rgb == 1 {
+            let _p2: i64 = cc_bstr(pl_b, "/per_level_resetfix.json");
+        } else {
+            let _p2: i64 = cc_bstr(pl_b, "/per_level.json");
+        }
+        let pl: i64 = cc_parse_file(cc_cstr(pl_b));
+        if pl == 0 {
+            return 1;
+        }
+        let ng: i64 = jv_tbl_len(pl);
+        let act_cap: i64 = 512;
+        let agp: i64 = __mind_alloc(act_cap * 8);
+        let agn: i64 = __mind_alloc(act_cap * 8);
+        let alv: i64 = __mind_alloc(act_cap * 8);
+        let anv: i64 = __mind_alloc(act_cap * 8);
+        let ghp: i64 = __mind_alloc(64 * 8);
+        let ghn: i64 = __mind_alloc(64 * 8);
+        let ghv: i64 = __mind_alloc(64 * 8);
+        let mut nact: i64 = 0;
+        let mut gi: i64 = 0;
+        let mut ng_store: i64 = 0;
+        while gi < ng {
+            let krec: i64 = jv_tbl_key(pl, gi);
+            let gp: i64 = __mind_load_i64(krec + 0);
+            let gn: i64 = __mind_load_i64(krec + 8);
+            let val: i64 = jv_tbl_val(pl, gi);
+            if ng_store < 64 {
+                __mind_store_i64(ghp + ng_store * 8, gp);
+                __mind_store_i64(ghn + ng_store * 8, gn);
+                __mind_store_i64(ghv + ng_store * 8, val);
+                ng_store = ng_store + 1;
+            }
+            let arr: i64 = cc_get(val, "per_level");
+            let alen: i64 = if arr == 0 { 0 } else { jv_arr_len(arr) };
+            let mut li: i64 = 0;
+            while li < alen {
+                if nact < act_cap {
+                    let elem: i64 = jv_arr_get(arr, li);
+                    __mind_store_i64(agp + nact * 8, gp);
+                    __mind_store_i64(agn + nact * 8, gn);
+                    __mind_store_i64(alv + nact * 8, li + 1);
+                    __mind_store_i64(anv + nact * 8, cc_int(elem));
+                    nact = nact + 1;
+                }
+                li = li + 1;
+            }
+            gi = gi + 1;
+        }
+        let mut sum: f64 = 0.0;
+        let mut sum_c: f64 = 0.0;
+        let mut got_won: i64 = 0;
+        let mut got_at: i64 = 0;
+        let mut stray: i64 = 0;
+        let mut ai: i64 = 0;
+        while ai < nact {
+            let gp: i64 = __mind_load_i64(agp + ai * 8);
+            let gn: i64 = __mind_load_i64(agn + ai * 8);
+            let lv: i64 = __mind_load_i64(alv + ai * 8);
+            let nv: i64 = __mind_load_i64(anv + ai * 8);
+            let fi: i64 = cc_floor_find(gp, gn, lv, gaddr, glen, glv, nfloors);
+            if fi < 0 {
+                stray = 1;
+            } else {
+                let fl: i64 = __mind_load_i64(gfl + fi * 8);
+                let q: f64 = (fl as f64) / (nv as f64);
+                let sq: f64 = q * q;
+                sum = sum + sq;
+                got_won = got_won + 1;
+                if nv == fl {
+                    got_at = got_at + 1;
+                }
+                if cc_legacy_has(gp, gn, leg_p, leg_n, nleg) == 0 {
+                    sum_c = sum_c + sq;
+                }
+            }
+            ai = ai + 1;
+        }
+        let got_mean: f64 = sum / 183.0;
+        let got_cur: f64 = sum_c / 183.0;
+        let mut ok: i64 = 0;
+        if stray == 0 {
+            if got_won == want_won {
+                if got_at == want_at {
+                    if cc_abs_lt(got_mean, want_mean, 0.000005) == 1 {
+                        if cc_abs_lt(got_cur, want_cur, 0.000005) == 1 {
+                            ok = 1;
+                        }
+                    }
+                }
+            }
+        }

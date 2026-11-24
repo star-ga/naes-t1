@@ -1,0 +1,44 @@
+{
+  "artifact_sha256": [
+    {
+      "kind": "safe_statement_count_extract",
+      "sha256": "f9cb36b7b991f92a79f476aaeaf2a9306a4acd2f5d07dfefe32e9617107283b0"
+    },
+    {
+      "kind": "authority_ledger_label",
+      "sha256": "f293e6b784fcfa1c342aa241b3b4fcf122ac8786d0566afc35cf41fa770babad",
+      "status": "withheld"
+    },
+    {
+      "kind": "replay receipt on the current pinned game file (proofs/certificates/lower_replay)",
+      "sha256": "18a0da10a9edfd12e0405de55bdd83497949b3738f3f533e1c3c6b56b8742c1b"
+    },
+    {
+      "kind": "raw output of that replay",
+      "sha256": "3c9486e765c2c24d37509b9800d372665e7bedeb7a016c6d52623b22d42ddfeb"
+    }
+  ],
+  "floor": 26,
+  "game": "wa30",
+  "game_id": "wa30-ee6fef47",
+  "game_levels": 9,
+  "level": 1,
+  "lower_bound": {
+    "kind": "sokoban_astar_hungarian",
+    "statement": "A* retains player position and facing, every box and the held-box relation. Hungarian matching to distinct goals supplies an admissible heuristic; first optimal goal has cost 26. The proof sokoban_astar_hungarian establishes lower bound 26, equal to the floor. A replay on the current pinned game file obtained the bound 26 (verdict MATCH_CURRENT_INPUT_MODEL_ONLY; proofs/certificates/lower_replay/wa30_L1.json). Scope of that replay: Current pinned public engine supplies the level starts by native forward play. Exact A* searches the original external simulator. Its native engine replay and losing proper prefix are checked, but universal simulator/engine coupling is not re-proved; lower-bound scope remains conditional on the original transition and heuristic lemmas. Heuristic value at the start state: 14 (below the floor 26).",
+    "value": 26
+  },
+  "naes_t1_actions": 26,
+  "proof_class": "A*",
+  "proof_detail": "sokoban_astar_hungarian",
+  "schema_version": 1,
+  "source_certificate_sha256": "ebed483ff0ac9359eea361f5144eebe93f7e2d781398102fd8c929309ecab7d4",
+  "status": "proven",
+  "upper_bound": {
+    "expected_levels_completed": 1,
+    "length": 26,
+    "opening_reset_counted": false,
+    "route": "1 1 5 1 1 5 4 4 4 1 5 2 3 3 5 3 3 3 3 3 1 5 4 4 4 5",
+    "seed": 0
+  }
+}

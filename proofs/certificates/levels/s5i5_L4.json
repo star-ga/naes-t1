@@ -1,0 +1,71 @@
+{
+  "artifact_sha256": [
+    {
+      "kind": "safe_statement_count_extract",
+      "sha256": "4f12db61f084dc59fb5c856feff2d15aea956172f2cf5ee5c83c3e655bfd17ba"
+    },
+    {
+      "kind": "authority_ledger_label",
+      "sha256": "c84c3b22750cffa0afffe00d7486950e06c23da19128771b03e0da84fb950c92"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "66a2e4516a3068a618e1725db0c8f50e0acc9f31f3077f4c8ed1c886e349f6cc"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "5bdfadaf67099b99d1c40e025d6dce044c22658fc49353919299df2d16921556"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "61dd664cc97193b7cd6831a5c932482af6995ec8d48cb553bc96f05199e8d72c"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "d05f3ce8171db52a487f95c8a9389e1fd01d7910e8a9a442d7db495d97954e1b"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "ae0a049a336f5ab958283713311ada8b8ee928d6ec5dabbc90e4ecc5014fd2f0"
+    },
+    {
+      "kind": "historical_method_or_search_output",
+      "sha256": "c92da7349f60034efa431c42ac7c7096343e93bf65f4b000e6f34e69ba16ec2c"
+    },
+    {
+      "kind": "record: proofs/certificates/wt_rerun/s5i5_L4.json",
+      "sha256": "81b2904c6f4c39f9a51eacfa6a92ec834551703559605a6c1fd1c496f090bcdb"
+    },
+    {
+      "kind": "record: proofs/certificates/wt_rerun/SUMMARY.md",
+      "sha256": "2b74e38fe0463b8b3f502b5ac31123187e594618c90fbe0022c9b16013a625eb"
+    },
+    {
+      "kind": "record: proofs/certificates/floor_cert/s5i5/levels.json",
+      "sha256": "11f577b1df25b9294bdb18957d81a99f22a7e8b035a575304e5efddad3649ec2"
+    }
+  ],
+  "floor": 30,
+  "game": "s5i5",
+  "game_id": "s5i5-18d95033",
+  "game_levels": 8,
+  "level": 4,
+  "lower_bound": {
+    "kind": "engine_bfs_completion_loop",
+    "statement": "Record: proofs/certificates/wt_rerun (verdict PROVEN on the pinned current engine). Uniform-cost layers 1 through 29 are exhausted over 13,884 states and 138,786 nodes; the first win is at depth 30; replay of the returned path wins at 30. Also proofs/certificates/floor_cert/s5i5 (verdict CONFIRMED, claim code Cl).",
+    "value": 30
+  },
+  "naes_t1_actions": 30,
+  "proof_class": "Exhaustive search",
+  "proof_detail": "engine_bfs_completion_loop",
+  "schema_version": 1,
+  "source_certificate_sha256": "bbf0f94b51ef317b730a51d9a848fbac77ac0fb5ba6ffd1a12020f999ae44577",
+  "status": "proven",
+  "upper_bound": {
+    "expected_levels_completed": 4,
+    "length": 30,
+    "opening_reset_counted": false,
+    "route": "6@12,48 6@12,48 6@12,48 6@12,48 6@12,48 6@57,48 6@57,48 6@57,48 6@34,54 6@34,54 6@34,54 6@6,57 6@6,57 6@6,57 6@6,57 6@6,57 6@6,57 6@6,57 6@34,54 6@34,54 6@34,54 6@34,54 6@57,57 6@34,54 6@57,57 6@34,54 6@57,57 6@34,54 6@57,57 6@34,54",
+    "seed": 0
+  }
+}

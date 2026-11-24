@@ -1,0 +1,87 @@
+{
+  "comparison": "same host, controls ON vs controls OFF (--replay-control-max 0 --sweep-states 0)",
+  "purpose": "the controls must not perturb the search they validate",
+  "levels": {
+    "2": {
+      "per_layer_identical": true,
+      "status": [
+        "CLOSED_NO_WIN",
+        "CLOSED_NO_WIN"
+      ],
+      "layers": [
+        9,
+        9
+      ],
+      "expanded": [
+        448,
+        448
+      ],
+      "edges": [
+        3584,
+        3584
+      ],
+      "visited": [
+        638,
+        638
+      ],
+      "replay_checked": [
+        638,
+        1
+      ],
+      "sweeps": [
+        3,
+        0
+      ],
+      "wall_s": [
+        116.95,
+        13.92
+      ],
+      "mutation_control": [
+        "EARLY_WIN@9",
+        "EARLY_WIN@9"
+      ],
+      "identical": true
+    },
+    "7": {
+      "per_layer_identical": true,
+      "status": [
+        "CLOSED_NO_WIN",
+        "CLOSED_NO_WIN"
+      ],
+      "layers": [
+        13,
+        13
+      ],
+      "expanded": [
+        2568,
+        2568
+      ],
+      "edges": [
+        20544,
+        20544
+      ],
+      "visited": [
+        3294,
+        3294
+      ],
+      "replay_checked": [
+        3000,
+        1
+      ],
+      "sweeps": [
+        3,
+        0
+      ],
+      "wall_s": [
+        788.03,
+        77.15
+      ],
+      "mutation_control": [
+        "EARLY_WIN@13",
+        "EARLY_WIN@13"
+      ],
+      "identical": true
+    }
+  },
+  "all_identical": true
+}

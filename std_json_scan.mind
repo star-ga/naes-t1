@@ -1,0 +1,168 @@
+fn jv_load_byte(buf: i64, i: i64) -> i64 {
+    __mind_load_i8(buf + i)
+}
+
+fn jv_copy_bytes(src: i64, dst: i64, n: i64) -> i64 {
+    let mut i: i64 = 0;
+    while i < n {
+        __mind_store_i8(dst + i, __mind_load_i8(src + i));
+        i = i + 1;
+    }
+    0
+}
+
+fn jv_copy_i64s(src: i64, dst: i64, n: i64) -> i64 {
+    let mut i: i64 = 0;
+    while i < n {
+        __mind_store_i64(dst + i * 8, __mind_load_i64(src + i * 8));
+        i = i + 1;
+    }
+    0
+}
+
+fn jv_bytes_eq(aa: i64, ba: i64, n: i64) -> i64 {
+    let mut i: i64 = 0;
+    let mut ok: i64 = 1;
+    while i < n {
+        if (__mind_load_i8(aa + i)) == (__mind_load_i8(ba + i)) {
+            i = i + 1;
+        } else {
+            ok = 0;
+            i = n;
+        }
+    }
+    ok
+}
+
+fn jv_is_ws(b: i64) -> i64 {
+    if b == 32 {
+        return 1;
+    }
+    if b == 9 {
+        return 1;
+    }
+    if b == 10 {
+        return 1;
+    }
+    if b == 13 {
+        return 1;
+    }
+    0
+}
+
+fn jv_is_digit(b: i64) -> i64 {
+    if b >= 48 {
+        if b <= 57 {
+            return 1;
+        }
+    }
+    0
+}
+
+fn jv_is_hex(b: i64) -> i64 {
+    if b >= 48 {
+        if b <= 57 {
+            return 1;
+        }
+    }
+    if b >= 65 {
+        if b <= 70 {
+            return 1;
+        }
+    }
+    if b >= 97 {
+        if b <= 102 {
+            return 1;
+        }
+    }
+    0
+}
+
+fn jv_hex_val(b: i64) -> i64 {
+    if b >= 48 {
+        if b <= 57 {
+            return b - 48;
+        }
+    }
+    if b >= 65 {
+        if b <= 70 {
+            return b - 55;
+        }
+    }
+    if b >= 97 {
+        if b <= 102 {
+            return b - 87;
+        }
+    }
+    0
+}
+
+// --- String builder ---
+
+fn jvsb_new() -> i64 {
+    let h: i64 = __mind_alloc(24);
+    __mind_store_i64(h + 0, 0);
+    __mind_store_i64(h + 8, 0);
+    __mind_store_i64(h + 16, 0);
+    h
+}
+
+fn jvsb_push(h: i64, b: i64) -> i64 {
+    let old_len: i64 = __mind_load_i64(h + 8);
+    let old_cap: i64 = __mind_load_i64(h + 16);
+    let old_dat: i64 = __mind_load_i64(h + 0);
+    let new_cap: i64 = if old_cap == 0 {
+        16
+    } else {
+        if old_len < old_cap {
+            old_cap
+        } else {
+            old_cap * 2
+        }
+    };
+    let new_dat: i64 = if new_cap == old_cap {
+        old_dat
+    } else {
+        let d: i64 = __mind_alloc(new_cap);
+        let _ = jv_copy_bytes(old_dat, d, old_len);
+        if old_dat != 0 {
+            let _ = __mind_free(old_dat);
+        }
+        d
+    };
+    __mind_store_i8(new_dat + old_len, b);
+    __mind_store_i64(h + 0, new_dat);
+    __mind_store_i64(h + 8, old_len + 1);
+    __mind_store_i64(h + 16, new_cap);
+    0
+}
+
+// --- String heap record ---
+
+fn jvstr_alloc(src_addr: i64, src_len: i64) -> i64 {
+    let h: i64 = __mind_alloc(24);
+    let dat: i64 = if src_len == 0 {
+        0
+    } else {
+        let d: i64 = __mind_alloc(src_len);
+        let _ = jv_copy_bytes(src_addr, d, src_len);
+        d
+    };
+    __mind_store_i64(h + 0, dat);
+    __mind_store_i64(h + 8, src_len);
+    __mind_store_i64(h + 16, src_len);
+    h
+}
+
+fn jvstr_eq_h(a: i64, b: i64) -> i64 {
+    let la: i64 = __mind_load_i64(a + 8);
+    let lb: i64 = __mind_load_i64(b + 8);
+    if la == lb {
+        jv_bytes_eq(__mind_load_i64(a + 0), __mind_load_i64(b + 0), la)
+    } else {
+        0
+    }
+}
+
+// --- Array push ---
+

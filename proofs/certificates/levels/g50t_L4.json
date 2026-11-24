@@ -1,0 +1,87 @@
+{
+  "artifact_sha256": [
+    {
+      "kind": "safe_statement_count_extract",
+      "sha256": "33a0367a45747a65504ca70be20ee5beb6136b1b5fdfcd95ed70b0a7e2bf6ad8"
+    },
+    {
+      "kind": "authority_ledger_label",
+      "sha256": "9cb40128d3010514d932ebac373183f76143c54fedf03969f4d3e5615df7a750"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "015cdf21e8a4c649aebf6b2725d87dc66564b1e1a398594b4546d4594fe94372"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "859f41b14da85f7dcaacb7998288b0dbcbe5dc4822f8696f79722da421952651"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "eaa8e680c523c5d1c46212a11eb1b34fab99cf7ef948e5b00d5f77de1fe701f8"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "755890de240c1da3b9676b11af76fe92cea31bcd41c8095c41bd13ab614a686f"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "96fc029e5ee0164b889aadf94b0b00302a5fc295d520601e86e6c1c6adaa0e75"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "fed9e2cbc7cd8eaa1c5ff91d28adff097838c89fb2f67329980c6da29d1979f4"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "6dd446fa5f9df391b96f2b63cf258bc6689f61fed154005b43a5bc41dfe0f6f2"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "352a5dbed46e7c1ede41b5fd68bb69b6b4c17415751767502c07f08ff22d6d70"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "5f49a1899bbd08b9fd89f4c5270278f3a4b462add4f1b091711687a4957cf409"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "799eeeb3c86db2facc5d07f4d482365d7d86d406520dfbc62b1bad4636b6f4d2"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "900317c6911ef68fe42382eb314812ea3e06fbd3d82f1e8f818e54423fc9484b"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "318d11b822d316325d85b3cf26335d755eea7b84e6dc4ef37475cf991f75bd01"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "1772a4ed5e457d8a7358835d25b8af081dbd11f06360e7297b76b9f5ac677780"
+    }
+  ],
+  "floor": 31,
+  "game": "g50t",
+  "game_id": "g50t-5849a774",
+  "game_levels": 7,
+  "level": 4,
+  "lower_bound": {
+    "kind": "sat_bmc_v4_unsat_at_F_minus_1_main_grid_45_of_45+release_order_grid_15_of_15+index0_closing_grid_15_of_15",
+    "statement": "No winning run of 30 or fewer actions exists. The v4 encoding 1b6ea6a032a32fc7d40b27b32b3a1b4ec81060f499539c1afa2e58f763548b41 is UNSAT at k=30 on the 45-case main grid (15 final-mode, 15 cap-mode and 15 pause-mode cases, pass counts 1 to 15), the 15-case release-order grid, and the 15-case precise index-0 grid. These are solver verdicts. No proof-checker certificate is recorded for these queries. The receipts are in proofs/certificates/g50t-l3-l6-v4/.",
+    "value": 31
+  },
+  "naes_t1_actions": 31,
+  "proof_class": "Bounded SAT",
+  "proof_detail": "sat_bmc_v4_unsat_at_F_minus_1_main_grid_45_of_45+release_order_grid_15_of_15+index0_closing_grid_15_of_15",
+  "schema_version": 1,
+  "source_certificate_sha256": "c0d0b39b42734b3a7a6b33451a28ad2c6c9d42b3a8360b5adabb293cecc53d81",
+  "status": "proven",
+  "upper_bound": {
+    "expected_levels_completed": 4,
+    "length": 31,
+    "opening_reset_counted": false,
+    "route": "2 2 4 2 5 2 2 4 4 1 1 4 4 2 2 2 5 3 3 3 2 2 2 2 2 4 4 4 3 3 3",
+    "seed": 0
+  }
+}

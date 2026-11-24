@@ -1,0 +1,2 @@
+ROOT h=11 (rule 1) bound B=10 flags=3 mode=find root-prune-disabled SLACK=1 (prune only if h-SLACK>remaining: shorter-route attack, NOT a proof run)
+rc=143

@@ -1,0 +1,6 @@
+EST_VIOLATION prefix_len=82 exact=9 est=10 heur=8 A=8 CAP2=16
+EST_VIOLATION prefix_len=83 exact=8 est=9 heur=7 A=7 CAP2=17
+EST_VIOLATION prefix_len=84 exact=7 est=8 heur=6 A=6 CAP2=18
+EST_VIOLATION prefix_len=85 exact=6 est=8 heur=6 A=5 CAP2=19
+EST_VIOLATION prefix_len=86 exact=5 est=7 heur=5 A=4 CAP2=20
+EST pool=192 violations=26 tight=2 states_where_arm>heur=0 EST_MUT=2

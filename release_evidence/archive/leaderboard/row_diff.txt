@@ -1,0 +1,7 @@
+extracted_rows_2026-11-04=22
+extracted_rows_live=22
+cited_in_2026-11-04=14/14
+cited_in_live=14/14
+cited_row_fields_name_score_cost_date=UNCHANGED
+scorecard_ids_only_in_2026-11-04=[]
+scorecard_ids_only_in_live=[]

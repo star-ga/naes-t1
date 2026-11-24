@@ -1,0 +1,320 @@
+// naes_t1_dns.mind — pure-MIND DNS resolver for the NAES-T1 play client:
+// wire format (query builder, name decoder, question match, response parser
+// and the A + AAAA merge).
+//
+// Unit layout. naes_t1_dns_resolve.mind reads /etc/resolv.conf, draws the
+// transaction ids from /dev/urandom and runs the query/retry loop; the UDP
+// exchange and the fd close are a transport seam with two legs:
+//   naes_t1_dns_udp.mind       default backend: libc socket / sendto /
+//                              recvfrom / poll (externs in naes_t1_libc.mind)
+//   naes_t1_dns_udp_stub.mind  native lane (no socket-family rows): the
+//                              exchange returns naes_dns_err_transport()
+// A unit concatenates this file, naes_t1_dns_resolve.mind and exactly one
+// leg. Helpers are prefixed naes_dns_ (0.10.4 rule); no helper is named like
+// a std seed symbol; no alloc/free runs inside a loop.
+//
+// Address-set contract. Results are `out_max` entries of 24 bytes at `out`:
+// family i64 at +0 (2 = AF_INET, 10 = AF_INET6), address bytes at +8 (IPv4
+// in the first four, zero padded). Returns the distinct address count (>= 0)
+// or a negative error code.
+// ---- types, errors ----------------------------------------------------------
+pub fn naes_dns_type_a() -> i64 { 1 }
+pub fn naes_dns_type_aaaa() -> i64 { 28 }
+pub fn naes_dns_type_cname() -> i64 { 5 }
+pub fn naes_dns_err_param() -> i64 { 0 - 1 }
+pub fn naes_dns_err_trunc() -> i64 { 0 - 2 }
+pub fn naes_dns_err_form() -> i64 { 0 - 3 }
+pub fn naes_dns_err_rcode() -> i64 { 0 - 5 }
+pub fn naes_dns_err_transport() -> i64 { 0 - 6 }
+pub fn naes_dns_err_io() -> i64 { 0 - 7 }
+pub fn naes_dns_err_nx() -> i64 { 0 - 8 }
+// ---- byte helpers -----------------------------------------------------------
+fn naes_dns_lower(c: i64) -> i64 { if c >= 65 && c <= 90 { return c + 32; } c }
+fn naes_dns_copy(dst: i64, src: i64, n: i64) -> i64 {
+    let mut i: i64 = 0;
+    while i < n { __mind_store_i8(dst + i, __mind_load_i8(src + i)); i = i + 1; }
+    n
+}
+fn naes_dns_cstr_len(p: i64) -> i64 {
+    let mut n: i64 = 0;
+    while n < 256 { if __mind_load_i8(p + n) == 0 { return n; } n = n + 1; }
+    0
+}
+fn naes_dns_name_eq(a: i64, b: i64) -> i64 {
+    let mut i: i64 = 0;
+    while i < 256 {
+        let ca: i64 = naes_dns_lower(__mind_load_i8(a + i));
+        let cb: i64 = naes_dns_lower(__mind_load_i8(b + i));
+        if ca != cb { return 0; }
+        if ca == 0 { return 1; }
+        i = i + 1;
+    }
+    0
+}
+// 1 when the n label bytes at p hold no NUL and no '.': either byte would let
+// the dotted text of one wire name equal the text of another.
+fn naes_dns_label_ok(p: i64, n: i64) -> i64 {
+    let mut i: i64 = 0;
+    while i < n {
+        let c: i64 = __mind_load_i8(p + i) & 255;
+        if c == 0 || c == 46 { return 0; }
+        i = i + 1;
+    }
+    1
+}
+fn naes_dns_seen(out: i64, count: i64, fam: i64, nbytes: i64, bytes: i64) -> i64 {
+    let mut i: i64 = 0;
+    while i < count {
+        if __mind_load_i64(out + i * 24) == fam {
+            let mut same: i64 = 1;
+            let mut k: i64 = 0;
+            while k < nbytes { if __mind_load_i8(out + i * 24 + 8 + k) != __mind_load_i8(bytes + k) { same = 0; } k = k + 1; }
+            if same == 1 { return 1; }
+        }
+        i = i + 1;
+    }
+    0
+}
+fn naes_dns_store_entry(out: i64, count: i64, fam: i64, nbytes: i64, bytes: i64) -> i64 {
+    __mind_store_i64(out + count * 24, fam);
+    __mind_store_i64(out + count * 24 + 8, 0);
+    __mind_store_i64(out + count * 24 + 16, 0);
+    naes_dns_copy(out + count * 24 + 8, bytes, nbytes);
+    0
+}
+fn naes_dns_rd16(pkt: i64, off: i64) -> i64 {
+    (__mind_load_i8(pkt + off) & 255) * 256 + (__mind_load_i8(pkt + off + 1) & 255)
+}
+fn naes_dns_wr16(buf: i64, off: i64, v: i64) -> i64 {
+    __mind_store_i8(buf + off, (v >> 8) & 255);
+    __mind_store_i8(buf + off + 1, v & 255);
+    off + 2
+}
+// ---- query builder ----------------------------------------------------------
+// Write a recursive query for `name` (dotted, optional trailing dot) of type
+// `qtype` with transaction `id` into buf. Returns the length or an error.
+pub fn naes_dns_build_query(buf: i64, cap: i64, name: i64, name_n: i64, qtype: i64, id: i64) -> i64 {
+    if buf == 0 || cap < 32 || name == 0 || name_n < 1 || name_n > 253 { return naes_dns_err_param(); }
+    if qtype < 1 || qtype > 65535 { return naes_dns_err_param(); }
+    let mut off: i64 = naes_dns_wr16(buf, 0, id);
+    off = naes_dns_wr16(buf, off, 256); off = naes_dns_wr16(buf, off, 1);
+    off = naes_dns_wr16(buf, off, 0); off = naes_dns_wr16(buf, off, 0); off = naes_dns_wr16(buf, off, 0);
+    let mut i: i64 = 0;
+    let mut ls: i64 = 0;
+    while i <= name_n {
+        let mut at_end: i64 = 0;
+        if i == name_n { at_end = 1; }
+        if i < name_n { if __mind_load_i8(name + i) == 46 { at_end = 1; } }
+        if at_end == 1 {
+            let ll: i64 = i - ls;
+            if ll == 0 {
+                if i != name_n { return naes_dns_err_param(); }
+            } else {
+                if ll > 63 { return naes_dns_err_param(); }
+                if off + 1 + ll + 5 > cap { return naes_dns_err_param(); }
+                __mind_store_i8(buf + off, ll);
+                let c: i64 = naes_dns_copy(buf + off + 1, name + ls, ll);
+                off = off + 1 + c;
+            }
+            ls = i + 1;
+        }
+        i = i + 1;
+    }
+    if off + 5 > cap { return naes_dns_err_param(); }
+    __mind_store_i8(buf + off, 0);
+    off = off + 1;
+    off = naes_dns_wr16(buf, off, qtype);
+    naes_dns_wr16(buf, off, 1)
+}
+// ---- name decoder (RFC 1035 compression) ------------------------------------
+// Decode the name at pkt[off] into out as dotted text (NUL-terminated),
+// following compression pointers. Returns the offset after the name as it
+// appears at `off`, or a negative error. A label byte NUL or '.' and a name
+// longer than 253 dotted characters are err_form, so two distinct wire names
+// never decode to the same text.
+pub fn naes_dns_parse_name(pkt: i64, pkt_n: i64, off: i64, out: i64, out_cap: i64) -> i64 {
+    if pkt == 0 || out == 0 || out_cap < 2 { return naes_dns_err_param(); }
+    let mut pos: i64 = off;
+    let mut nxt: i64 = 0 - 1;
+    let mut on: i64 = 0;
+    let mut hops: i64 = 0;
+    let mut go: i64 = 1;
+    while go == 1 {
+        if pos < 0 || pos >= pkt_n { return naes_dns_err_trunc(); }
+        // labels only move pos forward; only pointer jumps can loop
+        if hops > 32 { return naes_dns_err_form(); }
+        let b: i64 = __mind_load_i8(pkt + pos);
+        if b == 0 {
+            if nxt < 0 { nxt = pos + 1; }
+            if on + 1 > out_cap { return naes_dns_err_param(); }
+            __mind_store_i8(out + on, 0);
+            return nxt;
+        }
+        if (b & 192) == 192 {
+            if pos + 1 >= pkt_n { return naes_dns_err_trunc(); }
+            let ptr: i64 = (b & 63) * 256 + (__mind_load_i8(pkt + pos + 1) & 255);
+            if ptr >= pkt_n { return naes_dns_err_form(); }
+            if nxt < 0 { nxt = pos + 2; }
+            hops = hops + 1; pos = ptr;
+        } else {
+            if (b & 192) != 0 { return naes_dns_err_form(); }
+            let lab: i64 = b & 63;
+            if pos + 1 + lab > pkt_n { return naes_dns_err_trunc(); }
+            if naes_dns_label_ok(pkt + pos + 1, lab) != 1 { return naes_dns_err_form(); }
+            let mut need: i64 = lab;
+            if on > 0 { need = need + 1; }
+            // 255 wire octets at most (RFC 1035 3.1): 253 dotted characters
+            if on + need > 253 { return naes_dns_err_form(); }
+            if on + need + 1 > out_cap { return naes_dns_err_param(); }
+            if on > 0 { __mind_store_i8(out + on, 46); on = on + 1; }
+            let c: i64 = naes_dns_copy(out + on, pkt + pos + 1, lab);
+            on = on + c;
+            pos = pos + 1 + lab;
+        }
+    }
+    naes_dns_err_form()
+}
+// ---- question match -----------------------------------------------------------
+// 1 when the packet carries exactly one question and it is (`want`, `qtype`,
+// IN), names compared case-insensitively (`want` may end in one '.');
+// otherwise 0. A response to another question is no answer to this query.
+pub fn naes_dns_question_ok(pkt: i64, pkt_n: i64, want: i64, want_n: i64, qtype: i64) -> i64 {
+    if pkt == 0 || want == 0 || pkt_n < 12 || want_n < 1 || want_n > 253 { return 0; }
+    if naes_dns_rd16(pkt, 4) != 1 { return 0; }
+    let wbuf: i64 = __mind_alloc(264); let nbuf: i64 = __mind_alloc(264);
+    let mut ok: i64 = 0;
+    if wbuf != 0 && nbuf != 0 { ok = naes_dns_question_at(pkt, pkt_n, want, want_n, qtype, wbuf, nbuf); }
+    let _rwbuf: i64 = naes_dns_release(wbuf);
+    let _rnbuf: i64 = naes_dns_release(nbuf);
+    ok
+}
+// naes_dns_question_ok on caller-owned 264-byte name buffers.
+fn naes_dns_question_at(pkt: i64, pkt_n: i64, want: i64, want_n: i64, qtype: i64, wbuf: i64, nbuf: i64) -> i64 {
+    let mut wn: i64 = want_n;
+    if __mind_load_i8(want + wn - 1) == 46 { wn = wn - 1; }
+    if wn < 1 { return 0; }
+    let c: i64 = naes_dns_copy(wbuf, want, wn);
+    __mind_store_i8(wbuf + c, 0);
+    let off: i64 = naes_dns_parse_name(pkt, pkt_n, 12, nbuf, 264);
+    if off < 0 || off + 4 > pkt_n { return 0; }
+    if naes_dns_name_eq(nbuf, wbuf) != 1 { return 0; }
+    if naes_dns_rd16(pkt, off) != qtype || naes_dns_rd16(pkt, off + 2) != 1 { return 0; }
+    1
+}
+// ---- response parser --------------------------------------------------------
+// Parse a response for `want`, collecting A/AAAA after following CNAMEs in
+// the answer section (`want` may end in one '.'). `id` must match the
+// header. Returns the distinct address count or a negative error; every read
+// is bounds-checked. The question section is matched by naes_dns_question_ok
+// (naes_dns_collect runs it before this parser).
+pub fn naes_dns_parse_response(pkt: i64, pkt_n: i64, id: i64, want: i64, want_n: i64, out: i64, out_max: i64) -> i64 {
+    if pkt == 0 || out == 0 || want == 0 || out_max < 1 || want_n < 1 || want_n > 253 { return naes_dns_err_param(); }
+    if pkt_n < 12 { return naes_dns_err_trunc(); }
+    if naes_dns_rd16(pkt, 0) != id { return naes_dns_err_form(); }
+    let flags: i64 = naes_dns_rd16(pkt, 2);
+    if (flags & 32768) == 0 { return naes_dns_err_form(); }
+    if (flags & 512) != 0 { return naes_dns_err_trunc(); }
+    if (flags & 15) != 0 { return naes_dns_err_rcode(); }
+    let qd: i64 = naes_dns_rd16(pkt, 4);
+    let an: i64 = naes_dns_rd16(pkt, 6);
+    if qd > 32 || an > 256 { return naes_dns_err_form(); }
+    let wbuf: i64 = __mind_alloc(264); let nbuf: i64 = __mind_alloc(264); let tbuf: i64 = __mind_alloc(264);
+    let mut rc: i64 = naes_dns_err_param();
+    if wbuf != 0 && nbuf != 0 && tbuf != 0 { rc = naes_dns_answers(pkt, pkt_n, qd, an, want, want_n, out, out_max, wbuf, nbuf, tbuf); }
+    let _rwbuf: i64 = naes_dns_release(wbuf);
+    let _rnbuf: i64 = naes_dns_release(nbuf);
+    let _rtbuf: i64 = naes_dns_release(tbuf);
+    rc
+}
+// The question skip and the answer walk of naes_dns_parse_response on
+// caller-owned 264-byte name buffers (header already checked).
+fn naes_dns_answers(pkt: i64, pkt_n: i64, qd: i64, an: i64, want: i64, want_n: i64, out: i64, out_max: i64, wbuf: i64, nbuf: i64, tbuf: i64) -> i64 {
+    // decoded owners carry no root dot, so drop one trailing '.' (FQDN form)
+    let mut wn: i64 = want_n;
+    if __mind_load_i8(want + wn - 1) == 46 { wn = wn - 1; }
+    if wn < 1 { return naes_dns_err_param(); }
+    let c: i64 = naes_dns_copy(wbuf, want, wn);
+    __mind_store_i8(wbuf + c, 0);
+    let mut off: i64 = 12;
+    let mut qi: i64 = 0;
+    while qi < qd {
+        off = naes_dns_parse_name(pkt, pkt_n, off, nbuf, 264);
+        if off < 0 { return off; }
+        if off + 4 > pkt_n { return naes_dns_err_trunc(); }
+        off = off + 4;
+        qi = qi + 1;
+    }
+    let q_off: i64 = off;
+    let mut count: i64 = 0;
+    let mut follows: i64 = 0;
+    let mut pass: i64 = 0;
+    let mut progress: i64 = 1;
+    // each progressing pass follows >= 1 of at most 8 CNAMEs, so 8 passes
+    // can follow a reverse-ordered chain and a 9th collects its addresses
+    while pass < 9 && progress == 1 {
+        progress = 0;
+        off = q_off;
+        let mut ai: i64 = 0;
+        while ai < an {
+            off = naes_dns_parse_name(pkt, pkt_n, off, nbuf, 264);
+            if off < 0 { return off; }
+            if off + 10 > pkt_n { return naes_dns_err_trunc(); }
+            let typ: i64 = naes_dns_rd16(pkt, off);
+            let cls: i64 = naes_dns_rd16(pkt, off + 2);
+            let rdlen: i64 = naes_dns_rd16(pkt, off + 8);
+            let rdata: i64 = off + 10;
+            if rdata + rdlen > pkt_n { return naes_dns_err_trunc(); }
+            if cls == 1 {
+                if typ == 5 && follows < 8 && naes_dns_name_eq(nbuf, wbuf) == 1 {
+                    let tn: i64 = naes_dns_parse_name(pkt, pkt_n, rdata, tbuf, 264);
+                    // the target name must end exactly at the rdata end
+                    if tn != rdata + rdlen { return naes_dns_err_form(); }
+                    // the chase name is the whole target (parse_name caps it
+                    // at 253 characters); a root target names no host
+                    let tl: i64 = naes_dns_cstr_len(tbuf);
+                    if tl < 1 { return naes_dns_err_form(); }
+                    let _tc: i64 = naes_dns_copy(wbuf, tbuf, tl + 1);
+                    follows = follows + 1;
+                    progress = 1;
+                }
+                let mut nb: i64 = 0;
+                if typ == 1 && rdlen == 4 && naes_dns_name_eq(nbuf, wbuf) == 1 { nb = 4; }
+                if typ == 28 && rdlen == 16 && naes_dns_name_eq(nbuf, wbuf) == 1 { nb = 16; }
+                if nb > 0 {
+                    let mut fam: i64 = 2;
+                    if nb == 16 { fam = 10; }
+                    if naes_dns_seen(out, count, fam, nb, pkt + rdata) == 0 {
+                        if count < out_max {
+                            let _s: i64 = naes_dns_store_entry(out, count, fam, nb, pkt + rdata);
+                            count = count + 1;
+                        }
+                    }
+                }
+            }
+            off = rdata + rdlen;
+            ai = ai + 1;
+        }
+        pass = pass + 1;
+    }
+    count
+}
+// Merge addresses from the A and the AAAA response (a zero or negative length
+// means that query produced no packet). Each packet must carry its own
+// transaction id and echo its own question.
+pub fn naes_dns_collect(pkt_a: i64, pkt_a_n: i64, pkt_aaaa: i64, pkt_aaaa_n: i64, id_a: i64, id_b: i64, name: i64, name_n: i64, out: i64, out_max: i64) -> i64 {
+    let mut count: i64 = 0;
+    if pkt_a != 0 && pkt_a_n > 0 {
+        if naes_dns_question_ok(pkt_a, pkt_a_n, name, name_n, 1) != 1 { return naes_dns_err_form(); }
+        let n: i64 = naes_dns_parse_response(pkt_a, pkt_a_n, id_a, name, name_n, out, out_max);
+        if n < 0 { return n; }
+        count = n;
+    }
+    if pkt_aaaa != 0 && pkt_aaaa_n > 0 && out_max - count > 0 {
+        if naes_dns_question_ok(pkt_aaaa, pkt_aaaa_n, name, name_n, 28) != 1 { return naes_dns_err_form(); }
+        let n2: i64 = naes_dns_parse_response(pkt_aaaa, pkt_aaaa_n, id_b, name, name_n, out + count * 24, out_max - count);
+        if n2 < 0 { return n2; }
+        count = count + n2;
+    }
+    if count == 0 { return naes_dns_err_nx(); }
+    count
+}

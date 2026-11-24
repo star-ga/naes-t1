@@ -1,0 +1,40 @@
+{
+  "artifact_sha256": [
+    {
+      "kind": "safe_statement_count_extract",
+      "sha256": "28f3149ac11f5c7e19da64931b00d35d4a32099dbe4c5b328fa79728093209c3"
+    },
+    {
+      "kind": "authority_ledger_label",
+      "sha256": "f293e6b784fcfa1c342aa241b3b4fcf122ac8786d0566afc35cf41fa770babad",
+      "status": "withheld"
+    },
+    {
+      "kind": "historical_method_or_search_output",
+      "sha256": "3627f378c89e981ea58d46004dcb044961e9e484384cb389480a9a8f94ca0d9d"
+    }
+  ],
+  "floor": 36,
+  "game": "wa30",
+  "game_id": "wa30-ee6fef47",
+  "game_levels": 9,
+  "level": 7,
+  "lower_bound": {
+    "kind": "astar_consistent_heuristic_first_goal_pop",
+    "statement": "A* with the recorded consistent admissible heuristic exhausts every f-value below 36; the first goal is optimal at cost 36. The proof astar_consistent_heuristic_first_goal_pop establishes lower bound 36, equal to the floor.",
+    "value": 36
+  },
+  "naes_t1_actions": 36,
+  "proof_class": "A*",
+  "proof_detail": "astar_consistent_heuristic_first_goal_pop",
+  "schema_version": 1,
+  "source_certificate_sha256": "e3eef5290cfa015a1bd171a903105fd53414a536afc9dbfb530b328654d44ded",
+  "status": "proven",
+  "upper_bound": {
+    "expected_levels_completed": 7,
+    "length": 36,
+    "opening_reset_counted": false,
+    "route": "1 4 2 1 4 4 4 4 4 4 5 2 5 3 3 3 3 3 3 3 3 3 5 1 4 4 4 4 5 2 3 3 3 3 3 5",
+    "seed": 0
+  }
+}

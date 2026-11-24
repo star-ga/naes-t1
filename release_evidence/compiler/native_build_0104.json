@@ -1,0 +1,50 @@
+{
+ "record": "build and check of the release executable with the compiler release mindc 0.10.4",
+ "date_utc": "2026-11-24",
+ "compiler": {
+  "name": "mindc",
+  "version": "0.10.4",
+  "tag": "v0.10.4",
+  "repository": "https://github.com/star-ga/mind",
+  "commit": "90acf89bfacae3d5664d5d6b5d183e1d81dc2399",
+  "archives": {
+   "mindc-linux-x64.tar.gz": "b887ddedaa03a5a5d7124456d4b433bce5782b66d9dacac58c9dcf9083dc8003",
+   "mindc-linux-arm64.tar.gz": "4856acf7360e196e09d7576fd3d2d4b3c2c98d344350c313a2c20fba5d7f2990"
+  },
+  "std_directory_in_archive": "std",
+  "std_files": 78,
+  "std_digest": "64e596dac9700103b0aac61c6f9bdac5c5054634277e30ce52829b5ff5a73682",
+  "std_digest_command": "find std -type f | LC_ALL=C sort | xargs sha256sum | sha256sum"
+ },
+ "x86_64_native": {
+  "unit_list": "src/unit_order.txt",
+  "unit_sha256": "7536fd8a7334f1a84dd476de21849765fb66f06d16087e3d2298e204c3b6443c",
+  "build": "mindc build build/naes_t1_unit.mind --no-cache --out naes_t1",
+  "executable_sha256": "0e0398866f8252a62557b32816b44eac5e036094b42b08e9ccd98bc377f2f61b",
+  "executable_bytes": 1729760,
+  "two_builds_byte_equal": true
+ },
+ "selftest": {
+  "runs": 2,
+  "SELFTEST_SHA256": "e0c8ae9167d99b37b00194fb3bdf5d545952ae4fc223e0c2d5be3382708d7444",
+  "WEIGHTS_SHA256": "fa54f507fdf9a9c74a8bc22d95a1c970e3528b3fe1707b6eb61d74bad2419fec",
+  "outputs_byte_equal": true
+ },
+ "verify": {
+  "result": "MATCH 5499/5499",
+  "decision_stream_sha256": "4d2d98f711a1209eace8f3841952e39d4d75870d48079c3175b361bba9746396",
+  "records_bytes": 16497
+ },
+ "bench": {
+  "worker_processes": [
+   1,
+   2,
+   4,
+   8
+  ],
+  "result_of_each": "MATCH 5499/5499",
+  "decision_stream_sha256_of_each": "4d2d98f711a1209eace8f3841952e39d4d75870d48079c3175b361bba9746396",
+  "wrong_decisions_in_the_timed_part": 0
+ },
+ "closed_loop_replay": "release_evidence/play/mode_a.json"
+}

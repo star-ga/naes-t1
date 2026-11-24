@@ -1,0 +1,2 @@
+{"table_ok": true, "levels": 183, "floor_total": 5499, "games": 25, "mismatches": [], "su15": [7, 8, 11, 9, 5, 4, 5, 5, 7], "wa30": [26, 46, 67, 43, 91, 46, 36, 91, 57]}
+FLOORS_OK

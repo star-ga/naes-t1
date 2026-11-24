@@ -1,0 +1,26 @@
+{
+  "controls": [
+    {
+      "certified_min_l1_cost": 40,
+      "configs_enumerated": 2449440,
+      "first_counterexample": {
+        "certified_l1_cost": 40,
+        "planted_chebyshev_cost": 28
+      },
+      "recorded_floor": 40,
+      "rejected": true,
+      "row": "ar25_L3",
+      "winning_configs": 1
+    },
+    {
+      "recorded_floor": 7,
+      "rejected": true,
+      "row": "su15_L1"
+    },
+    {
+      "recorded_floor": 8,
+      "rejected": true,
+      "row": "lf52_L1"
+    }
+  ]
+}

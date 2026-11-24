@@ -1,0 +1,83 @@
+{
+  "artifact_sha256": [
+    {
+      "kind": "safe_statement_count_extract",
+      "sha256": "9cb05c30fa8ec781f1e2b01846b14fab307e5e08a87d13efbef30f9a0fc24fca"
+    },
+    {
+      "kind": "authority_ledger_label",
+      "sha256": "1829e0215cabe49836f79dcd2d94901f7d646c1a55acdab4ebe31e5146f60171"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "60a07c1904869a9eac3019bfb91d6e0b694ef67cb27c8a7cd2f361286f67fd55"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "fe2920e7f14abca562d2ab1b0e7d60247c4d52e5a41d8e969c73713de2e7fe8c"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "56ecc2ef4121d475eb78081bcb540295fb8dc6cd93e84c6ddf33613c54d334e7"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "ce1e9684ca44a16428d21793c40948b7529053161ae3c737c15da67ca393fcca"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "cb6a48eb2a88e1a955b4d97e82cef43529b7cae7a19304aebab6f137608da553"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "867b7dcaa4ffde6bf6c844431aae94e12ae1eab4d1b7b4036ae10475c662eee0"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "5bdfadaf67099b99d1c40e025d6dce044c22658fc49353919299df2d16921556"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "02e70ac439b6a35e3c39cfe434a9a9d0f6e8096a4785e84870894a79977e3be5"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "74d949f6513cf45fd5e0dd71fee892a7bcd6a039b87427a86e8f69405d1236f0"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "7ae8b97b8a2977f5c3e91c876a70eae0f12033c726910e4a9c5133575093751c"
+    },
+    {
+      "kind": "historical_method_or_search_output",
+      "sha256": "01b65f6282f16a23949ebfd8e5518f086b38ba614753fe5ad04fada6245112f1"
+    },
+    {
+      "kind": "historical_method_or_search_output",
+      "sha256": "643fd77e1ce94c235bd24f5681583edd2e825767f58fe1b4b87e4ce470880356"
+    }
+  ],
+  "floor": 8,
+  "game": "su15",
+  "game_id": "su15-1944f8ab",
+  "game_levels": 9,
+  "level": 2,
+  "lower_bound": {
+    "kind": "one_merge_group_lemma_value_count_merge_tree_enumeration",
+    "statement": "A value count and a complete enumeration of the merge trees prove the floor 8. One click makes at most one merge group: every captured fruit arrives at its clamped placement, which contains the click point, so captured fruits always overlap. The start has eight level-0 fruits and no enemy, and the goal is one level-3 fruit; no rule creates a fruit, a binary merge keeps the value and a merge of three or more loses value, so a win needs seven binary merge clicks. A seven-click win then has no click that only moves a fruit. All 315 merge-tree shapes (105 leaf matchings times 3 groupings) are enumerated with the engine's capture test, border clamp and placement: 210 level-3 positions are reachable and none has its centre in the goal box. Other fruits are left out of the capture sets, which can only add positions. An undo can be deleted from a winning play together with its click, so undo does not give a shorter win. The 8-action route replays to a win on the engine and its 7-action prefix does not.",
+    "value": 8
+  },
+  "naes_t1_actions": 8,
+  "proof_class": "Exact math",
+  "proof_detail": "one_merge_group_lemma_value_count_merge_tree_enumeration",
+  "schema_version": 1,
+  "source_certificate_sha256": "e99e9380fd8fb698404a310ee30a4022b3d469a1daafab5defdd3e7605c98ef5",
+  "status": "proven",
+  "upper_bound": {
+    "expected_levels_completed": 2,
+    "length": 8,
+    "opening_reset_counted": false,
+    "route": "6@39,38 6@44,49 6@19,50 6@22,36 6@24,43 6@40,41 6@32,39 6@33,29",
+    "seed": 0
+  }
+}

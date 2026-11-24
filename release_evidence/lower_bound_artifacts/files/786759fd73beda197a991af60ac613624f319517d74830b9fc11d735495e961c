@@ -1,0 +1,168 @@
+{
+  "network_calls": false,
+  "environment": {
+    "ONLY_RESET_LEVELS": null,
+    "interpreter": "<interp-version>"
+  },
+  "source_files": {
+    "Sprite": {
+      "installed_path": "<path>",
+      "archive_path": "Sprite-native-source.py",
+      "sha256": "ea9d3d02c7db0814954134a0e0ea6a3cb9b80066930dbdbfc5865befb54c493f"
+    },
+    "Camera": {
+      "installed_path": "<path>",
+      "archive_path": "Camera-native-source.py",
+      "sha256": "f06e16807b0f97d86cafb5481bb3969213f27768f789d898c6b8b07e957de397"
+    },
+    "Scorecard": {
+      "installed_path": "<path>",
+      "archive_path": "sdk-scorecard.py",
+      "sha256": "1db954f8fe8624f48f92a43cd43c4b539154df49c61ab4a15e3c0147563f0c77"
+    }
+  },
+  "levels": {
+    "2": {
+      "cardinal_then_level_reset": [
+        {
+          "action": [
+            4
+          ],
+          "level_index": 1,
+          "direction": 3,
+          "full_reset": false,
+          "native_action_count": 1,
+          "scorecard_actions": 1,
+          "scorecard_resets": 0,
+          "total_plays": 1
+        },
+        {
+          "action": [
+            0
+          ],
+          "level_index": 1,
+          "direction": 3,
+          "full_reset": false,
+          "native_action_count": 0,
+          "scorecard_actions": 2,
+          "scorecard_resets": 1,
+          "total_plays": 1
+        }
+      ],
+      "reset_at_canonical_start": {
+        "full_reset": true,
+        "level_index": 0,
+        "direction": 2
+      },
+      "player_base_pixels_shape": [
+        2,
+        2
+      ]
+    },
+    "3": {
+      "cardinal_then_level_reset": [
+        {
+          "action": [
+            4
+          ],
+          "level_index": 2,
+          "direction": 3,
+          "full_reset": false,
+          "native_action_count": 1,
+          "scorecard_actions": 1,
+          "scorecard_resets": 0,
+          "total_plays": 1
+        },
+        {
+          "action": [
+            0
+          ],
+          "level_index": 2,
+          "direction": 3,
+          "full_reset": false,
+          "native_action_count": 0,
+          "scorecard_actions": 2,
+          "scorecard_resets": 1,
+          "total_plays": 1
+        }
+      ],
+      "reset_at_canonical_start": {
+        "full_reset": true,
+        "level_index": 0,
+        "direction": 0
+      },
+      "player_base_pixels_shape": [
+        2,
+        2
+      ]
+    }
+  },
+  "<word withheld>_prover_fresh_reproductions": [
+    {
+      "result": {
+        "level": 2,
+        "floor": 5,
+        "status": "PROVEN",
+        "proof_kind": "uniform_cost_exhaustion",
+        "proof": "macro alphabet (4 moves + one burst per allowed spell, cost = |pattern|) is a lossless reduction of the 13-input alphabet; uniform-cost Dijkstra over the compact state, first goal pop = optimal",
+        "alphabet_n": 5,
+        "nodes": 19,
+        "macro_plan": [
+          "cast:jzukcpajs",
+          "U",
+          "U"
+        ],
+        "min_path": [
+          "CLK(25,50)",
+          "CLK(30,50)",
+          "CLK(30,55)",
+          "U",
+          "U"
+        ],
+        "replay_verified": true,
+        "budget": 25,
+        "budget_ok": true
+      },
+      "seconds": 1.274
+    },
+    {
+      "result": {
+        "level": 3,
+        "floor": 11,
+        "status": "PROVEN",
+        "proof_kind": "uniform_cost_exhaustion",
+        "proof": "macro alphabet (4 moves + one burst per allowed spell, cost = |pattern|) is a lossless reduction of the 13-input alphabet; uniform-cost Dijkstra over the compact state, first goal pop = optimal",
+        "alphabet_n": 5,
+        "nodes": 164,
+        "macro_plan": [
+          "L",
+          "L",
+          "R",
+          "cast:aprnrzeyj",
+          "D",
+          "D",
+          "L",
+          "D",
+          "L"
+        ],
+        "min_path": [
+          "L",
+          "L",
+          "R",
+          "CLK(30,50)",
+          "CLK(30,55)",
+          "CLK(30,60)",
+          "D",
+          "D",
+          "L",
+          "D",
+          "L"
+        ],
+        "replay_verified": true,
+        "budget": 50,
+        "budget_ok": true
+      },
+      "seconds": 11.804
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "game": "s5i5",
+  "instance": "s5i5-a48e4b1d",
+  "full_id": "s5i5-a48e4b1d",
+  "level": 1,
+  "source_sha256": {
+    "s5i5.py": "4e0c7d1a813cc7f10a28b7c9f168c811450a4330d8717b1badc9bf76143cbfeb",
+    "mmae_minimum.py": "28bf4afb6666aa19a3a00cf79c2557f7943afec559f203e89c8abca69f30c41b",
+    "base_game.py": "5b5f41f3bec4c0c97a727fda7326114991dc0d4a5642d489b40ee4aa87e6b15f",
+    "level.py": "f74db969772b251018b2fcce6ec42f3522adeef4e9c03c036e455d2a35e3215a",
+    "camera.py": "f06e16807b0f97d86cafb5481bb3969213f27768f789d898c6b8b07e957de397"
+  },
+  "L2_bootstrap_moves_excluded": 13,
+  "levels": {
+    "1": {
+      "level": 1,
+      "floor": 13,
+      "start_tape": [],
+      "start_level_index": 0,
+      "start_action_count": 0,
+      "start_source": "replay_oracle",
+      "floor_measured_from": "level_start_snapshot",
+      "bootstrap_moves_excluded": 0,
+      "min_path": [
+        "CLK(24,44)",
+        "CLK(24,44)",
+        "CLK(24,44)",
+        "CLK(24,44)",
+        "CLK(24,44)",
+        "CLK(24,44)",
+        "CLK(45,21)",
+        "CLK(45,21)",
+        "CLK(45,21)",
+        "CLK(45,21)",
+        "CLK(45,21)",
+        "CLK(45,21)",
+        "CLK(45,21)"
+      ]
+    }
+  }
+}

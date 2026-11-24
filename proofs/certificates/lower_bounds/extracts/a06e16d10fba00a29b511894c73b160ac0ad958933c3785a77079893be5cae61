@@ -1,0 +1,1875 @@
+{
+  "full_id": "dc22-fdcac232",
+  "levels": {
+    "1": {
+      "level": 1,
+      "status": "PROVEN",
+      "floor": 20,
+      "proof_kind": "complete_state_ucs_structural_alphabet",
+      "proof": "uniform-cost/A* exhaustion over the COMPLETE engine state (key = whitebox content hash minus the two verified pure records) with the structurally-resolved click alphabet; first win popped under a consistent heuristic is optimal; witness replays on a FRESH engine at exactly this length alphabet_n=6 (structural), nodes=1468, support_relaxed_cells=46.",
+      "path": [
+        "U",
+        "CLK(45,34)",
+        "U",
+        "U",
+        "U",
+        "U",
+        "R",
+        "R",
+        "R",
+        "R",
+        "R",
+        "CLK(45,17)",
+        "U",
+        "U",
+        "U",
+        "CLK(45,34)",
+        "U",
+        "U",
+        "R",
+        "R"
+      ],
+      "replay_verified": true,
+      "source": "tools/floor_plan/dc22_gatednav.py 2026-07-25",
+      "instance": "dc22-fdcac232",
+      "replay_won_at": 20,
+      "transfer": {
+        "date": "2026-09-24",
+        "from_instance": "dc22-4c9bff3e",
+        "old_certificate": "docs/mmae_floor_certificates/<label withheld>/dc22-4c9bff3e.json (commit df95c3f85b)",
+        "argument": "the old PROVEN floor carries to the served build: rule code rename-equivalent, same sprite multiset, the old witness wins at exactly the floor on the served build (direct and chained replay), and the old-vs-served lockstep differential shows 0 dynamic divergences",
+        "served_witness_won_at": 20,
+        "chain_replay_served": {
+          "won_at": 20,
+          "ok": true
+        },
+        "differential": {
+          "rollouts": 200,
+          "steps": 5713,
+          "dynamic_divergences": 0,
+          "components": {},
+          "observation_only_frame_mismatch_steps": 0
+        },
+        "evidence": [
+          "docs/mmae_floor_certificates/served_20260924/transfer/<label withheld>.json#builds.dc22-fdcac232.1",
+          "docs/mmae_floor_certificates/served_20260924/transfer/evidence/replay_diff/dc22.json#levels.1",
+          "docs/mmae_floor_certificates/served_20260924/transfer/evidence/code_diff/dc22.json",
+          "docs/mmae_floor_certificates/served_20260924/transfer/evidence/level_diff/dc22.json"
+        ]
+      }
+    },
+    "2": {
+      "level": 2,
+      "status": "PROVEN",
+      "floor": 42,
+      "proof_kind": "complete_state_ucs_structural_alphabet",
+      "proof": "MINIMALITY BY COMPLETE EXHAUSTION. Uniform-cost (unit-cost BFS) search from the level start expanded EVERY state reachable in at most 41 actions (1454 distinct states, 9196 engine transitions) and found no win. STATE KEY = the full whitebox content hash (mmae_minimum.whitebox_sig) of the current Level plus every field of the game object, minus (a) three fields gated bisimilar by mmae_minimum.verify_key_reduction on sampled states of THIS level — `_action` (last ActionInput record), `lvnwxszdcv` (fall-restore snapshot, overwritten at the start of every action and read only inside that action) and `_action_count` (arcengine base_game reads it only in _do_reset, never during play) — and minus (b) `_clean_levels` and the non-current `_levels` entries, measured byte-identical over the level start and a 60-action random walk, i.e. constants of the level. ONLY PRUNE = step-budget Pareto dominance: dc22 spends `current_steps` solely in khximaydsc.rddadrvtot()/yepbymuune(), whose boolean result is used only to call lose(), and the win test uhqbwfdkff() (player cell == goal cell) is evaluated BEFORE the decrement, so a state with more budget admits every continuation a lower-budget copy admi",
+      "path": [
+        "CLK(49,38)",
+        "D",
+        "D",
+        "D",
+        "D",
+        "D",
+        "D",
+        "R",
+        "R",
+        "R",
+        "R",
+        "R",
+        "R",
+        "CLK(49,20)",
+        "D",
+        "D",
+        "D",
+        "D",
+        "D",
+        "U",
+        "U",
+        "U",
+        "U",
+        "U",
+        "U",
+        "U",
+        "U",
+        "U",
+        "U",
+        "CLK(49,29)",
+        "R",
+        "U",
+        "U",
+        "U",
+        "U",
+        "U",
+        "U",
+        "U",
+        "U",
+        "U",
+        "U",
+        "R"
+      ],
+      "replay_verified": true,
+      "independent_replay": "host A 2026-07-25: replays from acquire_level_starts on a fresh restore and wins at EXACTLY F",
+      "source": "out_final_dc22.json",
+      "instance": "dc22-fdcac232",
+      "replay_won_at": 42,
+      "transfer": {
+        "date": "2026-09-24",
+        "from_instance": "dc22-4c9bff3e",
+        "old_certificate": "docs/mmae_floor_certificates/<label withheld>/dc22-4c9bff3e.json (commit df95c3f85b)",
+        "argument": "the old PROVEN floor carries to the served build: rule code rename-equivalent, same sprite multiset, the old witness wins at exactly the floor on the served build (direct and chained replay), and the old-vs-served lockstep differential shows 0 dynamic divergences",
+        "served_witness_won_at": 42,
+        "chain_replay_served": {
+          "won_at": 42,
+          "ok": true
+        },
+        "differential": {
+          "rollouts": 200,
+          "steps": 5939,
+          "dynamic_divergences": 0,
+          "components": {},
+          "observation_only_frame_mismatch_steps": 0
+        },
+        "evidence": [
+          "docs/mmae_floor_certificates/served_20260924/transfer/<label withheld>.json#builds.dc22-fdcac232.2",
+          "docs/mmae_floor_certificates/served_20260924/transfer/evidence/replay_diff/dc22.json#levels.2",
+          "docs/mmae_floor_certificates/served_20260924/transfer/evidence/code_diff/dc22.json",
+          "docs/mmae_floor_certificates/served_20260924/transfer/evidence/level_diff/dc22.json"
+        ]
+      }
+    },
+    "3": {
+      "level": 3,
+      "status": "PROVEN",
+      "floor": 45,
+      "proof_kind": "complete_state_ucs_structural_alphabet",
+      "proof": "MINIMALITY BY COMPLETE EXHAUSTION. Uniform-cost (unit-cost BFS) search from the level start expanded EVERY state reachable in at most 44 actions (2040 distinct states, 14356 engine transitions) and found no win. STATE KEY = the full whitebox content hash (mmae_minimum.whitebox_sig) of the current Level plus every field of the game object, minus (a) three fields gated bisimilar by mmae_minimum.verify_key_reduction on sampled states of THIS level — `_action` (last ActionInput record), `lvnwxszdcv` (fall-restore snapshot, overwritten at the start of every action and read only inside that action) and `_action_count` (arcengine base_game reads it only in _do_reset, never during play) — and minus (b) `_clean_levels` and the non-current `_levels` entries, measured byte-identical over the level start and a 60-action random walk, i.e. constants of the level. ONLY PRUNE = step-budget Pareto dominance: dc22 spends `current_steps` solely in khximaydsc.rddadrvtot()/yepbymuune(), whose boolean result is used only to call lose(), and the win test uhqbwfdkff() (player cell == goal cell) is evaluated BEFORE the decrement, so a state with more budget admits every continuation a lower-budget copy adm",
+      "path": [
+        "L",
+        "CLK(48,16)",
+        "CLK(48,25)",
+        "L",
+        "L",
+        "L",
+        "D",
+        "D",
+        "D",
+        "L",
+        "CLK(48,16)",
+        "L",
+        "L",
+        "L",
+        "L",
+        "CLK(48,25)",
+        "L",
+        "L",
+        "L",
+        "CLK(48,16)",
+        "CLK(48,25)",
+        "U",
+        "U",
+        "U",
+        "U",
+        "CLK(48,34)",
+        "U",
+        "U",
+        "R",
+        "R",
+        "U",
+        "R",
+        "CLK(48,43)",
+        "U",
+        "U",
+        "U",
+        "R",
+        "R",
+        "R",
+        "R",
+        "R",
+        "R",
+        "D",
+        "D",
+        "R"
+      ],
+      "replay_verified": true,
+      "independent_replay": "host A 2026-07-25: replays from acquire_level_starts on a fresh restore and wins at EXACTLY F",
+      "source": "out_final_dc22.json",
+      "instance": "dc22-fdcac232",
+      "replay_won_at": 45,
+      "transfer": {
+        "date": "2026-09-24",
+        "from_instance": "dc22-4c9bff3e",
+        "old_certificate": "docs/mmae_floor_certificates/<label withheld>/dc22-4c9bff3e.json (commit df95c3f85b)",
+        "argument": "the old PROVEN floor carries to the served build: rule code rename-equivalent, same sprite multiset, the old witness wins at exactly the floor on the served build (direct and chained replay), and the old-vs-served lockstep differential shows 0 dynamic divergences",
+        "served_witness_won_at": 45,
+        "chain_replay_served": {
+          "won_at": 45,
+          "ok": true
+        },
+        "differential": {
+          "rollouts": 200,
+          "steps": 5953,
+          "dynamic_divergences": 0,
+          "components": {},
+          "observation_only_frame_mismatch_steps": 0
+        },
+        "evidence": [
+          "docs/mmae_floor_certificates/served_20260924/transfer/<label withheld>.json#builds.dc22-fdcac232.3",
+          "docs/mmae_floor_certificates/served_20260924/transfer/evidence/replay_diff/dc22.json#levels.3",
+          "docs/mmae_floor_certificates/served_20260924/transfer/evidence/code_diff/dc22.json",
+          "docs/mmae_floor_certificates/served_20260924/transfer/evidence/level_diff/dc22.json"
+        ]
+      }
+    },
+    "4": {
+      "level": 4,
+      "status": "PROVEN",
+      "floor": 62,
+      "proof_kind": "complete_state_ucs_structural_alphabet",
+      "proof": "Every state reachable in <=61 actions was expanded (9695 distinct states, 67442 engine transitions) with no win, under the same key/prune/alphabet soundness argument as L2 (key-reduction bisimulation gate true; constant tables unchanged; alphabet covers all 3 observed non-no-op click classes out of 4096 probed coordinates). INDEPENDENT STRUCTURAL BOUND (agrees): itki positions provably fixed at [(4,16),(18,24)], one action advances at most one edge of the relaxed lattice-plus-teleport graph, so floor >= 16.",
+      "path": [
+        "D",
+        "R",
+        "CLK(43,25)",
+        "CLK(43,25)",
+        "CLK(43,25)",
+        "CLK(43,25)",
+        "CLK(43,25)",
+        "CLK(54,26)",
+        "R",
+        "CLK(54,26)",
+        "R",
+        "CLK(54,26)",
+        "R",
+        "CLK(54,26)",
+        "R",
+        "R",
+        "R",
+        "R",
+        "R",
+        "R",
+        "D",
+        "D",
+        "D",
+        "D",
+        "L",
+        "L",
+        "L",
+        "D",
+        "D",
+        "CLK(49,17)",
+        "D",
+        "R",
+        "R",
+        "CLK(43,25)",
+        "D",
+        "D",
+        "D",
+        "D",
+        "D",
+        "D",
+        "CLK(43,25)",
+        "R",
+        "CLK(43,25)",
+        "R",
+        "CLK(43,25)",
+        "R",
+        "CLK(43,25)",
+        "R",
+        "CLK(54,26)",
+        "D",
+        "CLK(54,26)",
+        "R",
+        "CLK(54,26)",
+        "R",
+        "CLK(54,26)",
+        "R",
+        "R",
+        "R",
+        "R",
+        "D",
+        "D",
+        "R"
+      ],
+      "replay_verified": true,
+      "independent_replay": "host A 2026-07-25: replays from acquire_level_starts on a fresh restore, wins at EXACTLY 62",
+      "source": "out_final61.json",
+      "instance": "dc22-fdcac232",
+      "replay_won_at": 62,
+      "transfer": {
+        "date": "2026-09-24",
+        "from_instance": "dc22-4c9bff3e",
+        "old_certificate": "docs/mmae_floor_certificates/<label withheld>/dc22-4c9bff3e.json (commit df95c3f85b)",
+        "argument": "the old PROVEN floor carries to the served build: rule code rename-equivalent, same sprite multiset, the old witness wins at exactly the floor on the served build (direct and chained replay), and the old-vs-served lockstep differential shows 0 dynamic divergences",
+        "served_witness_won_at": 62,
+        "chain_replay_served": {
+          "won_at": 62,
+          "ok": true
+        },
+        "differential": {
+          "rollouts": 200,
+          "steps": 5882,
+          "dynamic_divergences": 0,
+          "components": {},
+          "observation_only_frame_mismatch_steps": 0
+        },
+        "evidence": [
+          "docs/mmae_floor_certificates/served_20260924/transfer/<label withheld>.json#builds.dc22-fdcac232.4",
+          "docs/mmae_floor_certificates/served_20260924/transfer/evidence/replay_diff/dc22.json#levels.4",
+          "docs/mmae_floor_certificates/served_20260924/transfer/evidence/code_diff/dc22.json",
+          "docs/mmae_floor_certificates/served_20260924/transfer/evidence/level_diff/dc22.json"
+        ]
+      }
+    },
+    "5": {
+      "level": 5,
+      "status": "PROVEN",
+      "floor": 108,
+      "proof_kind": "complete_state_ucs_simulator_bisimulation_gated",
+      "proof": "MINIMALITY BY COMPLETE EXHAUSTION (arsenal technique 3). Uniform-cost BFS over the complete engine state (key = whitebox content hash with bisimulation-gated pure-record exclusions) and the structurally-resolved click alphabet (13 effect classes; gate-verified against 4096-click partition). Layers 1..107 were fully expanded (4,173,191 engine transitions, 307,150 distinct states) with no win; first win at depth 108. EXISTENCE: path length 108 replays from mm.acquire_level_starts and wins at exactly 108; the 107-prefix does not win. Self-check on same pipeline: L1=20, L2=42, L3=45, L4=62 MATCH known floors. Artifact: <path>/L5b.json; proof_kind=complete_state_ucs_simulator_bisimulation_gated.",
+      "path": [
+        [
+          3,
+          null,
+          null
+        ],
+        [
+          6,
+          52,
+          40
+        ],
+        [
+          3,
+          null,
+          null
+        ],
+        [
+          1,
+          null,
+          null
+        ],
+        [
+          1,
+          null,
+          null
+        ],
+        [
+          3,
+          null,
+          null
+        ],
+        [
+          6,
+          52,
+          40
+        ],
+        [
+          6,
+          49,
+          23
+        ],
+        [
+          6,
+          49,
+          23
+        ],
+        [
+          6,
+          49,
+          23
+        ],
+        [
+          6,
+          49,
+          23
+        ],
+        [
+          6,
+          57,
+          20
+        ],
+        [
+          6,
+          57,
+          20
+        ],
+        [
+          6,
+          57,
+          20
+        ],
+        [
+          6,
+          57,
+          20
+        ],
+        [
+          6,
+          48,
+          29
+        ],
+        [
+          6,
+          48,
+          29
+        ],
+        [
+          6,
+          48,
+          29
+        ],
+        [
+          6,
+          56,
+          28
+        ],
+        [
+          6,
+          56,
+          28
+        ],
+        [
+          6,
+          56,
+          28
+        ],
+        [
+          6,
+          48,
+          36
+        ],
+        [
+          6,
+          45,
+          28
+        ],
+        [
+          6,
+          45,
+          28
+        ],
+        [
+          6,
+          45,
+          28
+        ],
+        [
+          6,
+          60,
+          28
+        ],
+        [
+          6,
+          60,
+          28
+        ],
+        [
+          6,
+          60,
+          28
+        ],
+        [
+          6,
+          56,
+          28
+        ],
+        [
+          6,
+          56,
+          28
+        ],
+        [
+          6,
+          56,
+          28
+        ],
+        [
+          3,
+          null,
+          null
+        ],
+        [
+          1,
+          null,
+          null
+        ],
+        [
+          1,
+          null,
+          null
+        ],
+        [
+          1,
+          null,
+          null
+        ],
+        [
+          1,
+          null,
+          null
+        ],
+        [
+          4,
+          null,
+          null
+        ],
+        [
+          1,
+          null,
+          null
+        ],
+        [
+          6,
+          45,
+          28
+        ],
+        [
+          6,
+          45,
+          28
+        ],
+        [
+          6,
+          45,
+          28
+        ],
+        [
+          6,
+          48,
+          29
+        ],
+        [
+          6,
+          48,
+          29
+        ],
+        [
+          6,
+          48,
+          29
+        ],
+        [
+          6,
+          56,
+          28
+        ],
+        [
+          6,
+          56,
+          28
+        ],
+        [
+          6,
+          56,
+          28
+        ],
+        [
+          3,
+          null,
+          null
+        ],
+        [
+          1,
+          null,
+          null
+        ],
+        [
+          1,
+          null,
+          null
+        ],
+        [
+          1,
+          null,
+          null
+        ],
+        [
+          1,
+          null,
+          null
+        ],
+        [
+          1,
+          null,
+          null
+        ],
+        [
+          1,
+          null,
+          null
+        ],
+        [
+          1,
+          null,
+          null
+        ],
+        [
+          6,
+          52,
+          49
+        ],
+        [
+          4,
+          null,
+          null
+        ],
+        [
+          6,
+          45,
+          28
+        ],
+        [
+          6,
+          45,
+          28
+        ],
+        [
+          6,
+          45,
+          28
+        ],
+        [
+          6,
+          60,
+          28
+        ],
+        [
+          6,
+          60,
+          28
+        ],
+        [
+          6,
+          60,
+          28
+        ],
+        [
+          1,
+          null,
+          null
+        ],
+        [
+          1,
+          null,
+          null
+        ],
+        [
+          1,
+          null,
+          null
+        ],
+        [
+          1,
+          null,
+          null
+        ],
+        [
+          1,
+          null,
+          null
+        ],
+        [
+          1,
+          null,
+          null
+        ],
+        [
+          1,
+          null,
+          null
+        ],
+        [
+          1,
+          null,
+          null
+        ],
+        [
+          2,
+          null,
+          null
+        ],
+        [
+          2,
+          null,
+          null
+        ],
+        [
+          2,
+          null,
+          null
+        ],
+        [
+          2,
+          null,
+          null
+        ],
+        [
+          2,
+          null,
+          null
+        ],
+        [
+          2,
+          null,
+          null
+        ],
+        [
+          2,
+          null,
+          null
+        ],
+        [
+          2,
+          null,
+          null
+        ],
+        [
+          2,
+          null,
+          null
+        ],
+        [
+          2,
+          null,
+          null
+        ],
+        [
+          2,
+          null,
+          null
+        ],
+        [
+          2,
+          null,
+          null
+        ],
+        [
+          2,
+          null,
+          null
+        ],
+        [
+          4,
+          null,
+          null
+        ],
+        [
+          4,
+          null,
+          null
+        ],
+        [
+          4,
+          null,
+          null
+        ],
+        [
+          4,
+          null,
+          null
+        ],
+        [
+          4,
+          null,
+          null
+        ],
+        [
+          4,
+          null,
+          null
+        ],
+        [
+          4,
+          null,
+          null
+        ],
+        [
+          6,
+          52,
+          15
+        ],
+        [
+          2,
+          null,
+          null
+        ],
+        [
+          2,
+          null,
+          null
+        ],
+        [
+          2,
+          null,
+          null
+        ],
+        [
+          2,
+          null,
+          null
+        ],
+        [
+          2,
+          null,
+          null
+        ],
+        [
+          3,
+          null,
+          null
+        ],
+        [
+          3,
+          null,
+          null
+        ],
+        [
+          6,
+          52,
+          15
+        ],
+        [
+          1,
+          null,
+          null
+        ],
+        [
+          1,
+          null,
+          null
+        ],
+        [
+          3,
+          null,
+          null
+        ],
+        [
+          3,
+          null,
+          null
+        ],
+        [
+          3,
+          null,
+          null
+        ],
+        [
+          3,
+          null,
+          null
+        ],
+        [
+          3,
+          null,
+          null
+        ],
+        [
+          3,
+          null,
+          null
+        ]
+      ],
+      "replay_verified": true,
+      "independent_replay": "tools/floor_harvest.py: replays from acquire_level_starts on a fresh restore and wins at EXACTLY F",
+      "source": "out_q_small.json",
+      "lower_bound_argument": "MINIMALITY BY COMPLETE EXHAUSTION. Unit-cost breadth-first search from the cascade level start expanded EVERY state reachable in at most 107 actions (307150 distinct states, 4173191 transitions) and found no win; a win exists at 108 (replay-verified on a fresh restore), so 108 is the minimum. STATE KEY = the complete mutable world of Dc22: player cell; for EVERY sprite its name, position and InteractionMode; the level's sprite-LIST ORDER (mutated by the zbhi pickup via remove_sprite and by the itki colour cycle via add_sprite, and ozbgzuaoya / uxwpppoljm / bwxffbswqz all break layer ties by that order); the crane cell (nxhz_x, nxhz_y); and what the crane holds (kind, prefix, position). The step budget is the ONLY field dropped, with a proof: dc22 reads current_steps in exactly three places -- rddadrvtot(), yepbymuune() (both of whose boolean results only ever call lose()) and render_interface() (display only) -- so it can never ENABLE a transition, and a fall-free play of length <= UB spends at most 2 per action (L5: 216 of 512, L6: 278 of 1024), checked per level by budget_headroom(). Per-action animation flags (uuehztercxf/jnmawhhrfhh/fgxfjbqnmgt and their counters) are NOT state between actions: ARCBaseGame.perform_action loops `while not is_action_complete(): step()`, so every animation runs to completion inside one action. ALPHABET. Moves 1-4 are offered at EVERY state with no inertness claim. ACTION5 and ACTION7 are excluded by DOMINANCE, proved from the source, not by an inertness assertion: in Dc22.step() ACTION5 hits a bare `pass` and ACTION7 has no branch at all, so both fall through with dx=dy=0 and ercfgufwkh=False into the `if bwzzqhqjdjj == 0 and tjbhmrnnitgy == 0:` arm, which does rddadrvtot() (budget only), the idempotent mbszrqqnqm() (already called at the top of the same step) and complete_action(); they never reach the win test uhqbwfdkff(). Deleting one from a winning play therefore leaves a winning play that is one action SHORTER and strictly richer in budget, so no minimum-length play contains one. CLICKS collapse to one representative per distinct (ozbgzuaoya(cell,'jpug'), ozbgzuaoya(cell,'sys_click')) pair, recomputed at EVERY state because pressure plates and keys change which jpug sprites are live. That is COMPLETE by reading Dc22.step(): the ACTION6 branch consumes the clicked coordinate only as camera.display_to_grid(x,y) -> cell -> those two ozbgzuaoya calls, and nothing else in the engine reads the coordinate. Cells resolving to (None,None) are world no-ops. FALLS and BLOCKED CRANE MOVES are pruned as measured world no-ops (ycfbtkckze() reinstates the snapshot xcrifaqaiy() took at the START of the same action, including that click's own effects; rqmwnltvjn() returns the crane to cayrfzcwfap) -- the search never assumes this, it compares each child's complete world key against its parent's and prunes only on equality. THE TRANSITION FUNCTION is a bit-mask model of Dc22.step() (<path>/dc22_sim.py) -- see gate_evidence for the four independent ways it is gated against the live engine.",
+      "replay_won_at": 108,
+      "instance": "dc22-fdcac232",
+      "transfer": {
+        "date": "2026-09-24",
+        "from_instance": "dc22-4c9bff3e",
+        "old_certificate": "docs/mmae_floor_certificates/<label withheld>/dc22-4c9bff3e.json (commit df95c3f85b)",
+        "argument": "the old PROVEN floor carries to the served build: rule code rename-equivalent, same sprite multiset, the old witness wins at exactly the floor on the served build (direct and chained replay), and the old-vs-served lockstep differential shows 0 dynamic divergences",
+        "served_witness_won_at": 108,
+        "chain_replay_served": {
+          "won_at": 108,
+          "ok": true
+        },
+        "differential": {
+          "rollouts": 200,
+          "steps": 6000,
+          "dynamic_divergences": 0,
+          "components": {},
+          "observation_only_frame_mismatch_steps": 217
+        },
+        "evidence": [
+          "docs/mmae_floor_certificates/served_20260924/transfer/<label withheld>.json#builds.dc22-fdcac232.5",
+          "docs/mmae_floor_certificates/served_20260924/transfer/evidence/replay_diff/dc22.json#levels.5",
+          "docs/mmae_floor_certificates/served_20260924/transfer/evidence/code_diff/dc22.json",
+          "docs/mmae_floor_certificates/served_20260924/transfer/evidence/level_diff/dc22.json"
+        ]
+      }
+    },
+    "6": {
+      "level": 6,
+      "status": "PROVEN",
+      "floor": 139,
+      "lb": 139,
+      "ub": 139,
+      "instance": "dc22-fdcac232",
+      "proof_kind": "complete_state_bfs_on_sampled_equivalent_simulator",
+      "proof": "complete-state layered BFS over a bit-mask simulator of the SERVED dc22 step(), gated by lockstep bisimulation against the served engine itself; every state at depth <= 137 expanded over the full reduced alphabet, no child at depth <= 138 wins; the first win is at depth 139",
+      "full_information_floor": 139,
+      "lower_bound_method": "complete-state layered BFS over a bit-mask simulator of the SERVED dc22 step(), gated by lockstep bisimulation against the served engine itself; every state at depth <= 137 expanded over the full reduced alphabet, no child at depth <= 138 wins; the first win is at depth 139",
+      "states_explored": 3083151,
+      "layers_closed": 138,
+      "per_layer_counts": [
+        1,
+        4,
+        9,
+        15,
+        21,
+        27,
+        31,
+        31,
+        28,
+        25,
+        26,
+        28,
+        31,
+        34,
+        36,
+        36,
+        34,
+        37,
+        39,
+        39,
+        45,
+        49,
+        50,
+        48,
+        47,
+        47,
+        43,
+        40,
+        37,
+        36,
+        33,
+        30,
+        36,
+        41,
+        46,
+        51,
+        55,
+        63,
+        65,
+        65,
+        64,
+        64,
+        75,
+        103,
+        151,
+        213,
+        289,
+        382,
+        486,
+        594,
+        708,
+        850,
+        1033,
+        1244,
+        1453,
+        1632,
+        1766,
+        1854,
+        1913,
+        1971,
+        2055,
+        2177,
+        2324,
+        2483,
+        2647,
+        2799,
+        2912,
+        2971,
+        2977,
+        2934,
+        2852,
+        2744,
+        2635,
+        2562,
+        2542,
+        2577,
+        2668,
+        2821,
+        3046,
+        3376,
+        3898,
+        4708,
+        5902,
+        7570,
+        9761,
+        12558,
+        16068,
+        20305,
+        25272,
+        30839,
+        36680,
+        42535,
+        48035,
+        52827,
+        56775,
+        59733,
+        61927,
+        63683,
+        65191,
+        66766,
+        68363,
+        69822,
+        71036,
+        71864,
+        72501,
+        73140,
+        73944,
+        75072,
+        76439,
+        77997,
+        79580,
+        80878,
+        81652,
+        81779,
+        81325,
+        80379,
+        79025,
+        77482,
+        76049,
+        74852,
+        73772,
+        72503,
+        70703,
+        68118,
+        64605,
+        60228,
+        55233,
+        49931,
+        44627,
+        39581,
+        34922,
+        30689,
+        26862,
+        23361,
+        20141,
+        17207,
+        14586,
+        12272,
+        10245
+      ],
+      "reduction": {
+        "clicks": "per expanded state all 64x64 display coordinates are mapped by camera.display_to_grid to a grid cell and classified by the pair (topmost visible 'buezna' sprite, topmost visible 'sys_click' sprite) at that cell (served xodizggcom); one representative per non-empty class is expanded; the (None, None) class is a world no-op (budget -1)",
+        "classes_per_state": "5-7 typical (4 moves + 1-3 click classes); root alphabet 7",
+        "validation": {
+          "method": "on the served engine: lockstep replay of every sampled BFS path and the witness; at every 3rd sampled state (and every 20th witness state) all 4096 ACTION6 coordinates plus ids 1,2,3,4,5,7 and RESET executed on deep copies; per coordinate the served successor is compared with the simulator's successor for that exact coordinate (sprite list in order with name/position/interaction/layer/blocking/tags/pixels, player, crane cell, attachment, camera), budget delta vs simulator cost, win flag, a no-op must leave the full served world signature unchanged; per class all served successors must have one world signature; the source partition (served xodizggcom lookups after the plate refresh) is recomputed per coordinate and compared with the simulator's classes; every visited simulator key must map to exactly one served world signature (key injectivity)",
+          "lockstep_actions": 28912,
+          "lockstep_paths": 416,
+          "probed_states": 145,
+          "probe_actions": 870,
+          "probe_clicks": 593920,
+          "click_classes_total": 746,
+          "noop_clicks": 580618,
+          "effect_clicks": 13302,
+          "offcamera_clicks": 0,
+          "partition_cells_checked": 593920,
+          "key_injectivity_checks": 43037,
+          "reset_ok": 144,
+          "action57_noop_ok": 290,
+          "fall_noop_ok": 945,
+          "reset_full_at_level_start_ok": 1,
+          "mismatches": 0,
+          "witness_won_at_lockstep": [
+            139
+          ],
+          "shards": [
+            "validate_L6_shard0.json",
+            "validate_L6_shard1.json",
+            "validate_L6_shard3.json"
+          ]
+        },
+        "state_key": "(interaction mode of every sprite slot incl. pre-allocated colour-cycle clones, sprite-list membership+order, positions of the movable sprites (crane head, craneable bridge variants, grawwq object, aybe sprites), player cell, crane cell, attached kind, attached bridge prefix and anchor) -- budget excluded",
+        "justification": "Budget: read only by ncuydqtllw/ykevdpbntc (lose at 0) and the HUD; a play without world no-ops spends <= 2 per action, 2*138 = 276 < 1024, so no such play of length <= 138 can lose; no-ops (blocked moves, inert clicks, fall-restore clicks, failed crane attach, ACTION5/7) leave every non-budget variable unchanged (validated per coordinate) and are deletable from any winning play, so a minimum play contains none. Injectivity of the key over all mutable state validated empirically (no key seen with two served world signatures); world signature = every game attribute and every sprite field in list order, excluding only fields dead between actions (last action record, action counter, undo snapshot sachklrxui, on_set_level-only list jrxnntmty, crane-bump animation scratch khgksxfzv/ltnwoxuhf/szwacahvg) and the budget."
+      },
+      "bisimulation": {
+        "model": "dc22_sim_served.py (served tag/attribute names)",
+        "against": "the served engine directly (no intermediate reordered-old-code module)",
+        "lockstep_actions": 28912,
+        "lockstep_paths": 416,
+        "per_coordinate_successor_checks": 594790,
+        "mismatches": 0
+      },
+      "concerns": [
+        "Simulator fidelity is established by sampled validation (416 lockstep paths / 28,912 actions; 145 states with all 4096 clicks + every action id), not by an exhaustive equivalence proof.",
+        "Key injectivity is checked empirically (43,037 checks, no key with two served world signatures), backed by the source argument in reduction.justification.",
+        "Out-of-range / non-integer ACTION6 payloads were not probed."
+      ],
+      "mutation_control": {
+        "mutant": "simulator with ACTION1/ACTION2 deltas swapped (mutctl/dc22_sim_mut.py)",
+        "result": "validation RED: 7 mismatches on 3 short paths (projection + no-op checks)",
+        "evidence": "<path>/validate_L6_shard0.json"
+      },
+      "transitions": 26651298,
+      "dispatch": {
+        "variant": "dc22-fdcac232",
+        "advertised": [
+          1,
+          2,
+          3,
+          4,
+          6
+        ],
+        "accepted": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "source_sha256": "74abe3523bd6bc8a0948991caa0ca71855e38542ba2123653a03485e064f252e",
+        "reset": "RESET is always taken by perform_action: with 0 actions on the level it is a FULL reset (to level 1), otherwise a level reset to the level-6 start (validated: served world signature equals the start signature). It costs an action and returns to the start or earlier, so it can never shorten a minimum.",
+        "action6_payload": "integer x,y in 0..63 (all 4096 executed at the probed states); an empty payload defaults to (0,0), which is inside that set; out-of-range integers not probed",
+        "note": "perform_action does not filter by available_actions; step() treats ACTION5 and ACTION7 as world no-ops that cost 1 budget (validated)"
+      },
+      "coverage": {
+        "key": "see reduction.state_key",
+        "click_probe": {
+          "states_probed": 3065959,
+          "states_expanded": 3065959,
+          "coords_per_state": 4096,
+          "method": "source partition computed in the simulator for every expanded state (all 4096 coordinates assigned to a class, one representative expanded per effective class); validated by executing all 4096 clicks on the served engine at 145 sampled states",
+          "executed_validation_states": 145,
+          "executed_validation_coords": 593920,
+          "validated": true
+        },
+        "coverage_argument": "served step() consumes ACTION6 data only through camera.display_to_grid and then xodizggcom(cell,'buezna') / xodizggcom(cell,'sys_click') (the plate refresh yuonzbouxb at the head of step is idempotent on stored states), so coordinates with the same lookup pair have identical successors; clicks never win (win is checked only after a move); ACTION5/7 and fall-restore clicks are world no-ops; RESET returns to the start. Every expanded state's 4096 coordinates were classified; the classification and the simulator successor of every coordinate were checked against the served engine on the sampled states.",
+        "truncated": false
+      },
+      "path": [
+        [
+          3,
+          null,
+          null
+        ],
+        [
+          3,
+          null,
+          null
+        ],
+        [
+          3,
+          null,
+          null
+        ],
+        [
+          3,
+          null,
+          null
+        ],
+        [
+          3,
+          null,
+          null
+        ],
+        [
+          6,
+          49,
+          23
+        ],
+        [
+          6,
+          53,
+          5
+        ],
+        [
+          6,
+          53,
+          5
+        ],
+        [
+          6,
+          53,
+          5
+        ],
+        [
+          6,
+          53,
+          5
+        ],
+        [
+          2,
+          null,
+          null
+        ],
+        [
+          2,
+          null,
+          null
+        ],
+        [
+          3,
+          null,
+          null
+        ],
+        [
+          3,
+          null,
+          null
+        ],
+        [
+          3,
+          null,
+          null
+        ],
+        [
+          2,
+          null,
+          null
+        ],
+        [
+          3,
+          null,
+          null
+        ],
+        [
+          6,
+          53,
+          5
+        ],
+        [
+          1,
+          null,
+          null
+        ],
+        [
+          3,
+          null,
+          null
+        ],
+        [
+          6,
+          53,
+          5
+        ],
+        [
+          1,
+          null,
+          null
+        ],
+        [
+          1,
+          null,
+          null
+        ],
+        [
+          1,
+          null,
+          null
+        ],
+        [
+          1,
+          null,
+          null
+        ],
+        [
+          1,
+          null,
+          null
+        ],
+        [
+          1,
+          null,
+          null
+        ],
+        [
+          1,
+          null,
+          null
+        ],
+        [
+          1,
+          null,
+          null
+        ],
+        [
+          1,
+          null,
+          null
+        ],
+        [
+          1,
+          null,
+          null
+        ],
+        [
+          1,
+          null,
+          null
+        ],
+        [
+          1,
+          null,
+          null
+        ],
+        [
+          1,
+          null,
+          null
+        ],
+        [
+          1,
+          null,
+          null
+        ],
+        [
+          1,
+          null,
+          null
+        ],
+        [
+          1,
+          null,
+          null
+        ],
+        [
+          1,
+          null,
+          null
+        ],
+        [
+          1,
+          null,
+          null
+        ],
+        [
+          1,
+          null,
+          null
+        ],
+        [
+          2,
+          null,
+          null
+        ],
+        [
+          2,
+          null,
+          null
+        ],
+        [
+          2,
+          null,
+          null
+        ],
+        [
+          2,
+          null,
+          null
+        ],
+        [
+          2,
+          null,
+          null
+        ],
+        [
+          2,
+          null,
+          null
+        ],
+        [
+          2,
+          null,
+          null
+        ],
+        [
+          2,
+          null,
+          null
+        ],
+        [
+          2,
+          null,
+          null
+        ],
+        [
+          2,
+          null,
+          null
+        ],
+        [
+          2,
+          null,
+          null
+        ],
+        [
+          2,
+          null,
+          null
+        ],
+        [
+          2,
+          null,
+          null
+        ],
+        [
+          2,
+          null,
+          null
+        ],
+        [
+          2,
+          null,
+          null
+        ],
+        [
+          2,
+          null,
+          null
+        ],
+        [
+          2,
+          null,
+          null
+        ],
+        [
+          2,
+          null,
+          null
+        ],
+        [
+          4,
+          null,
+          null
+        ],
+        [
+          6,
+          53,
+          5
+        ],
+        [
+          4,
+          null,
+          null
+        ],
+        [
+          6,
+          53,
+          5
+        ],
+        [
+          4,
+          null,
+          null
+        ],
+        [
+          6,
+          53,
+          5
+        ],
+        [
+          4,
+          null,
+          null
+        ],
+        [
+          6,
+          53,
+          5
+        ],
+        [
+          4,
+          null,
+          null
+        ],
+        [
+          1,
+          null,
+          null
+        ],
+        [
+          1,
+          null,
+          null
+        ],
+        [
+          1,
+          null,
+          null
+        ],
+        [
+          6,
+          49,
+          23
+        ],
+        [
+          1,
+          null,
+          null
+        ],
+        [
+          1,
+          null,
+          null
+        ],
+        [
+          4,
+          null,
+          null
+        ],
+        [
+          2,
+          null,
+          null
+        ],
+        [
+          2,
+          null,
+          null
+        ],
+        [
+          3,
+          null,
+          null
+        ],
+        [
+          6,
+          49,
+          23
+        ],
+        [
+          6,
+          52,
+          49
+        ],
+        [
+          6,
+          52,
+          49
+        ],
+        [
+          6,
+          52,
+          49
+        ],
+        [
+          6,
+          49,
+          23
+        ],
+        [
+          3,
+          null,
+          null
+        ],
+        [
+          6,
+          48,
+          36
+        ],
+        [
+          6,
+          48,
+          36
+        ],
+        [
+          6,
+          48,
+          36
+        ],
+        [
+          6,
+          48,
+          36
+        ],
+        [
+          4,
+          null,
+          null
+        ],
+        [
+          4,
+          null,
+          null
+        ],
+        [
+          6,
+          47,
+          18
+        ],
+        [
+          6,
+          56,
+          37
+        ],
+        [
+          6,
+          56,
+          37
+        ],
+        [
+          6,
+          56,
+          37
+        ],
+        [
+          6,
+          56,
+          37
+        ],
+        [
+          6,
+          56,
+          37
+        ],
+        [
+          1,
+          null,
+          null
+        ],
+        [
+          3,
+          null,
+          null
+        ],
+        [
+          6,
+          51,
+          34
+        ],
+        [
+          6,
+          51,
+          34
+        ],
+        [
+          6,
+          51,
+          34
+        ],
+        [
+          2,
+          null,
+          null
+        ],
+        [
+          3,
+          null,
+          null
+        ],
+        [
+          6,
+          48,
+          36
+        ],
+        [
+          6,
+          48,
+          36
+        ],
+        [
+          1,
+          null,
+          null
+        ],
+        [
+          4,
+          null,
+          null
+        ],
+        [
+          6,
+          51,
+          34
+        ],
+        [
+          6,
+          51,
+          34
+        ],
+        [
+          6,
+          51,
+          34
+        ],
+        [
+          2,
+          null,
+          null
+        ],
+        [
+          6,
+          49,
+          23
+        ],
+        [
+          6,
+          52,
+          49
+        ],
+        [
+          6,
+          52,
+          49
+        ],
+        [
+          6,
+          52,
+          49
+        ],
+        [
+          6,
+          49,
+          23
+        ],
+        [
+          2,
+          null,
+          null
+        ],
+        [
+          2,
+          null,
+          null
+        ],
+        [
+          4,
+          null,
+          null
+        ],
+        [
+          4,
+          null,
+          null
+        ],
+        [
+          4,
+          null,
+          null
+        ],
+        [
+          4,
+          null,
+          null
+        ],
+        [
+          4,
+          null,
+          null
+        ],
+        [
+          4,
+          null,
+          null
+        ],
+        [
+          4,
+          null,
+          null
+        ],
+        [
+          4,
+          null,
+          null
+        ],
+        [
+          4,
+          null,
+          null
+        ],
+        [
+          4,
+          null,
+          null
+        ],
+        [
+          4,
+          null,
+          null
+        ],
+        [
+          4,
+          null,
+          null
+        ],
+        [
+          4,
+          null,
+          null
+        ],
+        [
+          4,
+          null,
+          null
+        ],
+        [
+          1,
+          null,
+          null
+        ],
+        [
+          4,
+          null,
+          null
+        ],
+        [
+          4,
+          null,
+          null
+        ],
+        [
+          4,
+          null,
+          null
+        ],
+        [
+          4,
+          null,
+          null
+        ],
+        [
+          4,
+          null,
+          null
+        ],
+        [
+          4,
+          null,
+          null
+        ],
+        [
+          4,
+          null,
+          null
+        ]
+      ],
+      "replay_verified": true,
+      "replay_won_at": 139,
+      "replay": {
+        "won_at": 139,
+        "prefix_wins_before_F": false,
+        "fresh_from_level_start": true,
+        "method": "served engine, fresh Dc22(), RESET, set_level(5); witness replayed action by action, win = level index change or WIN state; also by natural arrival (levels 1-5 played with the old-build routes, which win on served at 20/42/45/62/108): start signature identical to set_level, wins at 139",
+        "natural_arrival_won_at": 139,
+        "natural_start_equals_set_level_start": true
+      },
+      "certificate_files": [
+        "docs/mmae_floor_certificates/served_20260924/proofs/levels/dc22_L6.json",
+        "docs/mmae_floor_certificates/served_20260924/proofs/proofs.json#levels.dc22_L6"
+      ],
+      "evidence_paths": [
+        "<path>/dc22_common.py",
+        "<path>/dc22_sim_served.py",
+        "<path>/dc22_prove_bfs.py",
+        "<path>/dc22_validate.py",
+        "<path>/dc22_replay.py",
+        "<path>/bfs_L6.json",
+        "<path>/bfs_L6.err",
+        "<path>/bfs_L6_samples.json",
+        "<path>/replay_L6.json",
+        "<path>/validate_L6_shard0.json",
+        "<path>/validate_L6_shard1.json",
+        "<path>/validate_L6_shard3.json",
+        "host B:<path>"
+      ]
+    }
+  }
+}

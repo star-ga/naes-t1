@@ -1,0 +1,21 @@
+depth 1 children 993 kept 993 best_f 12.550 minpieces 8
+BEAM depth 1 distinct_children 993 kept 993
+depth 2 children 454391 kept 20000 best_f 10.632 minpieces 7
+BEAM depth 2 distinct_children 454391 kept 20000
+depth 3 children 12337312 kept 20000 best_f 9.334 minpieces 6
+BEAM depth 3 distinct_children 12337312 kept 20000
+depth 4 children 10086846 kept 20000 best_f 8.085 minpieces 5
+BEAM depth 4 distinct_children 10086846 kept 20000
+depth 5 children 6807477 kept 20000 best_f 6.160 minpieces 4
+BEAM depth 5 distinct_children 6807477 kept 20000
+depth 6 children 4534239 kept 20000 best_f 5.025 minpieces 3
+BEAM depth 6 distinct_children 4534239 kept 20000
+depth 7 children 1783985 kept 20000 best_f 4.467 minpieces 3
+BEAM depth 7 distinct_children 1783985 kept 20000
+depth 8 children 2022321 kept 20000 best_f 4.016 minpieces 3
+BEAM depth 8 distinct_children 2022321 kept 20000
+depth 9 children 2582384 kept 20000 best_f 3.679 minpieces 2
+BEAM depth 9 distinct_children 2582384 kept 20000
+depth 10 children 1263592 kept 20000 best_f 3.109 minpieces 2
+BEAM depth 10 distinct_children 1263592 kept 20000
+BEAM_NO_WIN within 10 (B=20000 mode=1 lam=1.00) clicks_simulated=659431424

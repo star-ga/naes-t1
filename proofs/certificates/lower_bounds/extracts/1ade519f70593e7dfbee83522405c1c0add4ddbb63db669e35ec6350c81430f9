@@ -1,0 +1,247 @@
+"""cn04 closed-form floor lower bound (object decomposition + complete winning-
+configuration enumeration) and exact uniform-cost BFS for small levels.
+
+LOWER-BOUND THEOREM (proved in the report, mechanised here):
+  Objects = the level's position-groups (a lone sprite, or a CAROUSEL of >1 sprites
+  sharing one position with exactly one visible at a time).
+  * every engine action changes the mode of AT MOST ONE object
+      - ACTION1-4 translate the selected sprite only
+      - ACTION5 rotates the selected lone sprite (then clamps) or cycles the
+        selected carousel (then clamps)
+      - ACTION6 changes the SELECTION, and may additionally cycle the selected
+        carousel (when the clicked pixel of the selected stacked sprite renders 0)
+  * the selected OBJECT changes only at an ACTION6 that is not a cycle
+  =>  L >= sum_o d_o(start_o -> C_o) + |S| - [o0 in S]
+      where S = {o : C_o != start_o} and d_o is the exact BFS distance in object
+      o's own graph.  Every object graph edge set here is a SUPERSET of the real
+      one (the carousel ping-pong direction is treated as free, and both the
+      clamped and unclamped cycle results are edges), so d_o under-estimates,
+      which keeps the bound valid.
+  The configuration enumeration is COMPLETE: the engine wins iff, for each joint
+  kind k in {8,13} separately, every cell carrying a kind-k joint of a VISIBLE
+  sprite carries exactly two.  Hence every winning configuration induces a perfect
+  matching of the kind-k joints; we enumerate all identity choices (lone rotation /
+  carousel member), all perfect matchings, and all free translations of every
+  connected component.  Cells carrying FOUR joints are admitted too (a superset of
+  the win set), which again only weakens the bound.
+"""
+import sys, itertools
+from collections import deque
+sys.path.insert(0, "<path>")
+import sim as S
+
+GRID = S.GRID
+
+
+# ---------------------------------------------------------------- object graphs
+def object_modes_and_dist(model, gi):
+    """BFS over object gi's own graph. Mode:
+         lone     -> (x, y, rot)
+         carousel -> (x, y, member_index)
+       Returns (dist dict, start mode)."""
+    grp = model.groups[gi]
+    if len(grp) == 1:
+        i = grp[0]
+        start = (model.pos0[i][0], model.pos0[i][1], model.rot0[i])
+
+        def succ(m):
+            x, y, r = m
+            R = model.R[i, r]
+            out = []
+            for dx, dy in ((0, -1), (0, 1), (-1, 0), (1, 0)):
+                nx, ny = x + dx, y + dy
+                if nx >= 0 and ny >= 0 and nx + R["w"] <= GRID and ny + R["h"] <= GRID:
+                    out.append((nx, ny, r))
+            r2 = (r + 90) % 360
+            out.append(S.clamp(model, i, r2, x, y) + (r2,))
+            return out
+    else:
+        vis0 = [m for m in grp if model.vis0[m]]
+        assert len(vis0) == 1, f"carousel {grp} has {len(vis0)} visible at start"
+        m0 = grp.index(vis0[0])
+        start = (model.pos0[vis0[0]][0], model.pos0[vis0[0]][1], m0)
+
+        def succ(m):
+            x, y, k = m
+            i = grp[k]
+            R = model.R[i, model.rot0[i]]
+            out = []
+            for dx, dy in ((0, -1), (0, 1), (-1, 0), (1, 0)):
+                nx, ny = x + dx, y + dy
+                if nx >= 0 and ny >= 0 and nx + R["w"] <= GRID and ny + R["h"] <= GRID:
+                    out.append((nx, ny, k))
+            for k2 in (k - 1, k + 1):                      # ping-pong over-approximated
+                if 0 <= k2 < len(grp):
+                    j = grp[k2]
+                    out.append((x, y, k2))                 # click-cycle: no clamp
+                    cx, cy = S.clamp(model, j, model.rot0[j], x, y)
+                    out.append((cx, cy, k2))               # ACTION5-cycle: clamp
+            return out
+
+    dist = {start: 0}
+    q = deque([start])
+    while q:
+        m = q.popleft()
+        d = dist[m] + 1
+        for n in succ(m):
+            if n not in dist:
+                dist[n] = d
+                q.append(n)
+    return dist, start
+
+
+def group_identity_options(model, gi):
+    """Identity part of a mode: rotation for a lone sprite, member index for a
+    carousel. Returns list of (ident, visible_sprite_index, rot_of_that_sprite)."""
+    grp = model.groups[gi]
+    if len(grp) == 1:
+        return [(r, grp[0], r) for r in (0, 90, 180, 270)]
+    return [(k, grp[k], model.rot0[grp[k]]) for k in range(len(grp))]
+
+
+# --------------------------------------------------------- matching enumeration
+def perfect_matchings(items):
+    """All perfect matchings of `items` (list). Yields lists of index pairs."""
+    n = len(items)
+    if n % 2:
+        return
+    idx = list(range(n))
+
+    def rec(rem, acc):
+        if not rem:
+            yield list(acc)
+            return
+        a = rem[0]
+        for j in range(1, len(rem)):
+            b = rem[j]
+            acc.append((a, b))
+            yield from rec(rem[1:j] + rem[j + 1:], acc)
+            acc.pop()
+    yield from rec(idx, [])
+
+
+def solve_offsets(ngroups, constraints):
+    """constraints: list of (gA, gB, dx, dy) meaning t_B - t_A = (dx,dy).
+       Returns (root[], off[]) or None on inconsistency."""
+    parent = list(range(ngroups))
+    off = [(0, 0)] * ngroups          # t_g - t_root(g)
+
+    def find(g):
+        if parent[g] == g:
+            return g, (0, 0)
+        r, o = find(parent[g])
+        parent[g] = r
+        off[g] = (off[g][0] + o[0], off[g][1] + o[1])
+        return r, off[g]
+
+    for (a, b, dx, dy) in constraints:
+        ra, oa = find(a)
+        rb, ob = find(b)
+        if ra == rb:
+            if (ob[0] - oa[0], ob[1] - oa[1]) != (dx, dy):
+                return None
+        else:
+            # t_b = t_a + d  ;  t_a = t_ra + oa ; t_b = t_rb + ob
+            # => t_rb = t_ra + oa + d - ob
+            parent[rb] = ra
+            off[rb] = (oa[0] + dx - ob[0], oa[1] + dy - ob[1])
+    roots = []
+    res = []
+    for g in range(ngroups):
+        r, o = find(g)
+        res.append((r, o))
+        if r not in roots:
+            roots.append(r)
+    return res, roots
+
+
+def closed_form_lb(model, verbose=False, ub=None):
+    ng = len(model.groups)
+    dists = []
+    starts = []
+    for gi in range(ng):
+        d, s = object_modes_and_dist(model, gi)
+        dists.append(d)
+        starts.append(s)
+    o0 = model.gof[model.sel0] if model.sel0 is not None else None
+
+    ident_opts = [group_identity_options(model, gi) for gi in range(ng)]
+    best = None
+    best_info = None
+    n_configs = 0
+    for combo in itertools.product(*ident_opts):
+        # joints of each group under this identity choice
+        j8 = []   # (group, lx, ly)
+        j13 = []
+        for gi, (ident, sp, rot) in enumerate(combo):
+            R = model.R[sp, rot]
+            for (lx, ly) in R["j8"]:
+                j8.append((gi, lx, ly))
+            for (lx, ly) in R["j13"]:
+                j13.append((gi, lx, ly))
+        if len(j8) % 2 or len(j13) % 2:
+            continue
+        for m8 in perfect_matchings(j8):
+            if any(j8[a][0] == j8[b][0] for a, b in m8):
+                continue
+            for m13 in perfect_matchings(j13):
+                if any(j13[a][0] == j13[b][0] for a, b in m13):
+                    continue
+                cons = []
+                for a, b in m8:
+                    ga, ax, ay = j8[a]; gb, bx, by = j8[b]
+                    cons.append((ga, gb, ax - bx, ay - by))
+                for a, b in m13:
+                    ga, ax, ay = j13[a]; gb, bx, by = j13[b]
+                    cons.append((ga, gb, ax - bx, ay - by))
+                sol = solve_offsets(ng, cons)
+                if sol is None:
+                    continue
+                res, roots = sol
+                n_configs += 1
+                # per-component minimisation
+                comp = {r: [] for r in roots}
+                for gi in range(ng):
+                    comp[res[gi][0]].append(gi)
+                total = 0
+                info = {}
+                feasible = True
+                for r, members in comp.items():
+                    # free translation t_r: enumerate all positions the ROOT could take
+                    bestc = None
+                    for tx in range(GRID):
+                        for ty in range(GRID):
+                            c = 0
+                            changed0 = False
+                            ok = True
+                            modes = {}
+                            for gi in members:
+                                ox, oy = res[gi][1]
+                                ident = combo[gi][0]
+                                mode = (tx + ox, ty + oy, ident)
+                                d = dists[gi].get(mode)
+                                if d is None:
+                                    ok = False
+                                    break
+                                c += d + (1 if mode != starts[gi] else 0)
+                                if gi == o0 and mode != starts[gi]:
+                                    changed0 = True
+                                modes[gi] = mode
+                            if not ok:
+                                continue
+                            c -= 1 if changed0 else 0
+                            if bestc is None or c < bestc[0]:
+                                bestc = (c, modes)
+                    if bestc is None:
+                        feasible = False
+                        break
+                    total += bestc[0]
+                    info.update(bestc[1])
+                if not feasible:
+                    continue
+                if best is None or total < best:
+                    best = total
+                    best_info = (combo, info)
+                    if verbose:
+                        print("  new best", best, {g: info[g] for g in info})
+    return best, best_info, n_configs

@@ -1,0 +1,695 @@
+{
+  "status": "PASS",
+  "game": "vc33-9851e02b",
+  "source_lemma": "VC33 step reads x=action.data.get('x',0), y=action.data.get('y',0); therefore empty data is (0,0), missing y is (x,0), and missing x is (0,y).",
+  "key": "raw mm.whitebox_sig_bytes; only root _action temporarily omitted; _KEY_EXCLUDE empty; action_count retained",
+  "engine_source_sha256": {
+    "base_game.py": "5b5f41f3bec4c0c97a727fda7326114991dc0d4a5642d489b40ee4aa87e6b15f",
+    "level.py": "f74db969772b251018b2fcce6ec42f3522adeef4e9c03c036e455d2a35e3215a",
+    "camera.py": "f06e16807b0f97d86cafb5481bb3969213f27768f789d898c6b8b07e957de397"
+  },
+  "states_checked": 8,
+  "comparisons_checked": 40,
+  "results": [
+    {
+      "state": "L1-start",
+      "tape": [],
+      "comparisons": [
+        {
+          "left": "empty",
+          "right": "explicit-0-0",
+          "equal": true,
+          "left_key_sha256": "b166b134ec3f8cd9837e802304f0e431417f155b97300fb2395d6ff0943db2aa",
+          "right_key_sha256": "b166b134ec3f8cd9837e802304f0e431417f155b97300fb2395d6ff0943db2aa",
+          "left_frame_sha256": "fdf444521320aa0b1af7c6b38c7b1eadfba4afc36ee76ecfcad56e0138e61eb3",
+          "right_frame_sha256": "fdf444521320aa0b1af7c6b38c7b1eadfba4afc36ee76ecfcad56e0138e61eb3",
+          "levels_completed": 0,
+          "game_state": "GameState.NOT_FINISHED",
+          "action_count": 1
+        },
+        {
+          "left": "only-x-zero",
+          "right": "explicit-0-0",
+          "equal": true,
+          "left_key_sha256": "b166b134ec3f8cd9837e802304f0e431417f155b97300fb2395d6ff0943db2aa",
+          "right_key_sha256": "b166b134ec3f8cd9837e802304f0e431417f155b97300fb2395d6ff0943db2aa",
+          "left_frame_sha256": "fdf444521320aa0b1af7c6b38c7b1eadfba4afc36ee76ecfcad56e0138e61eb3",
+          "right_frame_sha256": "fdf444521320aa0b1af7c6b38c7b1eadfba4afc36ee76ecfcad56e0138e61eb3",
+          "levels_completed": 0,
+          "game_state": "GameState.NOT_FINISHED",
+          "action_count": 1
+        },
+        {
+          "left": "only-y-zero",
+          "right": "explicit-0-0",
+          "equal": true,
+          "left_key_sha256": "b166b134ec3f8cd9837e802304f0e431417f155b97300fb2395d6ff0943db2aa",
+          "right_key_sha256": "b166b134ec3f8cd9837e802304f0e431417f155b97300fb2395d6ff0943db2aa",
+          "left_frame_sha256": "fdf444521320aa0b1af7c6b38c7b1eadfba4afc36ee76ecfcad56e0138e61eb3",
+          "right_frame_sha256": "fdf444521320aa0b1af7c6b38c7b1eadfba4afc36ee76ecfcad56e0138e61eb3",
+          "levels_completed": 0,
+          "game_state": "GameState.NOT_FINISHED",
+          "action_count": 1
+        },
+        {
+          "left": "only-x-13",
+          "right": "x-13-y-zero",
+          "equal": true,
+          "left_key_sha256": "b166b134ec3f8cd9837e802304f0e431417f155b97300fb2395d6ff0943db2aa",
+          "right_key_sha256": "b166b134ec3f8cd9837e802304f0e431417f155b97300fb2395d6ff0943db2aa",
+          "left_frame_sha256": "fdf444521320aa0b1af7c6b38c7b1eadfba4afc36ee76ecfcad56e0138e61eb3",
+          "right_frame_sha256": "fdf444521320aa0b1af7c6b38c7b1eadfba4afc36ee76ecfcad56e0138e61eb3",
+          "levels_completed": 0,
+          "game_state": "GameState.NOT_FINISHED",
+          "action_count": 1
+        },
+        {
+          "left": "only-y-23",
+          "right": "x-zero-y-23",
+          "equal": true,
+          "left_key_sha256": "b166b134ec3f8cd9837e802304f0e431417f155b97300fb2395d6ff0943db2aa",
+          "right_key_sha256": "b166b134ec3f8cd9837e802304f0e431417f155b97300fb2395d6ff0943db2aa",
+          "left_frame_sha256": "fdf444521320aa0b1af7c6b38c7b1eadfba4afc36ee76ecfcad56e0138e61eb3",
+          "right_frame_sha256": "fdf444521320aa0b1af7c6b38c7b1eadfba4afc36ee76ecfcad56e0138e61eb3",
+          "levels_completed": 0,
+          "game_state": "GameState.NOT_FINISHED",
+          "action_count": 1
+        }
+      ]
+    },
+    {
+      "state": "L1-after-1",
+      "tape": [
+        [
+          6,
+          60,
+          32
+        ]
+      ],
+      "comparisons": [
+        {
+          "left": "empty",
+          "right": "explicit-0-0",
+          "equal": true,
+          "left_key_sha256": "de5130535a5fc2298469e7f278b340676587385bf67a3b08c77349c2c69b9bcc",
+          "right_key_sha256": "de5130535a5fc2298469e7f278b340676587385bf67a3b08c77349c2c69b9bcc",
+          "left_frame_sha256": "c4b0885194dec36c9d234cba6886d17a0d96c2ec81ac40472d25bb4e3802f483",
+          "right_frame_sha256": "c4b0885194dec36c9d234cba6886d17a0d96c2ec81ac40472d25bb4e3802f483",
+          "levels_completed": 0,
+          "game_state": "GameState.NOT_FINISHED",
+          "action_count": 2
+        },
+        {
+          "left": "only-x-zero",
+          "right": "explicit-0-0",
+          "equal": true,
+          "left_key_sha256": "de5130535a5fc2298469e7f278b340676587385bf67a3b08c77349c2c69b9bcc",
+          "right_key_sha256": "de5130535a5fc2298469e7f278b340676587385bf67a3b08c77349c2c69b9bcc",
+          "left_frame_sha256": "c4b0885194dec36c9d234cba6886d17a0d96c2ec81ac40472d25bb4e3802f483",
+          "right_frame_sha256": "c4b0885194dec36c9d234cba6886d17a0d96c2ec81ac40472d25bb4e3802f483",
+          "levels_completed": 0,
+          "game_state": "GameState.NOT_FINISHED",
+          "action_count": 2
+        },
+        {
+          "left": "only-y-zero",
+          "right": "explicit-0-0",
+          "equal": true,
+          "left_key_sha256": "de5130535a5fc2298469e7f278b340676587385bf67a3b08c77349c2c69b9bcc",
+          "right_key_sha256": "de5130535a5fc2298469e7f278b340676587385bf67a3b08c77349c2c69b9bcc",
+          "left_frame_sha256": "c4b0885194dec36c9d234cba6886d17a0d96c2ec81ac40472d25bb4e3802f483",
+          "right_frame_sha256": "c4b0885194dec36c9d234cba6886d17a0d96c2ec81ac40472d25bb4e3802f483",
+          "levels_completed": 0,
+          "game_state": "GameState.NOT_FINISHED",
+          "action_count": 2
+        },
+        {
+          "left": "only-x-13",
+          "right": "x-13-y-zero",
+          "equal": true,
+          "left_key_sha256": "de5130535a5fc2298469e7f278b340676587385bf67a3b08c77349c2c69b9bcc",
+          "right_key_sha256": "de5130535a5fc2298469e7f278b340676587385bf67a3b08c77349c2c69b9bcc",
+          "left_frame_sha256": "c4b0885194dec36c9d234cba6886d17a0d96c2ec81ac40472d25bb4e3802f483",
+          "right_frame_sha256": "c4b0885194dec36c9d234cba6886d17a0d96c2ec81ac40472d25bb4e3802f483",
+          "levels_completed": 0,
+          "game_state": "GameState.NOT_FINISHED",
+          "action_count": 2
+        },
+        {
+          "left": "only-y-23",
+          "right": "x-zero-y-23",
+          "equal": true,
+          "left_key_sha256": "de5130535a5fc2298469e7f278b340676587385bf67a3b08c77349c2c69b9bcc",
+          "right_key_sha256": "de5130535a5fc2298469e7f278b340676587385bf67a3b08c77349c2c69b9bcc",
+          "left_frame_sha256": "c4b0885194dec36c9d234cba6886d17a0d96c2ec81ac40472d25bb4e3802f483",
+          "right_frame_sha256": "c4b0885194dec36c9d234cba6886d17a0d96c2ec81ac40472d25bb4e3802f483",
+          "levels_completed": 0,
+          "game_state": "GameState.NOT_FINISHED",
+          "action_count": 2
+        }
+      ]
+    },
+    {
+      "state": "L1-after-2",
+      "tape": [
+        [
+          6,
+          60,
+          32
+        ],
+        [
+          6,
+          60,
+          32
+        ]
+      ],
+      "comparisons": [
+        {
+          "left": "empty",
+          "right": "explicit-0-0",
+          "equal": true,
+          "left_key_sha256": "3bdf3b3afcbe090fc7e195bb3f1745765e603647784dd6c1b4e76b707d75265e",
+          "right_key_sha256": "3bdf3b3afcbe090fc7e195bb3f1745765e603647784dd6c1b4e76b707d75265e",
+          "left_frame_sha256": "9b53a2a25b60ecf4af58ed740bed497a05fb9d5104dc94b5435a6f63171163ec",
+          "right_frame_sha256": "9b53a2a25b60ecf4af58ed740bed497a05fb9d5104dc94b5435a6f63171163ec",
+          "levels_completed": 0,
+          "game_state": "GameState.NOT_FINISHED",
+          "action_count": 3
+        },
+        {
+          "left": "only-x-zero",
+          "right": "explicit-0-0",
+          "equal": true,
+          "left_key_sha256": "3bdf3b3afcbe090fc7e195bb3f1745765e603647784dd6c1b4e76b707d75265e",
+          "right_key_sha256": "3bdf3b3afcbe090fc7e195bb3f1745765e603647784dd6c1b4e76b707d75265e",
+          "left_frame_sha256": "9b53a2a25b60ecf4af58ed740bed497a05fb9d5104dc94b5435a6f63171163ec",
+          "right_frame_sha256": "9b53a2a25b60ecf4af58ed740bed497a05fb9d5104dc94b5435a6f63171163ec",
+          "levels_completed": 0,
+          "game_state": "GameState.NOT_FINISHED",
+          "action_count": 3
+        },
+        {
+          "left": "only-y-zero",
+          "right": "explicit-0-0",
+          "equal": true,
+          "left_key_sha256": "3bdf3b3afcbe090fc7e195bb3f1745765e603647784dd6c1b4e76b707d75265e",
+          "right_key_sha256": "3bdf3b3afcbe090fc7e195bb3f1745765e603647784dd6c1b4e76b707d75265e",
+          "left_frame_sha256": "9b53a2a25b60ecf4af58ed740bed497a05fb9d5104dc94b5435a6f63171163ec",
+          "right_frame_sha256": "9b53a2a25b60ecf4af58ed740bed497a05fb9d5104dc94b5435a6f63171163ec",
+          "levels_completed": 0,
+          "game_state": "GameState.NOT_FINISHED",
+          "action_count": 3
+        },
+        {
+          "left": "only-x-13",
+          "right": "x-13-y-zero",
+          "equal": true,
+          "left_key_sha256": "3bdf3b3afcbe090fc7e195bb3f1745765e603647784dd6c1b4e76b707d75265e",
+          "right_key_sha256": "3bdf3b3afcbe090fc7e195bb3f1745765e603647784dd6c1b4e76b707d75265e",
+          "left_frame_sha256": "9b53a2a25b60ecf4af58ed740bed497a05fb9d5104dc94b5435a6f63171163ec",
+          "right_frame_sha256": "9b53a2a25b60ecf4af58ed740bed497a05fb9d5104dc94b5435a6f63171163ec",
+          "levels_completed": 0,
+          "game_state": "GameState.NOT_FINISHED",
+          "action_count": 3
+        },
+        {
+          "left": "only-y-23",
+          "right": "x-zero-y-23",
+          "equal": true,
+          "left_key_sha256": "3bdf3b3afcbe090fc7e195bb3f1745765e603647784dd6c1b4e76b707d75265e",
+          "right_key_sha256": "3bdf3b3afcbe090fc7e195bb3f1745765e603647784dd6c1b4e76b707d75265e",
+          "left_frame_sha256": "9b53a2a25b60ecf4af58ed740bed497a05fb9d5104dc94b5435a6f63171163ec",
+          "right_frame_sha256": "9b53a2a25b60ecf4af58ed740bed497a05fb9d5104dc94b5435a6f63171163ec",
+          "levels_completed": 0,
+          "game_state": "GameState.NOT_FINISHED",
+          "action_count": 3
+        }
+      ]
+    },
+    {
+      "state": "L2-start",
+      "tape": [
+        [
+          6,
+          60,
+          32
+        ],
+        [
+          6,
+          60,
+          32
+        ],
+        [
+          6,
+          60,
+          32
+        ]
+      ],
+      "comparisons": [
+        {
+          "left": "empty",
+          "right": "explicit-0-0",
+          "equal": true,
+          "left_key_sha256": "d6191ab079d22624fe97d32993e318dbc239e30be7e864402f66e0b4c8c7297b",
+          "right_key_sha256": "d6191ab079d22624fe97d32993e318dbc239e30be7e864402f66e0b4c8c7297b",
+          "left_frame_sha256": "4b7e02239adc58ad303701e81d014301993748bc81a1e8958402522490a0a176",
+          "right_frame_sha256": "4b7e02239adc58ad303701e81d014301993748bc81a1e8958402522490a0a176",
+          "levels_completed": 1,
+          "game_state": "GameState.NOT_FINISHED",
+          "action_count": 1
+        },
+        {
+          "left": "only-x-zero",
+          "right": "explicit-0-0",
+          "equal": true,
+          "left_key_sha256": "d6191ab079d22624fe97d32993e318dbc239e30be7e864402f66e0b4c8c7297b",
+          "right_key_sha256": "d6191ab079d22624fe97d32993e318dbc239e30be7e864402f66e0b4c8c7297b",
+          "left_frame_sha256": "4b7e02239adc58ad303701e81d014301993748bc81a1e8958402522490a0a176",
+          "right_frame_sha256": "4b7e02239adc58ad303701e81d014301993748bc81a1e8958402522490a0a176",
+          "levels_completed": 1,
+          "game_state": "GameState.NOT_FINISHED",
+          "action_count": 1
+        },
+        {
+          "left": "only-y-zero",
+          "right": "explicit-0-0",
+          "equal": true,
+          "left_key_sha256": "d6191ab079d22624fe97d32993e318dbc239e30be7e864402f66e0b4c8c7297b",
+          "right_key_sha256": "d6191ab079d22624fe97d32993e318dbc239e30be7e864402f66e0b4c8c7297b",
+          "left_frame_sha256": "4b7e02239adc58ad303701e81d014301993748bc81a1e8958402522490a0a176",
+          "right_frame_sha256": "4b7e02239adc58ad303701e81d014301993748bc81a1e8958402522490a0a176",
+          "levels_completed": 1,
+          "game_state": "GameState.NOT_FINISHED",
+          "action_count": 1
+        },
+        {
+          "left": "only-x-13",
+          "right": "x-13-y-zero",
+          "equal": true,
+          "left_key_sha256": "d6191ab079d22624fe97d32993e318dbc239e30be7e864402f66e0b4c8c7297b",
+          "right_key_sha256": "d6191ab079d22624fe97d32993e318dbc239e30be7e864402f66e0b4c8c7297b",
+          "left_frame_sha256": "4b7e02239adc58ad303701e81d014301993748bc81a1e8958402522490a0a176",
+          "right_frame_sha256": "4b7e02239adc58ad303701e81d014301993748bc81a1e8958402522490a0a176",
+          "levels_completed": 1,
+          "game_state": "GameState.NOT_FINISHED",
+          "action_count": 1
+        },
+        {
+          "left": "only-y-23",
+          "right": "x-zero-y-23",
+          "equal": true,
+          "left_key_sha256": "d6191ab079d22624fe97d32993e318dbc239e30be7e864402f66e0b4c8c7297b",
+          "right_key_sha256": "d6191ab079d22624fe97d32993e318dbc239e30be7e864402f66e0b4c8c7297b",
+          "left_frame_sha256": "4b7e02239adc58ad303701e81d014301993748bc81a1e8958402522490a0a176",
+          "right_frame_sha256": "4b7e02239adc58ad303701e81d014301993748bc81a1e8958402522490a0a176",
+          "levels_completed": 1,
+          "game_state": "GameState.NOT_FINISHED",
+          "action_count": 1
+        }
+      ]
+    },
+    {
+      "state": "L2-after-1",
+      "tape": [
+        [
+          6,
+          60,
+          32
+        ],
+        [
+          6,
+          60,
+          32
+        ],
+        [
+          6,
+          60,
+          32
+        ],
+        [
+          6,
+          0,
+          24
+        ]
+      ],
+      "comparisons": [
+        {
+          "left": "empty",
+          "right": "explicit-0-0",
+          "equal": true,
+          "left_key_sha256": "95bffe64324ac6d19081f5d6653cf2f99b2a2356ddd9d507f1ec1d0e7fc7b037",
+          "right_key_sha256": "95bffe64324ac6d19081f5d6653cf2f99b2a2356ddd9d507f1ec1d0e7fc7b037",
+          "left_frame_sha256": "487a2cb9f7cb57831fd3286eb43ef7587faa2f815cf7a95efca887c9d37037ab",
+          "right_frame_sha256": "487a2cb9f7cb57831fd3286eb43ef7587faa2f815cf7a95efca887c9d37037ab",
+          "levels_completed": 1,
+          "game_state": "GameState.NOT_FINISHED",
+          "action_count": 2
+        },
+        {
+          "left": "only-x-zero",
+          "right": "explicit-0-0",
+          "equal": true,
+          "left_key_sha256": "95bffe64324ac6d19081f5d6653cf2f99b2a2356ddd9d507f1ec1d0e7fc7b037",
+          "right_key_sha256": "95bffe64324ac6d19081f5d6653cf2f99b2a2356ddd9d507f1ec1d0e7fc7b037",
+          "left_frame_sha256": "487a2cb9f7cb57831fd3286eb43ef7587faa2f815cf7a95efca887c9d37037ab",
+          "right_frame_sha256": "487a2cb9f7cb57831fd3286eb43ef7587faa2f815cf7a95efca887c9d37037ab",
+          "levels_completed": 1,
+          "game_state": "GameState.NOT_FINISHED",
+          "action_count": 2
+        },
+        {
+          "left": "only-y-zero",
+          "right": "explicit-0-0",
+          "equal": true,
+          "left_key_sha256": "95bffe64324ac6d19081f5d6653cf2f99b2a2356ddd9d507f1ec1d0e7fc7b037",
+          "right_key_sha256": "95bffe64324ac6d19081f5d6653cf2f99b2a2356ddd9d507f1ec1d0e7fc7b037",
+          "left_frame_sha256": "487a2cb9f7cb57831fd3286eb43ef7587faa2f815cf7a95efca887c9d37037ab",
+          "right_frame_sha256": "487a2cb9f7cb57831fd3286eb43ef7587faa2f815cf7a95efca887c9d37037ab",
+          "levels_completed": 1,
+          "game_state": "GameState.NOT_FINISHED",
+          "action_count": 2
+        },
+        {
+          "left": "only-x-13",
+          "right": "x-13-y-zero",
+          "equal": true,
+          "left_key_sha256": "95bffe64324ac6d19081f5d6653cf2f99b2a2356ddd9d507f1ec1d0e7fc7b037",
+          "right_key_sha256": "95bffe64324ac6d19081f5d6653cf2f99b2a2356ddd9d507f1ec1d0e7fc7b037",
+          "left_frame_sha256": "487a2cb9f7cb57831fd3286eb43ef7587faa2f815cf7a95efca887c9d37037ab",
+          "right_frame_sha256": "487a2cb9f7cb57831fd3286eb43ef7587faa2f815cf7a95efca887c9d37037ab",
+          "levels_completed": 1,
+          "game_state": "GameState.NOT_FINISHED",
+          "action_count": 2
+        },
+        {
+          "left": "only-y-23",
+          "right": "x-zero-y-23",
+          "equal": true,
+          "left_key_sha256": "95bffe64324ac6d19081f5d6653cf2f99b2a2356ddd9d507f1ec1d0e7fc7b037",
+          "right_key_sha256": "95bffe64324ac6d19081f5d6653cf2f99b2a2356ddd9d507f1ec1d0e7fc7b037",
+          "left_frame_sha256": "487a2cb9f7cb57831fd3286eb43ef7587faa2f815cf7a95efca887c9d37037ab",
+          "right_frame_sha256": "487a2cb9f7cb57831fd3286eb43ef7587faa2f815cf7a95efca887c9d37037ab",
+          "levels_completed": 1,
+          "game_state": "GameState.NOT_FINISHED",
+          "action_count": 2
+        }
+      ]
+    },
+    {
+      "state": "L2-after-3",
+      "tape": [
+        [
+          6,
+          60,
+          32
+        ],
+        [
+          6,
+          60,
+          32
+        ],
+        [
+          6,
+          60,
+          32
+        ],
+        [
+          6,
+          0,
+          24
+        ],
+        [
+          6,
+          0,
+          24
+        ],
+        [
+          6,
+          0,
+          44
+        ]
+      ],
+      "comparisons": [
+        {
+          "left": "empty",
+          "right": "explicit-0-0",
+          "equal": true,
+          "left_key_sha256": "2ecf16e15608555846887f5e8222b19b947fd431f5b9970df886157a462bd627",
+          "right_key_sha256": "2ecf16e15608555846887f5e8222b19b947fd431f5b9970df886157a462bd627",
+          "left_frame_sha256": "6781882c1180bc761707ad487ca5c5e4b2657a09f5bb16052762c4f0ac2898b9",
+          "right_frame_sha256": "6781882c1180bc761707ad487ca5c5e4b2657a09f5bb16052762c4f0ac2898b9",
+          "levels_completed": 1,
+          "game_state": "GameState.NOT_FINISHED",
+          "action_count": 4
+        },
+        {
+          "left": "only-x-zero",
+          "right": "explicit-0-0",
+          "equal": true,
+          "left_key_sha256": "2ecf16e15608555846887f5e8222b19b947fd431f5b9970df886157a462bd627",
+          "right_key_sha256": "2ecf16e15608555846887f5e8222b19b947fd431f5b9970df886157a462bd627",
+          "left_frame_sha256": "6781882c1180bc761707ad487ca5c5e4b2657a09f5bb16052762c4f0ac2898b9",
+          "right_frame_sha256": "6781882c1180bc761707ad487ca5c5e4b2657a09f5bb16052762c4f0ac2898b9",
+          "levels_completed": 1,
+          "game_state": "GameState.NOT_FINISHED",
+          "action_count": 4
+        },
+        {
+          "left": "only-y-zero",
+          "right": "explicit-0-0",
+          "equal": true,
+          "left_key_sha256": "2ecf16e15608555846887f5e8222b19b947fd431f5b9970df886157a462bd627",
+          "right_key_sha256": "2ecf16e15608555846887f5e8222b19b947fd431f5b9970df886157a462bd627",
+          "left_frame_sha256": "6781882c1180bc761707ad487ca5c5e4b2657a09f5bb16052762c4f0ac2898b9",
+          "right_frame_sha256": "6781882c1180bc761707ad487ca5c5e4b2657a09f5bb16052762c4f0ac2898b9",
+          "levels_completed": 1,
+          "game_state": "GameState.NOT_FINISHED",
+          "action_count": 4
+        },
+        {
+          "left": "only-x-13",
+          "right": "x-13-y-zero",
+          "equal": true,
+          "left_key_sha256": "2ecf16e15608555846887f5e8222b19b947fd431f5b9970df886157a462bd627",
+          "right_key_sha256": "2ecf16e15608555846887f5e8222b19b947fd431f5b9970df886157a462bd627",
+          "left_frame_sha256": "6781882c1180bc761707ad487ca5c5e4b2657a09f5bb16052762c4f0ac2898b9",
+          "right_frame_sha256": "6781882c1180bc761707ad487ca5c5e4b2657a09f5bb16052762c4f0ac2898b9",
+          "levels_completed": 1,
+          "game_state": "GameState.NOT_FINISHED",
+          "action_count": 4
+        },
+        {
+          "left": "only-y-23",
+          "right": "x-zero-y-23",
+          "equal": true,
+          "left_key_sha256": "2ecf16e15608555846887f5e8222b19b947fd431f5b9970df886157a462bd627",
+          "right_key_sha256": "2ecf16e15608555846887f5e8222b19b947fd431f5b9970df886157a462bd627",
+          "left_frame_sha256": "6781882c1180bc761707ad487ca5c5e4b2657a09f5bb16052762c4f0ac2898b9",
+          "right_frame_sha256": "6781882c1180bc761707ad487ca5c5e4b2657a09f5bb16052762c4f0ac2898b9",
+          "levels_completed": 1,
+          "game_state": "GameState.NOT_FINISHED",
+          "action_count": 4
+        }
+      ]
+    },
+    {
+      "state": "L2-after-6",
+      "tape": [
+        [
+          6,
+          60,
+          32
+        ],
+        [
+          6,
+          60,
+          32
+        ],
+        [
+          6,
+          60,
+          32
+        ],
+        [
+          6,
+          0,
+          24
+        ],
+        [
+          6,
+          0,
+          24
+        ],
+        [
+          6,
+          0,
+          44
+        ],
+        [
+          6,
+          0,
+          44
+        ],
+        [
+          6,
+          0,
+          44
+        ],
+        [
+          6,
+          0,
+          44
+        ]
+      ],
+      "comparisons": [
+        {
+          "left": "empty",
+          "right": "explicit-0-0",
+          "equal": true,
+          "left_key_sha256": "b796e2eec17e96c34686b9906a77a566e0651be77adf7a1c7514fcce9f53c056",
+          "right_key_sha256": "b796e2eec17e96c34686b9906a77a566e0651be77adf7a1c7514fcce9f53c056",
+          "left_frame_sha256": "35c2eda641666c2a9ec01bdecb04b73ae3ff3bfce826b0606ab859b439685265",
+          "right_frame_sha256": "35c2eda641666c2a9ec01bdecb04b73ae3ff3bfce826b0606ab859b439685265",
+          "levels_completed": 1,
+          "game_state": "GameState.NOT_FINISHED",
+          "action_count": 7
+        },
+        {
+          "left": "only-x-zero",
+          "right": "explicit-0-0",
+          "equal": true,
+          "left_key_sha256": "b796e2eec17e96c34686b9906a77a566e0651be77adf7a1c7514fcce9f53c056",
+          "right_key_sha256": "b796e2eec17e96c34686b9906a77a566e0651be77adf7a1c7514fcce9f53c056",
+          "left_frame_sha256": "35c2eda641666c2a9ec01bdecb04b73ae3ff3bfce826b0606ab859b439685265",
+          "right_frame_sha256": "35c2eda641666c2a9ec01bdecb04b73ae3ff3bfce826b0606ab859b439685265",
+          "levels_completed": 1,
+          "game_state": "GameState.NOT_FINISHED",
+          "action_count": 7
+        },
+        {
+          "left": "only-y-zero",
+          "right": "explicit-0-0",
+          "equal": true,
+          "left_key_sha256": "b796e2eec17e96c34686b9906a77a566e0651be77adf7a1c7514fcce9f53c056",
+          "right_key_sha256": "b796e2eec17e96c34686b9906a77a566e0651be77adf7a1c7514fcce9f53c056",
+          "left_frame_sha256": "35c2eda641666c2a9ec01bdecb04b73ae3ff3bfce826b0606ab859b439685265",
+          "right_frame_sha256": "35c2eda641666c2a9ec01bdecb04b73ae3ff3bfce826b0606ab859b439685265",
+          "levels_completed": 1,
+          "game_state": "GameState.NOT_FINISHED",
+          "action_count": 7
+        },
+        {
+          "left": "only-x-13",
+          "right": "x-13-y-zero",
+          "equal": true,
+          "left_key_sha256": "b796e2eec17e96c34686b9906a77a566e0651be77adf7a1c7514fcce9f53c056",
+          "right_key_sha256": "b796e2eec17e96c34686b9906a77a566e0651be77adf7a1c7514fcce9f53c056",
+          "left_frame_sha256": "35c2eda641666c2a9ec01bdecb04b73ae3ff3bfce826b0606ab859b439685265",
+          "right_frame_sha256": "35c2eda641666c2a9ec01bdecb04b73ae3ff3bfce826b0606ab859b439685265",
+          "levels_completed": 1,
+          "game_state": "GameState.NOT_FINISHED",
+          "action_count": 7
+        },
+        {
+          "left": "only-y-23",
+          "right": "x-zero-y-23",
+          "equal": true,
+          "left_key_sha256": "b796e2eec17e96c34686b9906a77a566e0651be77adf7a1c7514fcce9f53c056",
+          "right_key_sha256": "b796e2eec17e96c34686b9906a77a566e0651be77adf7a1c7514fcce9f53c056",
+          "left_frame_sha256": "35c2eda641666c2a9ec01bdecb04b73ae3ff3bfce826b0606ab859b439685265",
+          "right_frame_sha256": "35c2eda641666c2a9ec01bdecb04b73ae3ff3bfce826b0606ab859b439685265",
+          "levels_completed": 1,
+          "game_state": "GameState.NOT_FINISHED",
+          "action_count": 7
+        }
+      ]
+    },
+    {
+      "state": "L2-reset-to-L1",
+      "tape": [
+        [
+          6,
+          60,
+          32
+        ],
+        [
+          6,
+          60,
+          32
+        ],
+        [
+          6,
+          60,
+          32
+        ],
+        [
+          0,
+          null,
+          null
+        ]
+      ],
+      "comparisons": [
+        {
+          "left": "empty",
+          "right": "explicit-0-0",
+          "equal": true,
+          "left_key_sha256": "b166b134ec3f8cd9837e802304f0e431417f155b97300fb2395d6ff0943db2aa",
+          "right_key_sha256": "b166b134ec3f8cd9837e802304f0e431417f155b97300fb2395d6ff0943db2aa",
+          "left_frame_sha256": "fdf444521320aa0b1af7c6b38c7b1eadfba4afc36ee76ecfcad56e0138e61eb3",
+          "right_frame_sha256": "fdf444521320aa0b1af7c6b38c7b1eadfba4afc36ee76ecfcad56e0138e61eb3",
+          "levels_completed": 0,
+          "game_state": "GameState.NOT_FINISHED",
+          "action_count": 1
+        },
+        {
+          "left": "only-x-zero",
+          "right": "explicit-0-0",
+          "equal": true,
+          "left_key_sha256": "b166b134ec3f8cd9837e802304f0e431417f155b97300fb2395d6ff0943db2aa",
+          "right_key_sha256": "b166b134ec3f8cd9837e802304f0e431417f155b97300fb2395d6ff0943db2aa",
+          "left_frame_sha256": "fdf444521320aa0b1af7c6b38c7b1eadfba4afc36ee76ecfcad56e0138e61eb3",
+          "right_frame_sha256": "fdf444521320aa0b1af7c6b38c7b1eadfba4afc36ee76ecfcad56e0138e61eb3",
+          "levels_completed": 0,
+          "game_state": "GameState.NOT_FINISHED",
+          "action_count": 1
+        },
+        {
+          "left": "only-y-zero",
+          "right": "explicit-0-0",
+          "equal": true,
+          "left_key_sha256": "b166b134ec3f8cd9837e802304f0e431417f155b97300fb2395d6ff0943db2aa",
+          "right_key_sha256": "b166b134ec3f8cd9837e802304f0e431417f155b97300fb2395d6ff0943db2aa",
+          "left_frame_sha256": "fdf444521320aa0b1af7c6b38c7b1eadfba4afc36ee76ecfcad56e0138e61eb3",
+          "right_frame_sha256": "fdf444521320aa0b1af7c6b38c7b1eadfba4afc36ee76ecfcad56e0138e61eb3",
+          "levels_completed": 0,
+          "game_state": "GameState.NOT_FINISHED",
+          "action_count": 1
+        },
+        {
+          "left": "only-x-13",
+          "right": "x-13-y-zero",
+          "equal": true,
+          "left_key_sha256": "b166b134ec3f8cd9837e802304f0e431417f155b97300fb2395d6ff0943db2aa",
+          "right_key_sha256": "b166b134ec3f8cd9837e802304f0e431417f155b97300fb2395d6ff0943db2aa",
+          "left_frame_sha256": "fdf444521320aa0b1af7c6b38c7b1eadfba4afc36ee76ecfcad56e0138e61eb3",
+          "right_frame_sha256": "fdf444521320aa0b1af7c6b38c7b1eadfba4afc36ee76ecfcad56e0138e61eb3",
+          "levels_completed": 0,
+          "game_state": "GameState.NOT_FINISHED",
+          "action_count": 1
+        },
+        {
+          "left": "only-y-23",
+          "right": "x-zero-y-23",
+          "equal": true,
+          "left_key_sha256": "b166b134ec3f8cd9837e802304f0e431417f155b97300fb2395d6ff0943db2aa",
+          "right_key_sha256": "b166b134ec3f8cd9837e802304f0e431417f155b97300fb2395d6ff0943db2aa",
+          "left_frame_sha256": "fdf444521320aa0b1af7c6b38c7b1eadfba4afc36ee76ecfcad56e0138e61eb3",
+          "right_frame_sha256": "fdf444521320aa0b1af7c6b38c7b1eadfba4afc36ee76ecfcad56e0138e61eb3",
+          "levels_completed": 0,
+          "game_state": "GameState.NOT_FINISHED",
+          "action_count": 1
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,241 @@
+#!/usr/bin/env python3
+"""bp35_f43_search — decide "does a win of length <= UB-1 exist?" on the f <= UB-1 contour.
+
+THE ARGUMENT.  h is admissible, so for EVERY state s_t of a winning play of length L,
+t + h(s_t) <= L.  So every state of a hypothetical win of length <= UB-1 on a bp35 level satisfies
+g + h <= UB-1, and a depth-first search that prunes the moment g + h > UB-1 either
+
+  * finds a win of length <= UB-1 -> the route is re-verified on the LIVE engine before it is
+    believed;  or
+  * EXHAUSTS the contour with no win -> no win of length <= UB-1 exists, hence
+    lb = UB and the floor is UB.
+
+Only ADMISSIBILITY is needed, never consistency -- the same argument the shipped L3/L5
+A* proofs use.  The action alphabet is `bp35_prove_sim.sim_actions`, the COMPLETE
+per-state effect alphabet (theorem A), so nothing is missed by restricting it.
+
+COST.  h is only ever asked "are you already >= T", never "what are you", so it goes
+through RelayHeur.h_ge: the shipped arms first (free), then aT, and only then a
+CUTOFF relay Dijkstra that stops as soon as it can no longer come in under T.
+
+Usage: bp35_f43_search.py <level> [--bound N] [--node-cap N] [--time-cap S] [--out FILE]
+
+`--out FILE` checkpoints the counters to JSON every 60 s and again at the end, so a run
+that is KILLED still leaves on disk exactly how far into the contour it got.  An
+unfinished run bounds NOTHING and the file says so (`exhausted: false`); only
+`exhausted: true` with `win: null` carries the lb.
+"""
+from __future__ import annotations
+
+import json
+import os
+import sys
+import time
+
+ROOT = os.environ.get("<label withheld>_ROOT", "<path>")
+sys.path[:0] = [ROOT, os.path.join(ROOT, "tools"), os.path.join(ROOT, "tools", "floor_plan"),
+                os.path.join(ROOT, "<path>", "<label withheld>_bp35_h"),
+                os.path.join(ROOT, "tools", "invent")]
+os.environ.setdefault("OPERATION_MODE", "offline")
+
+import mmae_minimum as M  # noqa: E402
+M._WHITEBOX = True
+import bp35_prove_sim as P  # noqa: E402
+import bp35_sim as S  # noqa: E402
+import gpush_bp35_v5 as V  # noqa: E402
+import bp35_alg_core as A  # noqa: E402
+from admis_gate import engine_route_to_model  # noqa: E402
+from bp35_relay_gate import CONF, OVERRIDE  # noqa: E402
+
+
+def _opt(name, default, cast=int):
+    return cast(sys.argv[sys.argv.index(name) + 1]) if name in sys.argv else default
+
+
+
+# --- <path> variant: h_ge augmented with the aS SPREAD-Steiner arm ------------
+import bp35_spread_lb as SP
+
+
+class SpreadHeurGE(SP.SpreadHeur):
+    """SpreadHeur + an h_ge that actually consults aS.
+
+    RelayHeur.h_ge only knows the shipped arms + aT + aR, so a contour search built on
+    it throws away the aS arm.  aS is admissible (same
+    proof as the proven L9 lb: G1 + G2 + action-class disjointness), so
+    `h(s) >= T` may be decided by the cheap arms first and aS only as a fallback.
+    """
+
+    def h_ge(self, s, T):
+        if super().h_ge(s, T):
+            return True
+        if self.gem is None or (s.px, s.py) not in self.base:
+            return False
+        return self.spread_arm(s) >= T
+
+
+def main():
+    plain = [a for i, a in enumerate(sys.argv[1:], 1)
+             if not a.startswith("--") and not sys.argv[i - 1].startswith("--")]
+    lv = int(plain[0]) if plain else 7
+    node_cap = _opt("--node-cap", 200000)
+    time_cap = _opt("--time-cap", 3600.0, float)
+
+    fdb = json.load(open(os.path.join(ROOT, "<path>", "fdb2", "bp35.json")))
+    over = json.load(open(OVERRIDE)) if os.path.exists(OVERRIDE) else {}
+    rec = fdb["levels"][str(lv)]
+    route = [tuple(t) for t in rec["path"]]
+    if str(lv) in over and len(over[str(lv)]["path"]) < len(route):
+        route = [tuple(t) for t in over[str(lv)]["path"]]
+    starts = P.bootstrap(9, os.path.join(ROOT, "<path>", "floor_plan",
+                                         "bp35_starts.pkl"))
+    st = starts[lv]
+    z0 = tuple(st["z"])
+    g0 = V.strip(M.restore(z0))
+    b, s0 = S.from_engine(g0, V)
+    pixmaps = P.PixelMaps(V.grid_of(g0))
+    macts = engine_route_to_model(s0, route, V.grid_of(g0))
+    ub = len(macts)
+    F = _opt("--bound", ub - 1)
+    nflip = sum(1 for n in s0.dyn.values() if n == S.FLIP)
+    cap, rounds = CONF.get(lv, (12, 6))
+    # `--no-second-bit` runs the whole exhaustion against the ABLATION-STABLE heuristic
+    # (the one-"paid"-bit mask).  It is a
+    # strictly WEAKER admissible h, so the contour is strictly LARGER and the search is
+    # strictly harder -- but an exhaustion under it does not depend on the second-bit
+    # charge at all, which is the whole point: it decides the minimality question.
+    kw = dict(second_bit=False) if "--no-second-bit" in sys.argv else {}
+    H = SpreadHeurGE(b, nflip, cap=cap, rounds=rounds, **kw)
+    h0 = H(s0)
+    if kw:
+        print(f"  [ablation] second_bit=OFF -> h(s0)={h0}", flush=True)
+    print(f"L{lv}: ub={ub}  bound F={F}  h(s0)={h0}  cap={cap} rounds={rounds}  "
+          f"alphabet={len(P.sim_actions(s0, pixmaps))}")
+    if h0 > F:
+        print(f"*** h(s0)={h0} > F={F}: the contour is EMPTY, no win of length <= {F} "
+              f"exists.  lb = {F + 1} = ub -> FLOOR = {ub} ***")
+        return
+    sys.stdout.flush()
+
+    t0 = time.time()
+    seen = {s0.key(): 0}
+    stack = [(s0.copy(), 0, ())]
+    # h_ge is monotone in T, so one answer settles a whole range for that state:
+    # `hi[k]` = the largest T that came back True (so every T <= hi[k] is True),
+    # `lo[k]` = the smallest T that came back False (so every T >= lo[k] is False).
+    hi, lo = {}, {}
+
+    def prune(s2, k, T):
+        v = hi.get(k)
+        if v is not None and T <= v:
+            return True
+        v = lo.get(k)
+        if v is not None and T >= v:
+            return False
+        r = H.h_ge(s2, T)
+        if r:
+            hi[k] = max(hi.get(k, -1), T)
+        else:
+            lo[k] = min(lo.get(k, 1 << 30), T)
+        return r
+
+    expanded = pruned = losses = dominated = 0
+    deepest = 0
+    exhausted = True
+    win = None
+    last = t0
+    out = sys.argv[sys.argv.index("--out") + 1] if "--out" in sys.argv else ""
+
+    def checkpoint(done=False):
+        if not out:
+            return
+        rec = {"level": lv, "bound_F": F, "ub": ub, "h0": h0,
+               "expanded": expanded, "pruned_by_h": pruned, "lose_children": losses,
+               "dominated": dominated, "deepest_g": deepest, "seen": len(seen),
+               "stack": len(stack), "node_cap": node_cap, "time_cap": time_cap,
+               "elapsed_s": round(time.time() - t0, 1),
+               "exhausted": bool(exhausted and done),
+               "win_len": (len(win) if win else None), "done": done}
+        tmp = out + ".tmp"
+        with open(tmp, "w") as f:
+            json.dump(rec, f, indent=1)
+        os.replace(tmp, out)
+
+    while stack:
+        if expanded >= node_cap:
+            exhausted = False
+            print(f"!! node cap {node_cap} reached")
+            break
+        if time.time() - t0 > time_cap:
+            exhausted = False
+            print(f"!! time cap {time_cap}s reached")
+            break
+        s, g, seq = stack.pop()
+        expanded += 1
+        deepest = max(deepest, g)
+        if time.time() - last > 60:
+            last = time.time()
+            print(f"  expanded={expanded} pruned={pruned} depth={g} deepest={deepest} "
+                  f"stack={len(stack)} seen={len(seen)} {time.time() - t0:.0f}s",
+                  flush=True)
+            checkpoint()
+        kids = []
+        for (a, _e) in P.sim_actions(s, pixmaps):
+            s2 = s.copy()
+            S.apply(s2, a)
+            if s2.outcome == S.LOSE:
+                losses += 1
+                continue
+            if s2.outcome == S.WIN:
+                win = list(seq) + [a]
+                print(f"*** WIN at length {g + 1} <= F={F} ***")
+                stack = []
+                break
+            if g + 1 >= F:
+                pruned += 1                 # nothing left to spend and s2 is not a win
+                continue
+            k = s2.key()
+            prev = seen.get(k)
+            if prev is not None and prev <= g + 1:
+                dominated += 1
+                continue
+            # PRUNE unless (g+1) + h(s2) <= F, i.e. unless h(s2) < F - g
+            if prune(s2, k, F - g):
+                pruned += 1
+                continue
+            seen[k] = g + 1
+            # the SHIPPED arms are free (no relay Dijkstra), so use them purely as a DFS
+            # ORDER -- it changes which win is found first, never which states survive.
+            kids.append((super(A.RelayHeur, H).detail(s2)["h"], s2, g + 1,
+                         tuple(seq) + (a,)))
+        if win is not None:
+            break
+        kids.sort(key=lambda t: -t[0])          # pop() takes the most promising child
+        stack.extend((s2, g2, sq) for (_hc, s2, g2, sq) in kids)
+
+    dt = time.time() - t0
+    checkpoint(done=True)
+    print(f"\nL{lv}: F={F}  expanded={expanded}  pruned_by_h={pruned}  "
+          f"lose_children={losses}  dominated={dominated}  deepest_g={deepest}  "
+          f"seen={len(seen)}  {dt:.0f}s")
+    if win is not None:
+        print(f"MODEL WIN LENGTH {len(win)}")
+        eng = P.model_path_to_engine(s0, win, pixmaps)
+        if eng is None:
+            print("!! could not convert to engine actions")
+            return
+        ok, at, neg = P.replay_verify(z0, eng, st["lc"], len(eng))
+        print(f"LIVE ENGINE REPLAY: len={len(eng)} ok={ok} won_at={at} won_earlier={neg}")
+        ok1, at1, _ = P.replay_verify(z0, eng[:-1], st["lc"], len(eng) - 1)
+        print(f"LIVE ENGINE (len-1) PREFIX: ok={ok1} won_at={at1}")
+        print(json.dumps({"level": lv, "len": len(eng), "path": [list(t) for t in eng]}))
+    elif exhausted:
+        print(f"*** CONTOUR EXHAUSTED, NO WIN OF LENGTH <= {F}.  "
+              f"lb = {F + 1} = ub = {ub}  ->  bp35 L{lv} FLOOR = {ub} ***")
+    else:
+        print(f"NOT EXHAUSTED -- no win found in the part of the f <= {F} contour "
+              f"explored.  This is NOT a proof; it bounds nothing.")
+
+
+if __name__ == "__main__":
+    main()

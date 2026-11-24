@@ -1,0 +1,14 @@
+{
+ "host": "build-host",
+ "s5i5_sha256": "4e0c7d1a813cc7f10a28b7c9f168c811450a4330d8717b1badc9bf76143cbfeb",
+ "path": {
+  "len": 28,
+  "win_at": 28,
+  "prefix_win_at": null
+ },
+ "search_witness_path": {
+  "len": 28,
+  "win_at": 28,
+  "prefix_win_at": null
+ }
+}

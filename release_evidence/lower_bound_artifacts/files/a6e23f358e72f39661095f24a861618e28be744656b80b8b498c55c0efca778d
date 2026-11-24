@@ -1,0 +1,56 @@
+{
+ "<word withheld>_change": "none -- <label withheld>",
+ "checked_utc": "2026-09-23T06:29:33Z",
+ "files_verified": 98,
+ "floor_claim": 5,
+ "game": "su15",
+ "gate_run": "producer/r18_layout_bfs/gate/stage_gate_report.json (tools/floor_claim_gate.py on <word withheld> copies laid out as <root>/<path>)",
+ "instance": "su15-4c352900",
+ "level": 8,
+ "status": "PROVEN (<word withheld>)",
+ "verify_manifest_output": {
+  "cut_mutants_caught": {
+   "enemy_chain_cut": true,
+   "enemyfree3": true,
+   "knock8": true,
+   "mergehull0": false,
+   "nobob": true,
+   "ray6": true,
+   "value_r_narrow": true
+  },
+  "cut_validation_win_clicks": 7450991,
+  "diff_full_clicks": 192512,
+  "diff_full_win_clicks": 3088,
+  "diff_random_clicks": 10278,
+  "files_verified": 98,
+  "floor": 5,
+  "gate_floor_plus_1_own_route_rejected": true,
+  "gate_floor_plus_1_padded_route_rejected": true,
+  "level": 8,
+  "model_mutants_caught": {
+   "chase_off": true,
+   "flash_is_normal": true,
+   "frames3": true,
+   "knock9": true,
+   "merge_center_up": true,
+   "no_hit_cooldown": true,
+   "pull3": true,
+   "radius7": true,
+   "round_floor": false,
+   "win_final_only": true
+  },
+  "positive_controls": [
+   "pc_L6_k4_F4_p0.json",
+   "pc_L6_k4_F4_p2.json",
+   "pc_L6_k5_F3_p2.json",
+   "pc_L7_k2_F4_p2.json",
+   "pc_L7_k3_F3_p0.json",
+   "pc_L7_k3_F3_p2.json",
+   "pc_L8_k2_F4_p2.json",
+   "pc_L8_k3_F3_p0.json",
+   "pc_L8_k3_F3_p2.json"
+  ],
+  "states_expanded": 57035735,
+  "status": "PASS"
+ }
+}

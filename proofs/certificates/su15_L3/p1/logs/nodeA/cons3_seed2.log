@@ -1,0 +1,1 @@
+CONS flags=3 seed=2 walks=25 transitions_checked=225 violations=0 tight(h(s)=h(s')+1)=42

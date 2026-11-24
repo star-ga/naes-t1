@@ -1,0 +1,43 @@
+{
+  "artifact_sha256": [
+    {
+      "kind": "safe_statement_count_extract",
+      "sha256": "ba3893d24e7ee6eef21dc0987b420a30ba2dff3a1dc41583c9f492ead1d4379e"
+    },
+    {
+      "kind": "authority_ledger_label",
+      "sha256": "22d4f8bc0d614886e33d0edf3ca987c162d3a390f8ca77daba5e60dbbf58da1c"
+    },
+    {
+      "kind": "record: proofs/certificates/floor_cert/ft09/SUMMARY.md",
+      "sha256": "1ce793e382640ea43169b018af8f9a01445c38c3cefb2c19fca5a3fafcc3186a"
+    },
+    {
+      "kind": "record: proofs/certificates/floor_cert/ft09/levels.json",
+      "sha256": "405bfb9c204e039cb6bcb275306727cade3d24098a7ca17d342a5e28a443e795"
+    }
+  ],
+  "floor": 13,
+  "game": "ft09",
+  "game_id": "ft09-0d8bbf25",
+  "game_levels": 6,
+  "level": 6,
+  "lower_bound": {
+    "kind": "engine_measured_columns_meet_in_middle_min_weight",
+    "statement": "Record: proofs/certificates/floor_cert/ft09 (verdict CONFIRMED on the official game file). Argument: exhaustive classification of all 64x64 display clicks and actions 1,2,3,4,5,7; pixel partition rechecked after one click; every generator column rechecked after every other generator on the engine; cgj predicate checked by paint against the engine; exact meet-in-the-middle minimum on the measured columns. Nodes 4096. The recorded route wins at the floor and the prefix one action shorter does not.",
+    "value": 13
+  },
+  "naes_t1_actions": 13,
+  "proof_class": "Exact math",
+  "proof_detail": "engine_measured_columns_meet_in_middle_min_weight",
+  "schema_version": 1,
+  "source_certificate_sha256": "d62c19b59b72db20b646bed0462e8b673c8b19ef099218620f446d869fa41acc",
+  "status": "proven",
+  "upper_bound": {
+    "expected_levels_completed": 6,
+    "length": 13,
+    "opening_reset_counted": false,
+    "route": "6@7,17 6@15,25 6@7,9 6@23,17 6@39,17 6@23,25 6@15,33 6@31,33 6@39,33 6@47,33 6@23,41 6@47,41 6@55,41",
+    "seed": 0
+  }
+}

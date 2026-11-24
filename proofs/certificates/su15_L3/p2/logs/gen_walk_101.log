@@ -1,0 +1,4 @@
+INFO:arc_agi.scorecard:Initialized ScorecardManager with idle_for=0:15:00 and max_open_for=3 days, 0:00:00
+2026-11-19 03:29:31 | INFO | Created new scorecard: 4421da84-b803-4858-948b-6def03a04ab7
+2026-11-19 03:29:31 | INFO | Successfully loaded game class Su15 from <path>/su15.py
+GEN walk 101 records 6000 sec 17

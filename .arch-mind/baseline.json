@@ -1,0 +1,42 @@
+{
+  "gateway_bypass_findings": 0,
+  "gateway_bypass_q16": 655360000,
+  "interpretation": "Empty-source ratios are vacuous. This baseline is informational and never substitutes for a fresh product scan.",
+  "measured_on": "2026-11-04",
+  "product_source_files": 0,
+  "scores_q16": {
+    "acyclicity_q16": 655360000,
+    "depth_q16": 655360000,
+    "equality_q16": 655360000,
+    "evidence_chain_density": 0,
+    "governance_kernel_coverage": 0,
+    "mcp_tool_isolation": 655360000,
+    "modularity_q16": 655360000,
+    "q16_determinism_purity": 655360000,
+    "redundancy_q16": 655360000
+  },
+  "scripting_source_files": 0,
+  "state": "bootstrap-no-product-sources",
+  "summary": {
+    "cyclic_edges": 0,
+    "intra_package_edges": 0,
+    "longest_path": 0,
+    "max_mcp_tool_overlap": 0,
+    "module_count": 0,
+    "pure_modules": 0,
+    "redundancy_body_tokens": 0,
+    "redundancy_duplicate_functions": 0,
+    "redundancy_duplicate_groups": 0,
+    "redundancy_excess": 0,
+    "redundancy_functions_analysed": 0,
+    "redundancy_redundant_tokens": 0,
+    "sum_abs_symbol_diffs": 0,
+    "sum_decision_points": 0,
+    "sum_evidence_calls": 0,
+    "sum_protected_decls": 0,
+    "sum_symbols": 0,
+    "total_edges": 0,
+    "total_mcp_tools": 0
+  },
+  "tool_pin": "not recorded here; the gate pins the scanner image by digest in .github/workflows/architecture.yml and never reads this file"
+}

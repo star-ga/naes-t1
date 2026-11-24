@@ -1,0 +1,160 @@
+fn cc_span_int(p: i64, n: i64) -> i64 {
+    let mut i: i64 = 0;
+    let mut sign: i64 = 1;
+    if n > 0 {
+        if __mind_load_i8(p) == 45 {
+            sign = 0 - 1;
+            i = 1;
+        }
+    }
+    let mut v: i64 = 0;
+    while i < n {
+        let c: i64 = __mind_load_i8(p + i);
+        if c < 48 || c > 57 {
+            return 0;
+        }
+        v = v * 10 + (c - 48);
+        i = i + 1;
+    }
+    v * sign
+}
+
+fn cc_col(header_s: i64, header_l: i64, nf: i64, name: String) -> i64 {
+    let mut i: i64 = 0;
+    while i < nf {
+        let p: i64 = __mind_load_i64(header_s + i * 8);
+        let n: i64 = __mind_load_i64(header_l + i * 8);
+        if cc_eq(p, n, string_addr(name), string_len(name)) == 1 {
+            return i;
+        }
+        i = i + 1;
+    }
+    0 - 1
+}
+
+fn cc_default_community(buf: i64) -> i64 {
+    let a0: String = cc_argv(0);
+    let tmp: i64 = cc_bnew(string_len(a0) + 1);
+    let _w: i64 = cc_bstr(tmp, a0);
+    let rec: i64 = canonicalize(cc_cstr(tmp));
+    let addr: i64 = __mind_load_i64(rec + 0);
+    let len: i64 = __mind_load_i64(rec + 8);
+    if len <= 0 {
+        return 0;
+    }
+    let mut slash: i64 = 0 - 1;
+    let mut i: i64 = 0;
+    while i < len {
+        if __mind_load_i8(addr + i) == 47 {
+            slash = i;
+        }
+        i = i + 1;
+    }
+    if slash <= 0 {
+        return 0;
+    }
+    let mut slash2: i64 = 0 - 1;
+    i = 0;
+    while i < slash {
+        if __mind_load_i8(addr + i) == 47 {
+            slash2 = i;
+        }
+        i = i + 1;
+    }
+    if slash2 <= 0 {
+        return 0;
+    }
+    let _c: i64 = cc_bmem(buf, addr, slash2);
+    cc_bstr(buf, "/community")
+}
+
+fn cc_join2(a_p: i64, a_n: i64, b: String) -> i64 {
+    let buf: i64 = cc_bnew(a_n + string_len(b) + 2);
+    let mut out: i64 = cc_bmem(buf, a_p, a_n);
+    if a_n > 0 {
+        if __mind_load_i8(a_p + a_n - 1) != 47 {
+            out = cc_bpush(out, 47);
+        }
+    }
+    cc_bstr(out, b)
+}
+
+fn cc_name_less(ap: i64, an: i64, bp: i64, bn: i64) -> i64 {
+    let mut i: i64 = 0;
+    let n: i64 = if an < bn { an } else { bn };
+    while i < n {
+        let ca: i64 = __mind_load_i8(ap + i);
+        let cb: i64 = __mind_load_i8(bp + i);
+        if ca < cb {
+            return 1;
+        }
+        if ca > cb {
+            return 0;
+        }
+        i = i + 1;
+    }
+    if an < bn { 1 } else { 0 }
+}
+
+fn cc_floor_find(gp: i64, gn: i64, level: i64, gaddr: i64, glen: i64, lv: i64, nf: i64) -> i64 {
+    let mut i: i64 = 0;
+    while i < nf {
+        if __mind_load_i64(lv + i * 8) == level {
+            let p: i64 = __mind_load_i64(gaddr + i * 8);
+            let n: i64 = __mind_load_i64(glen + i * 8);
+            if cc_eq(p, n, gp, gn) == 1 {
+                return i;
+            }
+        }
+        i = i + 1;
+    }
+    0 - 1
+}
+
+fn cc_legacy_has(gp: i64, gn: i64, lp: i64, ln: i64, nleg: i64) -> i64 {
+    let mut i: i64 = 0;
+    while i < nleg {
+        if cc_eq(gp, gn, __mind_load_i64(lp + i * 8), __mind_load_i64(ln + i * 8)) == 1 {
+            return 1;
+        }
+        i = i + 1;
+    }
+    0
+}
+
+fn cc_fill_legacy(obj: i64, lp: i64, ln: i64) -> i64 {
+    if obj == 0 {
+        return 0;
+    }
+    if jv_kind(obj) != jv_kind_object() {
+        return 0;
+    }
+    let n: i64 = jv_tbl_len(obj);
+    let mut i: i64 = 0;
+    let mut w: i64 = 0;
+    while i < n {
+        if w < 64 {
+            let krec: i64 = jv_tbl_key(obj, i);
+            __mind_store_i64(lp + w * 8, __mind_load_i64(krec + 0));
+            __mind_store_i64(ln + w * 8, __mind_load_i64(krec + 8));
+            w = w + 1;
+        }
+        i = i + 1;
+    }
+    w
+}
+
+fn cc_sbytes(h: i64) -> i64 {
+    // record [addr, len] of a JSON string, or 0
+    if h == 0 {
+        return 0;
+    }
+    if jv_kind(h) != jv_kind_string() {
+        return 0;
+    }
+    let rec: i64 = __mind_alloc(16);
+    __mind_store_i64(rec + 0, jv_s_addr(h));
+    __mind_store_i64(rec + 8, jv_s_len(h));
+    rec
+}
+

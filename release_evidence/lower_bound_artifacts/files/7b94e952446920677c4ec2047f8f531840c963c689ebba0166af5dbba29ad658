@@ -1,0 +1,146 @@
+{
+ "level": 3,
+ "witness": [
+  1,
+  1,
+  1,
+  1,
+  1,
+  1,
+  1,
+  [
+   6,
+   12,
+   21
+  ],
+  4,
+  4,
+  4,
+  4,
+  4,
+  4,
+  4,
+  2,
+  2,
+  2,
+  2,
+  2,
+  2,
+  2,
+  [
+   6,
+   45,
+   27
+  ],
+  3,
+  3,
+  3,
+  3,
+  3,
+  3,
+  3,
+  3,
+  3,
+  3,
+  3,
+  3,
+  2,
+  2,
+  2,
+  2,
+  2
+ ],
+ "replay": {
+  "won_at": 40,
+  "prefix_wins_before_F": false,
+  "level_index_after": 3,
+  "fresh_from_level_start": true,
+  "method": "fresh Ar25(); set_level(L-1); perform_action per step; win = level_index advances"
+ },
+ "predicate": {
+  "configs_compared": 20011,
+  "per_target_vector_mismatches": 0,
+  "native_wins": 1,
+  "model_wins": 1,
+  "covered_target_bits": 26215
+ },
+ "lockstep": {
+  "rollouts": 300,
+  "steps": 18000,
+  "violations": 0,
+  "move_steps": 11997,
+  "undo_steps": 1475,
+  "sel_steps": 4528,
+  "pixel_changes": 0,
+  "invariant_checks": 18000,
+  "click_probe": {
+   "states_probed": 12,
+   "clicks_executed": 49152,
+   "pos_changes": 0,
+   "nonselection_state_changes": 0,
+   "classes_per_state": [
+    {
+     "0": 3853,
+     "2": 189,
+     "1": 54
+    },
+    {
+     "0": 3853,
+     "2": 189,
+     "1": 54
+    },
+    {
+     "0": 3853,
+     "2": 189,
+     "1": 54
+    },
+    {
+     "1": 3844,
+     "2": 189,
+     "0": 63
+    },
+    {
+     "1": 3844,
+     "2": 189,
+     "0": 63
+    },
+    {
+     "1": 3844,
+     "2": 189,
+     "0": 63
+    },
+    {
+     "2": 3979,
+     "0": 63,
+     "1": 54
+    },
+    {
+     "0": 3853,
+     "2": 189,
+     "1": 54
+    },
+    {
+     "1": 3844,
+     "2": 189,
+     "0": 63
+    },
+    {
+     "0": 3853,
+     "2": 189,
+     "1": 54
+    },
+    {
+     "0": 3853,
+     "2": 189,
+     "1": 54
+    },
+    {
+     "0": 3853,
+     "2": 189,
+     "1": 54
+    }
+   ]
+  }
+ },
+ "runtime_s": 596.8
+}

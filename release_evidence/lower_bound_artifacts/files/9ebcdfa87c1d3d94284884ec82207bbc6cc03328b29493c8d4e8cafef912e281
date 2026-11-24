@@ -1,0 +1,510 @@
+{
+  "ar25-0c556536": {
+    "game_id": "ar25-0c556536",
+    "secs": 27.58,
+    "levels_solved": 8,
+    "error": null,
+    "solver": "reflect_symmetry",
+    "n_records": 254,
+    "n_actions": 253,
+    "n_resets": 1,
+    "per_level_actions": [
+      15,
+      11,
+      40,
+      22,
+      28,
+      53,
+      37,
+      47
+    ],
+    "unassigned_tail_actions": 0
+  },
+  "bp35-0a0ad940": {
+    "game_id": "bp35-0a0ad940",
+    "secs": 133.58,
+    "levels_solved": 9,
+    "error": null,
+    "solver": "gravity_block_platformer",
+    "n_records": 323,
+    "n_actions": 322,
+    "n_resets": 1,
+    "per_level_actions": [
+      15,
+      40,
+      34,
+      19,
+      30,
+      41,
+      43,
+      36,
+      64
+    ],
+    "unassigned_tail_actions": 0
+  },
+  "cd82-fb555c5d": {
+    "game_id": "cd82-fb555c5d",
+    "secs": 11.72,
+    "levels_solved": 6,
+    "error": null,
+    "solver": "octant_paint_match",
+    "n_records": 70,
+    "n_actions": 69,
+    "n_resets": 1,
+    "per_level_actions": [
+      5,
+      6,
+      16,
+      13,
+      13,
+      16
+    ],
+    "unassigned_tail_actions": 0
+  },
+  "cn04-2fe56bfb": {
+    "game_id": "cn04-2fe56bfb",
+    "secs": 45.66,
+    "levels_solved": 6,
+    "error": null,
+    "solver": "connector_dock_assembly",
+    "n_records": 174,
+    "n_actions": 173,
+    "n_resets": 1,
+    "per_level_actions": [
+      13,
+      29,
+      20,
+      29,
+      44,
+      38
+    ],
+    "unassigned_tail_actions": 0
+  },
+  "dc22-fdcac232": {
+    "game_id": "dc22-fdcac232",
+    "secs": 36.16,
+    "levels_solved": 6,
+    "error": null,
+    "solver": "toggle_reveal",
+    "n_records": 417,
+    "n_actions": 416,
+    "n_resets": 1,
+    "per_level_actions": [
+      20,
+      42,
+      45,
+      62,
+      108,
+      139
+    ],
+    "unassigned_tail_actions": 0
+  },
+  "ft09-0d8bbf25": {
+    "game_id": "ft09-0d8bbf25",
+    "secs": 5.18,
+    "levels_solved": 6,
+    "error": null,
+    "solver": "colour_cycle_csp",
+    "n_records": 76,
+    "n_actions": 75,
+    "n_resets": 1,
+    "per_level_actions": [
+      4,
+      7,
+      14,
+      16,
+      21,
+      13
+    ],
+    "unassigned_tail_actions": 0
+  },
+  "g50t-5849a774": {
+    "game_id": "g50t-5849a774",
+    "secs": 36.35,
+    "levels_solved": 7,
+    "error": null,
+    "solver": "ghost_record_pixel_nav",
+    "n_records": 275,
+    "n_actions": 274,
+    "n_resets": 1,
+    "per_level_actions": [
+      17,
+      31,
+      64,
+      31,
+      50,
+      40,
+      41
+    ],
+    "unassigned_tail_actions": 0
+  },
+  "ka59-38d34dbb": {
+    "game_id": "ka59-38d34dbb",
+    "secs": 83.88,
+    "levels_solved": 7,
+    "error": null,
+    "solver": "bomb_beam_push",
+    "n_records": 243,
+    "n_actions": 242,
+    "n_resets": 1,
+    "per_level_actions": [
+      11,
+      30,
+      33,
+      38,
+      20,
+      45,
+      65
+    ],
+    "unassigned_tail_actions": 0
+  },
+  "lf52-271a04aa": {
+    "game_id": "lf52-271a04aa",
+    "secs": 161.29,
+    "levels_solved": 10,
+    "error": null,
+    "solver": "track_merge",
+    "n_records": 642,
+    "n_actions": 641,
+    "n_resets": 1,
+    "per_level_actions": [
+      8,
+      34,
+      45,
+      50,
+      83,
+      85,
+      125,
+      68,
+      100,
+      43
+    ],
+    "unassigned_tail_actions": 0
+  },
+  "lp85-305b61c3": {
+    "game_id": "lp85-305b61c3",
+    "secs": 18.93,
+    "levels_solved": 8,
+    "error": null,
+    "solver": null,
+    "n_records": 80,
+    "n_actions": 79,
+    "n_resets": 1,
+    "per_level_actions": [
+      5,
+      8,
+      16,
+      12,
+      9,
+      19,
+      5,
+      5
+    ],
+    "unassigned_tail_actions": 0
+  },
+  "ls20-9607627b": {
+    "game_id": "ls20-9607627b",
+    "secs": 101.21,
+    "levels_solved": 7,
+    "error": null,
+    "solver": "symbol_morph_maze",
+    "n_records": 310,
+    "n_actions": 309,
+    "n_resets": 1,
+    "per_level_actions": [
+      13,
+      45,
+      39,
+      43,
+      44,
+      72,
+      53
+    ],
+    "unassigned_tail_actions": 0
+  },
+  "m0r0-492f87ba": {
+    "game_id": "m0r0-492f87ba",
+    "secs": 28.83,
+    "levels_solved": 6,
+    "error": null,
+    "solver": "coupled_dot_maze_blocker_door_bfs",
+    "n_records": 180,
+    "n_actions": 179,
+    "n_resets": 1,
+    "per_level_actions": [
+      15,
+      23,
+      53,
+      11,
+      39,
+      38
+    ],
+    "unassigned_tail_actions": 0
+  },
+  "r11l-495a7899": {
+    "game_id": "r11l-495a7899",
+    "secs": 37.39,
+    "levels_solved": 6,
+    "error": null,
+    "solver": "centroid_legs",
+    "n_records": 58,
+    "n_actions": 57,
+    "n_resets": 1,
+    "per_level_actions": [
+      3,
+      7,
+      9,
+      13,
+      12,
+      13
+    ],
+    "unassigned_tail_actions": 0
+  },
+  "re86-8af5384d": {
+    "game_id": "re86-8af5384d",
+    "secs": 106.23,
+    "levels_solved": 8,
+    "error": null,
+    "solver": "shape_colour_assignment",
+    "n_records": 508,
+    "n_actions": 507,
+    "n_resets": 1,
+    "per_level_actions": [
+      20,
+      36,
+      47,
+      42,
+      63,
+      46,
+      98,
+      155
+    ],
+    "unassigned_tail_actions": 0
+  },
+  "s5i5-18d95033": {
+    "game_id": "s5i5-18d95033",
+    "secs": 88.34,
+    "levels_solved": 8,
+    "error": null,
+    "solver": "arm_kinematics_exhaustive",
+    "n_records": 241,
+    "n_actions": 240,
+    "n_resets": 1,
+    "per_level_actions": [
+      13,
+      26,
+      37,
+      30,
+      28,
+      25,
+      45,
+      36
+    ],
+    "unassigned_tail_actions": 0
+  },
+  "sb26-7fbdac44": {
+    "game_id": "sb26-7fbdac44",
+    "secs": 14.57,
+    "levels_solved": 8,
+    "error": null,
+    "solver": "color_pattern_frames",
+    "n_records": 125,
+    "n_actions": 124,
+    "n_resets": 1,
+    "per_level_actions": [
+      9,
+      15,
+      15,
+      15,
+      17,
+      19,
+      17,
+      17
+    ],
+    "unassigned_tail_actions": 0
+  },
+  "sc25-635fd71a": {
+    "game_id": "sc25-635fd71a",
+    "secs": 31.91,
+    "levels_solved": 6,
+    "error": null,
+    "solver": "spell_toggle_walk",
+    "n_records": 122,
+    "n_actions": 121,
+    "n_resets": 1,
+    "per_level_actions": [
+      13,
+      5,
+      11,
+      21,
+      36,
+      35
+    ],
+    "unassigned_tail_actions": 0
+  },
+  "sk48-d8078629": {
+    "game_id": "sk48-d8078629",
+    "secs": 97.32,
+    "levels_solved": 8,
+    "error": null,
+    "solver": "track_match_pixel",
+    "n_records": 214,
+    "n_actions": 213,
+    "n_resets": 1,
+    "per_level_actions": [
+      14,
+      27,
+      33,
+      23,
+      33,
+      36,
+      23,
+      24
+    ],
+    "unassigned_tail_actions": 0
+  },
+  "sp80-589a99af": {
+    "game_id": "sp80-589a99af",
+    "secs": 97.8,
+    "levels_solved": 6,
+    "error": null,
+    "solver": "spill_fill_deflector",
+    "n_records": "<word withheld>",
+    "n_actions": "<word withheld>",
+    "n_resets": 1,
+    "per_level_actions": [
+      4,
+      7,
+      10,
+      20,
+      17,
+      "<word withheld>"
+    ],
+    "unassigned_tail_actions": 0
+  },
+  "su15-1944f8ab": {
+    "game_id": "su15-1944f8ab",
+    "secs": 144.29,
+    "levels_solved": 9,
+    "error": null,
+    "solver": "merge_vacuum_pixel",
+    "n_records": "<word withheld>",
+    "n_actions": "<word withheld>",
+    "n_resets": 1,
+    "per_level_actions": [
+      7,
+      8,
+      "<word withheld>",
+      9,
+      5,
+      4,
+      5,
+      5,
+      7
+    ],
+    "unassigned_tail_actions": 0
+  },
+  "tn36-ef4dde99": {
+    "game_id": "tn36-ef4dde99",
+    "secs": 97.79,
+    "levels_solved": 7,
+    "error": null,
+    "solver": "program_tablet_pixel_port",
+    "n_records": 86,
+    "n_actions": 85,
+    "n_resets": 1,
+    "per_level_actions": [
+      7,
+      9,
+      9,
+      12,
+      16,
+      16,
+      16
+    ],
+    "unassigned_tail_actions": 0
+  },
+  "tr87-cd924810": {
+    "game_id": "tr87-cd924810",
+    "secs": 26.3,
+    "levels_solved": 6,
+    "error": null,
+    "solver": "pixel_rotation_rule",
+    "n_records": 119,
+    "n_actions": 118,
+    "n_resets": 1,
+    "per_level_actions": [
+      14,
+      25,
+      21,
+      21,
+      14,
+      23
+    ],
+    "unassigned_tail_actions": 0
+  },
+  "tu93-0768757b": {
+    "game_id": "tu93-0768757b",
+    "secs": 81.08,
+    "levels_solved": 9,
+    "error": null,
+    "solver": "lattice_joint_bfs",
+    "n_records": 186,
+    "n_actions": 185,
+    "n_resets": 1,
+    "per_level_actions": [
+      18,
+      10,
+      19,
+      17,
+      29,
+      28,
+      14,
+      21,
+      29
+    ],
+    "unassigned_tail_actions": 0
+  },
+  "vc33-5430563c": {
+    "game_id": "vc33-5430563c",
+    "secs": 48.96,
+    "levels_solved": 7,
+    "error": null,
+    "solver": "track_slide_match",
+    "n_records": 168,
+    "n_actions": 167,
+    "n_resets": 1,
+    "per_level_actions": [
+      3,
+      7,
+      23,
+      21,
+      44,
+      20,
+      49
+    ],
+    "unassigned_tail_actions": 0
+  },
+  "wa30-ee6fef47": {
+    "game_id": "wa30-ee6fef47",
+    "secs": 150.12,
+    "levels_solved": 9,
+    "error": null,
+    "solver": "carry_thief_sokoban",
+    "n_records": "<word withheld>",
+    "n_actions": "<word withheld>",
+    "n_resets": 1,
+    "per_level_actions": [
+      26,
+      46,
+      67,
+      43,
+      91,
+      46,
+      36,
+      91,
+      "<word withheld>"
+    ],
+    "unassigned_tail_actions": 0
+  }
+}

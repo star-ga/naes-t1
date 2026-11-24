@@ -1,0 +1,44 @@
+{
+ "total": {
+  "levels": 9,
+  "ref_levels": 9,
+  "actions": 323,
+  "ref_actions": 323,
+  "games_full": 1,
+  "games": 1,
+  "perturb": 0
+ },
+ "games": [
+  {
+   "game": "bp35-0a0ad940",
+   "levels": 9,
+   "ref_levels": 9,
+   "actions": 323,
+   "ref_actions": 323,
+   "per_level": [
+    16,
+    40,
+    34,
+    19,
+    30,
+    41,
+    43,
+    36,
+    64
+   ],
+   "ref_per_level": [
+    15,
+    40,
+    34,
+    19,
+    30,
+    41,
+    43,
+    36,
+    64
+   ],
+   "resets": 1,
+   "over_ref_levels": []
+  }
+ ]
+}

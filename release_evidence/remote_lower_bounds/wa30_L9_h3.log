@@ -1,0 +1,44 @@
+START HNEW=3 2026-09-24T22:07:17Z host=<host> bin_md5=9b99292902a37261564e000d40415086 src_md5=25bc5e4bc6fb8a6832bca42656948ab4 hnew_md5=53d113b1d45155bb1735733a828d77d4 lev_md5=409515c94b6ba0695b62187cbb958f9b
+HNEW=3: SW(static-box start-up) EW(waste-priced enemy start-up)
+PROVE L9 h0=30 Bmax=60 threads=<threads> tt=<memory>/thr D=12
+PATHMAX OFF : h' is the raw heuristic at each child; no parent value is transplanted. The per-edge consistency check is a LIVE COUNTING OBSERVER (CONSOBS lines), not an abort -- the cuts require admissibility, not consistency.
+shared TT: <memory>
+BOUND 30 CLOSED_EMPTY lb=31 t=0
+BOUND 31 CLOSED_EMPTY lb=32 t=0
+BOUND 32 CLOSED_EMPTY lb=33 t=1
+BOUND 33 COMPLETE_NOWIN lb=34 frontier=2 D=12 bfs=1095 nodes=2 t=3
+CONSOBS B=33 pathmax=off checks=10 viol=0 rate=0 [LIVE observer]
+BOUND 34 COMPLETE_NOWIN lb=35 frontier=57 D=12 bfs=1949 nodes=209 t=5
+CONSOBS B=34 pathmax=off checks=792 viol=0 rate=0 [LIVE observer]
+BOUND 35 COMPLETE_NOWIN lb=36 frontier=466 D=12 bfs=3868 nodes=2404 t=8
+CONSOBS B=35 pathmax=off checks=7454 viol=0 rate=0 [LIVE observer]
+BOUND 36 COMPLETE_NOWIN lb=37 frontier=1998 D=12 bfs=5956 nodes=17936 t=11
+CONSOBS B=36 pathmax=off checks=48073 viol=0 rate=0 [LIVE observer]
+BOUND 37 COMPLETE_NOWIN lb=38 frontier=5490 D=12 bfs=7536 nodes=90620 t=14
+CONSOBS B=37 pathmax=off checks=207673 viol=0 rate=0 [LIVE observer]
+BOUND 38 COMPLETE_NOWIN lb=39 frontier=7784 D=12 bfs=8001 nodes=300984 t=17
+CONSOBS B=38 pathmax=off checks=616997 viol=0 rate=0 [LIVE observer]
+BOUND 39 COMPLETE_NOWIN lb=40 frontier=8402 D=12 bfs=8034 nodes=846749 t=25
+CONSOBS B=39 pathmax=off checks=1624350 viol=0 rate=0 [LIVE observer]
+BOUND 40 COMPLETE_NOWIN lb=41 frontier=8437 D=12 bfs=8034 nodes=2204862 t=36
+CONSOBS B=40 pathmax=off checks=4060095 viol=0 rate=0 [LIVE observer]
+BOUND 41 COMPLETE_NOWIN lb=42 frontier=8437 D=12 bfs=8034 nodes=5714272 t=61
+CONSOBS B=41 pathmax=off checks=10178346 viol=0 rate=0 [LIVE observer]
+BOUND 42 COMPLETE_NOWIN lb=43 frontier=8437 D=12 bfs=8034 nodes=19489444 t=134
+CONSOBS B=42 pathmax=off checks=33204827 viol=0 rate=0 [LIVE observer]
+BOUND 43 COMPLETE_NOWIN lb=44 frontier=8437 D=12 bfs=8034 nodes=58161499 t=348
+CONSOBS B=43 pathmax=off checks=97204335 viol=0 rate=0 [LIVE observer]
+BOUND 44 COMPLETE_NOWIN lb=45 frontier=8437 D=12 bfs=8034 nodes=173395726 t=1016
+CONSOBS B=44 pathmax=off checks=284497850 viol=0 rate=0 [LIVE observer]
+BOUND 45 COMPLETE_NOWIN lb=46 frontier=8437 D=12 bfs=8034 nodes=482356331 t=3006
+CONSOBS B=45 pathmax=off checks=763050894 viol=0 rate=0 [LIVE observer]
+BOUND 46 COMPLETE_NOWIN lb=47 frontier=8437 D=12 bfs=8034 nodes=1282076501 t=6565
+CONSOBS B=46 pathmax=off checks=1916695495 viol=0 rate=0 [LIVE observer]
+BOUND 47 COMPLETE_NOWIN lb=48 frontier=8437 D=12 bfs=8034 nodes=3307616710 t=12520
+CONSOBS B=47 pathmax=off checks=4729806578 viol=0 rate=0 [LIVE observer]
+BOUND 48 COMPLETE_NOWIN lb=49 frontier=8437 D=12 bfs=8034 nodes=8490985008 t=26980
+CONSOBS B=48 pathmax=off checks=11669992302 viol=0 rate=0 [LIVE observer]
+BOUND 49 COMPLETE_NOWIN lb=50 frontier=8437 D=12 bfs=8034 nodes=24540623718 t=55683
+CONSOBS B=49 pathmax=off checks=33051760456 viol=0 rate=0 [LIVE observer]
+TIMEOUT at B=50 (incomplete) lb=50 nodes=6877762022 t=68400
+EXIT rc=0 2026-09-25T17:07:20Z

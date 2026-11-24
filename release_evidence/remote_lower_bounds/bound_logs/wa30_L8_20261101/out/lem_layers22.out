@@ -1,0 +1,9 @@
+C6_EXAMPLE box 0 (5,4)->(5,3) BG 7->6 enemy 0 at (5,4)
+LAYERS MUT=0
+  L1 enemy-grab off-egoal                  checks=787830 violations=0
+  L2 enemy-loss egoal|P|kill               checks=502500 violations=0
+  L3 helper-grab unheld off-goal           checks=3181109 violations=185
+  L4 helper-loss goal|P|enemy              checks=106670 violations=0
+  L5 box <=1 cell/tick                     checks=97230250 violations=0
+  C6 enemy carry BG non-decreasing         checks=8344462 violations=3020593
+  C7 H1 stays bottom while bottom work     checks=7479245 violations=69

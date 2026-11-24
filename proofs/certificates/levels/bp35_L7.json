@@ -1,0 +1,35 @@
+{
+  "artifact_sha256": [
+    {
+      "kind": "safe_statement_count_extract",
+      "sha256": "537f732c8beb9623bd5be275fd98f560cdfa4f25fe0f033a3de2760b50f91a0b"
+    },
+    {
+      "kind": "authority_ledger_label",
+      "sha256": "f9bbb436cc4caeb471392dbef3bc788609f3585e543c7c92394e67b479fdb83b"
+    }
+  ],
+  "floor": 43,
+  "game": "bp35",
+  "game_id": "bp35-0a0ad940",
+  "game_levels": 9,
+  "level": 7,
+  "lower_bound": {
+    "kind": "empty_contour_lb_meets_verified_win",
+    "statement": "The recorded admissible start value h(s0) is 43 and equals the 43-action winning route.",
+    "value": 43
+  },
+  "naes_t1_actions": 43,
+  "proof_class": "Matching bounds",
+  "proof_detail": "empty_contour_lb_meets_verified_win",
+  "schema_version": 1,
+  "source_certificate_sha256": "532496cd4477c768e49a8495ead6a9a642116480fd60ae2ea62c74e368ebbe11",
+  "status": "proven",
+  "upper_bound": {
+    "expected_levels_completed": 7,
+    "length": 43,
+    "opening_reset_counted": false,
+    "route": "4 4 6@39,51 4 6@3,3 4 6@3,5 4 3 3 6@3,45 3 6@27,11 3 6@3,17 3 3 4 6@3,45 6@27,17 4 6@3,23 6@33,39 4 6@33,51 6@3,57 6@39,29 4 6@39,17 6@3,35 4 6@45,63 6@3,57 4 4 3 3 6@3,5 3 3 3 3 6@3,3",
+    "seed": 0
+  }
+}

@@ -1,0 +1,121 @@
+{
+ "certificate": "complete_key",
+ "official_engine": "arcengine 0.9.3",
+ "levels": [
+  {
+   "game": "vc33",
+   "level": 1,
+   "floor": 3,
+   "records": [
+    {
+     "mode": "full",
+     "path": "raw/vc33_L1_full.json",
+     "sha256": "6601578eef0e8636c7c95d56afeee692ad10a267b46767cb6ab283c7980d8b8a",
+     "states": 8,
+     "edges": 20515,
+     "verdict": "CONFIRMED"
+    },
+    {
+     "mode": "classes",
+     "path": "raw/vc33_L1_classes.json",
+     "sha256": "55d78df091e95f6edc03f94d9726734b0b5494422aa43b7ebc66ac2cff112085",
+     "states": 8,
+     "edges": 75,
+     "verdict": "CONFIRMED"
+    }
+   ],
+   "claim_code": "C",
+   "alphabet": "every display pixel at every state"
+  },
+  {
+   "game": "vc33",
+   "level": 2,
+   "floor": 7,
+   "records": [
+    {
+     "mode": "full",
+     "path": "raw/vc33_L2_full.json",
+     "sha256": "acce296b1848dafdb9493bcaa11dfccc0c7d32066d9c8f9488ddd4a01e80face",
+     "states": 90,
+     "edges": 291313,
+     "verdict": "CONFIRMED"
+    },
+    {
+     "mode": "classes",
+     "path": "raw/vc33_L2_classes.json",
+     "sha256": "dc6ca21346b4bf5bc6451154cdd751ae2867d25e6b586dcfd60ee84da1d37357",
+     "states": 90,
+     "edges": 1333,
+     "verdict": "CONFIRMED"
+    }
+   ],
+   "claim_code": "C",
+   "alphabet": "every display pixel at every state"
+  },
+  {
+   "game": "s5i5",
+   "level": 1,
+   "floor": 13,
+   "records": [
+    {
+     "mode": "full",
+     "path": "raw/s5i5_L1_full.json",
+     "sha256": "0c71d140f8762ec0081926fc157bedd4087e6a22eacfc706e8acbe8df9026699",
+     "states": 118,
+     "edges": 447227,
+     "verdict": "CONFIRMED"
+    },
+    {
+     "mode": "classes",
+     "path": "raw/s5i5_L1_classes.json",
+     "sha256": "a1373d84224210adae6b3205f952d2798091528ef5001d9d12b9d9f931a15a50",
+     "states": 118,
+     "edges": 1526,
+     "verdict": "CONFIRMED"
+    }
+   ],
+   "claim_code": "C",
+   "alphabet": "every display pixel at every state"
+  },
+  {
+   "game": "s5i5",
+   "level": 2,
+   "floor": 26,
+   "records": [
+    {
+     "mode": "classes",
+     "path": "raw/s5i5_L2_classes.json",
+     "sha256": "3a3c8e163611ecd5e8a5fada91e1ccf634aa70706186d08c0efb17b9357699fe",
+     "states": 4892,
+     "edges": 94040,
+     "verdict": "CONFIRMED"
+    }
+   ],
+   "claim_code": "C",
+   "alphabet": "click classes recomputed at every state, each checked at its last pixel"
+  },
+  {
+   "game": "s5i5",
+   "level": 5,
+   "floor": 28,
+   "records": [
+    {
+     "mode": "classes",
+     "path": "raw/s5i5_L5_classes.json",
+     "sha256": "48e92d23636f30f8b3ddb7e7bdf4c81c78e8b3fb87a3e063b4a507d59fb31221",
+     "states": 3751,
+     "edges": 71160,
+     "verdict": "CONFIRMED"
+    }
+   ],
+   "claim_code": "C",
+   "alphabet": "click classes recomputed at every state, each checked at its last pixel"
+  }
+ ],
+ "programs_sha256": {
+  "full_bfs.py": "145ed2c455aefa061e5d1c8fcb4f0d2bf63dcd10d2647999b341c48ef8432262",
+  "readsites.py": "3efd23541e25e0b79448ecff5c3f7462b8a4495b66d27a03967ba3e45bd7571b",
+  "depth1_check.py": "5806a0b8b52bde31679d2cec2a59dd42b736b0336505ec339318f7e8852dbb4b"
+ },
+ "routes_sha256": "30b1f5fbb1fa661f859dd77f9b95b1f711a8cb65f3ae09c5cfb9e3f066031a5e"
+}

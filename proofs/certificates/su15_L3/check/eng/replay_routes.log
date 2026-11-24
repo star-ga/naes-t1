@@ -1,0 +1,12 @@
+ROUTE 55,28 47,31 14,24 34,22 33,30 22,24 40,36 27,31 23,39 32,42 23,46
+su15 L 3 route len 11 result(actions_to_complete,state) (11, 'NOT_FINISHED')
+negative control (drop last action): (0, 'NOT_FINISHED')
+ROUTE 4,23 12,22 13,31 17,39 28,21 33,27 55,27 47,30 39,34 31,40 23,46
+su15 L 3 route len 11 result(actions_to_complete,state) (11, 'NOT_FINISHED')
+negative control (drop last action): (0, 'NOT_FINISHED')
+ROUTE 57,29 48,29 5,23 40,33 28,21 26,27 33,39 13,23 19,30 23,38 27,46
+su15 L 3 route len 11 result(actions_to_complete,state) (11, 'NOT_FINISHED')
+negative control (drop last action): (0, 'NOT_FINISHED')
+ROUTE 34,22 14,24 55,28 37,29 47,31 40,37 32,43 19,25 20,34 21,43 23,46
+su15 L 3 route len 11 result(actions_to_complete,state) (11, 'NOT_FINISHED')
+negative control (drop last action): (0, 'NOT_FINISHED')

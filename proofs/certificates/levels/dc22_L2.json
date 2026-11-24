@@ -1,0 +1,59 @@
+{
+  "artifact_sha256": [
+    {
+      "kind": "safe_statement_count_extract",
+      "sha256": "ae3cad3b1e6d4d1c85127c6698f7ca012beea493ac4ad6bbef3baa3734545d5b"
+    },
+    {
+      "kind": "authority_ledger_label",
+      "sha256": "a06e16d10fba00a29b511894c73b160ac0ad958933c3785a77079893be5cae61"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "05ff39156b7164ca7e2a9dda72d48f66749aeb468bcda5ccfc60c04746e842b7"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "5bdfadaf67099b99d1c40e025d6dce044c22658fc49353919299df2d16921556"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "0490e4bda43a70ae30a7acfb59b3a276de570abef65e0cde8d69aa157e66615a"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "664423d65ee6acaf7f93a81a324fabc6ba66ac7e887bdf361cbce5dfa4c9dc31"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "d27965486ca9634698fc63aee388bbeac39c2afba95074b733b278b809fcbcd9"
+    },
+    {
+      "kind": "historical_method_or_search_output",
+      "sha256": "b371d584bbd75716a8d27a6ff88fb0f399139baa2f5364324896cb6e3658c013"
+    }
+  ],
+  "floor": 42,
+  "game": "dc22",
+  "game_id": "dc22-fdcac232",
+  "game_levels": 6,
+  "level": 2,
+  "lower_bound": {
+    "kind": "complete_state_ucs_structural_alphabet",
+    "statement": "Complete-state uniform-cost search over the recorded structural action alphabet closes every route cost below 42. The source record supplies the state-key and no-op reduction obligations. The proof complete_state_ucs_structural_alphabet establishes lower bound 42, equal to the floor.",
+    "value": 42
+  },
+  "naes_t1_actions": 42,
+  "proof_class": "Exhaustive search",
+  "proof_detail": "complete_state_ucs_structural_alphabet",
+  "schema_version": 1,
+  "source_certificate_sha256": "49f9b0e9fc08f3ad67db9a70bda5f12d20a599bae5a2d1b6cf6a8c6d4de95109",
+  "status": "proven",
+  "upper_bound": {
+    "expected_levels_completed": 2,
+    "length": 42,
+    "opening_reset_counted": false,
+    "route": "6@52,40 2 2 2 2 2 4 4 4 4 4 2 6@52,22 2 2 2 2 2 4 1 1 1 1 1 1 1 1 1 1 6@52,31 4 4 1 1 1 1 1 1 1 1 1 1",
+    "seed": 0
+  }
+}

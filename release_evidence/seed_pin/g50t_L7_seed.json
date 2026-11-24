@@ -1,0 +1,119 @@
+{
+  "both_win_at_41": true,
+  "g50t_L7_actions": 41,
+  "g50t_L7_route_digits_sha256": "18e47a344d90c516c7f5a7fce02aae79de321e8854cded108e6f84d2bd803515",
+  "plays": [
+    {
+      "after_L1": {
+        "actions": 17,
+        "frame_sha256": "c3da1578138913d79b3dbadcd697c7f68f7ecc8de78e1039675d9b12b08626a7",
+        "levels_completed": 1,
+        "state": "NOT_FINISHED"
+      },
+      "after_L2": {
+        "actions": 31,
+        "frame_sha256": "c3da1578138913d79b3dbadcd697c7f68f7ecc8de78e1039675d9b12b08626a7",
+        "levels_completed": 2,
+        "state": "NOT_FINISHED"
+      },
+      "after_L3": {
+        "actions": 64,
+        "frame_sha256": "c3da1578138913d79b3dbadcd697c7f68f7ecc8de78e1039675d9b12b08626a7",
+        "levels_completed": 3,
+        "state": "NOT_FINISHED"
+      },
+      "after_L4": {
+        "actions": 31,
+        "frame_sha256": "ab9a4cc70935ed37d1359a93aba8d798ac712e32b65d3f4ef9ed89899bfb2303",
+        "levels_completed": 4,
+        "state": "NOT_FINISHED"
+      },
+      "after_L5": {
+        "actions": 50,
+        "frame_sha256": "793cd4036df67feca310bce414545cc84a356128e00062621983e47ccdd37711",
+        "levels_completed": 5,
+        "state": "NOT_FINISHED"
+      },
+      "after_L6": {
+        "actions": 40,
+        "frame_sha256": "43234a24b1c259996d8970e5443efc7fc5e92cc614fe2921577f146e57325a1b",
+        "levels_completed": 6,
+        "state": "NOT_FINISHED"
+      },
+      "after_L7": {
+        "actions": 41,
+        "frame_sha256": "5092dad32d374a45126804dd018c2eea57586a1d90995561a7d785b372176901",
+        "levels_completed": 7,
+        "state": "WIN"
+      },
+      "class_name": "G50t",
+      "init_signature": "(self) -> 'None'",
+      "reset_frame_sha256": "28b0bf3469bc0b24d8d598b7b5301eb4ef56eddf81de79700ae2911e1bb20051",
+      "reset_levels": 0,
+      "reset_sprite_count": 17,
+      "reset_sprite_sha256": "830b43e99bf7a991a0fb14f7f21b2c8d1e1e2a4d996de362fba01ac97c593803",
+      "reset_state": "NOT_FINISHED",
+      "seed_arg": 0,
+      "stored_seed_after_init": 0,
+      "stored_seed_after_reset": 0
+    },
+    {
+      "after_L1": {
+        "actions": 17,
+        "frame_sha256": "c3da1578138913d79b3dbadcd697c7f68f7ecc8de78e1039675d9b12b08626a7",
+        "levels_completed": 1,
+        "state": "NOT_FINISHED"
+      },
+      "after_L2": {
+        "actions": 31,
+        "frame_sha256": "c3da1578138913d79b3dbadcd697c7f68f7ecc8de78e1039675d9b12b08626a7",
+        "levels_completed": 2,
+        "state": "NOT_FINISHED"
+      },
+      "after_L3": {
+        "actions": 64,
+        "frame_sha256": "c3da1578138913d79b3dbadcd697c7f68f7ecc8de78e1039675d9b12b08626a7",
+        "levels_completed": 3,
+        "state": "NOT_FINISHED"
+      },
+      "after_L4": {
+        "actions": 31,
+        "frame_sha256": "ab9a4cc70935ed37d1359a93aba8d798ac712e32b65d3f4ef9ed89899bfb2303",
+        "levels_completed": 4,
+        "state": "NOT_FINISHED"
+      },
+      "after_L5": {
+        "actions": 50,
+        "frame_sha256": "793cd4036df67feca310bce414545cc84a356128e00062621983e47ccdd37711",
+        "levels_completed": 5,
+        "state": "NOT_FINISHED"
+      },
+      "after_L6": {
+        "actions": 40,
+        "frame_sha256": "43234a24b1c259996d8970e5443efc7fc5e92cc614fe2921577f146e57325a1b",
+        "levels_completed": 6,
+        "state": "NOT_FINISHED"
+      },
+      "after_L7": {
+        "actions": 41,
+        "frame_sha256": "5092dad32d374a45126804dd018c2eea57586a1d90995561a7d785b372176901",
+        "levels_completed": 7,
+        "state": "WIN"
+      },
+      "class_name": "G50t",
+      "init_signature": "(self) -> 'None'",
+      "reset_frame_sha256": "28b0bf3469bc0b24d8d598b7b5301eb4ef56eddf81de79700ae2911e1bb20051",
+      "reset_levels": 0,
+      "reset_sprite_count": 17,
+      "reset_sprite_sha256": "830b43e99bf7a991a0fb14f7f21b2c8d1e1e2a4d996de362fba01ac97c593803",
+      "reset_state": "NOT_FINISHED",
+      "seed_arg": 11,
+      "stored_seed_after_init": 0,
+      "stored_seed_after_reset": 0
+    }
+  ],
+  "same_L7_frame": true,
+  "same_reset_frame": true,
+  "same_reset_sprites": true,
+  "same_stored_seed": true
+}

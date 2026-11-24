@@ -1,0 +1,85 @@
+// naes_t1_play_tcp.mind — TCP connect and byte helpers for the HTTPS
+// transport of the NAES-T1 play client (naes_t1_play_tls.mind).
+//
+// The connect walks the naes_dns address set (24-byte entries: family i64
+// at +0, 2 or 10; bytes at +8) and returns the first socket that takes both
+// 10 s timeouts and accepts the connection. Default backend only (libc
+// externs in naes_t1_libc.mind). No alloc/free runs inside a loop.
+// Fill the 28-byte sockaddr at sa for the address entry ns and port.
+fn naes_tls_sockaddr(sa: i64, ns: i64, port: i64) -> i64 {
+    let mut i: i64 = 0;
+    while i < 28 { __mind_store_i8(sa + i, 0); i = i + 1; }
+    let fam: i64 = __mind_load_i64(ns);
+    __mind_store_i8(sa, fam & 255);
+    __mind_store_i8(sa + 1, 0);
+    __mind_store_i8(sa + 2, (port >> 8) & 255);
+    __mind_store_i8(sa + 3, port & 255);
+    if fam == 2 {
+        __mind_store_i8(sa + 4, __mind_load_i8(ns + 8));
+        __mind_store_i8(sa + 5, __mind_load_i8(ns + 9));
+        __mind_store_i8(sa + 6, __mind_load_i8(ns + 10));
+        __mind_store_i8(sa + 7, __mind_load_i8(ns + 11));
+        sa
+    } else {
+        let mut k: i64 = 0;
+        while k < 16 { __mind_store_i8(sa + 8 + k, __mind_load_i8(ns + 8 + k)); k = k + 1; }
+        sa
+    }
+}
+// 10 s receive and send timeouts on fd: the whole timeval is written (a
+// recycled heap chunk may hold tv_usec >= 1e6, which the kernel refuses with
+// EDOM). Returns 0, or -1 when either option was not set.
+fn naes_tls_set_timeouts(fd: i64, tv: i64) -> i64 {
+    __mind_store_i64(tv, 10);
+    __mind_store_i64(tv + 8, 0);
+    let a: i64 = (setsockopt(fd as i32, 1 as i32, 20 as i32, tv as *const u8, 16 as i32)) as i64;
+    let b: i64 = (setsockopt(fd as i32, 1 as i32, 21 as i32, tv as *const u8, 16 as i32)) as i64;
+    if a != 0 || b != 0 { return 0 - 1; }
+    0
+}
+// Connect to the first address in the set that takes both timeouts and
+// accepts the connection. Returns fd >= 0 or -1.
+fn naes_tls_connect_addrs(addrs: i64, count: i64, port: i64) -> i64 {
+    let tv: i64 = __mind_alloc(16);
+    let sa: i64 = __mind_alloc(28);
+    let mut found: i64 = 0 - 1;
+    let mut i: i64 = 0;
+    while tv != 0 && sa != 0 && found < 0 && i < count {
+        let ns: i64 = addrs + i * 24;
+        let fam: i64 = __mind_load_i64(ns);
+        if fam == 2 || fam == 10 {
+            let fd: i64 = (socket(fam as i32, 1 as i32, 0 as i32)) as i64;
+            if fd >= 0 {
+                let mut salen: i64 = 16;
+                if fam == 10 { salen = 28; }
+                let mut r: i64 = naes_tls_set_timeouts(fd, tv);
+                if r == 0 {
+                    let _s: i64 = naes_tls_sockaddr(sa, ns, port);
+                    r = (connect(fd as i32, sa as *const u8, salen as i32)) as i64;
+                }
+                if r == 0 { found = fd; } else { let _c: i64 = (close(fd as i32)) as i64; }
+            }
+        }
+        i = i + 1;
+    }
+    if tv != 0 { __mind_free(tv); }
+    if sa != 0 { __mind_free(sa); }
+    found
+}
+// ---- small helpers ----------------------------------------------------------
+fn naes_tls_copy(dst: i64, src: i64, n: i64) -> i64 {
+    let mut i: i64 = 0;
+    while i < n { __mind_store_i8(dst + i, __mind_load_i8(src + i)); i = i + 1; }
+    n
+}
+fn naes_tls_copy_lit(dst: i64, s: String) -> i64 {
+    let mut i: i64 = 0;
+    while i < s.len { __mind_store_i8(dst + i, __mind_load_i8(s.addr + i)); i = i + 1; }
+    s.len
+}
+fn naes_tls_pow10(n: i64) -> i64 {
+    let mut v: i64 = 1;
+    let mut i: i64 = 0;
+    while i < n { v = v * 10; i = i + 1; }
+    v
+}

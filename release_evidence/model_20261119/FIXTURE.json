@@ -1,0 +1,11 @@
+{
+ "file": "naes_t1_fixture.bin",
+ "location": "root of the naes-t1 model repository",
+ "magic": "NAEST1F",
+ "header_bytes": 12,
+ "record_bytes": 8200,
+ "records": 5499,
+ "bytes": 45091812,
+ "sha256": "a2dc9485252ddd922d742f7e36191fa92a20bbdb7680a2ca1c378874ecd7b925",
+ "check": "sha256sum naes_t1_fixture.bin; wc -c naes_t1_fixture.bin"
+}

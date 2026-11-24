@@ -1,0 +1,14 @@
+{
+ "level": 3,
+ "gid": "g50t-5849a774",
+ "route_len": 64,
+ "engine_sha256": "6f21f2065744e484ac38534f940158034e69f39add3b10a3d9fd258de7293aa9",
+ "bootstrap_prefix_len": 48,
+ "base_levels_completed": 2,
+ "only_reset_levels": "true",
+ "first_completion_at": 64,
+ "prefix_F_minus_1_completes": false,
+ "prefix_F_minus_1_len": 63,
+ "secs": 1.4,
+ "verdict": "PASS"
+}

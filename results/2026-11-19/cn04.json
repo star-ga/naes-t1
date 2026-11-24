@@ -1,0 +1,38 @@
+{
+ "total": {
+  "levels": 6,
+  "ref_levels": 6,
+  "actions": 174,
+  "ref_actions": 174,
+  "games_full": 1,
+  "games": 1,
+  "perturb": 0
+ },
+ "games": [
+  {
+   "game": "cn04-2fe56bfb",
+   "levels": 6,
+   "ref_levels": 6,
+   "actions": 174,
+   "ref_actions": 174,
+   "per_level": [
+    14,
+    29,
+    20,
+    29,
+    44,
+    38
+   ],
+   "ref_per_level": [
+    13,
+    29,
+    20,
+    29,
+    44,
+    38
+   ],
+   "resets": 1,
+   "over_ref_levels": []
+  }
+ ]
+}

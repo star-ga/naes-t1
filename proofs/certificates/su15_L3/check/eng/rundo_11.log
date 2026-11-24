@@ -1,0 +1,1 @@
+RUNDO 11 {'walks': 2500, 'actions': 55375, 'undos': 16631, 'undo_empty': 1204, 'clicks': 38744, 'noop_row': 2968, 'nohit': 7517, 'fail': 6066, 'ok': 22193, 'win': 0, 'gameover': 245, 'mism': 0, 'undo_unvisited': 0, 'budget_mism': 0} sec=118

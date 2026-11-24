@@ -1,0 +1,29 @@
+{
+  "wins": 3,
+  "tested": 133321580,
+  "min_cost": 27,
+  "witness": {
+    "cost": 27,
+    "place": [
+      [
+        6,
+        8
+      ],
+      [
+        7,
+        13
+      ],
+      [
+        8,
+        11
+      ],
+      [
+        9,
+        10
+      ]
+    ]
+  },
+  "seconds": 159.93,
+  "threads": "<threads>",
+  "placements_bound": 133321580
+}

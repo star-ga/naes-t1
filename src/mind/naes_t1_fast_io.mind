@@ -1,0 +1,291 @@
+// Input and output helpers of the grouped-sum kernel and the bench mode:
+// file open, read and write wrappers, the configuration cells (cf_*), the
+// fixture record helpers, the timed write helpers (io4, clock4, put_*4) and
+// the reply digest check (hash_ok).
+// Entry points: write_fd_all, io4, clock4, hash_ok.
+
+fn open_ro(path: i64) -> i64 {
+    __mind_sys_openat(0 - 100, path, 0, 0)
+}
+
+fn close_fd(fd: i64) -> i64 {
+    __mind_sys_close(fd)
+}
+
+fn read_some(fd: i64, buf: i64, n: i64) -> i64 {
+    __mind_read(fd, buf, n, 0 - 1)
+}
+
+fn write_some(fd: i64, buf: i64, n: i64) -> i64 {
+    __mind_write(fd, buf, n, 0 - 1)
+}
+
+// Writes n bytes at buf to the file descriptor fd. Returns 0, or -1 on a write
+// failure.
+fn write_fd_all(fd: i64, buf: i64, n: i64) -> i64 {
+    let mut put: i64 = 0;
+    while put < n {
+        let w: i64 = write_some(fd, buf + put, n - put);
+        if w <= 0 {
+            return 0 - 1;
+        }
+        put = put + w;
+    }
+    0
+}
+
+fn fixture_to_request(rec: i64) -> i64 {
+    let run: i64 = __mind_load_i8(rec + 8193);
+    let cell: i64 = signed_i16(rec + 8194);
+    if run > 127 {
+        return 0;
+    }
+    __mind_store_i8(rec + 8193, cell & 255);
+    __mind_store_i8(rec + 8194, (cell >> 8) & 255);
+    __mind_store_i8(rec + 8195, run);
+    record_ok(rec)
+}
+
+fn store_reply(ws: i64, action: i64, out: i64) -> i64 {
+    let cell: i64 = result_cell(ws);
+    let mut x: i64 = 255;
+    let mut y: i64 = 255;
+    if cell >= 0 {
+        x = cell % 64;
+        y = cell / 64;
+    }
+    __mind_store_i8(out, action);
+    __mind_store_i8(out + 1, x);
+    __mind_store_i8(out + 2, y);
+    0
+}
+
+fn parse_limit(p: i64) -> i64 {
+    let mut i: i64 = 0;
+    let mut n: i64 = 0;
+    let mut any: i64 = 0;
+    while i < 8 {
+        let c: i64 = ldu8(p, i);
+        if c == 0 {
+            if any == 0 {
+                return 0 - 1;
+            }
+            return n;
+        }
+        if c < 48 || c > 57 {
+            return 0 - 1;
+        }
+        n = n * 10 + (c - 48);
+        any = 1;
+        i = i + 1;
+    }
+    0 - 1
+}
+
+fn expected_byte(i: i64) -> i64 {
+    if i == 0 { return 77; }
+    if i == 1 { return 45; }
+    if i == 2 { return 152; }
+    if i == 3 { return 247; }
+    if i == 4 { return 17; }
+    if i == 5 { return 161; }
+    if i == 6 { return 32; }
+    if i == 7 { return 158; }
+    if i == 8 { return 172; }
+    if i == 9 { return 232; }
+    if i == 10 { return 243; }
+    if i == 11 { return 132; }
+    if i == 12 { return 25; }
+    if i == 13 { return 82; }
+    if i == 14 { return 227; }
+    if i == 15 { return 157; }
+    if i == 16 { return 77; }
+    if i == 17 { return 117; }
+    if i == 18 { return 135; }
+    if i == 19 { return 13; }
+    if i == 20 { return 72; }
+    if i == 21 { return 7; }
+    if i == 22 { return 156; }
+    if i == 23 { return 49; }
+    if i == 24 { return 117; }
+    if i == 25 { return 179; }
+    if i == 26 { return 97; }
+    if i == 27 { return 187; }
+    if i == 28 { return 169; }
+    if i == 29 { return 116; }
+    if i == 30 { return 99; }
+    if i == 31 { return 150; }
+    0
+}
+
+fn hash_ok(dig: i64) -> i64 {
+    let mut i: i64 = 0;
+    while i < 32 {
+        if __mind_load_i8(dig + i) != expected_byte(i) {
+            return 0;
+        }
+        i = i + 1;
+    }
+    1
+}
+
+fn cf_weights() -> i64 { 0 }
+fn cf_fixture() -> i64 { 1 }
+fn cf_workers() -> i64 { 2 }
+fn cf_group() -> i64 { 3 }
+fn cf_cg() -> i64 { 4 }
+fn cf_tile() -> i64 { 5 }
+fn cf_limit() -> i64 { 6 }
+fn cf_records() -> i64 { 7 }
+fn cf_diff() -> i64 { 8 }
+fn cf_time() -> i64 { 9 }
+fn cf_mutant() -> i64 { 10 }
+fn cf_stream() -> i64 { 11 }
+fn cf_offset() -> i64 { 12 }
+fn cf_epi() -> i64 { 13 }
+
+fn word_byte(w0: i64, w1: i64, i: i64) -> i64 {
+    if i < 8 {
+        return (w0 >> (i * 8)) & 255;
+    }
+    (w1 >> ((i - 8) * 8)) & 255
+}
+
+fn str_is(p: i64, w0: i64, w1: i64, n: i64) -> i64 {
+    let mut i: i64 = 0;
+    while i < n {
+        if ldu8(p, i) != word_byte(w0, w1, i) {
+            return 0;
+        }
+        i = i + 1;
+    }
+    if ldu8(p, n) != 0 {
+        return 0;
+    }
+    1
+}
+
+// Returns the flag id, or -1 for an unknown argument.
+fn flag_id(p: i64) -> i64 {
+    if str_is(p, 8388068008349084973, 115, 9) == 1 { return cf_weights(); }
+    if str_is(p, 8247626353112132909, 101, 9) == 1 { return cf_fixture(); }
+    if str_is(p, 8243112832212086061, 115, 9) == 1 { return cf_workers(); }
+    if str_is(p, 31654318912777517, 0, 7) == 1 { return cf_group(); }
+    if str_is(p, 1734552877, 0, 4) == 1 { return cf_cg(); }
+    if str_is(p, 111516300094765, 0, 6) == 1 { return cf_tile(); }
+    if str_is(p, 32767015939484973, 0, 7) == 1 { return cf_limit(); }
+    if str_is(p, 7237970023832235309, 115, 9) == 1 { return cf_records(); }
+    if str_is(p, 112590040870189, 0, 6) == 1 { return cf_diff(); }
+    if str_is(p, 111520595062061, 0, 6) == 1 { return cf_time(); }
+    if str_is(p, 8389750308652002605, 0, 8) == 1 { return cf_mutant(); }
+    if str_is(p, 7881692365129461037, 0, 8) == 1 { return cf_stream(); }
+    if str_is(p, 8387236764689837357, 0, 8) == 1 { return cf_offset(); }
+    if str_is(p, 452857244973, 0, 5) == 1 { return cf_epi(); }
+    0 - 1
+}
+
+fn pow3(n: i64) -> i64 {
+    let mut v: i64 = 1;
+    let mut i: i64 = 0;
+    while i < n {
+        v = v * 3;
+        i = i + 1;
+    }
+    v
+}
+
+fn n_codes(gsz: i64) -> i64 {
+    (pow3(gsz) - 1) / 2
+}
+
+fn n_groups(gsz: i64) -> i64 {
+    (64 + gsz - 1) / gsz
+}
+
+fn n_segs(gsz: i64, cg: i64) -> i64 {
+    (n_groups(gsz) + cg - 1) / cg
+}
+
+fn emit_word(fd: i64, w0: i64, w1: i64, n: i64) -> i64 {
+    let p: i64 = __mind_alloc(16);
+    if p == 0 {
+        return 0 - 1;
+    }
+    let mut i: i64 = 0;
+    while i < n {
+        __mind_store_i8(p + i, word_byte(w0, w1, i));
+        i = i + 1;
+    }
+    let rc: i64 = write_fd_all(fd, p, n);
+    __mind_free(p);
+    rc
+}
+
+fn emit_sp(fd: i64) -> i64 {
+    emit_word(fd, 32, 0, 1)
+}
+
+fn emit_serve(fd: i64) -> i64 {
+    emit_word(fd, 5211613945203410259, 138348409409, 13)
+}
+
+fn io4(w4: i64) -> i64 {
+    ld(w4, w4_scratch()) + 128
+}
+
+fn time_on4(w4: i64) -> i64 {
+    st(io4(w4), 2, 1);
+    w4
+}
+
+fn clock4(w4: i64) -> i64 {
+    let io: i64 = io4(w4);
+    if ld(io, 2) == 0 {
+        return 0;
+    }
+    if __mind_sys_clock_gettime(1, io) < 0 {
+        return 0;
+    }
+    ld(io, 0) * 1000000000 + ld(io, 1)
+}
+
+fn put_word4(w4: i64, fd: i64, w0: i64, w1: i64, n: i64) -> i64 {
+    let p: i64 = io4(w4) + 24;
+    let mut i: i64 = 0;
+    while i < n {
+        __mind_store_i8(p + i, word_byte(w0, w1, i));
+        i = i + 1;
+    }
+    write_fd_all(fd, p, n)
+}
+
+fn put_sp4(w4: i64, fd: i64) -> i64 {
+    put_word4(w4, fd, 32, 0, 1)
+}
+
+fn put_nl4(w4: i64, fd: i64) -> i64 {
+    put_word4(w4, fd, 10, 0, 1)
+}
+
+fn put_i64_4(w4: i64, fd: i64, v: i64) -> i64 {
+    let b: i64 = io4(w4) + 24;
+    let mut n: i64 = v;
+    let mut end: i64 = 32;
+    if n < 0 {
+        n = 0 - n;
+    }
+    if n == 0 {
+        end = 31;
+        st8(b, 31, 48);
+    }
+    while n > 0 {
+        end = end - 1;
+        __mind_store_i8(b + end, 48 + (n % 10));
+        n = n / 10;
+    }
+    if v < 0 {
+        end = end - 1;
+        st8(b, end, 45);
+    }
+    write_fd_all(fd, b + end, 32 - end)
+}

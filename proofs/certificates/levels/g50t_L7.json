@@ -1,0 +1,80 @@
+{
+  "artifact_sha256": [
+    {
+      "kind": "safe_statement_count_extract",
+      "sha256": "8f8aec851b8f17ecc3289920de478506fd3d6b3f1c91ae54bb46ff72627f5f2f"
+    },
+    {
+      "kind": "proof record",
+      "sha256": "6a510266c694fe7eaf6e2041e876ef89a7263013c72f7d53cc2d9c4b2724bc3a"
+    },
+    {
+      "kind": "proof folder checksum list (anchors every receipt)",
+      "sha256": "939111f8ace342babb9b9a2b6d7a619b5c22fd68c6b88a94b306f9a78357d2f0"
+    },
+    {
+      "kind": "recorded reproduction commands",
+      "sha256": "0a00fe7fe9e54646be187272a8655e984d2a96550bc604790ae10987b1039510"
+    },
+    {
+      "kind": "41-action winning route",
+      "sha256": "ed02bc263f1e2e9529c7e225cc369817685dd7feaeb4562901be0158d0c51ad6"
+    },
+    {
+      "kind": "main grid ledger, 60/60 UNSAT",
+      "sha256": "686b270d2ed7bac38c3c350148c0e6300fede373dc64e2cec6bac3955c91d109"
+    },
+    {
+      "kind": "precise grid dispatcher receipts (12 UNSAT)",
+      "sha256": "41811f60f372bb2c39376a62a2c3b49c327156879214f00e3a27b1e6d8a2cb13"
+    },
+    {
+      "kind": "precise grid portfolio receipts (8 UNSAT)",
+      "sha256": "c7af589b006e10b46503eea54a457a59fcad0351354c9d2e98b574660518cdf7"
+    },
+    {
+      "kind": "precise-grid positive control, SAT_CANDIDATE",
+      "sha256": "2b013d3fc69451fc92831d3530f75a06bc428dc9fb67440dffd8a08d6b3bdc02"
+    },
+    {
+      "kind": "portfolio-path positive control, SAT_CANDIDATE",
+      "sha256": "aa98af8cb6b4b6e607a32cec25065267e1a75e3784d063ddfda2e58509c8e413"
+    },
+    {
+      "kind": "source proof note",
+      "sha256": "cd2c34c5217788aa780018630f2821b48154a14a87047b6fa636633ba53065f4"
+    },
+    {
+      "kind": "checker certificate coverage, 100 of 100 queries",
+      "sha256": "2927a4510702cfe073fcf5106851bacf43a0c3cec3996c97e2f494fb34806cf3"
+    },
+    {
+      "kind": "checker certificate digest table, 100 queries",
+      "sha256": "4a362c080d2a7e53fe05b3918129c26b73fd38b1e20c924d2a3e1256c7e4269a"
+    }
+  ],
+  "floor": 41,
+  "game": "g50t",
+  "game_id": "g50t-5849a774",
+  "game_levels": 7,
+  "game_source_sha256": "6f21f2065744e484ac38534f940158034e69f39add3b10a3d9fd258de7293aa9",
+  "level": 7,
+  "lower_bound": {
+    "kind": "sat_bmc_unsat_k40_complete_grid_plus_precise_closing_grid",
+    "statement": "No winning run of 40 or fewer actions exists. The v4 encoding 1b6ea6a032a32fc7d40b27b32b3a1b4ec81060f499539c1afa2e58f763548b41 is UNSAT at k=40 on the 60-case main grid, the 20-case release-order grid, and the 20-case precise index-0 grid. The 41-action route replays to WIN. All 100 queries at bound 40 have a certificate accepted by a proof checker: 85 by the verified LRAT checker cake_lpr and 15 by drat-trim on formulas from the pinned v4 encoder (proofs/certificates/g50t-l7-drat/CERT_100.md lists the proof digests). Twenty of them also have DRAT gzip digests in proofs/certificates/g50t-l7-drat/MANIFEST.md.",
+    "value": 41
+  },
+  "naes_t1_actions": 41,
+  "proof_class": "Bounded SAT",
+  "proof_detail": "sat_bmc_v4_unsat_at_F_minus_1_main_grid_60_of_60+release_order_grid_20_of_20+index0_closing_grid_20_of_20",
+  "schema_version": 1,
+  "source_certificate_sha256": "0f54f74f0b00d56ea71bc0e963250a4ec883ec3f6ea2d7651b777f17634dd35a",
+  "status": "proven",
+  "upper_bound": {
+    "expected_levels_completed": 7,
+    "length": 41,
+    "opening_reset_counted": false,
+    "route": "2 2 3 4 1 1 3 3 5 2 2 4 4 1 1 1 1 3 1 1 4 4 4 5 2 2 4 4 1 1 1 1 4 4 2 2 2 2 3 3 3",
+    "seed": 0
+  }
+}

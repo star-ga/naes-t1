@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="430" viewBox="0 0 1200 430" font-family="Helvetica, Arial, sans-serif">
+  <rect width="1200" height="430" fill="#ffffff"/>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#555"/>
+    </marker>
+  </defs>
+  <text x="600" y="34" text-anchor="middle" font-size="22" font-weight="700" fill="#111">NAES-T1: 324,096 ternary weights (-1, 0, +1) x one scale per channel</text>
+
+  <!-- input -->
+  <rect x="20" y="70" width="230" height="300" rx="10" fill="#f4f6fa" stroke="#9aa4b8"/>
+  <text x="135" y="98" text-anchor="middle" font-size="16" font-weight="700" fill="#111">Input planes</text>
+  <text x="135" y="118" text-anchor="middle" font-size="13" fill="#444">49 x 64 x 64</text>
+  <text x="40" y="152" font-size="14" fill="#222">current frame, one-hot (16)</text>
+  <text x="40" y="180" font-size="14" fill="#222">previous frame, one-hot (16)</text>
+  <text x="40" y="208" font-size="14" fill="#222">own previous action (8)</text>
+  <text x="40" y="236" font-size="14" fill="#222">own previous click cell (1)</text>
+  <text x="40" y="264" font-size="14" fill="#222">times it repeated it (8)</text>
+  <text x="40" y="306" font-size="13" fill="#a33">no game id, no level id,</text>
+  <text x="40" y="326" font-size="13" fill="#a33">no step counter, no game state</text>
+
+  <line x1="250" y1="220" x2="290" y2="220" stroke="#555" stroke-width="2" marker-end="url(#a)"/>
+
+  <!-- stem -->
+  <rect x="295" y="160" width="150" height="120" rx="10" fill="#eef7ee" stroke="#7fae7f"/>
+  <text x="370" y="196" text-anchor="middle" font-size="15" font-weight="700" fill="#111">Stem</text>
+  <text x="370" y="220" text-anchor="middle" font-size="13" fill="#333">3x3 ternary conv</text>
+  <text x="370" y="240" text-anchor="middle" font-size="13" fill="#333">49 -&gt; 64, ReLU</text>
+
+  <line x1="445" y1="220" x2="475" y2="220" stroke="#555" stroke-width="2" marker-end="url(#a)"/>
+
+  <!-- trunk -->
+  <rect x="480" y="110" width="320" height="220" rx="10" fill="#eef7ee" stroke="#7fae7f"/>
+  <text x="640" y="142" text-anchor="middle" font-size="15" font-weight="700" fill="#111">8 residual blocks</text>
+  <text x="640" y="166" text-anchor="middle" font-size="13" fill="#333">h = ReLU(conv3x3(h)) + h, 64 channels</text>
+  <g font-size="13" fill="#111" text-anchor="middle">
+    <rect x="510" y="190" width="28" height="28" fill="#cfe6cf"/><text x="524" y="209">1</text>
+    <rect x="543" y="190" width="28" height="28" fill="#cfe6cf"/><text x="557" y="209">2</text>
+    <rect x="576" y="190" width="28" height="28" fill="#cfe6cf"/><text x="590" y="209">4</text>
+    <rect x="609" y="190" width="28" height="28" fill="#cfe6cf"/><text x="623" y="209">8</text>
+    <rect x="642" y="190" width="28" height="28" fill="#cfe6cf"/><text x="656" y="209">16</text>
+    <rect x="675" y="190" width="28" height="28" fill="#cfe6cf"/><text x="689" y="209">1</text>
+    <rect x="708" y="190" width="28" height="28" fill="#cfe6cf"/><text x="722" y="209">2</text>
+    <rect x="741" y="190" width="28" height="28" fill="#cfe6cf"/><text x="755" y="209">4</text>
+  </g>
+  <text x="640" y="246" text-anchor="middle" font-size="12" fill="#333">dilations: the view grows to the whole 64 x 64 board</text>
+  <text x="640" y="270" text-anchor="middle" font-size="12" fill="#333">no multiplies: add where +1, subtract where -1, skip 0</text>
+  <text x="640" y="294" text-anchor="middle" font-size="12" fill="#333">then one scale and one bias per channel</text>
+
+  <line x1="800" y1="180" x2="850" y2="130" stroke="#555" stroke-width="2" marker-end="url(#a)"/>
+  <line x1="800" y1="290" x2="850" y2="310" stroke="#555" stroke-width="2" marker-end="url(#a)"/>
+
+  <!-- heads -->
+  <rect x="855" y="70" width="320" height="120" rx="10" fill="#fdf3e6" stroke="#d1a35c"/>
+  <text x="1015" y="102" text-anchor="middle" font-size="15" font-weight="700" fill="#111">Action head</text>
+  <text x="1015" y="126" text-anchor="middle" font-size="13" fill="#333">mean + max over the board (128)</text>
+  <text x="1015" y="146" text-anchor="middle" font-size="13" fill="#333">1x1 ternary conv -&gt; 7 logits</text>
+  <text x="1015" y="170" text-anchor="middle" font-size="13" fill="#333">next action = argmax (ACTION1 .. ACTION7)</text>
+
+  <rect x="855" y="250" width="320" height="120" rx="10" fill="#fdf3e6" stroke="#d1a35c"/>
+  <text x="1015" y="282" text-anchor="middle" font-size="15" font-weight="700" fill="#111">Click head</text>
+  <text x="1015" y="306" text-anchor="middle" font-size="13" fill="#333">1x1 ternary conv -&gt; 64 x 64 heat map</text>
+  <text x="1015" y="326" text-anchor="middle" font-size="13" fill="#333">used only for ACTION6 (click)</text>
+  <text x="1015" y="350" text-anchor="middle" font-size="13" fill="#333">click cell = argmax over 4,096 cells</text>
+
+  <text x="600" y="408" text-anchor="middle" font-size="14" fill="#555">One pass per move, closed loop: frame in, move out. Inference in MIND. Weight file: 329 KB.</text>
+</svg>

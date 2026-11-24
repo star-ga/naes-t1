@@ -1,0 +1,112 @@
+"""L3 relay algebra -- uses two EXACT (not relaxed) engine facts.
+
+ E1 PREMATURE-DROP.  ynmgxjqkgh releases the carried box the moment it sits on a
+    goal cell, and never re-grabs a box that is on a goal; the player cannot
+    reach x>=36.  => while carried, a box may NOT touch any goal cell before its
+    final one.  (exact: it is what the engine does, not an added restriction)
+ E2 DELIVERED-BOX BLOCKING.  a delivered box never moves again (E1) and boxes are
+    collidable, so every already-filled goal cell is a permanent obstacle for the
+    helper AND for later carried boxes.
+
+ still RELAXED (kept generous): the player, the not-yet-fetched boxes and the
+ pickup row are all free; the helper is optimally controlled.
+"""
+import sys
+from collections import deque
+
+sys.path.insert(0, "<path>")
+from wa30_alg_core import load  # noqa: E402
+
+D, st = load(3)
+HELPER = tuple(D["helpers"][0])
+SLOTS = list(st.goalslots)
+NB = len(D["boxes"])
+A1 = st.compcells[1]
+GOALSET = set(SLOTS)
+DXY = [(-4, 0), (4, 0), (0, -4), (0, 4)]
+INF = 10 ** 6
+PICKROWS = sorted(c[1] for c in A1 if c[0] == 36)
+
+
+def walk(src, blocked):
+    """empty-walk distances for the helper inside comp1 avoiding `blocked`."""
+    if src in blocked:
+        return {}
+    dist = {src: 0}
+    q = deque([src])
+    while q:
+        u = q.popleft()
+        for d in DXY:
+            v = (u[0] + d[0], u[1] + d[1])
+            if v in A1 and v not in blocked and v not in dist:
+                dist[v] = dist[u] + 1
+                q.append(v)
+    return dist
+
+
+def carry(src_helper, goal, blocked):
+    """min helper steps carrying with the forced offset delta=(-4,0) from
+    src_helper (box at src_helper-(4,0)) until the box sits on `goal`,
+    never touching another goal cell on the way."""
+    start = src_helper
+    if start in blocked:
+        return INF
+    dist = {start: 0}
+    q = deque([start])
+    while q:
+        u = q.popleft()
+        for d in DXY:
+            v = (u[0] + d[0], u[1] + d[1])
+            if v not in A1 or v in blocked or v in dist:
+                continue
+            b = (v[0] - 4, v[1])
+            if b not in st.B or b in blocked:
+                continue
+            if b in GOALSET and b != goal:
+                continue                      # E1: would be dropped there
+            dist[v] = dist[u] + 1
+            if b == goal:
+                return dist[v]
+            q.append(v)
+    return INF
+
+
+def solve():
+    # DP over (frozenset of filled goals, helper cell)
+    startpos = HELPER
+    cur = {(frozenset(), startpos): 0}
+    for step in range(NB):
+        nxt = {}
+        for (F, p), c0 in cur.items():
+            blocked = set(F)
+            wd = walk(p, blocked)
+            for g in SLOTS:
+                if g in F:
+                    continue
+                rel = (g[0] + 4, g[1])
+                if rel in blocked:
+                    continue
+                best = INF
+                for y in PICKROWS:
+                    pk = (36, y)
+                    w0 = wd.get(pk)
+                    if w0 is None:
+                        continue
+                    if w0 + 2 >= best:
+                        continue
+                    cc = carry(pk, g, blocked)
+                    if cc >= INF:
+                        continue
+                    best = min(best, w0 + 1 + cc + 1)
+                if best >= INF:
+                    continue
+                k = (F | {g}, rel)
+                if nxt.get(k, INF) > c0 + best:
+                    nxt[k] = c0 + best
+        cur = nxt
+        print(f"  after {step+1} deliveries: states={len(cur)} min={min(cur.values())}")
+    return min(cur.values())
+
+
+if __name__ == "__main__":
+    print("L3 refined helper-tour LOWER BOUND =", solve())

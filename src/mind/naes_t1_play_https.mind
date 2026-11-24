@@ -1,0 +1,238 @@
+// naes_t1_play_https.mind — HTTPS requests of the NAES-T1 play client, one
+// kept-alive TLS connection per game.
+//
+// naes_https_request reuses the connection held in `conn_cell` while the
+// server keeps it open, so a game pays one DNS lookup, TCP connect and TLS
+// handshake instead of one per action (std's handshake keeps its scratch
+// memory, about 2.7 MiB per handshake as measured). A request whose write
+// never started (a reused connection found closed or closing) is sent once
+// on a fresh connection; a request whose write started is never sent again:
+// an action has an ambiguous server-side commit status after that point.
+// naes_https_roundtrip is the one-shot form (live probe and gates).
+//
+// Connection record (40 bytes): +0 fd, +8 TLS state, +16 entropy, +24
+// entropy length, +32 anchor record owned by the connection (0 when the
+// anchors live in a caller cell).
+
+// ---- request bytes ------------------------------------------------------------
+// method: 0 = GET, 1 = POST. `host` names the Host header, `path` the
+// target; [hdr, hdr+hdr_len) is "Name: value" CRLF lines (API key,
+// cookie). Writes the HTTP/1.1 request at req (16384 bytes); returns its
+// length or -1 when it would not fit.
+fn naes_https_build_req(req: i64, method: i64, host: i64, host_len: i64, port: i64, path: i64, path_len: i64, hdr: i64, hdr_len: i64, body: i64, body_len: i64, ct: i64, ct_len: i64) -> i64 {
+    if host_len < 1 || path_len < 1 || hdr_len < 0 || body_len < 0 || ct_len < 0 { return 0 - 1; }
+    if path_len + host_len + hdr_len + body_len + ct_len + 128 > 16384 { return 0 - 1; }
+    let mut p: i64 = 0;
+    if method == 0 {
+        let _a: i64 = naes_tls_copy_lit(req + p, "GET "); p = p + 4;
+    } else {
+        let _a: i64 = naes_tls_copy_lit(req + p, "POST "); p = p + 5;
+    }
+    let _b: i64 = naes_tls_copy(req + p, path, path_len); p = p + path_len;
+    let _c: i64 = naes_tls_copy_lit(req + p, " HTTP/1.1\r\nHost: "); p = p + 17;
+    let _d: i64 = naes_tls_copy(req + p, host, host_len); p = p + host_len;
+    if port != 443 {
+        let _e: i64 = naes_tls_copy_lit(req + p, ":"); p = p + 1;
+        // decimal port
+        let mut pv: i64 = port;
+        let mut digits: i64 = 0;
+        let mut tmp: i64 = pv;
+        while tmp > 0 { digits = digits + 1; tmp = tmp / 10; }
+        let mut di: i64 = digits;
+        while di > 0 { di = di - 1; let d: i64 = (pv / naes_tls_pow10(di)) % 10; __mind_store_i8(req + p, 48 + d); p = p + 1; }
+    }
+    if hdr != 0 && hdr_len > 0 {
+        let _f: i64 = naes_tls_copy_lit(req + p, "\r\n"); p = p + 2;
+        let _g: i64 = naes_tls_copy(req + p, hdr, hdr_len); p = p + hdr_len;
+        // hdr block ends with CRLF; strip a trailing CRLF before Content-Length
+        if p >= 2 { if __mind_load_i8(req + p - 2) == 13 && __mind_load_i8(req + p - 1) == 10 { p = p - 2; } }
+    }
+    if method == 1 && body != 0 && body_len > 0 {
+        let _h: i64 = naes_tls_copy_lit(req + p, "\r\nContent-Type: "); p = p + 16;
+        if ct != 0 && ct_len > 0 { let _i: i64 = naes_tls_copy(req + p, ct, ct_len); p = p + ct_len; }
+        else { let _i: i64 = naes_tls_copy_lit(req + p, "application/json"); p = p + 16; }
+        let _j: i64 = naes_tls_copy_lit(req + p, "\r\nContent-Length: "); p = p + 18;
+        let mut bl: i64 = body_len;
+        let mut bdigits: i64 = 0;
+        let mut btmp: i64 = bl;
+        if btmp == 0 { bdigits = 1; } else { while btmp > 0 { bdigits = bdigits + 1; btmp = btmp / 10; } }
+        let mut bdi: i64 = bdigits;
+        while bdi > 0 { bdi = bdi - 1; let d: i64 = (bl / naes_tls_pow10(bdi)) % 10; __mind_store_i8(req + p, 48 + d); p = p + 1; }
+    }
+    let _k: i64 = naes_tls_copy_lit(req + p, "\r\n\r\n"); p = p + 4;
+    if method == 1 && body != 0 && body_len > 0 {
+        let _l: i64 = naes_tls_copy(req + p, body, body_len); p = p + body_len;
+    }
+    if p < 1 || p > 16384 { return 0 - 1; }
+    p
+}
+// ---- connection ---------------------------------------------------------------
+// Close the connection record (0 is ignored): TLS state and entropy zeroed
+// and freed, an owned anchor record freed, the socket closed.
+fn naes_https_close(conn: i64) -> i64 {
+    if conn <= 0 { return 0; }
+    let state: i64 = __mind_load_i64(conn + 8);
+    let ent: i64 = __mind_load_i64(conn + 16);
+    if state != 0 { tls13c_zero(state, tls13c_state_size()); __mind_free(state); }
+    if ent != 0 { tls13c_zero(ent, __mind_load_i64(conn + 24)); __mind_free(ent); }
+    let _aw: i64 = naes_tls_anchors_done(0, __mind_load_i64(conn + 32));
+    let _c: i64 = (close(__mind_load_i64(conn) as i32)) as i64;
+    __mind_free(conn);
+    0
+}
+// Close the connection kept in `cell` and clear the cell.
+pub fn naes_https_close_cell(cell: i64) -> i64 {
+    if cell == 0 { return 0; }
+    let _c: i64 = naes_https_close(__mind_load_i64(cell));
+    __mind_store_i64(cell, 0);
+    0
+}
+// Resolve, connect, load the anchors (kept in anchors_cell, or owned by the
+// connection when it is 0), seed and seal the ClientHello. Returns the
+// connection record or a negative error (-5 no address, -6 no connect, -7
+// no CA bundle, -8 no entropy, -9 TLS init, -1 otherwise).
+fn naes_https_open(host: i64, host_len: i64, port: i64, anchors_cell: i64) -> i64 {
+    let addrs: i64 = __mind_alloc(24 * 8);
+    if addrs == 0 { return 0 - 1; }
+    let acount: i64 = naes_dns_resolve(host, host_len, addrs, 8);
+    let mut fd: i64 = 0 - 1;
+    if acount > 0 { fd = naes_tls_connect_addrs(addrs, acount, port); }
+    __mind_free(addrs);
+    if acount < 1 { return 0 - 5; }
+    if fd < 0 { return 0 - 6; }
+    let conn: i64 = __mind_alloc(40);
+    if conn == 0 { let _c: i64 = (close(fd as i32)) as i64; return 0 - 1; }
+    __mind_store_i64(conn, fd);
+    __mind_store_i64(conn + 8, 0); __mind_store_i64(conn + 16, 0); __mind_store_i64(conn + 32, 0);
+    let wire: i64 = naes_tls_anchors(anchors_cell);
+    if wire < 0 { let _x: i64 = naes_https_close(conn); return wire; }
+    if anchors_cell == 0 { __mind_store_i64(conn + 32, wire); }
+    let need: i64 = tls13c_entropy_need(0);
+    let ent: i64 = __mind_alloc(need);
+    __mind_store_i64(conn + 16, ent);
+    __mind_store_i64(conn + 24, need);
+    if ent == 0 { let _x: i64 = naes_https_close(conn); return 0 - 1; }
+    if entropy_fill(ent, need) != 0 { let _x: i64 = naes_https_close(conn); return 0 - 8; }
+    let state: i64 = __mind_alloc(tls13c_state_size());
+    __mind_store_i64(conn + 8, state);
+    if state == 0 { let _x: i64 = naes_https_close(conn); return 0 - 1; }
+    let mut rc: i64 = 0;
+    if tls13c_init(state, ent, need, __mind_load_i64(wire), __mind_load_i64(wire + 8), host, host_len, hio_now_unix(), 0, 0) != 0 { rc = 0 - 9; }
+    let ch: i64 = __mind_alloc(8192);
+    if rc == 0 && ch == 0 { rc = 0 - 1; }
+    if rc == 0 {
+        let n: i64 = tls13c_build_client_hello(state, ent, need, ch);
+        if n < 1 || tls13c_seal_client_hello(state, ch, n) != 0 { rc = 0 - 9; }
+    }
+    if ch != 0 { __mind_free(ch); }
+    if rc != 0 { let _x: i64 = naes_https_close(conn); return rc; }
+    conn
+}
+// 1 when a reused connection can carry the next request: TLS connected and
+// nothing waiting on the socket (bytes or EOF there mean close_notify, a
+// FIN or data nobody asked for, so the connection is not reused).
+fn naes_https_idle(conn: i64) -> i64 {
+    if tls13c_status(__mind_load_i64(conn + 8)) != tls13c_st_connected() { return 0; }
+    let pfd: i64 = __mind_alloc(8);
+    if pfd == 0 { return 0; }
+    let fd: i64 = __mind_load_i64(conn);
+    __mind_store_i64(pfd, 0);
+    __mind_store_i8(pfd, fd & 255); __mind_store_i8(pfd + 1, (fd >> 8) & 255);
+    __mind_store_i8(pfd + 2, (fd >> 16) & 255); __mind_store_i8(pfd + 3, (fd >> 24) & 255);
+    __mind_store_i8(pfd + 4, 1);
+    let ready: i64 = (poll(pfd as *mut u8, 1, 0 as i32)) as i64;
+    __mind_free(pfd);
+    if ready == 0 { return 1; }
+    0
+}
+// 1 when the connection may carry another request after response r: still
+// TLS connected and no "Connection: close" from the server.
+fn naes_https_keep(conn: i64, r: i64) -> i64 {
+    if tls13c_status(__mind_load_i64(conn + 8)) != tls13c_st_connected() { return 0; }
+    let name: i64 = __mind_alloc(16);
+    if name == 0 { return 0; }
+    let _n: i64 = naes_tls_copy_lit(name, "connection");
+    let h: i64 = https_header(r, name, 10);
+    __mind_free(name);
+    if h == 0 { return 1; }
+    let mut keep: i64 = 1;
+    let a: i64 = __mind_load_i64(h);
+    if __mind_load_i64(h + 8) == 5 {
+        let mut same: i64 = 1;
+        let mut i: i64 = 0;
+        while i < 5 { let c: i64 = __mind_load_i8(a + i) | 32; if c != __mind_load_i8(play_ptr("close") + i) { same = 0; } i = i + 1; }
+        if same == 1 { keep = 0; }
+    }
+    __mind_free(h);
+    keep
+}
+// One request-response on conn. Returns the hx response record or a
+// negative error; `unsent` gets 1 when the failure came before the request
+// write started.
+fn naes_https_exchange(conn: i64, req: i64, p: i64, unsent: i64) -> i64 {
+    __mind_store_i64(unsent, 0);
+    let resp: i64 = hx_resp_new();
+    if resp == 0 { __mind_store_i64(unsent, 1); return 0 - 1; }
+    let sres: i64 = naes_tls_session(__mind_load_i64(conn), __mind_load_i64(conn + 8), __mind_load_i64(conn + 16), __mind_load_i64(conn + 24), req, p, resp);
+    if sres == 1 { return resp; }
+    if __mind_load_i64(resp + 176) == 0 { __mind_store_i64(unsent, 1); }
+    let _f: i64 = https_free(resp);
+    sres
+}
+// One attempt: reuse the connection in conn_cell when it is idle (reuse ==
+// 1), else open a fresh one, then exchange. The cell keeps the connection
+// only while it may carry another request. Returns as naes_https_exchange;
+// `fresh` gets 1 when the attempt ran on a new connection.
+fn naes_https_try(conn_cell: i64, anchors_cell: i64, host: i64, host_len: i64, port: i64, req: i64, p: i64, unsent: i64, fresh: i64) -> i64 {
+    __mind_store_i64(fresh, 0);
+    __mind_store_i64(unsent, 1);
+    let mut conn: i64 = __mind_load_i64(conn_cell);
+    if conn != 0 && naes_https_idle(conn) != 1 { let _c: i64 = naes_https_close_cell(conn_cell); conn = 0; }
+    if conn == 0 {
+        conn = naes_https_open(host, host_len, port, anchors_cell);
+        if conn < 0 { return conn; }
+        __mind_store_i64(conn_cell, conn);
+        __mind_store_i64(fresh, 1);
+    }
+    let r: i64 = naes_https_exchange(conn, req, p, unsent);
+    if r < 0 || naes_https_keep(conn, r) != 1 { let _c: i64 = naes_https_close_cell(conn_cell); }
+    r
+}
+// One HTTPS request on the game's kept-alive connection (conn_cell; 0 is
+// not allowed here) with the CA anchors in anchors_cell (0: per call).
+// Arguments as naes_https_build_req. Returns the hx response record
+// (release it with https_free or naes_https_take) or a negative error.
+pub fn naes_https_request(conn_cell: i64, anchors_cell: i64, method: i64, host: i64, host_len: i64, port: i64, path: i64, path_len: i64, hdr: i64, hdr_len: i64, body: i64, body_len: i64, ct: i64, ct_len: i64) -> i64 {
+    if conn_cell == 0 || host == 0 || host_len < 1 || host_len > 253 || path == 0 || path_len < 1 { return 0 - 1; }
+    if port < 1 || port > 65535 { return 0 - 1; }
+    let req: i64 = __mind_alloc(16384);
+    let flags: i64 = __mind_alloc(16);
+    if req == 0 || flags == 0 { return 0 - 1; }
+    let p: i64 = naes_https_build_req(req, method, host, host_len, port, path, path_len, hdr, hdr_len, body, body_len, ct, ct_len);
+    let mut r: i64 = 0 - 1;
+    if p > 0 {
+        r = naes_https_try(conn_cell, anchors_cell, host, host_len, port, req, p, flags, flags + 8);
+        // a reused connection that failed before the write: one fresh try
+        if r < 0 && __mind_load_i64(flags) == 1 && __mind_load_i64(flags + 8) == 0 {
+            r = naes_https_try(conn_cell, anchors_cell, host, host_len, port, req, p, flags, flags + 8);
+        }
+    }
+    __mind_free(req);
+    __mind_free(flags);
+    r
+}
+// One-shot round trip on its own connection, closed before return.
+pub fn naes_https_roundtrip(method: i64, host: i64, host_len: i64, port: i64, path: i64, path_len: i64, hdr: i64, hdr_len: i64, body: i64, body_len: i64, ct: i64, ct_len: i64, anchors_cell: i64) -> i64 {
+    let cell: i64 = __mind_alloc(8);
+    if cell == 0 { return 0 - 1; }
+    __mind_store_i64(cell, 0);
+    let r: i64 = naes_https_request(cell, anchors_cell, method, host, host_len, port, path, path_len, hdr, hdr_len, body, body_len, ct, ct_len);
+    let _c: i64 = naes_https_close_cell(cell);
+    __mind_free(cell);
+    r
+}
+// Probe: HTTPS GET the URL (https only) and return the hx response record.
+// Used by the live-TLS gate: check https_error(r) == 0 and read the status line.
+pub fn naes_https_probe_get(host: i64, host_len: i64, port: i64, path: i64, path_len: i64) -> i64 {
+    naes_https_roundtrip(0, host, host_len, port, path, path_len, 0, 0, 0, 0, 0, 0, 0)
+}

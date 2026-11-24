@@ -1,0 +1,26 @@
+{
+ "witness_len": 139,
+ "set_level_start_sig": "bc913db7584873f0df5f57a1410f7f666a1d3cc4e64a688abbaf862cbb85c392",
+ "set_level": {
+  "won_at": 139,
+  "score_after": 1,
+  "level_after": 5,
+  "state_after": "GameState.WIN"
+ },
+ "natural_arrival_prefix_levels_won_at": [
+  20,
+  42,
+  45,
+  62,
+  108
+ ],
+ "natural_start_sig": "bc913db7584873f0df5f57a1410f7f666a1d3cc4e64a688abbaf862cbb85c392",
+ "natural_start_score": 5,
+ "natural_start_equals_set_level_start": true,
+ "natural": {
+  "won_at": 139,
+  "score_after": 6,
+  "level_after": 5,
+  "state_after": "GameState.WIN"
+ }
+}

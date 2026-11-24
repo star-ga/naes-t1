@@ -1,0 +1,217 @@
+fn mkdir_p_walk(work: i64, plen: i64, i: i64, mode: i64) -> i64 {
+    if i > plen {
+        0
+    } else {
+        let b: i64 = __mind_load_i8(work + i);
+        if b == 47 {
+            __mind_store_i8(work + i, 0);
+            let _ = mkdir(work as *const u8, mode as i32);
+            __mind_store_i8(work + i, 47)
+        } else {
+            if i == plen {
+                let _ = mkdir(work as *const u8, mode as i32);
+            }
+        }
+        mkdir_p_walk(work, plen, i + 1, mode)
+    }
+}
+
+// mkdir_p — create directory and all parents. Returns 1 if final dir exists.
+pub fn mkdir_p(path_addr: i64, mode: i64) -> i64 {
+    let r: i64 = mkdir(path_addr as *const u8, mode as i32) as i64;
+    if r == 0 {
+        return 1;
+    }
+    let plen: i64 = fs_cstr_len(path_addr);
+    if plen == 0 {
+        return 0;
+    }
+    let work: i64 = fs_heap_copy(path_addr, plen);
+    let _ = mkdir_p_walk(work, plen, 1, mode);
+    let buf: i64 = __mind_alloc(144);
+    let _ = memset(buf as *mut u8, 0, 144);
+    let sr: i64 = stat(path_addr as *const u8, buf as *mut u8) as i64;
+    if sr == 0 {
+        1
+    } else {
+        0
+    }
+}
+
+// fs_rmdir — remove an empty directory. Returns 1 on success.
+pub fn fs_rmdir(path_addr: i64) -> i64 {
+    let r: i64 = rmdir(path_addr as *const u8) as i64;
+    if r == 0 {
+        1
+    } else {
+        0
+    }
+}
+
+// ---------------------------------------------------------------------------
+// Public: file removal / rename
+// ---------------------------------------------------------------------------
+
+// remove_file — remove a regular file. Returns 1 on success.
+pub fn remove_file(path_addr: i64) -> i64 {
+    let r: i64 = unlink(path_addr as *const u8) as i64;
+    if r == 0 {
+        1
+    } else {
+        0
+    }
+}
+
+// Internal: remove entries in vec_h for directory at path_addr.
+fn remove_recursive_entries(path_addr: i64, plen: i64, vec_h: i64, idx: i64) -> i64 {
+    let n: i64 = dir_vec_len(vec_h);
+    if idx >= n {
+        1
+    } else {
+        let entry: i64 = dir_vec_get(vec_h, idx);
+        let ename_addr: i64 = direntry_name_addr(entry);
+        let ename_len: i64 = direntry_name_len(entry);
+        let full_len: i64 = plen + 1 + ename_len;
+        let full: i64 = __mind_alloc(full_len + 1);
+        let _ = fs_copy_bytes(path_addr, full, plen);
+        __mind_store_i8(full + plen, 47);
+        let _ = fs_copy_bytes(ename_addr, full + plen + 1, ename_len);
+        __mind_store_i8(full + full_len, 0);
+        let sub_ok: i64 = remove_recursive(full);
+        let rest_ok: i64 = remove_recursive_entries(path_addr, plen, vec_h, idx + 1);
+        if sub_ok == 1 {
+            rest_ok
+        } else {
+            0
+        }
+    }
+}
+
+// remove_recursive — remove a file or directory tree.
+pub fn remove_recursive(path_addr: i64) -> i64 {
+    let buf: i64 = __mind_alloc(144);
+    let _ = memset(buf as *mut u8, 0, 144);
+    let sr: i64 = lstat(path_addr as *const u8, buf as *mut u8) as i64;
+    if sr != 0 {
+        return 0;
+    }
+    let mode: i64 = __mind_load_i64(buf + 24) & 65535;
+    let is_dir: i64 = if (mode & s_ifmt()) == s_ifdir() {
+        1
+    } else {
+        0
+    };
+    if is_dir == 0 {
+        return remove_file(path_addr);
+    }
+    let vec_h: i64 = read_dir(path_addr);
+    let plen: i64 = fs_cstr_len(path_addr);
+    let ok: i64 = remove_recursive_entries(path_addr, plen, vec_h, 0);
+    if ok == 1 {
+        let dr: i64 = rmdir(path_addr as *const u8) as i64;
+        if dr == 0 {
+            1
+        } else {
+            0
+        }
+    } else {
+        0
+    }
+}
+
+// fs_rename — rename / move a file or directory. Returns 1 on success.
+pub fn fs_rename(from_addr: i64, to_addr: i64) -> i64 {
+    let r: i64 = rename(from_addr as *const u8, to_addr as *const u8) as i64;
+    if r == 0 {
+        1
+    } else {
+        0
+    }
+}
+
+// ---------------------------------------------------------------------------
+// Public: existence / type tests
+// ---------------------------------------------------------------------------
+
+pub fn exists(path_addr: i64) -> i64 {
+    let buf: i64 = __mind_alloc(144);
+    let _ = memset(buf as *mut u8, 0, 144);
+    let r: i64 = stat(path_addr as *const u8, buf as *mut u8) as i64;
+    if r == 0 {
+        1
+    } else {
+        0
+    }
+}
+
+pub fn is_dir(path_addr: i64) -> i64 {
+    let buf: i64 = __mind_alloc(144);
+    let _ = memset(buf as *mut u8, 0, 144);
+    let r: i64 = stat(path_addr as *const u8, buf as *mut u8) as i64;
+    if r != 0 {
+        return 0;
+    }
+    let mode: i64 = __mind_load_i64(buf + 24) & 65535;
+    if (mode & s_ifmt()) == s_ifdir() {
+        1
+    } else {
+        0
+    }
+}
+
+pub fn is_file(path_addr: i64) -> i64 {
+    let buf: i64 = __mind_alloc(144);
+    let _ = memset(buf as *mut u8, 0, 144);
+    let r: i64 = stat(path_addr as *const u8, buf as *mut u8) as i64;
+    if r != 0 {
+        return 0;
+    }
+    let mode: i64 = __mind_load_i64(buf + 24) & 65535;
+    if (mode & s_ifmt()) == s_ifreg() {
+        1
+    } else {
+        0
+    }
+}
+
+// ---------------------------------------------------------------------------
+// Public: stat / canonicalize
+// ---------------------------------------------------------------------------
+
+// fs_stat — return a FileStat heap record [size, mode, mtime] for path.
+pub fn fs_stat(path_addr: i64) -> i64 {
+    let rec: i64 = __mind_alloc(24);
+    __mind_store_i64(rec + 0, 0);
+    __mind_store_i64(rec + 8, 0);
+    __mind_store_i64(rec + 16, 0);
+    let buf: i64 = __mind_alloc(144);
+    let _ = memset(buf as *mut u8, 0, 144);
+    let r: i64 = stat(path_addr as *const u8, buf as *mut u8) as i64;
+    if r != 0 {
+        return rec;
+    }
+    __mind_store_i64(rec + 0, fs_stat_size(buf));
+    __mind_store_i64(rec + 8, fs_stat_mode(buf));
+    __mind_store_i64(rec + 16, fs_stat_mtime(buf));
+    rec
+}
+
+// canonicalize — resolve path to absolute form.
+// Returns a String heap record [addr, len, cap]. Empty on error.
+pub fn canonicalize(path_addr: i64) -> i64 {
+    let rec: i64 = __mind_alloc(24);
+    __mind_store_i64(rec + 0, 0);
+    __mind_store_i64(rec + 8, 0);
+    __mind_store_i64(rec + 16, 0);
+    let out: i64 = __mind_alloc(4096);
+    let _ = memset(out as *mut u8, 0, 4096);
+    let rp: i64 = realpath(path_addr as *const u8, out as *mut u8) as i64;
+    if rp == 0 {
+        return rec;
+    }
+    let rlen: i64 = fs_cstr_len(out);
+    __mind_store_i64(rec + 0, out);
+    __mind_store_i64(rec + 8, rlen);
+    __mind_store_i64(rec + 16, 4096);
+    rec
+}

@@ -1,0 +1,715 @@
+// naes_t1.mind — NAES-T1 forward pass in integer arithmetic.
+//
+// Network (mirrors the reference forward pass exactly):
+//   x  = one-hot(cur, 16) ++ one-hot(prev, 16) ++ one-hot(prev_action, 8)
+//        ++ click plane (1 at the previous click cell, none if no click)
+//        ++ one-hot(min(prev_run, 7), 8); the action and run one-hots are
+//        broadcast over the 64x64 grid (49 planes, zero outside the grid)
+//   h  = ReLU(conv3x3(x) * scale + bias)                       (layer 0)
+//   h  = ReLU(conv3x3_dil(h) * scale + bias) + h               (each block)
+//   logits = act_head(mean_hw(h) ++ max_hw(h));  action = argmax + 1
+//   if action == 6: cell = argmax over 4096 cells of click_head(h)
+//
+// Rounding steps (all via mul_round, round half away from zero):
+//   R1 layer 0  : h = max(round(n * s * 2^24) + B, 0), n = exact tap count sum
+//   R2 block    : h' = max(round(acc * s) + B, 0) + h,  acc = exact Q24 sum
+//   R3 act head : logit = round(acc36 * s / 2^12) + B, acc36 = exact Q36 sum
+//                 (mean = sum / 4096 is exact in Q36, max << 12 is exact)
+//   B = round(bias * 2^24) is taken once at weight load (to_q24).
+//   Click head  : argmax runs on the EXACT integer accumulator (heat is a
+//                 strictly monotone map of it for scale > 0, reversed for
+//                 scale < 0, constant for scale == 0), so no rounding reaches
+//                 the chosen cell. First index wins every tie, like argmax.
+//
+// Buffers: each channel plane is 96x96 i64 with a 16-cell zero border, so a
+// dilated tap (dilation <= 16) never needs a bounds check.
+
+fn pw() -> i64 {
+    96
+}
+fn plane() -> i64 {
+    9216
+}
+// Element index of grid cell (0, 0) inside a padded plane: 16 * 96 + 16.
+fn origin() -> i64 {
+    1552
+}
+
+fn zero_i64(addr: i64, n: i64) -> i64 {
+    let mut i: i64 = 0;
+    while i < n {
+        __mind_store_i64(addr + i * 8, 0);
+        i = i + 1;
+    }
+    0
+}
+
+fn alloc_zero(n: i64) -> i64 {
+    let a: i64 = __mind_alloc(n * 8);
+    if a == 0 {
+        return 0;
+    }
+    let _z: i64 = zero_i64(a, n);
+    a
+}
+
+fn ld(base: i64, i: i64) -> i64 {
+    __mind_load_i64(base + i * 8)
+}
+
+fn st(base: i64, i: i64, v: i64) -> i64 {
+    __mind_store_i64(base + i * 8, v);
+    0
+}
+
+// Workspace record fields (i64 slots).
+fn ws_ha() -> i64 {
+    0
+}
+fn ws_hb() -> i64 {
+    1
+}
+fn ws_acc() -> i64 {
+    2
+}
+fn ws_cpad() -> i64 {
+    3
+}
+fn ws_ppad() -> i64 {
+    4
+}
+fn ws_apad() -> i64 {
+    5
+}
+fn ws_tabc() -> i64 {
+    6
+}
+fn ws_tabp() -> i64 {
+    7
+}
+fn ws_taba() -> i64 {
+    8
+}
+fn ws_lists() -> i64 {
+    9
+}
+fn ws_sum() -> i64 {
+    10
+}
+fn ws_max() -> i64 {
+    11
+}
+// Result slots: 12..18 logits, 19 cell, 20 best heat, 21 runner-up heat.
+fn ws_logit() -> i64 {
+    12
+}
+fn ws_cell() -> i64 {
+    19
+}
+fn ws_heat1() -> i64 {
+    20
+}
+fn ws_heat2() -> i64 {
+    21
+}
+fn ws_kpad() -> i64 {
+    22
+}
+fn ws_rpad() -> i64 {
+    23
+}
+fn ws_tabk() -> i64 {
+    24
+}
+fn ws_tabr() -> i64 {
+    25
+}
+
+// Layer-0 lookup tables: for out o and tap k = ky*3+kx, the ternary weight
+// of every colour (index 16 = outside the grid = 0), action (8 = outside),
+// click mark (0 = no mark, 1 = mark) and run length (8 = outside).
+fn build_input_tables(model: i64, ws: i64) -> i64 {
+    let ch: i64 = __mind_load_i64(model);
+    let lay: i64 = model_layer(model, 0);
+    let t: i64 = __mind_load_i64(lay + 32);
+    let tc: i64 = alloc_zero_bytes(ch * 9 * 17);
+    let tp: i64 = alloc_zero_bytes(ch * 9 * 17);
+    let ta: i64 = alloc_zero_bytes(ch * 9 * 9);
+    let tk: i64 = alloc_zero_bytes(ch * 9 * 2);
+    let tr: i64 = alloc_zero_bytes(ch * 9 * 9);
+    let ni: i64 = n_in();
+    let mut o: i64 = 0;
+    while o < ch {
+        let mut k: i64 = 0;
+        while k < 9 {
+            let mut c: i64 = 0;
+            while c < 16 {
+                let _a: i64 = st8(tc, (o * 9 + k) * 17 + c, ld(t, (o * ni + c) * 9 + k));
+                let _b: i64 = st8(tp, (o * 9 + k) * 17 + c, ld(t, (o * ni + 16 + c) * 9 + k));
+                c = c + 1;
+            }
+            let mut a: i64 = 0;
+            while a < 8 {
+                let _c: i64 = st8(ta, (o * 9 + k) * 9 + a, ld(t, (o * ni + 32 + a) * 9 + k));
+                let _r: i64 = st8(tr, (o * 9 + k) * 9 + a, ld(t, (o * ni + 41 + a) * 9 + k));
+                a = a + 1;
+            }
+            let _k: i64 = st8(tk, (o * 9 + k) * 2 + 1, ld(t, (o * ni + 40) * 9 + k));
+            k = k + 1;
+        }
+        o = o + 1;
+    }
+    let _s1: i64 = st(ws, ws_tabc(), tc);
+    let _s2: i64 = st(ws, ws_tabp(), tp);
+    let _s3: i64 = st(ws, ws_tabk(), tk);
+    let _s4: i64 = st(ws, ws_tabr(), tr);
+    let lut: i64 = alloc_zero(ch * 91);
+    o = 0;
+    while o < ch {
+        let m: i64 = ld(__mind_load_i64(lay + 40), o);
+        let sh: i64 = 0 - ld(__mind_load_i64(lay + 48), o) - q_frac();
+        let bq: i64 = ld(__mind_load_i64(lay + 56), o);
+        let mut n: i64 = 0 - 45;
+        while n <= 45 {
+            let mut v: i64 = mul_round(n, m, sh) + bq;
+            if v < 0 { v = 0; }
+            let _v: i64 = st(lut, o * 91 + n + 45, v);
+            n = n + 1;
+        }
+        o = o + 1;
+    }
+    let _lut: i64 = st(ws, 26, lut);
+    st(ws, ws_taba(), ta)
+}
+
+// For one residual block: byte offsets (relative to the source cell) of the
+// +1 taps and the -1 taps of every output channel. starts[o*3 .. o*3+2] =
+// (first +1, first -1, end) into offs.
+// Canonicalize a ternary triple under global sign. Thirteen nonzero
+// representatives cover all27 patterns. A negative result requests subtraction.
+fn triple_code(a: i64, b: i64, c: i64) -> i64 {
+    let mut aa: i64 = a;
+    let mut bb: i64 = b;
+    let mut cc: i64 = c;
+    let mut sign: i64 = 1;
+    if aa < 0 || (aa == 0 && bb < 0) || (aa == 0 && bb == 0 && cc < 0) {
+        aa = 0 - aa;
+        bb = 0 - bb;
+        cc = 0 - cc;
+        sign = 0 - 1;
+    }
+    let key: i64 = aa * 9 + bb * 3 + cc;
+    if key == 9 { return sign * 1; }
+    if key == 3 { return sign * 2; }
+    if key == 1 { return sign * 3; }
+    if key == 12 { return sign * 4; }
+    if key == 6 { return sign * 5; }
+    if key == 10 { return sign * 6; }
+    if key == 8 { return sign * 7; }
+    if key == 4 { return sign * 8; }
+    if key == 2 { return sign * 9; }
+    if key == 13 { return sign * 10; }
+    if key == 11 { return sign * 11; }
+    if key == 7 { return sign * 12; }
+    if key == 5 { return sign * 13; }
+    0
+}
+
+fn build_triple_list(lay: i64, ch: i64) -> i64 {
+    let t: i64 = __mind_load_i64(lay + 32);
+    let groups: i64 = ch * 3;
+    let offs: i64 = __mind_alloc(ch * groups * 8);
+    let starts: i64 = __mind_alloc(ch * 3 * 8);
+    let mut count: i64 = 0;
+    let mut o: i64 = 0;
+    while o < ch {
+        let mut sign: i64 = 1;
+        while sign >= 0 - 1 {
+            let _s: i64 = st(starts, o * 3 + (1 - sign) / 2, count);
+            let mut g: i64 = 0;
+            while g < groups {
+                let index: i64 = o * ch * 9 + g * 3;
+                let code: i64 = triple_code(ld(t, index), ld(t, index + 1), ld(t, index + 2));
+                if code * sign > 0 {
+                    let _p: i64 = st(offs, count, (g * 13 + code * sign - 1) * 16 * 8);
+                    count = count + 1;
+                }
+                g = g + 1;
+            }
+            sign = sign - 2;
+        }
+        let _e: i64 = st(starts, o * 3 + 2, count);
+        o = o + 1;
+    }
+    let rec: i64 = alloc_zero(6);
+    let _r1: i64 = st(rec, 0, starts);
+    let _r2: i64 = st(rec, 1, offs);
+    let _r3: i64 = st(rec, 2, __mind_alloc(groups * 13 * 16 * 8));
+    rec
+}
+
+// Allocate the workspace for a loaded model. Returns 0 on allocation failure.
+pub fn prepare(model: i64) -> i64 {
+    let ch: i64 = __mind_load_i64(model);
+    let nb: i64 = __mind_load_i64(model + 8);
+    let ws: i64 = alloc_zero(32);
+    let ha: i64 = alloc_zero(ch * plane());
+    let hb: i64 = alloc_zero(ch * plane());
+    if ws == 0 || ha == 0 || hb == 0 {
+        return 0;
+    }
+    let _a: i64 = st(ws, ws_ha(), ha);
+    let _b: i64 = st(ws, ws_hb(), hb);
+    let _c: i64 = st(ws, ws_acc(), alloc_zero(4096));
+    let _d: i64 = st(ws, ws_cpad(), alloc_zero_bytes(66 * 66));
+    let _e: i64 = st(ws, ws_ppad(), alloc_zero_bytes(66 * 66));
+    let _f: i64 = st(ws, ws_apad(), alloc_zero_bytes(66 * 66));
+    let _k: i64 = st(ws, ws_kpad(), alloc_zero_bytes(66 * 66));
+    let _r: i64 = st(ws, ws_rpad(), alloc_zero_bytes(66 * 66));
+    let _g: i64 = st(ws, ws_sum(), alloc_zero(ch));
+    let _h: i64 = st(ws, ws_max(), alloc_zero(ch));
+    let _i: i64 = build_input_tables(model, ws);
+    let plans: i64 = load_plan_file();
+    let lists: i64 = alloc_zero(nb);
+    let mut b: i64 = 0;
+    while b < nb {
+        let _l: i64 = st(lists, b, build_block_list(model_layer(model, b + 1), ch, b, plans));
+        b = b + 1;
+    }
+    let _j: i64 = st(ws, ws_lists(), lists);
+    ws
+}
+
+// Decision record: cur 4096 B (y*64+x), prev 4096 B, prev action u8 @8192,
+// prev click cell i16 LE @8193 (negative = no click), prev run u8 @8195.
+pub fn rec_size() -> i64 {
+    8196
+}
+
+// Previous click cell, sign-extended from the i16 field.
+pub fn rec_prev_cell(rec: i64) -> i64 {
+    let v: i64 = __mind_load_i8(rec + 8193) + __mind_load_i8(rec + 8194) * 256;
+    if v >= 32768 {
+        return v - 65536;
+    }
+    v
+}
+
+// Run length of the previous action, capped at 7 as the reference does.
+pub fn rec_prev_run(rec: i64) -> i64 {
+    let r: i64 = __mind_load_i8(rec + 8195);
+    if r > 7 {
+        return 7;
+    }
+    r
+}
+
+// Expand one decision record into the 66x66 padded index grids. Border
+// cells get the "outside" index (zero contribution).
+fn encode_input(ws: i64, rec: i64) -> i64 {
+    let cp: i64 = ld(ws, ws_cpad());
+    let pp: i64 = ld(ws, ws_ppad());
+    let ap: i64 = ld(ws, ws_apad());
+    let kp: i64 = ld(ws, ws_kpad());
+    let rp: i64 = ld(ws, ws_rpad());
+    let pa: i64 = __mind_load_i8(rec + 8192);
+    let pc: i64 = rec_prev_cell(rec);
+    let run: i64 = rec_prev_run(rec);
+    let mut i: i64 = 0;
+    while i < 66 * 66 {
+        let y: i64 = i / 66 - 1;
+        let x: i64 = i % 66 - 1;
+        if y >= 0 && y < 64 && x >= 0 && x < 64 {
+            let _a: i64 = st8(cp, i, __mind_load_i8(rec + y * 64 + x));
+            let _b: i64 = st8(pp, i, __mind_load_i8(rec + 4096 + y * 64 + x));
+            let _c: i64 = st8(ap, i, pa);
+            let _g: i64 = st8(rp, i, run);
+            let mut mark: i64 = 0;
+            if y * 64 + x == pc {
+                mark = 1;
+            }
+            let _h: i64 = st8(kp, i, mark);
+        } else {
+            let _d: i64 = st8(cp, i, 16);
+            let _e: i64 = st8(pp, i, 16);
+            let _f: i64 = st8(ap, i, 8);
+            let _j: i64 = st8(rp, i, 8);
+            let _k: i64 = st8(kp, i, 0);
+        }
+        i = i + 1;
+    }
+    0
+}
+
+// Layer 0 (R1). Returns 0, or -1 when an activation breaks the 2^40 guard.
+fn layer0(model: i64, ws: i64) -> i64 {
+    let ch: i64 = __mind_load_i64(model);
+    let lay: i64 = model_layer(model, 0);
+    let cp: i64 = ld(ws, ws_cpad());
+    let pp: i64 = ld(ws, ws_ppad());
+    let ap: i64 = ld(ws, ws_apad());
+    let kp: i64 = ld(ws, ws_kpad());
+    let rp: i64 = ld(ws, ws_rpad());
+    let tk: i64 = ld(ws, ws_tabk());
+    let tr: i64 = ld(ws, ws_tabr());
+    let tc: i64 = ld(ws, ws_tabc());
+    let tp: i64 = ld(ws, ws_tabp());
+    let ta: i64 = ld(ws, ws_taba());
+    let h: i64 = ld(ws, ws_ha());
+    let mut o: i64 = 0;
+    while o < ch {
+        let m: i64 = ld(__mind_load_i64(lay + 40), o);
+        let sh: i64 = 0 - ld(__mind_load_i64(lay + 48), o) - q_frac();
+        let bq: i64 = ld(__mind_load_i64(lay + 56), o);
+        let mut p: i64 = 0;
+        while p < 4096 {
+            let y: i64 = p / 64;
+            let x: i64 = p % 64;
+            let mut n: i64 = 0;
+            let mut k: i64 = 0;
+            while k < 9 {
+                let g: i64 = (y + k / 3) * 66 + x + k % 3;
+                let row: i64 = o * 9 + k;
+                n = n + lds8(tc, row * 17 + ldu8(cp, g)) + lds8(tp, row * 17 + ldu8(pp, g));
+                n = n + lds8(ta, row * 9 + ldu8(ap, g));
+                n = n + lds8(tk, row * 2 + ldu8(kp, g)) + lds8(tr, row * 9 + ldu8(rp, g));
+                k = k + 1;
+            }
+            // Nine taps, five one-hot choices per tap, every coefficient in
+            // {-1,0,1}: |n|<=45. Assert before indexing the exact rounding LUT.
+            if n < 0 - 45 || n > 45 { return 0 - 1; }
+            let v: i64 = ld(ld(ws, 26), o * 91 + n + 45);
+            if v >= act_limit() {
+                return 0 - 1;
+            }
+            let _s: i64 = st(h, o * plane() + origin() + y * pw() + x, v);
+            p = p + 1;
+        }
+        o = o + 1;
+    }
+    0
+}
+
+// acc[y*64+x] += src[y*96+x] over the 64x64 grid (src = cell (0,0)).
+fn add_plane(acc: i64, src: i64) -> i64 {
+    let mut y: i64 = 0;
+    while y < 64 {
+        let a: i64 = acc + y * 512;
+        let s: i64 = src + y * 768;
+        let mut x: i64 = 0;
+        while x < 512 {
+            __mind_store_i64(a + x, __mind_load_i64(a + x) + __mind_load_i64(s + x));
+            x = x + 8;
+        }
+        y = y + 1;
+    }
+    0
+}
+
+fn sub_plane(acc: i64, src: i64) -> i64 {
+    let mut y: i64 = 0;
+    while y < 64 {
+        let a: i64 = acc + y * 512;
+        let s: i64 = src + y * 768;
+        let mut x: i64 = 0;
+        while x < 512 {
+            __mind_store_i64(a + x, __mind_load_i64(a + x) - __mind_load_i64(s + x));
+            x = x + 8;
+        }
+        y = y + 1;
+    }
+    0
+}
+
+// Exact ternary conv sum for 8 neighbouring cells of one row: the +1 taps
+// offs[j0..j1) are added and the -1 taps offs[j1..j2) subtracted, keeping the
+// eight sums in registers. Integer addition is associative, so this order
+// gives the same integers as any other order.
+fn conv_tile8(src: i64, offs: i64, j0: i64, j1: i64, j2: i64, dst: i64) -> i64 {
+    let mut a0: i64 = 0;
+    let mut a1: i64 = 0;
+    let mut a2: i64 = 0;
+    let mut a3: i64 = 0;
+    let mut a4: i64 = 0;
+    let mut a5: i64 = 0;
+    let mut a6: i64 = 0;
+    let mut a7: i64 = 0;
+    let mut j: i64 = j0;
+    while j < j1 {
+        let s: i64 = src + __mind_load_i64(offs + j * 8);
+        a0 = a0 + __mind_load_i64(s);
+        a1 = a1 + __mind_load_i64(s + 8);
+        a2 = a2 + __mind_load_i64(s + 16);
+        a3 = a3 + __mind_load_i64(s + 24);
+        a4 = a4 + __mind_load_i64(s + 32);
+        a5 = a5 + __mind_load_i64(s + 40);
+        a6 = a6 + __mind_load_i64(s + 48);
+        a7 = a7 + __mind_load_i64(s + 56);
+        j = j + 1;
+    }
+    while j < j2 {
+        let s: i64 = src + __mind_load_i64(offs + j * 8);
+        a0 = a0 - __mind_load_i64(s);
+        a1 = a1 - __mind_load_i64(s + 8);
+        a2 = a2 - __mind_load_i64(s + 16);
+        a3 = a3 - __mind_load_i64(s + 24);
+        a4 = a4 - __mind_load_i64(s + 32);
+        a5 = a5 - __mind_load_i64(s + 40);
+        a6 = a6 - __mind_load_i64(s + 48);
+        a7 = a7 - __mind_load_i64(s + 56);
+        j = j + 1;
+    }
+    __mind_store_i64(dst, a0);
+    __mind_store_i64(dst + 8, a1);
+    __mind_store_i64(dst + 16, a2);
+    __mind_store_i64(dst + 24, a3);
+    __mind_store_i64(dst + 32, a4);
+    __mind_store_i64(dst + 40, a5);
+    __mind_store_i64(dst + 48, a6);
+    __mind_store_i64(dst + 56, a7);
+    0
+}
+
+// Materialize the13 signed combinations of each three adjacent horizontal
+// taps for16 neighbouring pixels. Every combination uses only exact i64 sums.
+fn triple_bank(lay: i64, ch: i64, hin: i64, bank: i64, y: i64, x: i64) -> i64 {
+    let dilation: i64 = ld(lay, 3);
+    let mut g: i64 = 0;
+    while g < ch * 3 {
+        let src: i64 = hin + ((g / 3) * plane() + origin() + (y + (g % 3 - 1) * dilation) * pw() + x) * 8;
+        let dst: i64 = bank + g * 13 * 16 * 8;
+        let mut p: i64 = 0;
+        while p < 16 {
+            let a: i64 = __mind_load_i64(src + (p - dilation) * 8);
+            let b: i64 = __mind_load_i64(src + p * 8);
+            let c: i64 = __mind_load_i64(src + (p + dilation) * 8);
+            let ab: i64 = a + b;
+            let amb: i64 = a - b;
+            __mind_store_i64(dst + (0 * 16 + p) * 8, a);
+            __mind_store_i64(dst + (1 * 16 + p) * 8, b);
+            __mind_store_i64(dst + (2 * 16 + p) * 8, c);
+            __mind_store_i64(dst + (3 * 16 + p) * 8, ab);
+            __mind_store_i64(dst + (4 * 16 + p) * 8, amb);
+            __mind_store_i64(dst + (5 * 16 + p) * 8, a + c);
+            __mind_store_i64(dst + (6 * 16 + p) * 8, a - c);
+            __mind_store_i64(dst + (7 * 16 + p) * 8, b + c);
+            __mind_store_i64(dst + (8 * 16 + p) * 8, b - c);
+            __mind_store_i64(dst + (9 * 16 + p) * 8, ab + c);
+            __mind_store_i64(dst + (10 * 16 + p) * 8, ab - c);
+            __mind_store_i64(dst + (11 * 16 + p) * 8, amb + c);
+            __mind_store_i64(dst + (12 * 16 + p) * 8, amb - c);
+            p = p + 1;
+        }
+        g = g + 1;
+    }
+    0
+}
+
+fn block_triple(lay: i64, list: i64, ch: i64, hin: i64, hout: i64, acc: i64) -> i64 {
+    let starts: i64 = ld(list, 0);
+    let offs: i64 = ld(list, 1);
+    let bank: i64 = ld(list, 2);
+    let ms: i64 = __mind_load_i64(lay + 40);
+    let es: i64 = __mind_load_i64(lay + 48);
+    let bs: i64 = __mind_load_i64(lay + 56);
+    let mut y: i64 = 0;
+    while y < 64 {
+        let mut x: i64 = 0;
+        while x < 64 {
+            let _t: i64 = triple_bank(lay, ch, hin, bank, y, x);
+            let mut o: i64 = 0;
+            while o < ch {
+                let j0: i64 = ld(starts, o * 3);
+                let j1: i64 = ld(starts, o * 3 + 1);
+                let j2: i64 = ld(starts, o * 3 + 2);
+                let dst: i64 = acc + (o * 64 + x) * 8;
+                let _c1: i64 = conv_tile8(bank, offs, j0, j1, j2, dst);
+                let _c2: i64 = conv_tile8(bank + 64, offs, j0, j1, j2, dst + 64);
+                o = o + 1;
+            }
+            x = x + 16;
+        }
+        let mut o: i64 = 0;
+        while o < ch {
+            if finish_row(acc + o * 64 * 8, ld(ms, o), 0 - ld(es, o), ld(bs, o), hin, hout, o * plane() + origin() + y * pw()) < 0 {
+                return 0 - 1;
+            }
+            o = o + 1;
+        }
+        y = y + 1;
+    }
+    0
+}
+
+// R2 for one 64-cell row: hout[cell] = max(round(acc * s) + B, 0) + hin[cell].
+fn finish_row(acc: i64, m: i64, sh: i64, bq: i64, hin: i64, hout: i64, cell0: i64) -> i64 {
+    let mut x: i64 = 0;
+    while x < 64 {
+        let mut v: i64 = mul_round(ld(acc, x), m, sh) + bq;
+        if v < 0 {
+            v = 0;
+        }
+        let nv: i64 = v + ld(hin, cell0 + x);
+        if nv >= act_limit() {
+            return 0 - 1;
+        }
+        let _s: i64 = st(hout, cell0 + x, nv);
+        x = x + 1;
+    }
+    0
+}
+
+// Per-channel exact sum (Q24) and max over the 64x64 grid.
+fn pool(h: i64, ch: i64, sums: i64, maxs: i64) -> i64 {
+    let mut c: i64 = 0;
+    while c < ch {
+        let mut s: i64 = 0;
+        let mut mx: i64 = 0;
+        let mut p: i64 = 0;
+        while p < 4096 {
+            let v: i64 = ld(h, c * plane() + origin() + (p / 64) * pw() + p % 64);
+            s = s + v;
+            if v > mx {
+                mx = v;
+            }
+            p = p + 1;
+        }
+        let _a: i64 = st(sums, c, s);
+        let _b: i64 = st(maxs, c, mx);
+        c = c + 1;
+    }
+    0
+}
+
+// Action head (R3). Writes 7 logits (Q24) into ws; returns action 1..7.
+fn act_head(model: i64, ws: i64, ch: i64) -> i64 {
+    let lay: i64 = model_layer(model, __mind_load_i64(model + 8) + 1);
+    let t: i64 = __mind_load_i64(lay + 32);
+    let sums: i64 = ld(ws, ws_sum());
+    let maxs: i64 = ld(ws, ws_max());
+    let mut best: i64 = 0;
+    let mut o: i64 = 0;
+    while o < 7 {
+        let mut acc: i64 = 0;
+        let mut c: i64 = 0;
+        while c < ch {
+            acc = acc + ld(t, o * 2 * ch + c) * ld(sums, c);
+            acc = acc + ld(t, o * 2 * ch + ch + c) * (ld(maxs, c) << 12);
+            c = c + 1;
+        }
+        let m: i64 = ld(__mind_load_i64(lay + 40), o);
+        let sh: i64 = 12 - ld(__mind_load_i64(lay + 48), o);
+        let logit: i64 = mul_round(acc, m, sh) + ld(__mind_load_i64(lay + 56), o);
+        let _s: i64 = st(ws, ws_logit() + o, logit);
+        if logit > ld(ws, ws_logit() + best) {
+            best = o;
+        }
+        o = o + 1;
+    }
+    best + 1
+}
+
+// Click head: exact integer argmax over the 4096 cells. Stores the cell and,
+// for diagnostics, the rounded Q24 heat of the winner and of the runner-up.
+fn click_head(model: i64, ws: i64, ch: i64, h: i64) -> i64 {
+    let lay: i64 = model_layer(model, __mind_load_i64(model + 8) + 2);
+    let t: i64 = __mind_load_i64(lay + 32);
+    let acc: i64 = ld(ws, ws_acc());
+    let _z: i64 = zero_i64(acc, 4096);
+    let mut c: i64 = 0;
+    while c < ch {
+        let src: i64 = h + (c * plane() + origin()) * 8;
+        if ld(t, c) == 1 {
+            let _a: i64 = add_plane(acc, src);
+        }
+        if ld(t, c) == 0 - 1 {
+            let _b: i64 = sub_plane(acc, src);
+        }
+        c = c + 1;
+    }
+    let m: i64 = ld(__mind_load_i64(lay + 40), 0);
+    let sh: i64 = 0 - ld(__mind_load_i64(lay + 48), 0);
+    let bq: i64 = ld(__mind_load_i64(lay + 56), 0);
+    let mut dir: i64 = 1;
+    if m < 0 {
+        dir = 0 - 1;
+    }
+    if m == 0 {
+        dir = 0;
+    }
+    let mut best: i64 = 0;
+    let mut p: i64 = 1;
+    while p < 4096 {
+        if dir * ld(acc, p) > dir * ld(acc, best) {
+            best = p;
+        }
+        p = p + 1;
+    }
+    let mut second: i64 = 0 - 1;
+    p = 0;
+    while p < 4096 {
+        if p != best {
+            if second < 0 || dir * ld(acc, p) > dir * ld(acc, second) {
+                second = p;
+            }
+        }
+        p = p + 1;
+    }
+    let _s1: i64 = st(ws, ws_cell(), best);
+    let _s2: i64 = st(ws, ws_heat1(), mul_round(ld(acc, best), m, sh) + bq);
+    let _s3: i64 = st(ws, ws_heat2(), mul_round(ld(acc, second), m, sh) + bq);
+    best
+}
+
+// Full decision. Returns action 1..7 (cell in ws slot ws_cell() when the click
+// head ran), or -1 when an activation guard tripped. `always_click` = 1 runs
+// the click head for every action (diagnostic mode).
+pub fn decide(model: i64, ws: i64, rec: i64, always_click: i64) -> i64 {
+    let ch: i64 = __mind_load_i64(model);
+    let nb: i64 = __mind_load_i64(model + 8);
+    let _e: i64 = encode_input(ws, rec);
+    if layer0(model, ws) < 0 {
+        return 0 - 1;
+    }
+    let mut hin: i64 = ld(ws, ws_ha());
+    let mut hout: i64 = ld(ws, ws_hb());
+    let mut b: i64 = 0;
+    while b < nb {
+        let lay: i64 = model_layer(model, b + 1);
+        let list: i64 = ld(ld(ws, ws_lists()), b);
+        if block(lay, list, ch, hin, hout, ld(ws, ws_acc())) < 0 {
+            return 0 - 1;
+        }
+        let tmp: i64 = hin;
+        hin = hout;
+        hout = tmp;
+        b = b + 1;
+    }
+    let _p: i64 = pool(hin, ch, ld(ws, ws_sum()), ld(ws, ws_max()));
+    let action: i64 = act_head(model, ws, ch);
+    let _c: i64 = st(ws, ws_cell(), 0 - 1);
+    if action == 6 || always_click == 1 {
+        let _k: i64 = click_head(model, ws, ch, hin);
+    }
+    action
+}
+
+pub fn result_cell(ws: i64) -> i64 {
+    ld(ws, ws_cell())
+}
+
+pub fn result_logit(ws: i64, o: i64) -> i64 {
+    ld(ws, ws_logit() + o)
+}
+
+pub fn result_heat(ws: i64, which: i64) -> i64 {
+    ld(ws, ws_heat1() + which)
+}
+
+// Addition schedules are derived only from ternary matrices. The complete
+// integer coefficient expansion is checked against loaded weights once, before
+// use. A changed matrix takes the generic triple path; no matrix is substituted.
+// At most 2048 gates, each intermediate has coefficient L1 norm <= 64.
+// Since input activations are nonnegative and <2^40, every intermediate is
+// <2^46 in magnitude; a row has <=2624 terms, so any partial is <2^58.
+// The mathematical final sum has <=576 input terms and is <2^50.

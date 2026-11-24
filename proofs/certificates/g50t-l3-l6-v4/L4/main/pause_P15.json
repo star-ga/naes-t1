@@ -1,0 +1,363 @@
+{
+ "level": 4,
+ "bound": 30,
+ "K": 2,
+ "mode": "pause",
+ "P": 15,
+ "Pmax": 15,
+ "status": "UNSAT",
+ "line": "v4 L4 mode=pause k=30 K=2 P=15 -> UNSAT vars=13525 clauses=59354 (0.4s)",
+ "started_utc": "2026-11-04T14:05:24.867494+00:00",
+ "solver_finished_utc": "2026-11-04T14:05:25.231148+00:00",
+ "encoding_sha256": "1b6ea6a032a32fc7d40b27b32b3a1b4ec81060f499539c1afa2e58f763548b41",
+ "engine_sha256": "6f21f2065744e484ac38534f940158034e69f39add3b10a3d9fd258de7293aa9",
+ "partitions": [
+  {
+   "pass": 0,
+   "keys": [
+    [
+     0,
+     0,
+     "undo"
+    ],
+    [
+     0,
+     0,
+     0
+    ]
+   ],
+   "targets": [
+    -1,
+    -1
+   ],
+   "index": 0,
+   "selector": 13511,
+   "status": "UNSAT",
+   "seconds": 0.0
+  },
+  {
+   "pass": 1,
+   "keys": [
+    [
+     1,
+     0,
+     "undo"
+    ],
+    [
+     1,
+     0,
+     0
+    ]
+   ],
+   "targets": [
+    -1,
+    -1
+   ],
+   "index": 1,
+   "selector": 13512,
+   "status": "UNSAT",
+   "seconds": 0.0
+  },
+  {
+   "pass": 2,
+   "keys": [
+    [
+     2,
+     0,
+     "undo"
+    ],
+    [
+     2,
+     0,
+     0
+    ]
+   ],
+   "targets": [
+    -1,
+    -1
+   ],
+   "index": 2,
+   "selector": 13513,
+   "status": "UNSAT",
+   "seconds": 0.0
+  },
+  {
+   "pass": 3,
+   "keys": [
+    [
+     3,
+     0,
+     "undo"
+    ],
+    [
+     3,
+     0,
+     0
+    ]
+   ],
+   "targets": [
+    -1,
+    -1
+   ],
+   "index": 3,
+   "selector": 13514,
+   "status": "UNSAT",
+   "seconds": 0.0
+  },
+  {
+   "pass": 4,
+   "keys": [
+    [
+     4,
+     0,
+     "undo"
+    ],
+    [
+     4,
+     0,
+     0
+    ]
+   ],
+   "targets": [
+    -1,
+    -1
+   ],
+   "index": 4,
+   "selector": 13515,
+   "status": "UNSAT",
+   "seconds": 0.0
+  },
+  {
+   "pass": 5,
+   "keys": [
+    [
+     5,
+     0,
+     "undo"
+    ],
+    [
+     5,
+     0,
+     0
+    ]
+   ],
+   "targets": [
+    -1,
+    -1
+   ],
+   "index": 5,
+   "selector": 13516,
+   "status": "UNSAT",
+   "seconds": 0.0
+  },
+  {
+   "pass": 6,
+   "keys": [
+    [
+     6,
+     0,
+     "undo"
+    ],
+    [
+     6,
+     0,
+     0
+    ]
+   ],
+   "targets": [
+    -1,
+    -1
+   ],
+   "index": 6,
+   "selector": 13517,
+   "status": "UNSAT",
+   "seconds": 0.0
+  },
+  {
+   "pass": 7,
+   "keys": [
+    [
+     7,
+     0,
+     "undo"
+    ],
+    [
+     7,
+     0,
+     0
+    ]
+   ],
+   "targets": [
+    -1,
+    -1
+   ],
+   "index": 7,
+   "selector": 13518,
+   "status": "UNSAT",
+   "seconds": 0.0
+  },
+  {
+   "pass": 8,
+   "keys": [
+    [
+     8,
+     0,
+     "undo"
+    ],
+    [
+     8,
+     0,
+     0
+    ]
+   ],
+   "targets": [
+    -1,
+    -1
+   ],
+   "index": 8,
+   "selector": 13519,
+   "status": "UNSAT",
+   "seconds": 0.0
+  },
+  {
+   "pass": 9,
+   "keys": [
+    [
+     9,
+     0,
+     "undo"
+    ],
+    [
+     9,
+     0,
+     0
+    ]
+   ],
+   "targets": [
+    -1,
+    -1
+   ],
+   "index": 9,
+   "selector": 13520,
+   "status": "UNSAT",
+   "seconds": 0.0
+  },
+  {
+   "pass": 10,
+   "keys": [
+    [
+     10,
+     0,
+     "undo"
+    ],
+    [
+     10,
+     0,
+     0
+    ]
+   ],
+   "targets": [
+    -1,
+    -1
+   ],
+   "index": 10,
+   "selector": 13521,
+   "status": "UNSAT",
+   "seconds": 0.0
+  },
+  {
+   "pass": 11,
+   "keys": [
+    [
+     11,
+     0,
+     "undo"
+    ],
+    [
+     11,
+     0,
+     0
+    ]
+   ],
+   "targets": [
+    -1,
+    -1
+   ],
+   "index": 11,
+   "selector": 13522,
+   "status": "UNSAT",
+   "seconds": 0.0
+  },
+  {
+   "pass": 12,
+   "keys": [
+    [
+     12,
+     0,
+     "undo"
+    ],
+    [
+     12,
+     0,
+     0
+    ]
+   ],
+   "targets": [
+    -1,
+    -1
+   ],
+   "index": 12,
+   "selector": 13523,
+   "status": "UNSAT",
+   "seconds": 0.0
+  },
+  {
+   "pass": 13,
+   "keys": [
+    [
+     13,
+     0,
+     "undo"
+    ],
+    [
+     13,
+     0,
+     0
+    ]
+   ],
+   "targets": [
+    -1,
+    -1
+   ],
+   "index": 13,
+   "selector": 13524,
+   "status": "UNSAT",
+   "seconds": 0.0
+  },
+  {
+   "pass": 14,
+   "keys": [
+    [
+     14,
+     0,
+     "undo"
+    ],
+    [
+     14,
+     0,
+     0
+    ]
+   ],
+   "targets": [
+    -1,
+    -1
+   ],
+   "index": 14,
+   "selector": 13525,
+   "status": "UNSAT",
+   "seconds": 0.0
+  }
+ ],
+ "finished_utc": "2026-11-04T14:05:25.231193+00:00",
+ "elapsed_seconds": 0.364
+}

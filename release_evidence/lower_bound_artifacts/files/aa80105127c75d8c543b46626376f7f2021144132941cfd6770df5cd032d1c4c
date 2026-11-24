@@ -1,0 +1,38 @@
+{
+  "question": "<word withheld>",
+  "answer": "no -- it refuses, by its own written precondition",
+  "licensed_alphabet_from_the_tu93_dispatch_record": {
+    "clicks_mode": "probe",
+    "simple_ids": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      7
+    ],
+    "accepted": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "advertised": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "reset_expanded": true,
+    "action7": "exhausted"
+  },
+  "refusal_path": "floor_nn_engine.licensed_rung_setup: clicks_mode == 'probe' and CLICK_ID (6) not in the level-start available_actions ([1,2,3,4]) -> returns the written refusal 'licensed rung cannot enumerate ACTION6 here: the dispatch record accepts it but the level start does not advertise it ... mm.probe_state_clicks filters on the advertised list'",
+  "root_cause_in_the_core": "tools/mmae_minimum.py:600-607 _probe_one returns None when 6 is not in the state's _available_actions, so the per-state click probe yields nothing for a game that ACCEPTS clicks without ADVERTISING them",
+  "consequence": "the sanctioned rung cannot cover tu93's ACTION6 <word withheld>; the packet therefore adapts the reset-inclusive exact-byte template that <word withheld> proved vc33 L1/L2 and tu93 L1, and closes ACTION6 from source instead (the coordinate is provably unread, so the class has one representative and no probe is needed)",
+  "checked_on": "build-host, read-only, no game instantiated"
+}

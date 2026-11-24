@@ -1,0 +1,180 @@
+// Group bank and tile bank of the grouped-sum kernel: bank_group builds the
+// bank of one source row, tb_* builds and binds the tile bank of a layer.
+// Entry points: bank_group, tb_build, tb_bind.
+
+fn bank_slot_store(slot: i64, p0: i64, p1: i64, p2: i64, p3: i64) -> i64 {
+    __mind_store_i64(slot, p0);
+    __mind_store_i64(slot + 8, p1);
+    __mind_store_i64(slot + 16, p2);
+    __mind_store_i64(slot + 24, p3);
+    0
+}
+
+fn bank_group(hin: i64, bank: i64, gl: i64, g: i64, gsz: i64, sy: i64, zero: i64) -> i64 {
+    let stride: i64 = bank_row_bytes();
+    let dst: i64 = bank + gl * n_codes(gsz) * stride + 128;
+    let slot: i64 = dst - 32;
+    let s0: i64 = __mind_load_i64(slot);
+    let s1: i64 = __mind_load_i64(slot + 8);
+    let s2: i64 = __mind_load_i64(slot + 16);
+    let s3: i64 = __mind_load_i64(slot + 24);
+    if gsz == 3 {
+        let ps: i64 = plane() * 8;
+        let c0: i64 = g * 3;
+        let p0: i64 = hin + (origin() + sy * pw()) * 8 + c0 * ps;
+        let mut q0: i64 = zero;
+        let mut q1: i64 = zero;
+        let mut q2: i64 = zero;
+        if c0 < 64 {
+            q0 = p0;
+        }
+        if c0 + 1 < 64 {
+            q1 = p0 + ps;
+        }
+        if c0 + 2 < 64 {
+            q2 = p0 + ps + ps;
+        }
+        __mind_store_i64(slot, q0);
+        __mind_store_i64(slot + 8, q1);
+        __mind_store_i64(slot + 16, q2);
+        __mind_store_i64(slot + 24, zero);
+        __mind_group_bank_i64(slot, dst, stride, 64, 3 | 16);
+    } else {
+        bank_slot_store(slot, chan_row(hin, g * 4 + 1, sy, zero), chan_row(hin, g * 4 + 2, sy, zero), chan_row(hin, g * 4 + 3, sy, zero), chan_row(hin, g * 4, sy, zero));
+        __mind_group_bank_i64(slot, dst, stride, 64, 4 | 16);
+    }
+    __mind_store_i64(slot, s0);
+    __mind_store_i64(slot + 8, s1);
+    __mind_store_i64(slot + 16, s2);
+    __mind_store_i64(slot + 24, s3);
+    0
+}
+
+fn w4_tbank() -> i64 { 23 }
+
+fn tb_stride() -> i64 { 320 }
+
+fn tb_cols() -> i64 { 40 }
+
+fn tb_halo() -> i64 { 4 }
+
+fn tb_use(gsz: i64, dil: i64) -> i64 {
+    if gsz == 3 && dil <= tb_halo() {
+        return 1;
+    }
+    0
+}
+
+// 64 bytes before row 0 hold the kind 87 pointer slot of group 0.
+fn tb_bank(gsz: i64, cg: i64) -> i64 {
+    let raw: i64 = alloc_zero(cg * n_codes(gsz) * tb_cols() + 24);
+    if raw == 0 {
+        return 0;
+    }
+    gsum_align64(raw) + 64
+}
+
+// The plan offsets are row * 768 + (16 + (kx - 1) * dil) * 8.
+fn tb_offs(plan: i64) -> i64 {
+    let n: i64 = ld(plan, pl_terms());
+    let src: i64 = ld(plan, pl_offs());
+    let dst: i64 = alloc_zero(n + 1);
+    if dst == 0 || src == 0 {
+        return 0;
+    }
+    let big: i64 = bank_row_bytes();
+    let shift: i64 = (16 - tb_halo()) * 8;
+    let mut i: i64 = 0;
+    while i < n {
+        let o: i64 = ld(src, i);
+        st(dst, i, (o / big) * tb_stride() + (o % big) - shift);
+        i = i + 1;
+    }
+    dst
+}
+
+fn tb_bind(w4: i64, model: i64, gsz: i64, cg: i64) -> i64 {
+    let nb: i64 = __mind_load_i64(model + 8);
+    let tb: i64 = alloc_zero(2 + 2 * nb);
+    let sb: i64 = tb_bank(gsz, cg);
+    let plans: i64 = ld(w4, w4_plans());
+    if tb == 0 || sb == 0 || plans == 0 {
+        return 0;
+    }
+    st(tb, 0, sb);
+    st(tb, 1, nb);
+    let mut b: i64 = 0;
+    while b < nb {
+        let plan: i64 = ld(plans, b);
+        st(tb, 2 + 2 * b, plan);
+        if tb_use(gsz, ld(model_layer(model, b + 1), 3)) == 1 {
+            let o2: i64 = tb_offs(plan);
+            if o2 == 0 {
+                return 0;
+            }
+            st(tb, 3 + 2 * b, o2);
+        }
+        b = b + 1;
+    }
+    st(w4, w4_tbank(), tb);
+    tb
+}
+
+// Tile offsets of this plan, or 0 when the layer uses the row bank.
+fn tb_plan_offs(tb: i64, plan: i64) -> i64 {
+    let nb: i64 = ld(tb, 1);
+    let mut b: i64 = 0;
+    while b < nb {
+        if ld(tb, 2 + 2 * b) == plan {
+            return ld(tb, 3 + 2 * b);
+        }
+        b = b + 1;
+    }
+    0
+}
+
+// rb is the address of column 0 in the row of channel 0. ps is the plane step.
+fn tb_group(rb: i64, ps: i64, sb: i64, gl: i64, g: i64, zero: i64) -> i64 {
+    let dst: i64 = sb + gl * 13 * tb_stride();
+    let slot: i64 = dst - 32;
+    let s0: i64 = __mind_load_i64(slot);
+    let s1: i64 = __mind_load_i64(slot + 8);
+    let s2: i64 = __mind_load_i64(slot + 16);
+    let s3: i64 = __mind_load_i64(slot + 24);
+    let c0: i64 = g * 3;
+    let p0: i64 = rb + c0 * ps;
+    let mut q0: i64 = zero;
+    let mut q1: i64 = zero;
+    let mut q2: i64 = zero;
+    if c0 < 64 {
+        q0 = p0;
+    }
+    if c0 + 1 < 64 {
+        q1 = p0 + ps;
+    }
+    if c0 + 2 < 64 {
+        q2 = p0 + ps + ps;
+    }
+    __mind_store_i64(slot, q0);
+    __mind_store_i64(slot + 8, q1);
+    __mind_store_i64(slot + 16, q2);
+    __mind_store_i64(slot + 24, zero);
+    __mind_group_bank_i64(slot, dst, tb_stride(), tb_cols(), 3 | 16);
+    __mind_store_i64(slot, s0);
+    __mind_store_i64(slot + 8, s1);
+    __mind_store_i64(slot + 16, s2);
+    __mind_store_i64(slot + 24, s3);
+    0
+}
+
+fn tb_build(hin: i64, sb: i64, sy: i64, seg: i64, cg: i64, zero: i64, tile: i64) -> i64 {
+    let ng: i64 = n_groups(3);
+    let ps: i64 = plane() * 8;
+    let rb: i64 = hin + (origin() + sy * pw() + 32 * tile - tb_halo()) * 8;
+    let mut gl: i64 = 0;
+    while gl < cg && seg * cg + gl < ng {
+        tb_group(rb, ps, sb, gl, seg * cg + gl, zero);
+        gl = gl + 1;
+    }
+    0
+}

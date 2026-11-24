@@ -1,0 +1,171 @@
+{
+ "n_levels_old": 6,
+ "n_levels_new": 6,
+ "levels": [
+  {
+   "level": 1,
+   "verdict": "CHANGED",
+   "n_sprites": [
+    25,
+    26
+   ],
+   "diffs": [
+    "data {\"efvw\": \"sieesc_chwjgc\", \"ozhskarnd\": true, \"slfh\": 50} -> {\"efvw\": \"sieesc_chwjgc\", \"rpjr\": true, \"slfh\": 50}",
+    "geometry: 0 sprites only-old [], 1 only-new [(3, 3, -4)]"
+   ]
+  },
+  {
+   "level": 2,
+   "verdict": "CHANGED",
+   "n_sprites": [
+    29,
+    29
+   ],
+   "diffs": [
+    "data {\"efvw\": \"tevyeq\", \"ozhskarnd\": true, \"slfh\": 25} -> {\"efvw\": \"tevyeq\", \"rpjr\": true, \"slfh\": 25}"
+   ]
+  },
+  {
+   "level": 3,
+   "verdict": "CHANGED",
+   "n_sprites": [
+    29,
+    29
+   ],
+   "diffs": [
+    "data {\"efvw\": \"fibcey\", \"ozhskarnd\": true, \"slfh\": 50} -> {\"efvw\": \"fibcey\", \"rpjr\": true, \"slfh\": 50}"
+   ]
+  },
+  {
+   "level": 4,
+   "verdict": "CHANGED",
+   "n_sprites": [
+    31,
+    31
+   ],
+   "diffs": [
+    "geometry: 1 sprites only-old [(11, 11, -4)], 1 only-new [(11, 11, -4)]"
+   ]
+  },
+  {
+   "level": 5,
+   "verdict": "ORDER_ONLY",
+   "n_sprites": [
+    42,
+    42
+   ],
+   "diffs": [],
+   "order_changed_layers": [
+    0,
+    1,
+    20
+   ],
+   "first_order_difference_index": 0
+  },
+  {
+   "level": 6,
+   "verdict": "ORDER_ONLY",
+   "n_sprites": [
+    43,
+    43
+   ],
+   "diffs": [],
+   "order_changed_layers": [
+    0,
+    1,
+    20
+   ],
+   "first_order_difference_index": 0
+  }
+ ],
+ "string_map_conflicts": {},
+ "string_map": {
+  "bbyayvbjq": "clzbxlm-sptivk-slsrhr",
+  "sys_click": "sys_click",
+  "dtfljwuit-2": "duvwsv-2",
+  "jqwvpaczd-1": "clcbko-1",
+  "jqwvpaczd": "clcbko",
+  "jqwvpaczd-2": "clcbko-2",
+  "jqwvpaczd-3": "clcbko-3",
+  "jqwvpaczd-4": "clcbko-4",
+  "lppppobad-ewsjvovai": "sptivk-caxiiu",
+  "lppppobad-fpokrvgln": "sptivk-sieesc_chwjgc",
+  "lppppobad-ui": "sptivk-ui",
+  "nwxssyzit": "pluyoo",
+  "pcohqadae": "exydhv",
+  "sjzzsedwu": "action-ui",
+  "dtfljwuit-1": "duvwsv-1",
+  "fxxlxszkp": "sprite-10",
+  "hldxbucrr": "sprite-21",
+  "lppppobad-jzukcpajs": "sptivk-tevyeq",
+  "miouvjsug": "acyylh-tevyeq-inkpfx",
+  "xhjhqjlxm": "tevyeq-tagsmh",
+  "dtfljwuit-4": "duvwsv-4",
+  "edusagitv": "tagsmh",
+  "eeneuskrx": "sprite-11",
+  "lppppobad-aprnrzeyj": "sptivk-fibcey",
+  "ltwvrfpfp": "dosorb",
+  "dtfljwuit-5": "duvwsv-5",
+  "upnqxyprx": "enjehv-pahtoz",
+  "ckmqitdgq-edusagitv": "seofsw-tagsmh",
+  "ckmqitdgq-ltwvrfpfp": "seofsw-dosorb",
+  "dtfljwuit-6": "duvwsv-6",
+  "kpmiccjem": "sprite-23",
+  "krmabklyy": "sprite-13",
+  "ozmgzwxbl": "smzaik-tevyeq-inkpfx",
+  "ujtkywomi": "smzaik-tevyeq-tagsmh",
+  "dtfljwuit-13": "duvwsv-13",
+  "fpjzpozjt": "sprite-22",
+  "pdijboygd": "sprite-14",
+  ".": ".",
+  "active": "acyylh",
+  "frame": "frame",
+  "max_frames": "max_frames",
+  "player_original_pixels": "player_original_pixels",
+  "jzukcpajs": "tevyeq",
+  "fpokrvgln": "sieesc_chwjgc",
+  "aprnrzeyj": "fibcey",
+  "fire_sprites": "fire_sprites",
+  "target_sprite": "target_sprite",
+  "original_player_pixels": "original_player_pixels",
+  "original_target_pixels": "original_target_pixels",
+  "target_x": "target_x",
+  "target_y": "target_y",
+  "original_scale": "original_scale",
+  "target_scale": "target_scale",
+  "blocked": "blocked",
+  "original_colors": "original_colors",
+  "spell_to_cast": "spell_to_cast",
+  "spell_name": "spell_name",
+  "slots_to_demo": "slots_to_demo",
+  "x": "x",
+  "y": "y",
+  "sc25": "sc25",
+  "sykpecmoq": "slfh",
+  "wdsxxkugj": "efvw",
+  "qvofjxgsl": "crzdcq",
+  "dtfljwuit-": "duvwsv-",
+  "aprnrzeyj-2": "fibcey-2",
+  "fireball_sprite": "fireball_sprite",
+  "direction": "direction",
+  "max_distance": "max_distance",
+  "current_distance": "current_distance",
+  "hit_sprite": "hit_sprite",
+  "shrinking": "shrinking",
+  "out_of_bounds": "out_of_bounds",
+  "original_x": "original_x",
+  "original_y": "original_y",
+  "offset_x": "offset_x",
+  "offset_y": "offset_y",
+  "left": "left",
+  "up": "up",
+  "right/down": "right/down",
+  "data": "data",
+  "lppppobad-": "sptivk-",
+  "lppppobad-button": "sptivk-button",
+  "": "",
+  "X": "X",
+  "O": "O"
+ },
+ "non_injective": {}
+}

@@ -1,0 +1,63 @@
+{
+  "artifact_sha256": [
+    {
+      "kind": "safe_statement_count_extract",
+      "sha256": "cfdd6e35fadf4fbcb771f6aee752e8d8388792de5227a113d33f31c7f77c747e"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "e546261f74caf1af4fb4e09a3cb731c0b63e8841c891dbc0fb50b1f0629ecde8"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "f6d543a7322f278aa3cdcc54edd8a89f66c5d83cc2ee4dd011fff7dd8f0d83f7"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "1ade519f70593e7dfbee83522405c1c0add4ddbb63db669e35ec6350c81430f9"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "c023b376d26c36d573d4f5dde79eb1907c08d9404856e4c05ff6b16cf634a605"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "ef2697a4358c961a21a5b0a64c67be4de40faddf33e86157919c3a8d18f9c2e6"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "cb6a48eb2a88e1a955b4d97e82cef43529b7cae7a19304aebab6f137608da553"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "6903c02e592aab4e7125b16f968708678d9ff96d32476699d47fb2a02991ea33"
+    },
+    {
+      "kind": "historical_method_or_search_output",
+      "sha256": "46cb1d458c50ba97b82ba9f5fe722362447c9ed5a9f6c8fe27c24017a1c7524f"
+    }
+  ],
+  "floor": 13,
+  "game": "cn04",
+  "game_id": "cn04-2fe56bfb",
+  "game_levels": 6,
+  "level": 1,
+  "lower_bound": {
+    "kind": "relaxed_object_distance_matching_configuration_enumeration",
+    "statement": "Each action changes at most one object mode; every winning route costs at least the sum of relaxed per-object distances plus required selection changes. Complete matching and configuration enumeration minimizes this bound to 13.",
+    "value": 13
+  },
+  "naes_t1_actions": 13,
+  "proof_class": "Matching bounds",
+  "proof_detail": "relaxed_object_distance_matching_configuration_enumeration",
+  "schema_version": 1,
+  "source_certificate_sha256": "42b53057b2ec1dc9ddbdd552307fde0d7e586d0c03ebca0e9868e174db295eb9",
+  "status": "proven",
+  "upper_bound": {
+    "expected_levels_completed": 1,
+    "length": 13,
+    "opening_reset_counted": false,
+    "route": "6@39,36 5 3 3 3 3 3 3 3 3 3 3 1",
+    "seed": 0
+  }
+}

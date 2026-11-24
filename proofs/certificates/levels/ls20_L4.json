@@ -1,0 +1,35 @@
+{
+  "artifact_sha256": [
+    {
+      "kind": "safe_statement_count_extract",
+      "sha256": "1f8a6023cededc97b924ed19d07da2563b2b4c4163c5dab079dc306abd7d65ad"
+    },
+    {
+      "kind": "authority_ledger_label",
+      "sha256": "e0a31b6fe86b85acfd7214174221e7283715147e2bc78bf6d8486f24791feda9"
+    }
+  ],
+  "floor": 43,
+  "game": "ls20",
+  "game_id": "ls20-9607627b",
+  "game_levels": 7,
+  "level": 4,
+  "lower_bound": {
+    "kind": "complete_state_ucs_fuel_dominance",
+    "statement": "Uniform-cost search retains position, shape, color, rotation, used refills, goals and turn phase; keeping maximal fuel for identical state dominates smaller fuel. Every cost below 43 is excluded. The proof complete_state_ucs_fuel_dominance establishes lower bound 43, equal to the floor.",
+    "value": 43
+  },
+  "naes_t1_actions": 43,
+  "proof_class": "Exhaustive search",
+  "proof_detail": "complete_state_ucs_fuel_dominance",
+  "schema_version": 1,
+  "source_certificate_sha256": "97377f858c7245e93f71ce4430c8bf1b8e543a48648fc5f48237e25241107ded",
+  "status": "proven",
+  "upper_bound": {
+    "expected_levels_completed": 4,
+    "length": 43,
+    "opening_reset_counted": false,
+    "route": "3 3 3 2 2 2 3 2 2 3 3 1 2 1 2 1 2 1 1 3 3 1 2 3 3 1 1 1 2 2 4 1 1 1 1 4 1 4 1 1 3 3 3",
+    "seed": 0
+  }
+}

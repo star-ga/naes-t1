@@ -1,0 +1,135 @@
+{
+ "game": "g50t",
+ "game_id": "g50t-5849a774",
+ "level": 7,
+ "length": 41,
+ "opening_reset_counted": false,
+ "seed": 0,
+ "source_sha256": "522152900483530bf3eb99a0293eff5fd8cbc3f56b296fc53df238408985da74",
+ "route": [
+  {
+   "action": 2
+  },
+  {
+   "action": 2
+  },
+  {
+   "action": 3
+  },
+  {
+   "action": 4
+  },
+  {
+   "action": 1
+  },
+  {
+   "action": 1
+  },
+  {
+   "action": 3
+  },
+  {
+   "action": 3
+  },
+  {
+   "action": 5
+  },
+  {
+   "action": 2
+  },
+  {
+   "action": 2
+  },
+  {
+   "action": 4
+  },
+  {
+   "action": 4
+  },
+  {
+   "action": 1
+  },
+  {
+   "action": 1
+  },
+  {
+   "action": 1
+  },
+  {
+   "action": 1
+  },
+  {
+   "action": 3
+  },
+  {
+   "action": 1
+  },
+  {
+   "action": 1
+  },
+  {
+   "action": 4
+  },
+  {
+   "action": 4
+  },
+  {
+   "action": 4
+  },
+  {
+   "action": 5
+  },
+  {
+   "action": 2
+  },
+  {
+   "action": 2
+  },
+  {
+   "action": 4
+  },
+  {
+   "action": 4
+  },
+  {
+   "action": 1
+  },
+  {
+   "action": 1
+  },
+  {
+   "action": 1
+  },
+  {
+   "action": 1
+  },
+  {
+   "action": 4
+  },
+  {
+   "action": 4
+  },
+  {
+   "action": 2
+  },
+  {
+   "action": 2
+  },
+  {
+   "action": 2
+  },
+  {
+   "action": 2
+  },
+  {
+   "action": 3
+  },
+  {
+   "action": 3
+  },
+  {
+   "action": 3
+  }
+ ],
+ "replay": "<label withheld> results/g50t_L7_<word withheld>.json (verdict PASS, 41 target actions, 7 levels completed)"
+}

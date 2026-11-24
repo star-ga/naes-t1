@@ -1,0 +1,85 @@
+// naes_t1_dns_udp.mind — default-backend leg of the DNS transport seam.
+//
+// Sends the query to the resolver over a connected UDP socket and receives
+// one response, bounded by a poll timeout. connect() makes the kernel drop
+// every datagram whose source is not the resolver address and port, so a
+// co-resident process spraying the ephemeral port cannot get a reply read;
+// the transaction id and question checks stay as a second line. The libc
+// externs are declared once in naes_t1_libc.mind, which the unit must
+// include ahead of this file. The native lane has no socket rows: its units
+// link naes_t1_dns_udp_stub.mind instead (same functions, same contracts).
+//
+// UDP exchange: send the query to `ns` port 53 and receive into r, bounded by
+// `timeout_s` seconds; naes_dns_ask retries. Returns the response length or a
+// negative error (err_transport when no socket or no reply).
+fn naes_dns_udp_xchg(q: i64, q_n: i64, r: i64, r_cap: i64, ns: i64, ns_fam: i64, timeout_s: i64) -> i64 {
+    if q == 0 || r == 0 || ns == 0 || q_n < 12 || r_cap < 12 { return naes_dns_err_param(); }
+    if ns_fam != 2 && ns_fam != 10 { return naes_dns_err_param(); }
+    if timeout_s < 1 { return naes_dns_err_param(); }
+    let fd: i64 = naes_dns_udp_open(ns, ns_fam, 53);
+    if fd < 0 { return fd; }
+    let sent: i64 = (send(fd as i32, q as *const u8, q_n, 0 as i32)) as i64;
+    if sent != q_n { let _c: i64 = (close(fd as i32)) as i64; return naes_dns_err_io(); }
+    let got: i64 = naes_dns_udp_wait(fd, r, r_cap, timeout_s);
+    let _c: i64 = (close(fd as i32)) as i64;
+    got
+}
+// UDP socket connected to `ns` (family 2 or 10) at `port`. Returns the fd or
+// err_transport.
+fn naes_dns_udp_open(ns: i64, ns_fam: i64, port: i64) -> i64 {
+    if ns == 0 || port < 1 || port > 65535 { return naes_dns_err_param(); }
+    if ns_fam != 2 && ns_fam != 10 { return naes_dns_err_param(); }
+    // sockaddr: family u16 LE, port u16 BE, then the address.
+    let sa: i64 = __mind_alloc(28);
+    if sa == 0 { return naes_dns_err_io(); }
+    let mut i: i64 = 0;
+    while i < 28 { __mind_store_i8(sa + i, 0); i = i + 1; }
+    __mind_store_i8(sa, ns_fam & 255);
+    __mind_store_i8(sa + 2, (port >> 8) & 255);
+    __mind_store_i8(sa + 3, port & 255);
+    if ns_fam == 2 {
+        let mut k4: i64 = 0;
+        while k4 < 4 { __mind_store_i8(sa + 4 + k4, __mind_load_i8(ns + 8 + k4)); k4 = k4 + 1; }
+    } else {
+        let mut k: i64 = 0;
+        while k < 16 { __mind_store_i8(sa + 8 + k, __mind_load_i8(ns + 8 + k)); k = k + 1; }
+    }
+    let mut salen: i64 = 16;
+    if ns_fam == 10 { salen = 28; }
+    let fd: i64 = (socket(ns_fam as i32, 2 as i32, 0 as i32)) as i64;
+    if fd < 0 { let _rs: i64 = naes_dns_release(sa); return naes_dns_err_transport(); }
+    let rc: i64 = (connect(fd as i32, sa as *const u8, salen as i32)) as i64;
+    let _rsa: i64 = naes_dns_release(sa);
+    if rc != 0 { let _c: i64 = (close(fd as i32)) as i64; return naes_dns_err_transport(); }
+    fd
+}
+// Wait up to `timeout_s` seconds for one datagram on fd and read it into r.
+// Returns its length, err_transport on timeout or a socket error (an ICMP
+// refusal on the connected socket), err_io on a datagram shorter than a
+// DNS header.
+fn naes_dns_udp_wait(fd: i64, r: i64, r_cap: i64, timeout_s: i64) -> i64 {
+    let pfd: i64 = __mind_alloc(8);
+    if pfd == 0 { return naes_dns_err_io(); }
+    __mind_store_i8(pfd, fd & 255);
+    __mind_store_i8(pfd + 1, (fd >> 8) & 255);
+    __mind_store_i8(pfd + 2, (fd >> 16) & 255);
+    __mind_store_i8(pfd + 3, (fd >> 24) & 255);
+    __mind_store_i8(pfd + 4, 1);
+    __mind_store_i8(pfd + 5, 0);
+    __mind_store_i8(pfd + 6, 0);
+    __mind_store_i8(pfd + 7, 0);
+    let ready: i64 = (poll(pfd as *mut u8, 1, (timeout_s * 1000) as i32)) as i64;
+    let _rpfd: i64 = naes_dns_release(pfd);
+    if ready <= 0 { return naes_dns_err_transport(); }
+    let got: i64 = (recv(fd as i32, r as *mut u8, r_cap, 0 as i32)) as i64;
+    if got < 0 { return naes_dns_err_transport(); }
+    if got < 12 { return naes_dns_err_io(); }
+    got
+}
+// Open the NUL-terminated `path` read-only; close a descriptor it returned.
+fn naes_dns_fd_open(path: i64) -> i64 { __mind_open(path) }
+fn naes_dns_fd_close(fd: i64) -> i64 { (close(fd as i32)) as i64 }
+// Give a resolver buffer back to the heap (0 is ignored). The default
+// backend's free reclaims, so a resolve per action keeps no memory.
+fn naes_dns_release(p: i64) -> i64 { if p != 0 { __mind_free(p); } 0 }
+fn naes_dns_leg_reclaims() -> i64 { 1 }

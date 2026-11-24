@@ -1,0 +1,3 @@
+level 4 tested 109006271 wins 0 capped 0 best_cost -1 seconds 60.002
+detail finished 109006271
+RC4:0

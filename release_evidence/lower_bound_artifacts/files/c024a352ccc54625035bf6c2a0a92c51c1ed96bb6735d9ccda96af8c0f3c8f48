@@ -1,0 +1,149 @@
+{
+ "n_levels_old": 7,
+ "n_levels_new": 7,
+ "levels": [
+  {
+   "level": 1,
+   "verdict": "ORDER_ONLY",
+   "n_sprites": [
+    6,
+    6
+   ],
+   "diffs": [],
+   "order_changed_layers": [
+    0
+   ],
+   "first_order_difference_index": 0
+  },
+  {
+   "level": 2,
+   "verdict": "ORDER_ONLY",
+   "n_sprites": [
+    10,
+    10
+   ],
+   "diffs": [],
+   "order_changed_layers": [
+    0,
+    3
+   ],
+   "first_order_difference_index": 0
+  },
+  {
+   "level": 3,
+   "verdict": "ORDER_ONLY",
+   "n_sprites": [
+    7,
+    7
+   ],
+   "diffs": [],
+   "order_changed_layers": [
+    0
+   ],
+   "first_order_difference_index": 0
+  },
+  {
+   "level": 4,
+   "verdict": "ORDER_ONLY",
+   "n_sprites": [
+    8,
+    8
+   ],
+   "diffs": [],
+   "order_changed_layers": [
+    0
+   ],
+   "first_order_difference_index": 0
+  },
+  {
+   "level": 5,
+   "verdict": "ORDER_ONLY",
+   "n_sprites": [
+    10,
+    10
+   ],
+   "diffs": [],
+   "order_changed_layers": [
+    0
+   ],
+   "first_order_difference_index": 4
+  },
+  {
+   "level": 6,
+   "verdict": "ORDER_ONLY",
+   "n_sprites": [
+    9,
+    9
+   ],
+   "diffs": [],
+   "order_changed_layers": [
+    0,
+    3
+   ],
+   "first_order_difference_index": 0
+  },
+  {
+   "level": 7,
+   "verdict": "ORDER_ONLY",
+   "n_sprites": [
+    10,
+    10
+   ],
+   "diffs": [],
+   "order_changed_layers": [
+    0,
+    3
+   ],
+   "first_order_difference_index": 0
+  }
+ ],
+ "string_map_conflicts": {},
+ "string_map": {
+  "awtopsutqo": "0028lydaygyjbu",
+  "divgcilurm": "0029ifoxxfvvvs",
+  "pomlugyufe": "0021xplppqqmfb",
+  "xlfuqjygey": "0022vrxelxosfy",
+  "sys_click": "sys_click",
+  "wewoeeghkd": "0009ouocpihipp",
+  "rktpmjcpkt": "0010xzmuziohuf",
+  "wrxsaqlvhe": "0014ysspdlqsqg",
+  "vwjqkxkyxm": "0015qniapgwsvb",
+  "cisjjwiopp": "0023jvrhzuyxhg",
+  "gamgogbomz": "0030hvaojwefpl",
+  "gypjdeisqg": "0016htdkkrlaim",
+  "peoafdrnua": "0025antkezljyc",
+  "pyqqacvnjx": "0012nclblyaezs",
+  "sfcitxooao": "0024ejsxlvzjgi",
+  "sxasgylpxm": "0011wpykruqziz",
+  "xozzfidseo": "0013rdkgnuvatj",
+  "crgdfmgpyr": "0031hexyjndrnn",
+  "thewpulaxq": "0026hnpvtkjhrp",
+  "ucjzrlvfkb": "0027jbgxilrocf",
+  "yxphjztrgf": "0000xijqsmvawl",
+  "nnckfubbhi": "0001uqqokjrptk",
+  "cnoctyjgvb": "0032oyluycrfor",
+  "ynfdrywqny": "0017ixqhjbhnqr",
+  "ahupezxcuy": "0002pdebyfquah",
+  "gobzaprasa": "0003umnkyodpjp",
+  "ctttougcls": "0033lkwljnelik",
+  "guzlfxebqr": "0006xssgmrgoep",
+  "hvalrvllph": "0005upuetaiejs",
+  "kdqjpjawgp": "0018druakohkdv",
+  "puozseozpy": "0034ufzauyukvb",
+  "roeurgaobs": "0004kgbrqnrpsk",
+  "sflczmmopv": "0019xlavbyoyqy",
+  "ejsiqtothk": "0035czkjzpboms",
+  "spsfzvxpoo": "0020gtzxhgxuss",
+  ".": ".",
+  "ka59": "ka59",
+  "StepCounter": "StepCounter",
+  "Enemy": "Enemy",
+  "Collider": "Collider",
+  "whiknkvuty": "0007zqjfknlfvm",
+  "explode-": "explode-",
+  "-": "-",
+  "x": "x",
+  "y": "y"
+ },
+ "non_injective": {}
+}

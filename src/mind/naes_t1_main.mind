@@ -1,0 +1,375 @@
+// naes_t1_main.mind — NAES-T1 decision server.
+//
+//   naes_t1 verify WEIGHTS.bin FIXTURE.bin [--records]
+//   naes_t1 selftest WEIGHTS.bin
+//   naes_t1 bench --weights FILE --fixture FILE [--threads 1..24] [--batch 1|25] [--offset N] [--limit N]
+//     (--batch above 1, --offset and --limit need --threads 1)
+//   naes_t1 play --game ID --card ID [--host HOST --port PORT] [--plain-http] [--weights FILE]
+//   naes_t1 serve WEIGHTS.bin [--trace] [DECISIONS.bin]
+//   naes_t1 WEIGHTS.bin [--trace] [DECISIONS.bin] (legacy serve spelling)
+//
+// Reads decision records (8196 bytes: cur frame 4096 B row-major y*64+x,
+// prev frame 4096 B, prev action u8, prev click cell i16 LE (-1 = none),
+// prev run length u8 (values above 7 count as 7)) from DECISIONS.bin, or from stdin when
+// no path is given, and answers each one on stdout as soon as it is decided,
+// so one long-running process serves a whole game.
+//   normal reply : 3 bytes  action (1..7), x, y   (x = y = 255 unless action 6)
+//   --trace reply: 80 bytes action, click x, click y (click head always run),
+//                  5 zero bytes, 7 x i64 LE logits (Q24), i64 best heat,
+//                  i64 runner-up heat (Q24)
+// Exit codes: 0 clean EOF, 2 usage, 3 weights rejected, 4 malformed or
+// truncated record, 5 activation guard tripped, 6 write failure.
+
+fn say(s: String) -> i64 {
+    __mind_write(2, s.addr, s.len, 0 - 1)
+}
+
+fn die(code: i64, s: String) -> i64 {
+    let _w: i64 = say(s);
+    code
+}
+
+// 1 when the NUL-terminated C string at p equals s. The literal is taken as a
+// parameter: field access on a `let`-bound String literal lowers to 0 in the
+// current MLIR backend, while a String parameter lowers correctly.
+fn cstr_eq(p: i64, s: String) -> i64 {
+    let mut i: i64 = 0;
+    while i < s.len {
+        if __mind_load_i8(p + i) != __mind_load_i8(s.addr + i) {
+            return 0;
+        }
+        i = i + 1;
+    }
+    if __mind_load_i8(p + s.len) != 0 {
+        return 0;
+    }
+    1
+}
+
+// Fill buf with exactly n bytes. Returns n, 0 on EOF before the first byte,
+// or -1 on a read error or EOF inside the record.
+fn read_exact(fd: i64, buf: i64, n: i64) -> i64 {
+    let mut got: i64 = 0;
+    while got < n {
+        let r: i64 = __mind_read(fd, buf + got, n - got, 0 - 1);
+        if r < 0 {
+            return 0 - 1;
+        }
+        if r == 0 {
+            if got == 0 {
+                return 0;
+            }
+            return 0 - 1;
+        }
+        got = got + r;
+    }
+    n
+}
+
+fn write_all(buf: i64, n: i64) -> i64 {
+    let mut put: i64 = 0;
+    while put < n {
+        let w: i64 = __mind_write(1, buf + put, n - put, 0 - 1);
+        if w <= 0 {
+            return 0 - 1;
+        }
+        put = put + w;
+    }
+    0
+}
+
+// 1 when every colour is 0..15, the previous action is 0..7 and the
+// previous click cell is the sentinel -1 or a grid cell below 4096.
+fn record_ok(rec: i64) -> i64 {
+    let mut i: i64 = 0;
+    while i < 8192 {
+        if __mind_load_i8(rec + i) > 15 {
+            return 0;
+        }
+        i = i + 1;
+    }
+    if __mind_load_i8(rec + 8192) > 7 {
+        return 0;
+    }
+    if rec_prev_cell(rec) < 0 - 1 || rec_prev_cell(rec) > 4095 {
+        return 0;
+    }
+    1
+}
+
+fn reply(ws: i64, action: i64, trace: i64, out: i64) -> i64 {
+    let mut cell: i64 = 0;
+    if trace == 0 { cell = fast_cell(ws); } else { cell = result_cell(ws); }
+    let mut x: i64 = 255;
+    let mut y: i64 = 255;
+    if cell >= 0 {
+        x = cell % 64;
+        y = cell / 64;
+    }
+    if trace == 0 {
+        __mind_store_i8(out, action);
+        __mind_store_i8(out + 1, x);
+        __mind_store_i8(out + 2, y);
+        return write_all(out, 3);
+    }
+    __mind_store_i64(out, 0);
+    __mind_store_i8(out, action);
+    __mind_store_i8(out + 1, x);
+    __mind_store_i8(out + 2, y);
+    let mut o: i64 = 0;
+    while o < 7 {
+        __mind_store_i64(out + 8 + o * 8, result_logit(ws, o));
+        o = o + 1;
+    }
+    __mind_store_i64(out + 64, result_heat(ws, 0));
+    __mind_store_i64(out + 72, result_heat(ws, 1));
+    write_all(out, 80)
+}
+
+fn serve(model: i64, ws: i64, fd: i64, trace: i64) -> i64 {
+    let rec: i64 = __mind_alloc(rec_size() + 8);
+    let out: i64 = __mind_alloc(80);
+    let mut running: i64 = 1;
+    while running == 1 {
+        let n: i64 = read_exact(fd, rec, rec_size());
+        if n == 0 {
+            running = 0;
+        } else {
+            if n < 0 {
+                return die(4, "naes_t1: truncated record or read error\n");
+            }
+            if record_ok(rec) == 0 {
+                return die(4, "naes_t1: record value out of range\n");
+            }
+            let mut action: i64 = 0;
+            if trace == 0 { action = fast_decide(model, ws, rec); } else { action = decide(model, ws, rec, 1); }
+            if action < 0 {
+                return die(5, "naes_t1: activation guard tripped (|h| >= 2^40 in Q24)\n");
+            }
+            if reply(ws, action, trace, out) < 0 {
+                return die(6, "naes_t1: write to stdout failed\n");
+            }
+        }
+    }
+    0
+}
+
+// Decimal output does not depend on locale or floating point formatting.
+fn print_i64(fd: i64, value: i64) -> i64 {
+    let buf: i64 = __mind_alloc(24);
+    if buf == 0 { return 0 - 1; }
+    let mut n: i64 = value;
+    let mut end: i64 = 24;
+    if n < 0 { n = 0 - n; }
+    if n == 0 {
+        end = end - 1;
+        __mind_store_i8(buf + end, 48);
+    }
+    while n > 0 {
+        end = end - 1;
+        __mind_store_i8(buf + end, 48 + n % 10);
+        n = n / 10;
+    }
+    if value < 0 {
+        end = end - 1;
+        __mind_store_i8(buf + end, 45);
+    }
+    let mut put: i64 = end;
+    while put < 24 {
+        let w: i64 = __mind_write(fd, buf + put, 24 - put, 0 - 1);
+        if w <= 0 {
+            return 0 - 1;
+        }
+        put = put + w;
+    }
+    0
+}
+
+fn print_text(fd: i64, s: String) -> i64 {
+    let mut put: i64 = 0;
+    while put < s.len {
+        let w: i64 = __mind_write(fd, s.addr + put, s.len - put, 0 - 1);
+        if w <= 0 { return 0 - 1; }
+        put = put + w;
+    }
+    0
+}
+
+fn mismatch(index: i64, ea: i64, ec: i64, ga: i64, gc: i64) -> i64 {
+    let a: i64 = print_text(2, "MISMATCH index=");
+    let b: i64 = print_i64(2, index);
+    let c: i64 = print_text(2, " expected=(");
+    let d: i64 = print_i64(2, ea);
+    let e: i64 = print_text(2, ",");
+    let f: i64 = print_i64(2, ec);
+    let g: i64 = print_text(2, ") got=(");
+    let h: i64 = print_i64(2, ga);
+    let i: i64 = print_text(2, ",");
+    let j: i64 = print_i64(2, gc);
+    print_text(2, ")\n")
+}
+
+fn signed_i16(p: i64) -> i64 {
+    let n: i64 = __mind_load_i8(p) + 256 * __mind_load_i8(p + 1);
+    if n >= 32768 { return n - 65536; }
+    n
+}
+
+// The fixture tail is action, run, cell; serve uses action, cell, run.
+// The first 8192 image bytes are shared and never copied or changed.
+fn fixture_record_to_request(rec: i64) -> i64 {
+    let run: i64 = __mind_load_i8(rec + 8193);
+    let cell: i64 = signed_i16(rec + 8194);
+    if run > 127 { return 0; }
+    __mind_store_i16(rec + 8193, cell);
+    __mind_store_i8(rec + 8195, run);
+    record_ok(rec)
+}
+
+// With records=1 stdout is only the concatenated 3-byte decisions, in fixture
+// order, and the summary goes to stderr. This stream can be hashed directly.
+fn verify_fixture(model: i64, ws: i64, path: i64, records: i64) -> i64 {
+    let fd: i64 = __mind_open(path);
+    if fd < 0 { return die(4, "naes_t1: cannot open fixture\n"); }
+    let header: i64 = __mind_alloc(12);
+    let rec: i64 = __mind_alloc(8200);
+    let out: i64 = __mind_alloc(80);
+    if header == 0 || rec == 0 || out == 0 {
+        return die(3, "naes_t1: out of memory reading fixture\n");
+    }
+    if read_exact(fd, header, 12) != 12 {
+        return die(4, "naes_t1: truncated fixture header\n");
+    }
+    if __mind_load_i32(header) != 1397047630 || __mind_load_i32(header + 4) != 4600148 {
+        return die(4, "naes_t1: fixture magic rejected\n");
+    }
+    let n: i64 = __mind_load_i32(header + 8);
+    if n < 1 || n > 1000000 {
+        return die(4, "naes_t1: fixture count rejected\n");
+    }
+    let mut index: i64 = 0;
+    let mut matches: i64 = 0;
+    let mut misses: i64 = 0;
+    while index < n {
+        if read_exact(fd, rec, 8200) != 8200 {
+            return die(4, "naes_t1: truncated fixture record\n");
+        }
+        let ea: i64 = __mind_load_i8(rec + 8196);
+        let ec: i64 = signed_i16(rec + 8198);
+        if ea < 1 || ea > 7 || __mind_load_i8(rec + 8197) != 0 {
+            return die(4, "naes_t1: invalid fixture expectation\n");
+        }
+        if ea == 6 {
+            if ec < 0 || ec > 4095 {
+                return die(4, "naes_t1: invalid fixture click expectation\n");
+            }
+        } else {
+            if ec != 0 - 1 {
+                return die(4, "naes_t1: invalid fixture cell sentinel\n");
+            }
+        }
+        if fixture_record_to_request(rec) == 0 {
+            return die(4, "naes_t1: fixture record value out of range\n");
+        }
+        let action: i64 = fast_decide(model, ws, rec);
+        if action < 0 { return die(5, "naes_t1: activation guard tripped\n"); }
+        let cell: i64 = fast_cell(ws);
+        if action == ea && cell == ec {
+            matches = matches + 1;
+        } else {
+            if misses < 10 {
+                let m: i64 = mismatch(index, ea, ec, action, cell);
+            }
+            misses = misses + 1;
+        }
+        if records == 1 {
+            if reply(ws, action, 0, out) < 0 {
+                return die(6, "naes_t1: write to stdout failed\n");
+            }
+        }
+        index = index + 1;
+    }
+    if read_exact(fd, rec, 1) != 0 {
+        return die(4, "naes_t1: trailing fixture bytes or read error\n");
+    }
+    let mut summary_fd: i64 = 1;
+    if records == 1 { summary_fd = 2; }
+    let a: i64 = print_text(summary_fd, "MATCH ");
+    let b: i64 = print_i64(summary_fd, matches);
+    let c: i64 = print_text(summary_fd, "/");
+    let d: i64 = print_i64(summary_fd, n);
+    let e: i64 = print_text(summary_fd, "\n");
+    if a < 0 || b < 0 || c < 0 || d < 0 || e < 0 { return 6; }
+    if matches == n { return 0; }
+    1
+}
+
+fn usage() -> i64 {
+    die(2, "usage: naes_t1 verify WEIGHTS FIXTURE [--records] | serve WEIGHTS [--trace] [DECISIONS] | selftest WEIGHTS | bench --weights FILE --fixture FILE [--threads 1..24] [--batch 1|25] [--offset N] [--limit N] (--batch above 1, --offset and --limit need --threads 1) | play --game ID --card ID [--host HOST --port PORT --weights FILE --max-actions N --result FILE --plain-http]\n")
+}
+
+fn main(os_argc: i64, argv: i64) -> i64 {
+    let mut argc: i64 = 0;
+    while __mind_load_i64(argv + argc * 8) != 0 {
+        argc = argc + 1;
+    }
+    if argc < 2 { return usage(); }
+    let first: i64 = __mind_load_i64(argv + 8);
+    if cstr_eq(first, "play") == 1 { return play_main(argc, argv); }
+    if cstr_eq(first, "selftest") == 1 {
+        if argc != 3 { return usage(); }
+        return run_selftest(__mind_load_i64(argv + 16));
+    }
+    if cstr_eq(first, "bench") == 1 { return bench_main(argc, argv); }
+    let mut weights: i64 = 0;
+    let mut decisions: i64 = 0;
+    let mut fixture: i64 = 0;
+    let mut trace: i64 = 0;
+    let mut records: i64 = 0;
+    let mut is_verify: i64 = 0;
+    let mut i: i64 = 2;
+    if cstr_eq(first, "verify") == 1 {
+        if argc != 4 && argc != 5 { return usage(); }
+        is_verify = 1;
+        weights = __mind_load_i64(argv + 16);
+        fixture = __mind_load_i64(argv + 24);
+        if argc == 5 {
+            if cstr_eq(__mind_load_i64(argv + 32), "--records") != 1 { return usage(); }
+            records = 1;
+        }
+        i = argc;
+    } else {
+        if cstr_eq(first, "serve") == 1 {
+            if argc < 3 { return usage(); }
+            weights = __mind_load_i64(argv + 16);
+            i = 3;
+        } else {
+            weights = first;
+        }
+    }
+    while i < argc {
+        let a: i64 = __mind_load_i64(argv + i * 8);
+        if cstr_eq(a, "--trace") == 1 {
+            if trace != 0 { return usage(); }
+            trace = 1;
+        } else {
+            if decisions != 0 { return usage(); }
+            decisions = a;
+        }
+        i = i + 1;
+    }
+    let model: i64 = load_model(weights);
+    if model < 0 {
+        return die(3, "naes_t1: weights file rejected (unreadable, bad header, shape, size or value)\n");
+    }
+    let mut ws: i64 = 0;
+    if trace == 0 { ws = fast_prepare(model); } else { ws = prepare(model); }
+    if ws == 0 { return die(3, "naes_t1: out of memory preparing workspace\n"); }
+    if is_verify == 1 { return verify_fixture(model, ws, fixture, records); }
+    let mut fd: i64 = 0;
+    if decisions != 0 {
+        fd = __mind_open(decisions);
+        if fd < 0 { return die(2, "naes_t1: cannot open decisions file\n"); }
+    }
+    serve(model, ws, fd, trace)
+}

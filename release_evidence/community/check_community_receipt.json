@@ -1,0 +1,73 @@
+{
+ "status": "measured",
+ "recorded_utc": "2026-11-23T05:07Z",
+ "basis": "The MIND counting check, built from the modules below and run on the reference table in this repository. Measured by STARGA, not yet verified by ARC Prize.",
+ "compiler": "mind 0.10.4 core-ir=1.0",
+ "build_commands": [
+  "cat std_json_read.mind std_json_free.mind std_json_scan.mind std_json_values.mind std_json_lexer.mind std_json_parse.mind std_json_dump.mind std_fs.mind std_fs_io.mind std_fs_path.mind check_community.mind check_community_csv.mind check_community_rec.mind check_community_score.mind check_community_report.mind > build/check_community.mind",
+  "mindc build --release --backend mlir --out ./check_community build/check_community.mind"
+ ],
+ "sources": {
+  "std_json_read.mind": "45fa04cae1c8bb4dcbb8f18ea9d07f7afa30ef0c9870582ce39dfd4de6b24a0f",
+  "std_json_free.mind": "aca0b7d743f2120860a5b3ca5bdf168704e46f018f0c17d87a9945d09619fcd8",
+  "std_json_scan.mind": "ff176b233d44ec09398082fde99151b47ba5a29dbc22549168fcf487a3ea5e06",
+  "std_json_values.mind": "9b1fe8cc8ca783a567d23bc3141537e9928e124cf2ff5dca875ca7935fa70546",
+  "std_json_lexer.mind": "829c6cd09e37a6e0659e7131424a40520bb16e09493aba808d27734a60ffb796",
+  "std_json_parse.mind": "7a38cb2cb88ddc64ca93b63a2b4fc073258057d0629c892713c81d269719b98c",
+  "std_json_dump.mind": "74a255dd106d689ee96e5420c5a1b0840ed7609825146d58941bbb91e002cbc8",
+  "std_fs.mind": "57f6ac2f58f0a79b784c3c6bd511ecccd9b1822445952a35154dd7c8290daf26",
+  "std_fs_io.mind": "1f64165bce0821198ac550a013bc2856171526fe9b3270cc2eb2084ac560b3e7",
+  "std_fs_path.mind": "b41644d6e2a1fb71a023ea23269118fa9e1a9a141f73d489dfa166ce7571154f",
+  "check_community.mind": "5aee14d3ee1e0a110a2da3b2a24f8505726587b892204140d0ef8a7369ec216f",
+  "check_community_csv.mind": "f6f8c8a388b45692f7e61528295e305a21a05f9182a0041764df6a9237caf0d4",
+  "check_community_rec.mind": "a79536ec6d2edeebb80b04c97252501c96933bf88deaa729999e5929d3bb87af",
+  "check_community_score.mind": "2eb3ffeda661aa048d819ec730f3e83d2bb48004a7a2e365a7f3751aba06fd86",
+  "check_community_report.mind": "6d854b0e5f33d1163563a68c84b91c58c8037c7e260e4433f8b062c88b51e9f1"
+ },
+ "units": {
+  "build/check_community.mind": "baf37c44f8c407620df71f0e86bf38fdf0df64a7986cb052081bcd922adb85e0"
+ },
+ "binaries": {
+  "check_community": "f1275846ce8c4e7ecbe8703b53ad16a9f344ce3ce8d18a7570f9788338b6eb5f"
+ },
+ "manifest": {
+  "path": "community_recordings.tsv",
+  "sha256": "80ac2328572c98a7140bae907b1a17e76ccfa5ae6a6606f395693f4434e7e51d",
+  "recordings": 322,
+  "scorecards": 14
+ },
+ "reference_table": {
+  "path": "data/demo25_levels_mmae.csv",
+  "sha256": "105e85b5c49a2ce1627dc63bfdf7d65c8a933d53e2a6834248aa4f542b41466f",
+  "rows": 183
+ },
+ "runs": [
+  {
+   "name": "counting check (per-level records and reference table)",
+   "command": "./check_community --csv data/demo25_levels_mmae.csv --community community",
+   "cwd": "repository root",
+   "rc": 0,
+   "stdout": [
+    "A ok   Tycho                        won 183/183  mean 0.750437/0.750437  floor  63/ 63  current 0.750437/0.750437",
+    "A ok   baseline1                    won 183/183  mean 0.668040/0.668040  floor  50/ 50  current 0.668040/0.668040",
+    "A ok   RGB-Agent                    won   7/  7  mean 0.008837/0.008837  floor   0/  0  current 0.000000/0.000000",
+    "A ok   OpenClaw                     won  28/ 28  mean 0.105139/0.105139  floor  13/ 13  current 0.105139/0.105139",
+    "A ok   Vision CLv1                  won 133/133  mean 0.396243/0.396243  floor  19/ 19  current 0.396243/0.396243",
+    "A ok   Human Intelligence Harness   won 183/183  mean 0.327144/0.327144  floor   7/  7  current 0.327144/0.327144",
+    "A ok   TELL                         won 131/131  mean 0.302557/0.302557  floor  18/ 18  current 0.103313/0.103313",
+    "A ok   NOOA                         won 170/170  mean 0.477842/0.477842  floor  29/ 29  current 0.477842/0.477842",
+    "A ok   DreamTeam                    won  98/ 98  mean 0.246346/0.246346  floor  15/ 15  current 0.246346/0.246346",
+    "A ok   Retrodict                    won 183/183  mean 0.678961/0.678961  floor  52/ 52  current 0.678961/0.678961",
+    "A ok   Continual Harness            won  64/ 64  mean 0.105230/0.105230  floor   4/  4  current 0.105230/0.105230",
+    "A ok   a-evolve                     won  64/ 64  mean 0.096450/0.096450  floor   1/  1  current 0.032983/0.032983",
+    "A ok   Polyphony                    won  59/ 59  mean 0.119194/0.119194  floor   9/  9  current 0.119194/0.119194",
+    "A ok   OPINE-World                  won 160/160  mean 0.339619/0.339619  floor  14/ 14  current 0.339619/0.339619",
+    "# ALL MATCH"
+   ]
+  }
+ ],
+ "gate": {
+  "communitycheck": "ALL MATCH",
+  "rule": "the counting run ends with '# ALL MATCH' and the exit code is 0"
+ }
+}

@@ -1,0 +1,540 @@
+[
+ {
+  "game": "cn04",
+  "game_id": "cn04-2fe56bfb",
+  "level": 1,
+  "status": "PROVEN",
+  "floor": 13,
+  "lb": 13,
+  "ub": 13,
+  "kind": "proven",
+  "proof_kind": "object_decomposition_closed_form_complete_configuration_enumeration",
+  "method": "object decomposition + complete winning-configuration enumeration (joint perfect matchings) + exact per-object BFS distances",
+  "lower_bound_argument": "OBJECT-DECOMPOSITION CLOSED FORM, mechanised twice by two independent implementations (<path>/prove2.py fast+pruned, <path>/prove.py unpruned) which agree on all six levels. OBJECTS = the level's position-groups: a lone sprite (mode = position x rotation) or a CAROUSEL of sprites sharing one position with exactly one member visible (mode = position x visible-member index; a stacked sprite can never be rotated because ACTION5 on a stacked selection cycles instead of rotating). (1) EVERY engine action changes the mode of AT MOST ONE object: ACTION1-4 translate only the selected sprite (bounds-checked), ACTION5 rotates the selected lone sprite then clamps or cycles the selected carousel then clamps, ACTION6 changes the SELECTION and may additionally cycle the selected carousel (when the clicked pixel of the selected stacked sprite renders 0) -- note that this click-cycle edge is real and is INCLUDED, it is not a selection-only action. (2) The selected OBJECT changes only at an ACTION6 that is not a cycle (a cycle re-selects a member of the SAME object). Hence, with S = {o : C_o != start_o} and o0 the initially selected object, L = #clicks + #non-clicks >= sum_o d_o(start_o -> C_o) + |S| - [o0 in S]. (3) Every d_o is an exact BFS over that object's own complete graph; the edge set used is a SUPERSET of the real one (the ping-pong direction flag is global and is treated as free, and both the clamped ACTION5-cycle and the unclamped click-cycle results are edges), so each d_o under-estimates -- the safe direction. (4) The configuration enumeration is COMPLETE: the engine wins iff, for each joint kind k in {8,13} SEPARATELY, every cell carrying a kind-k joint of a VISIBLE sprite carries exactly two (read directly off sjwqloivve/uqlndqojuf). So every winning configuration induces a perfect matching of the kind-k joints, and we enumerate all identity choices (lone rotation / carousel member) x all perfect matchings x all free translations of every connected component of the induced offset-constraint graph, solved by union-find with offsets. Configurations where a cell carries FOUR joints are admitted too (a strict SUPERSET of the win set), which only weakens the bound. (5) ACTION7 is inert (no branch for it in Cn04.step) -- verified empirically at all 173 states along the six routes. RESET cannot shorten a win: it restores the level start without any win check, so any winning play containing a reset is 1 + (a winning play from the level start) and is strictly longer than the reset-free minimum. ARGMIN configuration for L1: (3,3,rot90) + (2,8,rot90).",
+  "alphabet_probe": "cn04-2fe56bfb offers available_actions [1,2,3,4,5,6]. ACTION7 was applied at EVERY state along all six proven routes (13+29+20+29+44+38 = 173 states, from acquire_level_starts on a fresh restore each time) and changed NOTHING in the complete engine state at ANY of them -- level index, score, every sprite's (x,y,rotation,visible), the selected sprite, the ping-pong flag and the pending-next-level flag were all identical before and after, and it never won. This matches the source: Cn04.step has branches only for ACTION6, ACTION5 and ACTION1-4; every other id falls straight through to complete_action(). Clicks were NOT restricted to a sampled stride: the search alphabet enumerates every one of the 400 grid cells (camera 20x20, display scale 3, letterbox pad 2, so display_to_grid maps each 3x3 display block to one cell and everything else to None = a pure no-op), which is a complete cover of ACTION6. RESET is excluded by argument, not by assumption (see lower_bound_argument).",
+  "path": [
+   [
+    6,
+    39,
+    36
+   ],
+   [
+    5,
+    null,
+    null
+   ],
+   [
+    3,
+    null,
+    null
+   ],
+   [
+    3,
+    null,
+    null
+   ],
+   [
+    3,
+    null,
+    null
+   ],
+   [
+    3,
+    null,
+    null
+   ],
+   [
+    3,
+    null,
+    null
+   ],
+   [
+    3,
+    null,
+    null
+   ],
+   [
+    3,
+    null,
+    null
+   ],
+   [
+    3,
+    null,
+    null
+   ],
+   [
+    3,
+    null,
+    null
+   ],
+   [
+    3,
+    null,
+    null
+   ],
+   [
+    1,
+    null,
+    null
+   ]
+  ],
+  "replay_verified": true,
+  "replay_evidence": "mm.restore_pure(acquire_level_starts[L]['z']) on a fresh engine restore: levels_completed increments at EXACTLY action 13 and does NOT increment within the first 12 actions.",
+  "start_convention": "mm.acquire_level_starts cascade bootstrap on cn04-2fe56bfb (the DB standard). For cn04 this is provably the same board as a fresh level init: arcengine clones every level from _clean_levels at reset and set_level zeroes _action_count, so the level-k snapshot the cascade arrives at is the pristine level-k initialisation.",
+  "self_check": "TWO independent reproductions. (a) EXACT uniform-cost BFS over the COMPLETE game state in the bisimulation-validated simulator, with a provably complete ACTION6 alphabet (owner-class enumeration, cross-checked against a brute 400-grid-cell scan on 150 sampled reachable states, 0 misses): L1 -> 13, visited 154,534 states with layers 1..12 (117,171 states) fully exhausted and winless, matching the closed form's 13 exactly; the BFS's own 13-move optimum [D,R x10,CLK(42,30),A5] is a DIFFERENT route from the reported one and also replay-wins at exactly 13 and not at 12 on the live engine. (b) A second, independently structured implementation of the closed form (unpruned matching enumeration, pure-Python per-component minimisation) reproduces 13/29/20/29/44/38 on L1-L6. The simulator itself was bisimulated against the LIVE engine: 28,800 uniformly random transitions (all six levels) plus 6,000+ transitions branched off every prefix of every one of the six winning routes, comparing the complete internal state (all sprite positions, rotations, visibilities, the selected sprite, the ping-pong flag) and the level-completion signal after EVERY action: 0 mismatches, and each route's win is detected by the simulator at exactly the same action index as by the engine.",
+  "floor_measured_from": "level_start_snapshot"
+ },
+ {
+  "game": "cn04",
+  "game_id": "cn04-2fe56bfb",
+  "level": 5,
+  "status": "PROVEN",
+  "floor": 44,
+  "lb": 44,
+  "ub": 44,
+  "kind": "proven",
+  "proof_kind": "object_decomposition_closed_form_complete_configuration_enumeration",
+  "method": "object decomposition + complete winning-configuration enumeration (joint perfect matchings) + exact per-object BFS distances",
+  "lower_bound_argument": "OBJECT-DECOMPOSITION CLOSED FORM, mechanised twice by two independent implementations (<path>/prove2.py fast+pruned, <path>/prove.py unpruned) which agree on all six levels. OBJECTS = the level's position-groups: a lone sprite (mode = position x rotation) or a CAROUSEL of sprites sharing one position with exactly one member visible (mode = position x visible-member index; a stacked sprite can never be rotated because ACTION5 on a stacked selection cycles instead of rotating). (1) EVERY engine action changes the mode of AT MOST ONE object: ACTION1-4 translate only the selected sprite (bounds-checked), ACTION5 rotates the selected lone sprite then clamps or cycles the selected carousel then clamps, ACTION6 changes the SELECTION and may additionally cycle the selected carousel (when the clicked pixel of the selected stacked sprite renders 0) -- note that this click-cycle edge is real and is INCLUDED, it is not a selection-only action. (2) The selected OBJECT changes only at an ACTION6 that is not a cycle (a cycle re-selects a member of the SAME object). Hence, with S = {o : C_o != start_o} and o0 the initially selected object, L = #clicks + #non-clicks >= sum_o d_o(start_o -> C_o) + |S| - [o0 in S]. (3) Every d_o is an exact BFS over that object's own complete graph; the edge set used is a SUPERSET of the real one (the ping-pong direction flag is global and is treated as free, and both the clamped ACTION5-cycle and the unclamped click-cycle results are edges), so each d_o under-estimates -- the safe direction. (4) The configuration enumeration is COMPLETE: the engine wins iff, for each joint kind k in {8,13} SEPARATELY, every cell carrying a kind-k joint of a VISIBLE sprite carries exactly two (read directly off sjwqloivve/uqlndqojuf). So every winning configuration induces a perfect matching of the kind-k joints, and we enumerate all identity choices (lone rotation / carousel member) x all perfect matchings x all free translations of every connected component of the induced offset-constraint graph, solved by union-find with offsets. Configurations where a cell carries FOUR joints are admitted too (a strict SUPERSET of the win set), which only weakens the bound. (5) ACTION7 is inert (no branch for it in Cn04.step) -- verified empirically at all 173 states along the six routes. RESET cannot shorten a win: it restores the level start without any win check, so any winning play containing a reset is 1 + (a winning play from the level start) and is strictly longer than the reset-free minimum. ARGMIN configuration for L5: carousel@(7,4) member4; (5,5,r90) (9,4,r0) (11,8,r0).",
+  "alphabet_probe": "cn04-2fe56bfb offers available_actions [1,2,3,4,5,6]. ACTION7 was applied at EVERY state along all six proven routes (13+29+20+29+44+38 = 173 states, from acquire_level_starts on a fresh restore each time) and changed NOTHING in the complete engine state at ANY of them -- level index, score, every sprite's (x,y,rotation,visible), the selected sprite, the ping-pong flag and the pending-next-level flag were all identical before and after, and it never won. This matches the source: Cn04.step has branches only for ACTION6, ACTION5 and ACTION1-4; every other id falls straight through to complete_action(). Clicks were NOT restricted to a sampled stride: the search alphabet enumerates every one of the 400 grid cells (camera 20x20, display scale 3, letterbox pad 2, so display_to_grid maps each 3x3 display block to one cell and everything else to None = a pure no-op), which is a complete cover of ACTION6. RESET is excluded by argument, not by assumption (see lower_bound_argument).",
+  "path": [
+   [
+    5,
+    null,
+    null
+   ],
+   [
+    5,
+    null,
+    null
+   ],
+   [
+    5,
+    null,
+    null
+   ],
+   [
+    5,
+    null,
+    null
+   ],
+   [
+    6,
+    6,
+    39
+   ],
+   [
+    1,
+    null,
+    null
+   ],
+   [
+    1,
+    null,
+    null
+   ],
+   [
+    1,
+    null,
+    null
+   ],
+   [
+    1,
+    null,
+    null
+   ],
+   [
+    1,
+    null,
+    null
+   ],
+   [
+    1,
+    null,
+    null
+   ],
+   [
+    1,
+    null,
+    null
+   ],
+   [
+    4,
+    null,
+    null
+   ],
+   [
+    4,
+    null,
+    null
+   ],
+   [
+    4,
+    null,
+    null
+   ],
+   [
+    4,
+    null,
+    null
+   ],
+   [
+    6,
+    48,
+    9
+   ],
+   [
+    2,
+    null,
+    null
+   ],
+   [
+    2,
+    null,
+    null
+   ],
+   [
+    2,
+    null,
+    null
+   ],
+   [
+    3,
+    null,
+    null
+   ],
+   [
+    3,
+    null,
+    null
+   ],
+   [
+    3,
+    null,
+    null
+   ],
+   [
+    3,
+    null,
+    null
+   ],
+   [
+    3,
+    null,
+    null
+   ],
+   [
+    3,
+    null,
+    null
+   ],
+   [
+    5,
+    null,
+    null
+   ],
+   [
+    5,
+    null,
+    null
+   ],
+   [
+    5,
+    null,
+    null
+   ],
+   [
+    6,
+    48,
+    48
+   ],
+   [
+    1,
+    null,
+    null
+   ],
+   [
+    1,
+    null,
+    null
+   ],
+   [
+    1,
+    null,
+    null
+   ],
+   [
+    1,
+    null,
+    null
+   ],
+   [
+    1,
+    null,
+    null
+   ],
+   [
+    1,
+    null,
+    null
+   ],
+   [
+    1,
+    null,
+    null
+   ],
+   [
+    3,
+    null,
+    null
+   ],
+   [
+    3,
+    null,
+    null
+   ],
+   [
+    3,
+    null,
+    null
+   ],
+   [
+    3,
+    null,
+    null
+   ],
+   [
+    5,
+    null,
+    null
+   ],
+   [
+    5,
+    null,
+    null
+   ],
+   [
+    5,
+    null,
+    null
+   ]
+  ],
+  "replay_verified": true,
+  "replay_evidence": "mm.restore_pure(acquire_level_starts[L]['z']) on a fresh engine restore: levels_completed increments at EXACTLY action 44 and does NOT increment within the first 43 actions.",
+  "start_convention": "mm.acquire_level_starts cascade bootstrap on cn04-2fe56bfb (the DB standard). For cn04 this is provably the same board as a fresh level init: arcengine clones every level from _clean_levels at reset and set_level zeroes _action_count, so the level-k snapshot the cascade arrives at is the pristine level-k initialisation.",
+  "self_check": "TWO independent reproductions. (a) EXACT uniform-cost BFS over the COMPLETE game state in the bisimulation-validated simulator, with a provably complete ACTION6 alphabet (owner-class enumeration, cross-checked against a brute 400-grid-cell scan on 150 sampled reachable states, 0 misses): L1 -> 13, visited 154,534 states with layers 1..12 (117,171 states) fully exhausted and winless, matching the closed form's 13 exactly; the BFS's own 13-move optimum [D,R x10,CLK(42,30),A5] is a DIFFERENT route from the reported one and also replay-wins at exactly 13 and not at 12 on the live engine. (b) A second, independently structured implementation of the closed form (unpruned matching enumeration, pure-Python per-component minimisation) reproduces 13/29/20/29/44/38 on L1-L6. The simulator itself was bisimulated against the LIVE engine: 28,800 uniformly random transitions (all six levels) plus 6,000+ transitions branched off every prefix of every one of the six winning routes, comparing the complete internal state (all sprite positions, rotations, visibilities, the selected sprite, the ping-pong flag) and the level-completion signal after EVERY action: 0 mismatches, and each route's win is detected by the simulator at exactly the same action index as by the engine.",
+  "floor_measured_from": "level_start_snapshot"
+ },
+ {
+  "game": "cn04",
+  "game_id": "cn04-2fe56bfb",
+  "level": 6,
+  "status": "PROVEN",
+  "floor": 38,
+  "lb": 38,
+  "ub": 38,
+  "kind": "proven",
+  "proof_kind": "object_decomposition_closed_form_complete_configuration_enumeration",
+  "method": "object decomposition + complete winning-configuration enumeration (joint perfect matchings) + exact per-object BFS distances",
+  "lower_bound_argument": "OBJECT-DECOMPOSITION CLOSED FORM, mechanised twice by two independent implementations (<path>/prove2.py fast+pruned, <path>/prove.py unpruned) which agree on all six levels. OBJECTS = the level's position-groups: a lone sprite (mode = position x rotation) or a CAROUSEL of sprites sharing one position with exactly one member visible (mode = position x visible-member index; a stacked sprite can never be rotated because ACTION5 on a stacked selection cycles instead of rotating). (1) EVERY engine action changes the mode of AT MOST ONE object: ACTION1-4 translate only the selected sprite (bounds-checked), ACTION5 rotates the selected lone sprite then clamps or cycles the selected carousel then clamps, ACTION6 changes the SELECTION and may additionally cycle the selected carousel (when the clicked pixel of the selected stacked sprite renders 0) -- note that this click-cycle edge is real and is INCLUDED, it is not a selection-only action. (2) The selected OBJECT changes only at an ACTION6 that is not a cycle (a cycle re-selects a member of the SAME object). Hence, with S = {o : C_o != start_o} and o0 the initially selected object, L = #clicks + #non-clicks >= sum_o d_o(start_o -> C_o) + |S| - [o0 in S]. (3) Every d_o is an exact BFS over that object's own complete graph; the edge set used is a SUPERSET of the real one (the ping-pong direction flag is global and is treated as free, and both the clamped ACTION5-cycle and the unclamped click-cycle results are edges), so each d_o under-estimates -- the safe direction. (4) The configuration enumeration is COMPLETE: the engine wins iff, for each joint kind k in {8,13} SEPARATELY, every cell carrying a kind-k joint of a VISIBLE sprite carries exactly two (read directly off sjwqloivve/uqlndqojuf). So every winning configuration induces a perfect matching of the kind-k joints, and we enumerate all identity choices (lone rotation / carousel member) x all perfect matchings x all free translations of every connected component of the induced offset-constraint graph, solved by union-find with offsets. Configurations where a cell carries FOUR joints are admitted too (a strict SUPERSET of the win set), which only weakens the bound. (5) ACTION7 is inert (no branch for it in Cn04.step) -- verified empirically at all 173 states along the six routes. RESET cannot shorten a win: it restores the level start without any win check, so any winning play containing a reset is 1 + (a winning play from the level start) and is strictly longer than the reset-free minimum. ARGMIN configuration for L6: carouselA@(6,6) member5; (4,4,r90); carouselC@(5,11) member3; (11,4,r90) (4,9,r90).",
+  "alphabet_probe": "cn04-2fe56bfb offers available_actions [1,2,3,4,5,6]. ACTION7 was applied at EVERY state along all six proven routes (13+29+20+29+44+38 = 173 states, from acquire_level_starts on a fresh restore each time) and changed NOTHING in the complete engine state at ANY of them -- level index, score, every sprite's (x,y,rotation,visible), the selected sprite, the ping-pong flag and the pending-next-level flag were all identical before and after, and it never won. This matches the source: Cn04.step has branches only for ACTION6, ACTION5 and ACTION1-4; every other id falls straight through to complete_action(). Clicks were NOT restricted to a sampled stride: the search alphabet enumerates every one of the 400 grid cells (camera 20x20, display scale 3, letterbox pad 2, so display_to_grid maps each 3x3 display block to one cell and everything else to None = a pure no-op), which is a complete cover of ACTION6. RESET is excluded by argument, not by assumption (see lower_bound_argument).",
+  "path": [
+   [
+    2,
+    null,
+    null
+   ],
+   [
+    2,
+    null,
+    null
+   ],
+   [
+    2,
+    null,
+    null
+   ],
+   [
+    4,
+    null,
+    null
+   ],
+   [
+    4,
+    null,
+    null
+   ],
+   [
+    4,
+    null,
+    null
+   ],
+   [
+    6,
+    21,
+    27
+   ],
+   [
+    5,
+    null,
+    null
+   ],
+   [
+    5,
+    null,
+    null
+   ],
+   [
+    5,
+    null,
+    null
+   ],
+   [
+    5,
+    null,
+    null
+   ],
+   [
+    5,
+    null,
+    null
+   ],
+   [
+    6,
+    30,
+    54
+   ],
+   [
+    1,
+    null,
+    null
+   ],
+   [
+    1,
+    null,
+    null
+   ],
+   [
+    1,
+    null,
+    null
+   ],
+   [
+    3,
+    null,
+    null
+   ],
+   [
+    3,
+    null,
+    null
+   ],
+   [
+    3,
+    null,
+    null
+   ],
+   [
+    3,
+    null,
+    null
+   ],
+   [
+    5,
+    null,
+    null
+   ],
+   [
+    5,
+    null,
+    null
+   ],
+   [
+    5,
+    null,
+    null
+   ],
+   [
+    6,
+    48,
+    6
+   ],
+   [
+    2,
+    null,
+    null
+   ],
+   [
+    2,
+    null,
+    null
+   ],
+   [
+    2,
+    null,
+    null
+   ],
+   [
+    3,
+    null,
+    null
+   ],
+   [
+    3,
+    null,
+    null
+   ],
+   [
+    3,
+    null,
+    null
+   ],
+   [
+    3,
+    null,
+    null
+   ],
+   [
+    6,
+    6,
+    39
+   ],
+   [
+    1,
+    null,
+    null
+   ],
+   [
+    1,
+    null,
+    null
+   ],
+   [
+    1,
+    null,
+    null
+   ],
+   [
+    4,
+    null,
+    null
+   ],
+   [
+    4,
+    null,
+    null
+   ],
+   [
+    4,
+    null,
+    null
+   ]
+  ],
+  "replay_verified": true,
+  "replay_evidence": "mm.restore_pure(acquire_level_starts[L]['z']) on a fresh engine restore: levels_completed increments at EXACTLY action 38 and does NOT increment within the first 37 actions.",
+  "start_convention": "mm.acquire_level_starts cascade bootstrap on cn04-2fe56bfb (the DB standard). For cn04 this is provably the same board as a fresh level init: arcengine clones every level from _clean_levels at reset and set_level zeroes _action_count, so the level-k snapshot the cascade arrives at is the pristine level-k initialisation.",
+  "self_check": "TWO independent reproductions. (a) EXACT uniform-cost BFS over the COMPLETE game state in the bisimulation-validated simulator, with a provably complete ACTION6 alphabet (owner-class enumeration, cross-checked against a brute 400-grid-cell scan on 150 sampled reachable states, 0 misses): L1 -> 13, visited 154,534 states with layers 1..12 (117,171 states) fully exhausted and winless, matching the closed form's 13 exactly; the BFS's own 13-move optimum [D,R x10,CLK(42,30),A5] is a DIFFERENT route from the reported one and also replay-wins at exactly 13 and not at 12 on the live engine. (b) A second, independently structured implementation of the closed form (unpruned matching enumeration, pure-Python per-component minimisation) reproduces 13/29/20/29/44/38 on L1-L6. The simulator itself was bisimulated against the LIVE engine: 28,800 uniformly random transitions (all six levels) plus 6,000+ transitions branched off every prefix of every one of the six winning routes, comparing the complete internal state (all sprite positions, rotations, visibilities, the selected sprite, the ping-pong flag) and the level-completion signal after EVERY action: 0 mismatches, and each route's win is detected by the simulator at exactly the same action index as by the engine.",
+  "floor_measured_from": "level_start_snapshot"
+ }
+]

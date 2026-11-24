@@ -1,0 +1,2 @@
+DP_INDEP tables 150 c_tables 150 entries_compared 614400 mismatches 0 tables_equal_sets True
+H_INDEP F0(end-state) 12 F1(pair mid-flight) 11 F2(single mid-flight) 12 h=min 11

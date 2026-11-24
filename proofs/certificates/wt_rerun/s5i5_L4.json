@@ -1,0 +1,13 @@
+{
+  "alphabet_n": 10,
+  "floor": 30,
+  "game": "s5i5",
+  "level": 4,
+  "nodes": 138786,
+  "replay_verified": true,
+  "replay_win_at": 30,
+  "seconds": 741.8,
+  "statement": "Uniform-cost layers 1 through 29 are exhausted. The first win is at depth 30. Replay of the returned path wins at 30.",
+  "states": 13884,
+  "status": "PROVEN"
+}

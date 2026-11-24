@@ -1,0 +1,505 @@
+{
+  "level": 4,
+  "recorded_floor": 30,
+  "budget": 100,
+  "depth_cap": 29,
+  "classes": [
+    {
+      "key": [
+        "idle"
+      ],
+      "rep": [
+        0,
+        0
+      ],
+      "pixels": 3641
+    },
+    {
+      "key": [
+        "sld",
+        "0069zlulamypif",
+        -1
+      ],
+      "rep": [
+        3,
+        45
+      ],
+      "pixels": 42
+    },
+    {
+      "key": [
+        "sld",
+        "0069zlulamypif",
+        0
+      ],
+      "rep": [
+        9,
+        45
+      ],
+      "pixels": 7
+    },
+    {
+      "key": [
+        "sld",
+        "0069zlulamypif",
+        1
+      ],
+      "rep": [
+        10,
+        45
+      ],
+      "pixels": 42
+    },
+    {
+      "key": [
+        "sld",
+        "0071ogcspsoiwl",
+        -1
+      ],
+      "rep": [
+        48,
+        45
+      ],
+      "pixels": 42
+    },
+    {
+      "key": [
+        "sld",
+        "0071ogcspsoiwl",
+        0
+      ],
+      "rep": [
+        54,
+        45
+      ],
+      "pixels": 7
+    },
+    {
+      "key": [
+        "sld",
+        "0071ogcspsoiwl",
+        1
+      ],
+      "rep": [
+        55,
+        45
+      ],
+      "pixels": 42
+    },
+    {
+      "key": [
+        "sld",
+        "0067ahrmdjqjop",
+        -1
+      ],
+      "rep": [
+        25,
+        51
+      ],
+      "pixels": 42
+    },
+    {
+      "key": [
+        "sld",
+        "0067ahrmdjqjop",
+        0
+      ],
+      "rep": [
+        31,
+        51
+      ],
+      "pixels": 7
+    },
+    {
+      "key": [
+        "sld",
+        "0067ahrmdjqjop",
+        1
+      ],
+      "rep": [
+        32,
+        51
+      ],
+      "pixels": 42
+    },
+    {
+      "key": [
+        "sld",
+        "0068ydjiylapcv",
+        -1
+      ],
+      "rep": [
+        3,
+        54
+      ],
+      "pixels": 42
+    },
+    {
+      "key": [
+        "sld",
+        "0068ydjiylapcv",
+        0
+      ],
+      "rep": [
+        9,
+        54
+      ],
+      "pixels": 7
+    },
+    {
+      "key": [
+        "sld",
+        "0068ydjiylapcv",
+        1
+      ],
+      "rep": [
+        10,
+        54
+      ],
+      "pixels": 42
+    },
+    {
+      "key": [
+        "sld",
+        "0072edqxureewm",
+        -1
+      ],
+      "rep": [
+        48,
+        54
+      ],
+      "pixels": 42
+    },
+    {
+      "key": [
+        "sld",
+        "0072edqxureewm",
+        0
+      ],
+      "rep": [
+        54,
+        54
+      ],
+      "pixels": 7
+    },
+    {
+      "key": [
+        "sld",
+        "0072edqxureewm",
+        1
+      ],
+      "rep": [
+        55,
+        54
+      ],
+      "pixels": 42
+    }
+  ],
+  "class_mismatches": [],
+  "simple_actions_at_start": [
+    {
+      "id": 1,
+      "pose_unchanged": true,
+      "steps": 100,
+      "level": 3,
+      "state": "GameState.NOT_FINISHED"
+    },
+    {
+      "id": 2,
+      "pose_unchanged": true,
+      "steps": 100,
+      "level": 3,
+      "state": "GameState.NOT_FINISHED"
+    },
+    {
+      "id": 3,
+      "pose_unchanged": true,
+      "steps": 100,
+      "level": 3,
+      "state": "GameState.NOT_FINISHED"
+    },
+    {
+      "id": 4,
+      "pose_unchanged": true,
+      "steps": 100,
+      "level": 3,
+      "state": "GameState.NOT_FINISHED"
+    },
+    {
+      "id": 5,
+      "pose_unchanged": true,
+      "steps": 100,
+      "level": 3,
+      "state": "GameState.NOT_FINISHED"
+    },
+    {
+      "id": 7,
+      "pose_unchanged": true,
+      "steps": 100,
+      "level": 3,
+      "state": "GameState.NOT_FINISHED"
+    }
+  ],
+  "reset_at_start": {
+    "back_to_start_pose": false,
+    "level": 0,
+    "state": "GameState.NOT_FINISHED",
+    "steps": 50
+  },
+  "pins": {
+    "s5i5.py": "341f85bac1fb5ca7a3315a367405c3c993a57ce4dd0ff01cc8aaa72bf6c6ed34",
+    "base_game.py": "5b5f41f3bec4c0c97a727fda7326114991dc0d4a5642d489b40ee4aa87e6b15f",
+    "level.py": "f74db969772b251018b2fcce6ec42f3522adeef4e9c03c036e455d2a35e3215a",
+    "camera.py": "f06e16807b0f97d86cafb5481bb3969213f27768f789d898c6b8b07e957de397",
+    "enums.py": "94ebef48f6fe950a18679a1b991c366e8e28c32ab58c9335f385e19bea21950e",
+    "sprites.py": "ea9d3d02c7db0814954134a0e0ea6a3cb9b80066930dbdbfc5865befb54c493f"
+  },
+  "identity_display_to_grid": true,
+  "status": "CONFIRMED",
+  "search_status": "NO_SHORTER",
+  "reason": "layers 1..29 closed with no win",
+  "layers_closed": 29,
+  "nodes": 221952,
+  "states": 13881,
+  "expanded": 13872,
+  "edges": 221952,
+  "seconds": 151.796,
+  "per_layer": [
+    {
+      "depth": 1,
+      "expanded": 1,
+      "visited": 7,
+      "edges": 16,
+      "wins": 0,
+      "seconds": 0.009
+    },
+    {
+      "depth": 2,
+      "expanded": 6,
+      "visited": 27,
+      "edges": 96,
+      "wins": 0,
+      "seconds": 0.065
+    },
+    {
+      "depth": 3,
+      "expanded": 20,
+      "visited": 77,
+      "edges": 320,
+      "wins": 0,
+      "seconds": 0.209
+    },
+    {
+      "depth": 4,
+      "expanded": 50,
+      "visited": 181,
+      "edges": 800,
+      "wins": 0,
+      "seconds": 0.564
+    },
+    {
+      "depth": 5,
+      "expanded": 104,
+      "visited": 371,
+      "edges": 1664,
+      "wins": 0,
+      "seconds": 1.254
+    },
+    {
+      "depth": 6,
+      "expanded": 190,
+      "visited": 681,
+      "edges": 3040,
+      "wins": 0,
+      "seconds": 2.524
+    },
+    {
+      "depth": 7,
+      "expanded": 310,
+      "visited": 1141,
+      "edges": 4960,
+      "wins": 0,
+      "seconds": 4.112
+    },
+    {
+      "depth": 8,
+      "expanded": 460,
+      "visited": 1773,
+      "edges": 7360,
+      "wins": 0,
+      "seconds": 6.212
+    },
+    {
+      "depth": 9,
+      "expanded": 632,
+      "visited": 2583,
+      "edges": 10112,
+      "wins": 0,
+      "seconds": 8.048
+    },
+    {
+      "depth": 10,
+      "expanded": 810,
+      "visited": 3559,
+      "edges": 12960,
+      "wins": 0,
+      "seconds": 10.602
+    },
+    {
+      "depth": 11,
+      "expanded": 976,
+      "visited": 4665,
+      "edges": 15616,
+      "wins": 0,
+      "seconds": 11.595
+    },
+    {
+      "depth": 12,
+      "expanded": 1106,
+      "visited": 5859,
+      "edges": 17696,
+      "wins": 0,
+      "seconds": 11.768
+    },
+    {
+      "depth": 13,
+      "expanded": 1194,
+      "visited": 7081,
+      "edges": 19104,
+      "wins": 0,
+      "seconds": 13.223
+    },
+    {
+      "depth": 14,
+      "expanded": 1222,
+      "visited": 8277,
+      "edges": 19552,
+      "wins": 0,
+      "seconds": 12.293
+    },
+    {
+      "depth": 15,
+      "expanded": 1196,
+      "visited": 9392,
+      "edges": 19136,
+      "wins": 0,
+      "seconds": 12.552
+    },
+    {
+      "depth": 16,
+      "expanded": 1115,
+      "visited": 10389,
+      "edges": 17840,
+      "wins": 0,
+      "seconds": 10.749
+    },
+    {
+      "depth": 17,
+      "expanded": 997,
+      "visited": 11245,
+      "edges": 15952,
+      "wins": 0,
+      "seconds": 10.566
+    },
+    {
+      "depth": 18,
+      "expanded": 856,
+      "visited": 11951,
+      "edges": 13696,
+      "wins": 0,
+      "seconds": 9.318
+    },
+    {
+      "depth": 19,
+      "expanded": 706,
+      "visited": 12509,
+      "edges": 11296,
+      "wins": 0,
+      "seconds": 6.478
+    },
+    {
+      "depth": 20,
+      "expanded": 558,
+      "visited": 12933,
+      "edges": 8928,
+      "wins": 0,
+      "seconds": 5.697
+    },
+    {
+      "depth": 21,
+      "expanded": 424,
+      "visited": 13248,
+      "edges": 6784,
+      "wins": 0,
+      "seconds": 4.047
+    },
+    {
+      "depth": 22,
+      "expanded": 315,
+      "visited": 13469,
+      "edges": 5040,
+      "wins": 0,
+      "seconds": 3.058
+    },
+    {
+      "depth": 23,
+      "expanded": 221,
+      "visited": 13621,
+      "edges": 3536,
+      "wins": 0,
+      "seconds": 1.968
+    },
+    {
+      "depth": 24,
+      "expanded": 152,
+      "visited": 13722,
+      "edges": 2432,
+      "wins": 0,
+      "seconds": 1.198
+    },
+    {
+      "depth": 25,
+      "expanded": 101,
+      "visited": 13788,
+      "edges": 1616,
+      "wins": 0,
+      "seconds": 0.935
+    },
+    {
+      "depth": 26,
+      "expanded": 66,
+      "visited": 13829,
+      "edges": 1056,
+      "wins": 0,
+      "seconds": 0.644
+    },
+    {
+      "depth": 27,
+      "expanded": 41,
+      "visited": 13856,
+      "edges": 656,
+      "wins": 0,
+      "seconds": 0.377
+    },
+    {
+      "depth": 28,
+      "expanded": 27,
+      "visited": 13872,
+      "edges": 432,
+      "wins": 0,
+      "seconds": 0.21
+    },
+    {
+      "depth": 29,
+      "expanded": 16,
+      "visited": 13881,
+      "edges": 256,
+      "wins": 0,
+      "seconds": 0.188
+    }
+  ],
+  "recorded_replay_win": true,
+  "recorded_prefix_wins": false,
+  "shorter": null,
+  "win_depth": null
+}

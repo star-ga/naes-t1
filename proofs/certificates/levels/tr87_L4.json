@@ -1,0 +1,43 @@
+{
+  "artifact_sha256": [
+    {
+      "kind": "safe_statement_count_extract",
+      "sha256": "d2f538687a05a7e651b9ca633e1af1d50994651f636c3aaeb4e2efaa662788d9"
+    },
+    {
+      "kind": "authority_ledger_label",
+      "sha256": "dcec3081162351515626966697127fc94a41159f53a1b6007e36c1adf5ee6f63"
+    },
+    {
+      "kind": "replay receipt on the current pinned game file (proofs/certificates/lower_replay)",
+      "sha256": "6f8a1dda2d48fc2e0ab6d4b6ff17cb29ff4dae2936511332e27f9de3274edbcd"
+    },
+    {
+      "kind": "raw output of that replay",
+      "sha256": "bc420c94cdf2228fff8c04586e2c8a16f71527ac0f965cafa285116ce88182ec"
+    }
+  ],
+  "floor": 21,
+  "game": "tr87",
+  "game_id": "tr87-cd924810",
+  "game_levels": 6,
+  "level": 4,
+  "lower_bound": {
+    "kind": "rotation_group_closed_form_nonalter",
+    "statement": "Every piece requires its minimal rotation distance on the seven-cycle. Exhaustive cycle-cover walks price navigation as a separate cost; summed necessary costs are 21 and are attained. The proof rotation_group_closed_form_nonalter establishes lower bound 21, equal to the floor. A replay on the current pinned game file obtained the bound 21 (verdict MATCH; proofs/certificates/lower_replay/tr87_L4.json). Scope of that replay: Current pinned public game reached by replaying the frozen canonical prefix; complete archived rotation and cursor-walk cost enumeration.",
+    "value": 21
+  },
+  "naes_t1_actions": 21,
+  "proof_class": "Exact math",
+  "proof_detail": "rotation_group_closed_form_nonalter",
+  "schema_version": 1,
+  "source_certificate_sha256": "79d5c4a6e01d705956118652e4f76b1a958dd1346eeb0d3f8eeea8595b988fac",
+  "status": "proven",
+  "upper_bound": {
+    "expected_levels_completed": 4,
+    "length": 21,
+    "opening_reset_counted": false,
+    "route": "1 1 1 3 2 3 1 1 1 3 2 2 3 3 1 1 1 3 1 1 1",
+    "seed": 0
+  }
+}

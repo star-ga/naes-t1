@@ -1,0 +1,2 @@
+NEARWIN_BFS_RETALLY rows=185 exact_found_h_equal=133 exact_found_h_less=0 h_greater_than_exact(REAL VIOLATIONS)=0 no_win_within_reached_depth(no information)=52
+note: dpb.c 'bfs' mode also prints 'VIOLATION h=X but no win within depth d' when h>d+1 and no win was found; that is NOT a violation (exact>d, h may be larger); only 'VIOLATION h=X exact=Y' lines would be.

@@ -1,0 +1,1291 @@
+{
+  "decisions": 5499,
+  "wrong_actions": 0,
+  "wrong_clicks": 0,
+  "wrong_decisions": 0,
+  "seconds": 182.64715766906738,
+  "per_level": [
+    {
+      "game": "ar25-0c556536",
+      "level": 1,
+      "decisions": 15,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "ar25-0c556536",
+      "level": 2,
+      "decisions": 11,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "ar25-0c556536",
+      "level": 3,
+      "decisions": 40,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "ar25-0c556536",
+      "level": 4,
+      "decisions": 22,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "ar25-0c556536",
+      "level": 5,
+      "decisions": 28,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "ar25-0c556536",
+      "level": 6,
+      "decisions": 53,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "ar25-0c556536",
+      "level": 7,
+      "decisions": 37,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "ar25-0c556536",
+      "level": 8,
+      "decisions": 47,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "bp35-0a0ad940",
+      "level": 1,
+      "decisions": 15,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "bp35-0a0ad940",
+      "level": 2,
+      "decisions": 40,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "bp35-0a0ad940",
+      "level": 3,
+      "decisions": 34,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "bp35-0a0ad940",
+      "level": 4,
+      "decisions": 19,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "bp35-0a0ad940",
+      "level": 5,
+      "decisions": 30,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "bp35-0a0ad940",
+      "level": 6,
+      "decisions": 41,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "bp35-0a0ad940",
+      "level": 7,
+      "decisions": 43,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "bp35-0a0ad940",
+      "level": 8,
+      "decisions": 36,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "bp35-0a0ad940",
+      "level": 9,
+      "decisions": 64,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "cd82-fb555c5d",
+      "level": 1,
+      "decisions": 5,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "cd82-fb555c5d",
+      "level": 2,
+      "decisions": 6,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "cd82-fb555c5d",
+      "level": 3,
+      "decisions": 16,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "cd82-fb555c5d",
+      "level": 4,
+      "decisions": 13,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "cd82-fb555c5d",
+      "level": 5,
+      "decisions": 13,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "cd82-fb555c5d",
+      "level": 6,
+      "decisions": 16,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "cn04-2fe56bfb",
+      "level": 1,
+      "decisions": 13,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "cn04-2fe56bfb",
+      "level": 2,
+      "decisions": 29,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "cn04-2fe56bfb",
+      "level": 3,
+      "decisions": 20,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "cn04-2fe56bfb",
+      "level": 4,
+      "decisions": 29,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "cn04-2fe56bfb",
+      "level": 5,
+      "decisions": 44,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "cn04-2fe56bfb",
+      "level": 6,
+      "decisions": 38,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "dc22-fdcac232",
+      "level": 1,
+      "decisions": 20,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "dc22-fdcac232",
+      "level": 2,
+      "decisions": 42,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "dc22-fdcac232",
+      "level": 3,
+      "decisions": 45,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "dc22-fdcac232",
+      "level": 4,
+      "decisions": 62,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "dc22-fdcac232",
+      "level": 5,
+      "decisions": 108,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "dc22-fdcac232",
+      "level": 6,
+      "decisions": 139,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "ft09-0d8bbf25",
+      "level": 1,
+      "decisions": 4,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "ft09-0d8bbf25",
+      "level": 2,
+      "decisions": 7,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "ft09-0d8bbf25",
+      "level": 3,
+      "decisions": 14,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "ft09-0d8bbf25",
+      "level": 4,
+      "decisions": 16,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "ft09-0d8bbf25",
+      "level": 5,
+      "decisions": 21,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "ft09-0d8bbf25",
+      "level": 6,
+      "decisions": 13,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "g50t-5849a774",
+      "level": 1,
+      "decisions": 17,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "g50t-5849a774",
+      "level": 2,
+      "decisions": 31,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "g50t-5849a774",
+      "level": 3,
+      "decisions": 64,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "g50t-5849a774",
+      "level": 4,
+      "decisions": 31,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "g50t-5849a774",
+      "level": 5,
+      "decisions": 50,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "g50t-5849a774",
+      "level": 6,
+      "decisions": 40,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "g50t-5849a774",
+      "level": 7,
+      "decisions": 41,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "ka59-38d34dbb",
+      "level": 1,
+      "decisions": 11,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "ka59-38d34dbb",
+      "level": 2,
+      "decisions": 30,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "ka59-38d34dbb",
+      "level": 3,
+      "decisions": 33,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "ka59-38d34dbb",
+      "level": 4,
+      "decisions": 38,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "ka59-38d34dbb",
+      "level": 5,
+      "decisions": 20,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "ka59-38d34dbb",
+      "level": 6,
+      "decisions": 45,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "ka59-38d34dbb",
+      "level": 7,
+      "decisions": 65,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "lf52-271a04aa",
+      "level": 1,
+      "decisions": 8,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "lf52-271a04aa",
+      "level": 2,
+      "decisions": 34,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "lf52-271a04aa",
+      "level": 3,
+      "decisions": 45,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "lf52-271a04aa",
+      "level": 4,
+      "decisions": 50,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "lf52-271a04aa",
+      "level": 5,
+      "decisions": 83,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "lf52-271a04aa",
+      "level": 6,
+      "decisions": 85,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "lf52-271a04aa",
+      "level": 7,
+      "decisions": 125,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "lf52-271a04aa",
+      "level": 8,
+      "decisions": 68,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "lf52-271a04aa",
+      "level": 9,
+      "decisions": 100,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "lf52-271a04aa",
+      "level": 10,
+      "decisions": 43,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "lp85-305b61c3",
+      "level": 1,
+      "decisions": 5,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "lp85-305b61c3",
+      "level": 2,
+      "decisions": 8,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "lp85-305b61c3",
+      "level": 3,
+      "decisions": 16,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "lp85-305b61c3",
+      "level": 4,
+      "decisions": 12,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "lp85-305b61c3",
+      "level": 5,
+      "decisions": 9,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "lp85-305b61c3",
+      "level": 6,
+      "decisions": 19,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "lp85-305b61c3",
+      "level": 7,
+      "decisions": 5,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "lp85-305b61c3",
+      "level": 8,
+      "decisions": 5,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "ls20-9607627b",
+      "level": 1,
+      "decisions": 13,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "ls20-9607627b",
+      "level": 2,
+      "decisions": 45,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "ls20-9607627b",
+      "level": 3,
+      "decisions": 39,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "ls20-9607627b",
+      "level": 4,
+      "decisions": 43,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "ls20-9607627b",
+      "level": 5,
+      "decisions": 44,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "ls20-9607627b",
+      "level": 6,
+      "decisions": 72,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "ls20-9607627b",
+      "level": 7,
+      "decisions": 53,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "m0r0-492f87ba",
+      "level": 1,
+      "decisions": 15,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "m0r0-492f87ba",
+      "level": 2,
+      "decisions": 23,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "m0r0-492f87ba",
+      "level": 3,
+      "decisions": 53,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "m0r0-492f87ba",
+      "level": 4,
+      "decisions": 11,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "m0r0-492f87ba",
+      "level": 5,
+      "decisions": 39,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "m0r0-492f87ba",
+      "level": 6,
+      "decisions": 38,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "r11l-495a7899",
+      "level": 1,
+      "decisions": 3,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "r11l-495a7899",
+      "level": 2,
+      "decisions": 7,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "r11l-495a7899",
+      "level": 3,
+      "decisions": 9,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "r11l-495a7899",
+      "level": 4,
+      "decisions": 13,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "r11l-495a7899",
+      "level": 5,
+      "decisions": 12,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "r11l-495a7899",
+      "level": 6,
+      "decisions": 13,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "re86-8af5384d",
+      "level": 1,
+      "decisions": 20,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "re86-8af5384d",
+      "level": 2,
+      "decisions": 36,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "re86-8af5384d",
+      "level": 3,
+      "decisions": 47,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "re86-8af5384d",
+      "level": 4,
+      "decisions": 42,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "re86-8af5384d",
+      "level": 5,
+      "decisions": 63,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "re86-8af5384d",
+      "level": 6,
+      "decisions": 46,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "re86-8af5384d",
+      "level": 7,
+      "decisions": 98,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "re86-8af5384d",
+      "level": 8,
+      "decisions": 155,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "s5i5-18d95033",
+      "level": 1,
+      "decisions": 13,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "s5i5-18d95033",
+      "level": 2,
+      "decisions": 26,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "s5i5-18d95033",
+      "level": 3,
+      "decisions": 37,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "s5i5-18d95033",
+      "level": 4,
+      "decisions": 30,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "s5i5-18d95033",
+      "level": 5,
+      "decisions": 28,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "s5i5-18d95033",
+      "level": 6,
+      "decisions": 25,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "s5i5-18d95033",
+      "level": 7,
+      "decisions": 45,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "s5i5-18d95033",
+      "level": 8,
+      "decisions": 36,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "sb26-7fbdac44",
+      "level": 1,
+      "decisions": 9,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "sb26-7fbdac44",
+      "level": 2,
+      "decisions": 15,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "sb26-7fbdac44",
+      "level": 3,
+      "decisions": 15,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "sb26-7fbdac44",
+      "level": 4,
+      "decisions": 15,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "sb26-7fbdac44",
+      "level": 5,
+      "decisions": 17,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "sb26-7fbdac44",
+      "level": 6,
+      "decisions": 19,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "sb26-7fbdac44",
+      "level": 7,
+      "decisions": 17,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "sb26-7fbdac44",
+      "level": 8,
+      "decisions": 17,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "sc25-635fd71a",
+      "level": 1,
+      "decisions": 13,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "sc25-635fd71a",
+      "level": 2,
+      "decisions": 5,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "sc25-635fd71a",
+      "level": 3,
+      "decisions": 11,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "sc25-635fd71a",
+      "level": 4,
+      "decisions": 21,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "sc25-635fd71a",
+      "level": 5,
+      "decisions": 36,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "sc25-635fd71a",
+      "level": 6,
+      "decisions": 35,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "sk48-d8078629",
+      "level": 1,
+      "decisions": 14,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "sk48-d8078629",
+      "level": 2,
+      "decisions": 27,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "sk48-d8078629",
+      "level": 3,
+      "decisions": 33,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "sk48-d8078629",
+      "level": 4,
+      "decisions": 23,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "sk48-d8078629",
+      "level": 5,
+      "decisions": 33,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "sk48-d8078629",
+      "level": 6,
+      "decisions": 36,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "sk48-d8078629",
+      "level": 7,
+      "decisions": 23,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "sk48-d8078629",
+      "level": 8,
+      "decisions": 24,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "sp80-589a99af",
+      "level": 1,
+      "decisions": 4,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "sp80-589a99af",
+      "level": 2,
+      "decisions": 7,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "sp80-589a99af",
+      "level": 3,
+      "decisions": 10,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "sp80-589a99af",
+      "level": 4,
+      "decisions": 20,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "sp80-589a99af",
+      "level": 5,
+      "decisions": 17,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "sp80-589a99af",
+      "level": 6,
+      "decisions": 28,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "su15-1944f8ab",
+      "level": 1,
+      "decisions": 7,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "su15-1944f8ab",
+      "level": 2,
+      "decisions": 8,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "su15-1944f8ab",
+      "level": 3,
+      "decisions": 11,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "su15-1944f8ab",
+      "level": 4,
+      "decisions": 9,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "su15-1944f8ab",
+      "level": 5,
+      "decisions": 5,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "su15-1944f8ab",
+      "level": 6,
+      "decisions": 4,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "su15-1944f8ab",
+      "level": 7,
+      "decisions": 5,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "su15-1944f8ab",
+      "level": 8,
+      "decisions": 5,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "su15-1944f8ab",
+      "level": 9,
+      "decisions": 7,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "tn36-ef4dde99",
+      "level": 1,
+      "decisions": 7,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "tn36-ef4dde99",
+      "level": 2,
+      "decisions": 9,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "tn36-ef4dde99",
+      "level": 3,
+      "decisions": 9,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "tn36-ef4dde99",
+      "level": 4,
+      "decisions": 12,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "tn36-ef4dde99",
+      "level": 5,
+      "decisions": 16,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "tn36-ef4dde99",
+      "level": 6,
+      "decisions": 16,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "tn36-ef4dde99",
+      "level": 7,
+      "decisions": 16,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "tr87-cd924810",
+      "level": 1,
+      "decisions": 14,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "tr87-cd924810",
+      "level": 2,
+      "decisions": 25,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "tr87-cd924810",
+      "level": 3,
+      "decisions": 21,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "tr87-cd924810",
+      "level": 4,
+      "decisions": 21,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "tr87-cd924810",
+      "level": 5,
+      "decisions": 14,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "tr87-cd924810",
+      "level": 6,
+      "decisions": 23,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "tu93-0768757b",
+      "level": 1,
+      "decisions": 18,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "tu93-0768757b",
+      "level": 2,
+      "decisions": 10,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "tu93-0768757b",
+      "level": 3,
+      "decisions": 19,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "tu93-0768757b",
+      "level": 4,
+      "decisions": 17,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "tu93-0768757b",
+      "level": 5,
+      "decisions": 29,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "tu93-0768757b",
+      "level": 6,
+      "decisions": 28,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "tu93-0768757b",
+      "level": 7,
+      "decisions": 14,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "tu93-0768757b",
+      "level": 8,
+      "decisions": 21,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "tu93-0768757b",
+      "level": 9,
+      "decisions": 29,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "vc33-5430563c",
+      "level": 1,
+      "decisions": 3,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "vc33-5430563c",
+      "level": 2,
+      "decisions": 7,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "vc33-5430563c",
+      "level": 3,
+      "decisions": 23,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "vc33-5430563c",
+      "level": 4,
+      "decisions": 21,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "vc33-5430563c",
+      "level": 5,
+      "decisions": 44,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "vc33-5430563c",
+      "level": 6,
+      "decisions": 20,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "vc33-5430563c",
+      "level": 7,
+      "decisions": 49,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "wa30-ee6fef47",
+      "level": 1,
+      "decisions": 26,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "wa30-ee6fef47",
+      "level": 2,
+      "decisions": 46,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "wa30-ee6fef47",
+      "level": 3,
+      "decisions": 67,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "wa30-ee6fef47",
+      "level": 4,
+      "decisions": 43,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "wa30-ee6fef47",
+      "level": 5,
+      "decisions": 91,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "wa30-ee6fef47",
+      "level": 6,
+      "decisions": 46,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "wa30-ee6fef47",
+      "level": 7,
+      "decisions": 36,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "wa30-ee6fef47",
+      "level": 8,
+      "decisions": 91,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    },
+    {
+      "game": "wa30-ee6fef47",
+      "level": 9,
+      "decisions": 57,
+      "wrong_actions": 0,
+      "wrong_clicks": 0
+    }
+  ],
+  "errors": []
+}

@@ -1,0 +1,161 @@
+{
+ "levels": {
+  "1": {
+   "ok": true,
+   "steps": 1500,
+   "why": null,
+   "coverage": {
+    "L": 352,
+    "R": 365,
+    "noop": 390,
+    "qclfkhjnaac": 393,
+    "etlsaqqtjvn": 0,
+    "yuuqpmlxorv": 0,
+    "oonshderxef": 0,
+    "lrpkmzabbfa": 0,
+    "win": 2,
+    "lose": 33
+   }
+  },
+  "2": {
+   "ok": true,
+   "steps": 1500,
+   "why": null,
+   "coverage": {
+    "L": 113,
+    "R": 134,
+    "noop": 122,
+    "qclfkhjnaac": 1131,
+    "etlsaqqtjvn": 0,
+    "yuuqpmlxorv": 0,
+    "oonshderxef": 0,
+    "lrpkmzabbfa": 0,
+    "win": 0,
+    "lose": 105
+   }
+  },
+  "3": {
+   "ok": true,
+   "steps": 1500,
+   "why": null,
+   "coverage": {
+    "L": 203,
+    "R": 180,
+    "noop": 181,
+    "qclfkhjnaac": 87,
+    "etlsaqqtjvn": 0,
+    "yuuqpmlxorv": 419,
+    "oonshderxef": 430,
+    "lrpkmzabbfa": 0,
+    "win": 0,
+    "lose": 28
+   }
+  },
+  "4": {
+   "ok": true,
+   "steps": 1500,
+   "why": null,
+   "coverage": {
+    "L": 402,
+    "R": 412,
+    "noop": 428,
+    "qclfkhjnaac": 208,
+    "etlsaqqtjvn": 0,
+    "yuuqpmlxorv": 0,
+    "oonshderxef": 0,
+    "lrpkmzabbfa": 50,
+    "win": 0,
+    "lose": 30
+   }
+  },
+  "5": {
+   "ok": true,
+   "steps": 1500,
+   "why": null,
+   "coverage": {
+    "L": 192,
+    "R": 193,
+    "noop": 217,
+    "qclfkhjnaac": 672,
+    "etlsaqqtjvn": 0,
+    "yuuqpmlxorv": 26,
+    "oonshderxef": 32,
+    "lrpkmzabbfa": 168,
+    "win": 0,
+    "lose": 162
+   }
+  },
+  "6": {
+   "ok": true,
+   "steps": 1500,
+   "why": null,
+   "coverage": {
+    "L": 175,
+    "R": 161,
+    "noop": 177,
+    "qclfkhjnaac": 0,
+    "etlsaqqtjvn": 0,
+    "yuuqpmlxorv": 298,
+    "oonshderxef": 547,
+    "lrpkmzabbfa": 142,
+    "win": 0,
+    "lose": 140
+   }
+  },
+  "7": {
+   "ok": true,
+   "steps": 1500,
+   "why": null,
+   "coverage": {
+    "L": 74,
+    "R": 89,
+    "noop": 106,
+    "qclfkhjnaac": 0,
+    "etlsaqqtjvn": 0,
+    "yuuqpmlxorv": 472,
+    "oonshderxef": 584,
+    "lrpkmzabbfa": 175,
+    "win": 0,
+    "lose": 11
+   }
+  },
+  "8": {
+   "ok": true,
+   "steps": 1500,
+   "why": null,
+   "coverage": {
+    "L": 86,
+    "R": 88,
+    "noop": 67,
+    "qclfkhjnaac": 0,
+    "etlsaqqtjvn": 1248,
+    "yuuqpmlxorv": 6,
+    "oonshderxef": 5,
+    "lrpkmzabbfa": 0,
+    "win": 0,
+    "lose": 15
+   }
+  },
+  "9": {
+   "ok": true,
+   "steps": 1500,
+   "why": null,
+   "coverage": {
+    "L": 82,
+    "R": 86,
+    "noop": 53,
+    "qclfkhjnaac": 12,
+    "etlsaqqtjvn": 1233,
+    "yuuqpmlxorv": 0,
+    "oonshderxef": 0,
+    "lrpkmzabbfa": 34,
+    "win": 0,
+    "lose": 15
+   }
+  }
+ },
+ "clean": true,
+ "steps": 13500,
+ "restarts": 541,
+ "seconds": 1268.3
+}

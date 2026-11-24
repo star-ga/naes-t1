@@ -1,0 +1,26 @@
+GAME ar25 actions=4102 wins=0 null=TypeError
+GAME bp35 actions=4102 wins=0 null=TypeError
+GAME cd82 actions=4102 wins=0 null=TypeError
+GAME cn04 actions=4102 wins=0 null=TypeError
+GAME dc22 actions=4102 wins=0 null=TypeError
+GAME ft09 actions=4102 wins=0 null=TypeError
+GAME g50t actions=4102 wins=0 null={'exception': None, 'levels_completed': 0, 'state': 'NOT_FINISHED'}
+GAME ka59 actions=4102 wins=0 null=TypeError
+GAME lf52 actions=4102 wins=0 null=TypeError
+GAME lp85 actions=4102 wins=0 null=TypeError
+GAME ls20 actions=4102 wins=0 null={'exception': None, 'levels_completed': 0, 'state': 'NOT_FINISHED'}
+GAME m0r0 actions=4102 wins=0 null=TypeError
+GAME r11l actions=4102 wins=0 null=TypeError
+GAME re86 actions=4102 wins=0 null={'exception': None, 'levels_completed': 0, 'state': 'NOT_FINISHED'}
+GAME s5i5 actions=4102 wins=0 null=TypeError
+GAME sb26 actions=4102 wins=0 null=TypeError
+GAME sc25 actions=4102 wins=0 null={'exception': None, 'levels_completed': 0, 'state': 'NOT_FINISHED'}
+GAME sk48 actions=4102 wins=0 null=TypeError
+GAME sp80 actions=4102 wins=0 null=TypeError
+GAME su15 actions=4102 wins=0 null=TypeError
+GAME tn36 actions=4102 wins=0 null=TypeError
+GAME tr87 actions=4102 wins=0 null={'exception': None, 'levels_completed': 0, 'state': 'NOT_FINISHED'}
+GAME tu93 actions=4102 wins=0 null={'exception': None, 'levels_completed': 0, 'state': 'NOT_FINISHED'}
+GAME vc33 actions=4102 wins=0 null=TypeError
+GAME wa30 actions=4102 wins=0 null={'exception': None, 'levels_completed': 0, 'state': 'NOT_FINISHED'}
+rc=0

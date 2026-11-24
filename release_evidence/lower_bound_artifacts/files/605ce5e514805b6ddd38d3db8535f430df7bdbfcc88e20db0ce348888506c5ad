@@ -1,0 +1,118 @@
+{
+ "level": 3,
+ "rot_k": 2,
+ "level_index_convention": "set_level(LEVEL-1); LEVEL is 1-based",
+ "click_probe": {
+  "states_probed": 16,
+  "coords_per_state": 4096,
+  "clicks_executed": 65536,
+  "class_violations": 0,
+  "piece_moved_by_click": 0,
+  "classes_per_state": [
+   {
+    "state": "start",
+    "classes": 5,
+    "noop_in_classes": true
+   },
+   {
+    "state": "witness_prefix_1",
+    "classes": 5,
+    "noop_in_classes": true
+   },
+   {
+    "state": "witness_prefix_2",
+    "classes": 5,
+    "noop_in_classes": true
+   },
+   {
+    "state": "witness_prefix_3",
+    "classes": 5,
+    "noop_in_classes": true
+   },
+   {
+    "state": "witness_prefix_4",
+    "classes": 5,
+    "noop_in_classes": true
+   },
+   {
+    "state": "witness_prefix_5",
+    "classes": 5,
+    "noop_in_classes": true
+   },
+   {
+    "state": "witness_prefix_6",
+    "classes": 5,
+    "noop_in_classes": true
+   },
+   {
+    "state": "witness_prefix_7",
+    "classes": 5,
+    "noop_in_classes": true
+   },
+   {
+    "state": "witness_prefix_8",
+    "classes": 5,
+    "noop_in_classes": true
+   },
+   {
+    "state": "witness_prefix_9",
+    "classes": 5,
+    "noop_in_classes": true
+   },
+   {
+    "state": "random_0",
+    "classes": 5,
+    "noop_in_classes": true
+   },
+   {
+    "state": "random_1",
+    "classes": 5,
+    "noop_in_classes": true
+   },
+   {
+    "state": "random_2",
+    "classes": 5,
+    "noop_in_classes": true
+   },
+   {
+    "state": "random_3",
+    "classes": 5,
+    "noop_in_classes": true
+   },
+   {
+    "state": "random_4",
+    "classes": 5,
+    "noop_in_classes": true
+   },
+   {
+    "state": "random_5",
+    "classes": 5,
+    "noop_in_classes": true
+   }
+  ],
+  "noop_equals_action7": 16,
+  "selection_mismatch": 0,
+  "states_expanded": 16,
+  "method": "all 4096 sent coordinates executed on deep copies of each probed real state; full state_key successor compared within each source-derived class"
+ },
+ "reset_controls": {
+  "reset_at_level_entry_action_count0": {
+   "to_level_index": 0,
+   "is_full_reset": true
+  },
+  "reset_after_prefix": {
+   "to_level_index": 2,
+   "equals_level_start": true
+  },
+  "second_reset_immediately": {
+   "to_level_index": 0
+  },
+  "spill_at_start": {
+   "won": false,
+   "lyremoheq": 1,
+   "positions_unchanged": true,
+   "sprite_count_restored": true
+  }
+ },
+ "secs": 186.9
+}

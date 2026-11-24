@@ -1,0 +1,28 @@
+{
+ "record": "source files of the two program units of the release",
+ "date_utc": "2026-11-24",
+ "x86_64_native_unit": {
+  "list": "src/unit_order.txt",
+  "lines": 77,
+  "standard_library_modules": 31,
+  "program_sources": 46,
+  "program_source_groups": {
+   "network, reference walk, selftest, ARC API client and command line": 20,
+   "grouped-sum kernel and bench mode": 10,
+   "multi-worker bench": 16
+  },
+  "unit_sha256": "7536fd8a7334f1a84dd476de21849765fb66f06d16087e3d2298e204c3b6443c",
+  "unit_digest_file": "src/naes_t1_unit.sha256"
+ },
+ "aarch64_mlir_unit": {
+  "list": "src/unit_order_mlir.txt",
+  "lines": 52,
+  "standard_library_modules": 31,
+  "program_sources": 21,
+  "note": "the 20 sources of the first group above and the stub file src/mind/naes_t1_fast_stub.mind"
+ },
+ "count_commands": [
+  "grep -c '^src/mind/' src/unit_order.txt",
+  "grep -c '^src/mind/' src/unit_order_mlir.txt"
+ ]
+}

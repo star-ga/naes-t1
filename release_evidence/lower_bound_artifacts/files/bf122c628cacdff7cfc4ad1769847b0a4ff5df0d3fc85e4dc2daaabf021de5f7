@@ -1,0 +1,28 @@
+{
+ "level": 5,
+ "injected": {
+  "configs": 4003,
+  "of_which_enumeration_winners": 3,
+  "with_overlapping_pieces": 1480,
+  "agree": 4003,
+  "mismatch": 0,
+  "real_wins": 4,
+  "examples": []
+ },
+ "walks": {
+  "moves": 16890,
+  "move_mismatch": 0,
+  "clicks": 5389,
+  "click_mismatch": 0,
+  "spills": 1182,
+  "spill_mismatch": 0,
+  "reselect_checks": 1135,
+  "reselect_mismatch": 0,
+  "other_piece_moved": 0,
+  "real_wins": 0,
+  "walks": 300,
+  "walk_len_cap": 80,
+  "spill_mismatch_examples": []
+ },
+ "secs": 162.8
+}

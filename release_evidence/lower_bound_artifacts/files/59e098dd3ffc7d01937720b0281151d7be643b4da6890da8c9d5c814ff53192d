@@ -1,0 +1,218 @@
+{
+  "<word withheld>": "VC33 exact-byte search with RESET included; <word withheld>",
+  "instance": "vc33-9851e02b",
+  "game_id": "vc33-9851e02b",
+  "source_sha256": {
+    "vc33.py": "0af7a3c0fe201c1ae4c6168c8d62e83c4ae87f0a72b37732011cccfd59de31dc",
+    "vc33_prove.py": "014ce1431990405b5d5dfa4e76f04f31056ba3b4c496e429a155bded81ce6784",
+    "vc33_l1l2_reproof.py": "60ea060e784ae48a4a0bcdaa343b62b98c7b4f7c558c05d34c27ffa692bf1883",
+    "mmae_minimum.py": "28bf4afb6666aa19a3a00cf79c2557f7943afec559f203e89c8abca69f30c41b"
+  },
+  "engine_source_sha256": {
+    "arcengine/base_game.py": "5b5f41f3bec4c0c97a727fda7326114991dc0d4a5642d489b40ee4aa87e6b15f",
+    "arcengine/level.py": "f74db969772b251018b2fcce6ec42f3522adeef4e9c03c036e455d2a35e3215a",
+    "arcengine/camera.py": "f06e16807b0f97d86cafb5481bb3969213f27768f789d898c6b8b07e957de397"
+  },
+  "<key withheld>": "f686164d405a23e4ae62fb71cf8a4ee326344802f50d98d88a48915c8128259a",
+  "state_key": "mm.whitebox_sig_bytes raw bytes; only root _action temporarily omitted; _action_count, olv, _full_reset retained; no digest/hash identity",
+  "mm_key_exclude_after_init": [],
+  "deepcopy_control": "every retained unique nonterminal state compared against fresh uncached restore_pure(start_tape + path) with the same exact raw key",
+  "sprite_order_control": "raw key serializes the ordered level._sprites lists; Level.get_sprite_at rebuilds cache by stable sorting that same list by layer, so equal-layer order is preserved and cache has no separate history",
+  "dispatch": {
+    "advertised": [
+      6
+    ],
+    "enumerated_ids": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ]
+  },
+  "click_coverage": "4096 display pixels structurally partitioned by display_to_grid/get_sprite_at at each expanded state; one rep per actionable sprite and each no-op category",
+  "reset_semantics": "actual engine ACTION0 included at every expanded state; lc target remains original level completion",
+  "levels": {
+    "1": {
+      "start_tape": [],
+      "start_level_index": 0,
+      "start_action_count": 0,
+      "candidate_floor": 3,
+      "candidate_path": [
+        [
+          6,
+          60,
+          32
+        ],
+        [
+          6,
+          60,
+          32
+        ],
+        [
+          6,
+          60,
+          32
+        ]
+      ],
+      "fresh_replay_win_at": 3,
+      "fresh_replay_Fminus1": null,
+      "search_through_Fminus1_including_reset": {
+        "status": "CLOSED_NO_WIN",
+        "layers_complete": 2,
+        "per_layer": [
+          {
+            "depth": 1,
+            "expanded_states": 1,
+            "edges": 11,
+            "next_frontier": 4,
+            "visited": 5,
+            "win": false
+          },
+          {
+            "depth": 2,
+            "expanded_states": 4,
+            "edges": 44,
+            "next_frontier": 11,
+            "visited": 16,
+            "win": false
+          }
+        ],
+        "nodes": 55,
+        "visited": 16,
+        "expanded_total": 5,
+        "click_states_expanded": 5,
+        "pixels_per_state": 4096,
+        "replay_checked_states": 16
+      },
+      "<word withheld>_result": "PASS"
+    },
+    "2": {
+      "start_tape": [
+        [
+          6,
+          60,
+          32
+        ],
+        [
+          6,
+          60,
+          32
+        ],
+        [
+          6,
+          60,
+          32
+        ]
+      ],
+      "start_level_index": 1,
+      "start_action_count": 0,
+      "candidate_floor": 7,
+      "candidate_path": [
+        [
+          6,
+          0,
+          24
+        ],
+        [
+          6,
+          0,
+          24
+        ],
+        [
+          6,
+          0,
+          44
+        ],
+        [
+          6,
+          0,
+          44
+        ],
+        [
+          6,
+          0,
+          44
+        ],
+        [
+          6,
+          0,
+          44
+        ],
+        [
+          6,
+          0,
+          44
+        ]
+      ],
+      "fresh_replay_win_at": 7,
+      "fresh_replay_Fminus1": null,
+      "search_through_Fminus1_including_reset": {
+        "status": "CLOSED_NO_WIN",
+        "layers_complete": 6,
+        "per_layer": [
+          {
+            "depth": 1,
+            "expanded_states": 1,
+            "edges": 13,
+            "next_frontier": 7,
+            "visited": 8,
+            "win": false
+          },
+          {
+            "depth": 2,
+            "expanded_states": 7,
+            "edges": 89,
+            "next_frontier": 24,
+            "visited": 32,
+            "win": false
+          },
+          {
+            "depth": 3,
+            "expanded_states": 24,
+            "edges": 304,
+            "next_frontier": 61,
+            "visited": 93,
+            "win": false
+          },
+          {
+            "depth": 4,
+            "expanded_states": 61,
+            "edges": 771,
+            "next_frontier": 117,
+            "visited": 210,
+            "win": false
+          },
+          {
+            "depth": 5,
+            "expanded_states": 117,
+            "edges": 1483,
+            "next_frontier": 197,
+            "visited": 407,
+            "win": false
+          },
+          {
+            "depth": 6,
+            "expanded_states": 197,
+            "edges": 2501,
+            "next_frontier": 298,
+            "visited": 705,
+            "win": false
+          }
+        ],
+        "nodes": 5161,
+        "visited": 705,
+        "expanded_total": 407,
+        "click_states_expanded": 407,
+        "pixels_per_state": 4096,
+        "replay_checked_states": 705
+      },
+      "<word withheld>_result": "PASS"
+    }
+  },
+  "elapsed_s": 258.49,
+  "maxrss_kb": "<memory>"
+}

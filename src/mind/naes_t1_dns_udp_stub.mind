@@ -1,0 +1,29 @@
+// naes_t1_dns_udp_stub.mind — native-lane leg of the DNS transport seam.
+//
+// native-lane-v1 has no socket-family rows (no sendto / recvfrom), so the
+// exchange validates its arguments and returns naes_dns_err_transport():
+// naes_dns_resolve then fails closed after its one retry. The canned
+// selftest cases hold on this leg; live resolution needs the default-backend
+// leg, naes_t1_dns_udp.mind (same functions, same contracts).
+fn naes_dns_udp_xchg(q: i64, q_n: i64, r: i64, r_cap: i64, ns: i64, ns_fam: i64, timeout_s: i64) -> i64 {
+    if q == 0 || r == 0 || ns == 0 || q_n < 12 || r_cap < 12 { return naes_dns_err_param(); }
+    if ns_fam != 2 && ns_fam != 10 { return naes_dns_err_param(); }
+    if timeout_s < 1 { return naes_dns_err_param(); }
+    naes_dns_err_transport()
+}
+// No socket: every open and wait reports err_transport.
+fn naes_dns_udp_open(ns: i64, ns_fam: i64, port: i64) -> i64 {
+    if ns == 0 || port < 1 || port > 65535 { return naes_dns_err_param(); }
+    if ns_fam != 2 && ns_fam != 10 { return naes_dns_err_param(); }
+    naes_dns_err_transport()
+}
+fn naes_dns_udp_wait(fd: i64, r: i64, r_cap: i64, timeout_s: i64) -> i64 { naes_dns_err_transport() }
+// Open the NUL-terminated `path` read-only (native-lane openat row); close a
+// descriptor it returned.
+fn naes_dns_fd_open(path: i64) -> i64 { __mind_sys_openat(0 - 100, path, 0, 0) }
+fn naes_dns_fd_close(fd: i64) -> i64 { __mind_sys_close(fd) }
+// Native free does not reclaim arena storage, and native-lane-v1 refuses a
+// free reached from a loop (lane.alloc.free_in_loop); this leg keeps its
+// buffers and selftest case 43 (heap reuse) reports SKIP here.
+fn naes_dns_release(p: i64) -> i64 { 0 }
+fn naes_dns_leg_reclaims() -> i64 { 0 }

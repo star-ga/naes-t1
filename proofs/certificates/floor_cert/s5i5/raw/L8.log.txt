@@ -1,0 +1,37 @@
+SETUP level=8 floor=36 budget=200 classes=20 pixels=4096 mismatches=0 mobiles=15 static_bytes=559 pose_bytes=2649 probe_win=None reset_level=0
+LAYER level=8 depth=1 expanded=1 visited=10 edges=20 wins=0 t=2.2
+LAYER level=8 depth=2 expanded=10 visited=48 edges=200 wins=0 t=2.4
+LAYER level=8 depth=3 expanded=48 visited=150 edges=960 wins=0 t=3.3
+LAYER level=8 depth=4 expanded=150 visited=350 edges=3000 wins=0 t=5.6
+LAYER level=8 depth=5 expanded=350 visited=660 edges=7000 wins=0 t=9.9
+LAYER level=8 depth=6 expanded=660 visited=1056 edges=13200 wins=0 t=16.5
+LAYER level=8 depth=7 expanded=1056 visited=1484 edges=21120 wins=0 t=24.5
+LAYER level=8 depth=8 expanded=1484 visited=1891 edges=29680 wins=0 t=33.5
+LAYER level=8 depth=9 expanded=1891 visited=2253 edges=37820 wins=0 t=40.7
+LAYER level=8 depth=10 expanded=2253 visited=2578 edges=45060 wins=0 t=47.2
+LAYER level=8 depth=11 expanded=2578 visited=2901 edges=51560 wins=0 t=52.9
+LAYER level=8 depth=12 expanded=2901 visited=3275 edges=58020 wins=0 t=57.9
+LAYER level=8 depth=13 expanded=3275 visited=3748 edges=65500 wins=0 t=64.0
+LAYER level=8 depth=14 expanded=3748 visited=4341 edges=74960 wins=0 t=72.6
+LAYER level=8 depth=15 expanded=4341 visited=5044 edges=86820 wins=0 t=82.8
+LAYER level=8 depth=16 expanded=5044 visited=5828 edges=100880 wins=0 t=94.2
+LAYER level=8 depth=17 expanded=5828 visited=6658 edges=116560 wins=0 t=107.1
+LAYER level=8 depth=18 expanded=6658 visited=7500 edges=133160 wins=0 t=121.0
+LAYER level=8 depth=19 expanded=7500 visited=8336 edges=150000 wins=0 t=134.4
+LAYER level=8 depth=20 expanded=8336 visited=9181 edges=166720 wins=0 t=147.5
+LAYER level=8 depth=21 expanded=9181 visited=10077 edges=183620 wins=0 t=160.1
+LAYER level=8 depth=22 expanded=10077 visited=11064 edges=201540 wins=0 t=173.7
+LAYER level=8 depth=23 expanded=11064 visited=12156 edges=221280 wins=0 t=186.3
+LAYER level=8 depth=24 expanded=12156 visited=13327 edges=243120 wins=0 t=201.0
+LAYER level=8 depth=25 expanded=13327 visited=14516 edges=266540 wins=0 t=218.4
+LAYER level=8 depth=26 expanded=14516 visited=15670 edges=290320 wins=0 t=235.4
+LAYER level=8 depth=27 expanded=15670 visited=16781 edges=313400 wins=0 t=252.1
+LAYER level=8 depth=28 expanded=16781 visited=17883 edges=335620 wins=0 t=267.0
+LAYER level=8 depth=29 expanded=17883 visited=19027 edges=357660 wins=0 t=280.8
+LAYER level=8 depth=30 expanded=19027 visited=20256 edges=380540 wins=0 t=297.0
+LAYER level=8 depth=31 expanded=20256 visited=21588 edges=405120 wins=0 t=309.0
+LAYER level=8 depth=32 expanded=21588 visited=23013 edges=431760 wins=0 t=323.3
+LAYER level=8 depth=33 expanded=23013 visited=24508 edges=460260 wins=0 t=337.8
+LAYER level=8 depth=34 expanded=24508 visited=26053 edges=490160 wins=0 t=353.0
+LAYER level=8 depth=35 expanded=26053 visited=27637 edges=521060 wins=0 t=369.0
+RESULT level=8 verdict=CONFIRMED states=27637 edges=521060 layers=35 seconds=369.2

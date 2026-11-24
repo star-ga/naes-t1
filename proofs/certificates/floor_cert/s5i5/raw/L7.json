@@ -1,0 +1,669 @@
+{
+  "level": 7,
+  "recorded_floor": 45,
+  "budget": 200,
+  "depth_cap": 44,
+  "classes": [
+    {
+      "key": [
+        "idle"
+      ],
+      "rep": [
+        0,
+        0
+      ],
+      "pixels": 3721
+    },
+    {
+      "key": [
+        "sld",
+        "0076qqbsfdqbrm",
+        -1
+      ],
+      "rep": [
+        2,
+        49
+      ],
+      "pixels": 25
+    },
+    {
+      "key": [
+        "sld",
+        "0076qqbsfdqbrm",
+        0
+      ],
+      "rep": [
+        7,
+        49
+      ],
+      "pixels": 5
+    },
+    {
+      "key": [
+        "sld",
+        "0076qqbsfdqbrm",
+        1
+      ],
+      "rep": [
+        8,
+        49
+      ],
+      "pixels": 25
+    },
+    {
+      "key": [
+        "btn",
+        "0093ofzydsesyx"
+      ],
+      "rep": [
+        15,
+        49
+      ],
+      "pixels": 25
+    },
+    {
+      "key": [
+        "sld",
+        "0077dketvcncpc",
+        -1
+      ],
+      "rep": [
+        24,
+        49
+      ],
+      "pixels": 25
+    },
+    {
+      "key": [
+        "sld",
+        "0077dketvcncpc",
+        0
+      ],
+      "rep": [
+        29,
+        49
+      ],
+      "pixels": 5
+    },
+    {
+      "key": [
+        "sld",
+        "0077dketvcncpc",
+        1
+      ],
+      "rep": [
+        30,
+        49
+      ],
+      "pixels": 25
+    },
+    {
+      "key": [
+        "btn",
+        "0094pogidzgfcf"
+      ],
+      "rep": [
+        37,
+        49
+      ],
+      "pixels": 25
+    },
+    {
+      "key": [
+        "sld",
+        "0081qcyhnubdbe",
+        -1
+      ],
+      "rep": [
+        52,
+        49
+      ],
+      "pixels": 25
+    },
+    {
+      "key": [
+        "sld",
+        "0081qcyhnubdbe",
+        0
+      ],
+      "rep": [
+        57,
+        49
+      ],
+      "pixels": 5
+    },
+    {
+      "key": [
+        "sld",
+        "0081qcyhnubdbe",
+        1
+      ],
+      "rep": [
+        58,
+        49
+      ],
+      "pixels": 25
+    },
+    {
+      "key": [
+        "sld",
+        "0075alcxsczxjl",
+        -1
+      ],
+      "rep": [
+        2,
+        56
+      ],
+      "pixels": 25
+    },
+    {
+      "key": [
+        "sld",
+        "0075alcxsczxjl",
+        0
+      ],
+      "rep": [
+        7,
+        56
+      ],
+      "pixels": 5
+    },
+    {
+      "key": [
+        "sld",
+        "0075alcxsczxjl",
+        1
+      ],
+      "rep": [
+        8,
+        56
+      ],
+      "pixels": 25
+    },
+    {
+      "key": [
+        "btn",
+        "0091rynbvqsvxe"
+      ],
+      "rep": [
+        15,
+        56
+      ],
+      "pixels": 25
+    },
+    {
+      "key": [
+        "sld",
+        "0078vkisbwvycx",
+        -1
+      ],
+      "rep": [
+        24,
+        56
+      ],
+      "pixels": 25
+    },
+    {
+      "key": [
+        "sld",
+        "0078vkisbwvycx",
+        0
+      ],
+      "rep": [
+        29,
+        56
+      ],
+      "pixels": 5
+    },
+    {
+      "key": [
+        "sld",
+        "0078vkisbwvycx",
+        1
+      ],
+      "rep": [
+        30,
+        56
+      ],
+      "pixels": 25
+    },
+    {
+      "key": [
+        "btn",
+        "0096cmatymifsm"
+      ],
+      "rep": [
+        58,
+        56
+      ],
+      "pixels": 25
+    }
+  ],
+  "class_mismatches": [],
+  "simple_actions_at_start": [
+    {
+      "id": 1,
+      "pose_unchanged": true,
+      "steps": 200,
+      "level": 6,
+      "state": "GameState.NOT_FINISHED"
+    },
+    {
+      "id": 2,
+      "pose_unchanged": true,
+      "steps": 200,
+      "level": 6,
+      "state": "GameState.NOT_FINISHED"
+    },
+    {
+      "id": 3,
+      "pose_unchanged": true,
+      "steps": 200,
+      "level": 6,
+      "state": "GameState.NOT_FINISHED"
+    },
+    {
+      "id": 4,
+      "pose_unchanged": true,
+      "steps": 200,
+      "level": 6,
+      "state": "GameState.NOT_FINISHED"
+    },
+    {
+      "id": 5,
+      "pose_unchanged": true,
+      "steps": 200,
+      "level": 6,
+      "state": "GameState.NOT_FINISHED"
+    },
+    {
+      "id": 7,
+      "pose_unchanged": true,
+      "steps": 200,
+      "level": 6,
+      "state": "GameState.NOT_FINISHED"
+    }
+  ],
+  "reset_at_start": {
+    "back_to_start_pose": false,
+    "level": 0,
+    "state": "GameState.NOT_FINISHED",
+    "steps": 50
+  },
+  "pins": {
+    "s5i5.py": "341f85bac1fb5ca7a3315a367405c3c993a57ce4dd0ff01cc8aaa72bf6c6ed34",
+    "base_game.py": "5b5f41f3bec4c0c97a727fda7326114991dc0d4a5642d489b40ee4aa87e6b15f",
+    "level.py": "f74db969772b251018b2fcce6ec42f3522adeef4e9c03c036e455d2a35e3215a",
+    "camera.py": "f06e16807b0f97d86cafb5481bb3969213f27768f789d898c6b8b07e957de397",
+    "enums.py": "94ebef48f6fe950a18679a1b991c366e8e28c32ab58c9335f385e19bea21950e",
+    "sprites.py": "ea9d3d02c7db0814954134a0e0ea6a3cb9b80066930dbdbfc5865befb54c493f"
+  },
+  "identity_display_to_grid": true,
+  "status": "CONFIRMED",
+  "search_status": "NO_SHORTER",
+  "reason": "layers 1..44 closed with no win",
+  "layers_closed": 44,
+  "nodes": 11628960,
+  "states": 582724,
+  "expanded": 581448,
+  "edges": 11628960,
+  "seconds": 3189.549,
+  "per_layer": [
+    {
+      "depth": 1,
+      "expanded": 1,
+      "visited": 12,
+      "edges": 20,
+      "wins": 0,
+      "seconds": 0.009
+    },
+    {
+      "depth": 2,
+      "expanded": 11,
+      "visited": 69,
+      "edges": 220,
+      "wins": 0,
+      "seconds": 0.089
+    },
+    {
+      "depth": 3,
+      "expanded": 57,
+      "visited": 258,
+      "edges": 1140,
+      "wins": 0,
+      "seconds": 0.592
+    },
+    {
+      "depth": 4,
+      "expanded": 189,
+      "visited": 719,
+      "edges": 3780,
+      "wins": 0,
+      "seconds": 2.137
+    },
+    {
+      "depth": 5,
+      "expanded": 461,
+      "visited": 1635,
+      "edges": 9220,
+      "wins": 0,
+      "seconds": 5.811
+    },
+    {
+      "depth": 6,
+      "expanded": 916,
+      "visited": 3254,
+      "edges": 18320,
+      "wins": 0,
+      "seconds": 10.817
+    },
+    {
+      "depth": 7,
+      "expanded": 1619,
+      "visited": 5940,
+      "edges": 32380,
+      "wins": 0,
+      "seconds": 18.066
+    },
+    {
+      "depth": 8,
+      "expanded": 2686,
+      "visited": 10170,
+      "edges": 53720,
+      "wins": 0,
+      "seconds": 26.414
+    },
+    {
+      "depth": 9,
+      "expanded": 4230,
+      "visited": 16473,
+      "edges": 84600,
+      "wins": 0,
+      "seconds": 39.501
+    },
+    {
+      "depth": 10,
+      "expanded": 6303,
+      "visited": 25377,
+      "edges": 126060,
+      "wins": 0,
+      "seconds": 56.874
+    },
+    {
+      "depth": 11,
+      "expanded": 8904,
+      "visited": 37404,
+      "edges": 178080,
+      "wins": 0,
+      "seconds": 68.312
+    },
+    {
+      "depth": 12,
+      "expanded": 12027,
+      "visited": 53037,
+      "edges": 240540,
+      "wins": 0,
+      "seconds": 86.997
+    },
+    {
+      "depth": 13,
+      "expanded": 15633,
+      "visited": 72626,
+      "edges": 312660,
+      "wins": 0,
+      "seconds": 86.847
+    },
+    {
+      "depth": 14,
+      "expanded": 19589,
+      "visited": 96254,
+      "edges": 391780,
+      "wins": 0,
+      "seconds": 120.933
+    },
+    {
+      "depth": 15,
+      "expanded": 23628,
+      "visited": 123719,
+      "edges": 472560,
+      "wins": 0,
+      "seconds": 148.092
+    },
+    {
+      "depth": 16,
+      "expanded": 27465,
+      "visited": 154621,
+      "edges": 549300,
+      "wins": 0,
+      "seconds": 174.053
+    },
+    {
+      "depth": 17,
+      "expanded": 30902,
+      "visited": 188359,
+      "edges": 618040,
+      "wins": 0,
+      "seconds": 211.121
+    },
+    {
+      "depth": 18,
+      "expanded": 33738,
+      "visited": 224070,
+      "edges": 674760,
+      "wins": 0,
+      "seconds": 204.34
+    },
+    {
+      "depth": 19,
+      "expanded": 35711,
+      "visited": 260684,
+      "edges": 714220,
+      "wins": 0,
+      "seconds": 211.436
+    },
+    {
+      "depth": 20,
+      "expanded": 36614,
+      "visited": 297058,
+      "edges": 732280,
+      "wins": 0,
+      "seconds": 205.802
+    },
+    {
+      "depth": 21,
+      "expanded": 36374,
+      "visited": 332249,
+      "edges": 727480,
+      "wins": 0,
+      "seconds": 181.991
+    },
+    {
+      "depth": 22,
+      "expanded": 35191,
+      "visited": 365585,
+      "edges": 703820,
+      "wins": 0,
+      "seconds": 170.213
+    },
+    {
+      "depth": 23,
+      "expanded": 33336,
+      "visited": 396625,
+      "edges": 666720,
+      "wins": 0,
+      "seconds": 163.637
+    },
+    {
+      "depth": 24,
+      "expanded": 31040,
+      "visited": 425081,
+      "edges": 620800,
+      "wins": 0,
+      "seconds": 151.889
+    },
+    {
+      "depth": 25,
+      "expanded": 28456,
+      "visited": 450744,
+      "edges": 569120,
+      "wins": 0,
+      "seconds": 143.177
+    },
+    {
+      "depth": 26,
+      "expanded": 25663,
+      "visited": 473499,
+      "edges": 513260,
+      "wins": 0,
+      "seconds": 122.158
+    },
+    {
+      "depth": 27,
+      "expanded": 22755,
+      "visited": 493347,
+      "edges": 455100,
+      "wins": 0,
+      "seconds": 108.886
+    },
+    {
+      "depth": 28,
+      "expanded": 19848,
+      "visited": 510364,
+      "edges": 396960,
+      "wins": 0,
+      "seconds": 102.902
+    },
+    {
+      "depth": 29,
+      "expanded": 17017,
+      "visited": 524719,
+      "edges": 340340,
+      "wins": 0,
+      "seconds": 74.486
+    },
+    {
+      "depth": 30,
+      "expanded": 14355,
+      "visited": 536617,
+      "edges": 287100,
+      "wins": 0,
+      "seconds": 63.293
+    },
+    {
+      "depth": 31,
+      "expanded": 11898,
+      "visited": 546245,
+      "edges": 237960,
+      "wins": 0,
+      "seconds": 50.293
+    },
+    {
+      "depth": 32,
+      "expanded": 9628,
+      "visited": 553864,
+      "edges": 192560,
+      "wins": 0,
+      "seconds": 39.533
+    },
+    {
+      "depth": 33,
+      "expanded": 7619,
+      "visited": 559760,
+      "edges": 152380,
+      "wins": 0,
+      "seconds": 33.049
+    },
+    {
+      "depth": 34,
+      "expanded": 5896,
+      "visited": 564283,
+      "edges": 117920,
+      "wins": 0,
+      "seconds": 23.862
+    },
+    {
+      "depth": 35,
+      "expanded": 4523,
+      "visited": 567769,
+      "edges": 90460,
+      "wins": 0,
+      "seconds": 16.316
+    },
+    {
+      "depth": 36,
+      "expanded": 3486,
+      "visited": 570528,
+      "edges": 69720,
+      "wins": 0,
+      "seconds": 12.48
+    },
+    {
+      "depth": 37,
+      "expanded": 2759,
+      "visited": 572767,
+      "edges": 55180,
+      "wins": 0,
+      "seconds": 10.91
+    },
+    {
+      "depth": 38,
+      "expanded": 2239,
+      "visited": 574624,
+      "edges": 44780,
+      "wins": 0,
+      "seconds": 7.368
+    },
+    {
+      "depth": 39,
+      "expanded": 1857,
+      "visited": 576208,
+      "edges": 37140,
+      "wins": 0,
+      "seconds": 7.016
+    },
+    {
+      "depth": 40,
+      "expanded": 1584,
+      "visited": 577617,
+      "edges": 31680,
+      "wins": 0,
+      "seconds": 5.517
+    },
+    {
+      "depth": 41,
+      "expanded": 1409,
+      "visited": 578921,
+      "edges": 28180,
+      "wins": 0,
+      "seconds": 5.745
+    },
+    {
+      "depth": 42,
+      "expanded": 1304,
+      "visited": 580186,
+      "edges": 26080,
+      "wins": 0,
+      "seconds": 5.223
+    },
+    {
+      "depth": 43,
+      "expanded": 1265,
+      "visited": 581448,
+      "edges": 25300,
+      "wins": 0,
+      "seconds": 4.958
+    },
+    {
+      "depth": 44,
+      "expanded": 1262,
+      "visited": 582724,
+      "edges": 25240,
+      "wins": 0,
+      "seconds": 4.63
+    }
+  ],
+  "recorded_replay_win": true,
+  "recorded_prefix_wins": false,
+  "shorter": null,
+  "win_depth": null
+}

@@ -1,0 +1,3 @@
+CMD python lock_engine.py walks 24 10000 30
+LOCKSTEP_WALKS seed 24 walks 10000 steps 153312 mismatch 0 wins 0 gameover 264 {'ok': 71780, 'noop': 57628, 'fail': 14693, 'win': 0, 'undo': 9211} lossy_clicks 44 sec 59
+rc=0

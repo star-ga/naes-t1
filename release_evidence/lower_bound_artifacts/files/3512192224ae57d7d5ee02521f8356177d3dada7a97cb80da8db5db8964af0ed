@@ -1,0 +1,143 @@
+{
+ "n_levels_old": 8,
+ "n_levels_new": 8,
+ "levels": [
+  {
+   "level": 1,
+   "verdict": "ORDER_ONLY",
+   "n_sprites": [
+    7,
+    7
+   ],
+   "diffs": [],
+   "order_changed_layers": [],
+   "first_order_difference_index": 0
+  },
+  {
+   "level": 2,
+   "verdict": "ORDER_ONLY",
+   "n_sprites": [
+    10,
+    10
+   ],
+   "diffs": [],
+   "order_changed_layers": [],
+   "first_order_difference_index": 0
+  },
+  {
+   "level": 3,
+   "verdict": "ORDER_ONLY",
+   "n_sprites": [
+    29,
+    29
+   ],
+   "diffs": [],
+   "order_changed_layers": [
+    0
+   ],
+   "first_order_difference_index": 0
+  },
+  {
+   "level": 4,
+   "verdict": "ORDER_ONLY",
+   "n_sprites": [
+    27,
+    27
+   ],
+   "diffs": [],
+   "order_changed_layers": [],
+   "first_order_difference_index": 0
+  },
+  {
+   "level": 5,
+   "verdict": "ORDER_ONLY",
+   "n_sprites": [
+    26,
+    26
+   ],
+   "diffs": [],
+   "order_changed_layers": [],
+   "first_order_difference_index": 0
+  },
+  {
+   "level": 6,
+   "verdict": "ORDER_ONLY",
+   "n_sprites": [
+    56,
+    56
+   ],
+   "diffs": [],
+   "order_changed_layers": [
+    0
+   ],
+   "first_order_difference_index": 0
+  },
+  {
+   "level": 7,
+   "verdict": "ORDER_ONLY",
+   "n_sprites": [
+    46,
+    46
+   ],
+   "diffs": [],
+   "order_changed_layers": [
+    0
+   ],
+   "first_order_difference_index": 0
+  },
+  {
+   "level": 8,
+   "verdict": "ORDER_ONLY",
+   "n_sprites": [
+    64,
+    64
+   ],
+   "diffs": [],
+   "order_changed_layers": [
+    0
+   ],
+   "first_order_difference_index": 0
+  }
+ ],
+ "string_map_conflicts": {},
+ "string_map": {
+  "dlcwjcwyoc": "0055nwhypaamix",
+  "edyhkfhkcf": "0003uqrdzdofso",
+  "pwbzvhvyzx": "0056icpryeujyf",
+  "zxikvwjsyl": "0054kgxrvfihgm",
+  "qdwjaukgpe": "0007arvfmhagbj",
+  "gljpmsnsnx": "0006lxjtqggkmi",
+  "sys_click": "sys_click",
+  "vrfjzqaker": "0001sruqbuvukh",
+  "noaqoztjku": "0026ptolirjxrb",
+  "ezdsyuixsn": "0002nuguepuujf",
+  "jewbedvusb": "0053vnfodarlql",
+  "jidgddyrxm": "0027crpzfdutil",
+  "hylzmztfzg": "0028vcmxnipgaw",
+  "ucyadwewwc": "0032uqgfobrfhs",
+  "sezinyfuyf": "0029mcptsvtwrp",
+  "bdahvvicge": "0046frieufpmcm",
+  "jsfvegkkzt": "0045stdoddmwgj",
+  "hfkrronohx": "0031uifisqqrex",
+  "xusbtwzcmm": "0030rmanxmvnah",
+  "tsjkpdckto": "0049kqstcizzck",
+  "ujqxnvjoap": "0048sobinwpoqd",
+  "Ar25": "Ar25",
+  ".": ".",
+  "ar25": "ar25",
+  "StepCounter": "StepCounter",
+  "": "",
+  "migkdsjrwk": "ouurgkpbbjj",
+  "khupblbrxc": "jtkyjqznbnp",
+  "sllpppnezc": "0004afwyadxelg",
+  "flrtaztmgm": "0000gezzfvumef",
+  "xnpsicjqxc": "0040bwgtiqvhtu",
+  "dmfgetmeus": "0044qlxgcpzowy",
+  "border": "border",
+  "reflect_horizontal_only": "reflect_horizontal_only",
+  "fmxjsieygg": "0038pnuzypawco",
+  "x": "x",
+  "y": "y"
+ },
+ "non_injective": {}
+}

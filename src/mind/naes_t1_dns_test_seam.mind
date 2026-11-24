@@ -1,0 +1,375 @@
+// naes_t1_dns_test_seam.mind — cases 29..38 for the DNS resolver selftest:
+// the CNAME rdata bound, chase-order independence, the question match, the
+// random transaction ids, the remaining edge bounds and the per-query retry. Not a program by
+// itself: see the build line in naes_t1_dns_test.mind. Each negative
+// assertion is paired with a positive control on the same fixture.
+//  29 CNAME target must end at rdata+rdlen (overrun and slack -> err_form)
+//  30 reverse-ordered 7/8-hop chains resolve, a reverse 9-hop chain does not
+//  31 names match case-insensitively, only for A..Z
+//  32 resolv.conf octets above 255 rejected (first and last octet)
+//  33 build_query never writes past cap      34 qtype outside 1..65535
+//  35 collect with no room left for AAAA     36 question must echo the query
+//  37 transaction ids drawn from /dev/urandom, A and AAAA ids distinct
+//  38 A and AAAA retry on their own; a query with no reply -> err_transport;
+//     /dev/zero is the id source (A id 0, AAAA id 1, step-up on retry);
+//     /proc/self/exe is the id source (A id 32581, AAAA id 19526);
+//     a missing entropy path returns err_io and sends no query
+// ---- fixture helpers --------------------------------------------------------
+// www.example.com reply with no answer (NOERROR, ancount 0) to qtype; the
+// AAAA reply of an IPv4-only host. Returns the length.
+fn naes_dt_mk_empty(buf: i64, qtype: i64) -> i64 {
+    let o: i64 = naes_dt_hdr(buf, 4660, 33152, 1, 0);
+    let o2: i64 = naes_dt_q_www(buf, o);
+    let _t: i64 = naes_dns_wr16(buf, o2 - 4, qtype);
+    o2
+}
+// Scripted transport block (layout at naes_dns_xchg) with loss mask m.
+fn naes_dt_script(tx: i64, pa: i64, la: i64, pb: i64, lb: i64, m: i64) -> i64 {
+    let _z: i64 = naes_dt_zero(tx, 104);
+    __mind_store_i64(tx + 8, m);
+    __mind_store_i64(tx + 16, pa);
+    __mind_store_i64(tx + 24, la);
+    __mind_store_i64(tx + 32, pb);
+    __mind_store_i64(tx + 40, lb);
+    tx
+}
+// qtype of scripted exchange k
+fn naes_dt_xq(tx: i64, k: i64) -> i64 { __mind_load_i64(tx + 48 + k * 8) >> 16 }
+// transaction id of scripted exchange k (low 16 bits of the tx+48 record)
+fn naes_dt_xid(tx: i64, k: i64) -> i64 { __mind_load_i64(tx + 48 + k * 8) & 65535 }
+// Arm the id-source seam: tx+80 is a NUL-terminated path read by the same
+// call production uses. Zero keeps /dev/urandom.
+fn naes_dt_entropy(tx: i64, path: i64) -> i64 {
+    __mind_store_i64(tx + 80, path);
+    tx
+}
+// "/dev/zero" — four zero bytes, so the A id is 0 and the AAAA id steps to 1.
+fn naes_dt_lit_zero() -> i64 {
+    let b: i64 = __mind_alloc(16);
+    let o: i64 = naes_dt_wr8(b, 0, 8243129037239968815, 8);
+    let _z: i64 = naes_dt_wr8(b, o, 111, 2);
+    b
+}
+// "/proc/self/exe" — ELF bytes 7f 45 4c 46. The halves differ, so neither
+// id steps. The A id is 0x7f45 (32581). The AAAA id is 0x4c46 (19526).
+fn naes_dt_lit_exe() -> i64 {
+    let b: i64 = __mind_alloc(16);
+    let o: i64 = naes_dt_wr8(b, 0, 7310238724270485551, 8);
+    let _z: i64 = naes_dt_wr8(b, o, 111567768086124, 8);
+    b
+}
+// A path that is not a file. Opening it fails the id read.
+fn naes_dt_lit_noent() -> i64 {
+    let b: i64 = __mind_alloc(16);
+    let o: i64 = naes_dt_wr8(b, 0, 8315159412879617583, 8);
+    let _z: i64 = naes_dt_wr8(b, o, 28263141602124845, 8);
+    b
+}
+// h0 CNAME chain listed tail first: h<n> A 7.7.7.7, then h<n-1> CNAME h<n>
+// down to h0 CNAME h1; returns the length
+fn naes_dt_mk_rev(buf: i64, n: i64) -> i64 {
+    let o: i64 = naes_dt_hdr(buf, 4660, 33152, 1, n + 1);
+    let mut off: i64 = naes_dt_a_h(buf, naes_dt_q_h(buf, o, 0), n, 117901063);
+    let mut i: i64 = n - 1;
+    while i >= 0 { off = naes_dt_c_h(buf, off, i, i + 1); i = i - 1; }
+    off
+}
+// decimal 0..999 at off; returns the next offset
+fn naes_dt_dec(buf: i64, off: i64, v: i64) -> i64 {
+    let mut o: i64 = off;
+    if v >= 100 { o = naes_dt_b(buf, o, 48 + v / 100); }
+    if v >= 10 { o = naes_dt_b(buf, o, 48 + (v / 10) % 10); }
+    naes_dt_b(buf, o, 48 + v % 10)
+}
+// "nameserver a.b.c.d\n"; returns the length
+fn naes_dt_ns_line(buf: i64, a: i64, b: i64, c: i64, d: i64) -> i64 {
+    let o: i64 = naes_dt_wr8(buf, 0, 8534995790117822830, 8);
+    let mut off: i64 = naes_dt_wr8(buf, o, 2126437, 3);
+    off = naes_dt_b(buf, naes_dt_dec(buf, off, a), 46);
+    off = naes_dt_b(buf, naes_dt_dec(buf, off, b), 46);
+    off = naes_dt_b(buf, naes_dt_dec(buf, off, c), 46);
+    naes_dt_b(buf, naes_dt_dec(buf, off, d), 10)
+}
+// ---- cases ------------------------------------------------------------------
+fn naes_dt_case29() -> i64 {
+    let pkt: i64 = __mind_alloc(256);
+    let www: i64 = __mind_alloc(32);
+    let out: i64 = __mind_alloc(24 * 4);
+    let _w: i64 = naes_dt_name_www(www);
+    // overrun: rdlen 1, the 16-byte target runs on past the rdata
+    let o: i64 = naes_dt_www_rr(pkt, 1, 5, 1, 1);
+    let l1: i64 = naes_dt_wn_h(pkt, o, 2);
+    if naes_dns_parse_response(pkt, l1, 4660, www, 15, out, 4) != 0 - 3 { return 1; }
+    // slack: rdlen 18 for the 16-byte target, then h2 A 1.2.3.4
+    let o2: i64 = naes_dt_www_rr(pkt, 2, 5, 1, 18);
+    let o3: i64 = naes_dt_b(pkt, naes_dt_b(pkt, naes_dt_wn_h(pkt, o2, 2), 0), 0);
+    let l2: i64 = naes_dt_a_h(pkt, o3, 2, 67305985);
+    if naes_dns_parse_response(pkt, l2, 4660, www, 15, out, 4) != 0 - 3 { return 1; }
+    // control: rdlen 16 ends exactly at the target end and resolves
+    let o4: i64 = naes_dt_www_rr(pkt, 2, 5, 1, 16);
+    let l3: i64 = naes_dt_a_h(pkt, naes_dt_wn_h(pkt, o4, 2), 2, 67305985);
+    if naes_dns_parse_response(pkt, l3, 4660, www, 15, out, 4) != 1 { return 1; }
+    if naes_dt_ckn(out, 8, 4, 67305985) == 0 { return 1; }
+    0
+}
+fn naes_dt_case30() -> i64 {
+    let pkt: i64 = __mind_alloc(512);
+    let h0: i64 = __mind_alloc(32);
+    let out: i64 = __mind_alloc(24 * 4);
+    let _h: i64 = naes_dt_tn_h(h0, 0);
+    let l8: i64 = naes_dt_mk_rev(pkt, 8);
+    if naes_dns_parse_response(pkt, l8, 4660, h0, 14, out, 4) != 1 { return 1; }
+    if naes_dt_ckn(out, 8, 4, 117901063) == 0 { return 1; }
+    let l7: i64 = naes_dt_mk_rev(pkt, 7);
+    if naes_dns_parse_response(pkt, l7, 4660, h0, 14, out, 4) != 1 { return 1; }
+    // the follow cap holds in either order
+    let l9: i64 = naes_dt_mk_rev(pkt, 9);
+    if naes_dns_parse_response(pkt, l9, 4660, h0, 14, out, 4) != 0 { return 1; }
+    0
+}
+fn naes_dt_case31() -> i64 {
+    let pkt: i64 = __mind_alloc(256);
+    let www: i64 = __mind_alloc(32);
+    let out: i64 = __mind_alloc(24 * 4);
+    let _w: i64 = naes_dt_name_www(www);
+    // question (and so the owner, by pointer) "WWW.Example.COM"
+    let len: i64 = naes_dt_mk_a(pkt, 4660);
+    __mind_store_i8(pkt + 13, 87); __mind_store_i8(pkt + 14, 87); __mind_store_i8(pkt + 15, 87);
+    __mind_store_i8(pkt + 17, 69); __mind_store_i8(pkt + 25, 67); __mind_store_i8(pkt + 27, 77);
+    if naes_dns_question_ok(pkt, len, www, 15, 1) != 1 { return 1; }
+    if naes_dns_parse_response(pkt, len, 4660, www, 15, out, 4) != 1 { return 1; }
+    // only A..Z fold: '@' (64) / '`' (96) and '[' (91) / '{' (123) differ,
+    // each pair on its own so neither boundary masks the other
+    let a: i64 = __mind_alloc(8);
+    let b: i64 = __mind_alloc(8);
+    let _a: i64 = naes_dt_wr8(a, 0, 64, 2);
+    let _b: i64 = naes_dt_wr8(b, 0, 96, 2);
+    if naes_dns_name_eq(a, b) != 0 { return 1; }
+    let _c: i64 = naes_dt_wr8(b, 0, 64, 2);
+    if naes_dns_name_eq(a, b) != 1 { return 1; }
+    let _h: i64 = naes_dt_wr8(a, 0, 91, 2);
+    let _i: i64 = naes_dt_wr8(b, 0, 123, 2);
+    if naes_dns_name_eq(a, b) != 0 { return 1; }
+    let _j: i64 = naes_dt_wr8(b, 0, 91, 2);
+    if naes_dns_name_eq(a, b) != 1 { return 1; }
+    let _d: i64 = naes_dt_wr8(a, 0, 90, 2);
+    let _e: i64 = naes_dt_wr8(b, 0, 122, 2);
+    if naes_dns_name_eq(a, b) != 1 { return 1; }
+    let _f: i64 = naes_dt_wr8(a, 0, 65, 2);
+    let _g: i64 = naes_dt_wr8(b, 0, 97, 2);
+    if naes_dns_name_eq(a, b) != 1 { return 1; }
+    0
+}
+fn naes_dt_case32() -> i64 {
+    let buf: i64 = __mind_alloc(64);
+    let out: i64 = __mind_alloc(24);
+    let l1: i64 = naes_dt_ns_line(buf, 256, 1, 1, 1);
+    if naes_dns_parse_resolv(buf, l1, out) != 0 - 7 { return 1; }
+    let l2: i64 = naes_dt_ns_line(buf, 1, 1, 1, 256);
+    if naes_dns_parse_resolv(buf, l2, out) != 0 - 7 { return 1; }
+    // control: 255 is a valid octet in either place
+    let l3: i64 = naes_dt_ns_line(buf, 255, 1, 2, 255);
+    if naes_dns_parse_resolv(buf, l3, out) != 2 { return 1; }
+    if naes_dt_ckn(out, 8, 4, 4278321663) == 0 { return 1; }
+    0
+}
+fn naes_dt_case33() -> i64 {
+    let buf: i64 = __mind_alloc(64);
+    let name: i64 = __mind_alloc(32);
+    let mut i: i64 = 0;
+    while i < 30 { __mind_store_i8(name + i, 97); i = i + 1; }
+    __mind_store_i8(name + 30, 0);
+    i = 32;
+    while i < 64 { __mind_store_i8(buf + i, 90); i = i + 1; }
+    // the 30-byte label does not fit cap 32: rejected, nothing past buf+32
+    if naes_dns_build_query(buf, 32, name, 30, 1, 4660) != 0 - 1 { return 1; }
+    i = 32;
+    while i < 64 { if __mind_load_i8(buf + i) != 90 { return 1; } i = i + 1; }
+    // control: cap 48 holds the whole query exactly
+    if naes_dns_build_query(buf, 48, name, 30, 1, 4660) != 48 { return 1; }
+    0
+}
+fn naes_dt_case34() -> i64 {
+    let buf: i64 = __mind_alloc(512);
+    let name: i64 = __mind_alloc(32);
+    let _n: i64 = naes_dt_name_www(name);
+    if naes_dns_build_query(buf, 512, name, 15, 0, 4660) != 0 - 1 { return 1; }
+    if naes_dns_build_query(buf, 512, name, 15, 65536, 4660) != 0 - 1 { return 1; }
+    if naes_dns_build_query(buf, 512, name, 15, 65535, 4660) != 33 { return 1; }
+    if naes_dns_rd16(buf, 29) != 65535 { return 1; }
+    0
+}
+fn naes_dt_case35() -> i64 {
+    let pa: i64 = __mind_alloc(256);
+    let pb: i64 = __mind_alloc(256);
+    let www: i64 = __mind_alloc(32);
+    let out: i64 = __mind_alloc(24 * 2);
+    let _w: i64 = naes_dt_name_www(www);
+    let la: i64 = naes_dt_mk_a(pa, 4660);
+    let lb: i64 = naes_dt_mk_aaaa(pb, 4660);
+    __mind_store_i64(out + 24, 777);
+    // out_max 1: the A fills it, the AAAA packet is skipped, not an error
+    if naes_dns_collect(pa, la, pb, lb, 4660, 4660, www, 15, out, 1) != 1 { return 1; }
+    if __mind_load_i64(out) != 2 || __mind_load_i64(out + 24) != 777 { return 1; }
+    if naes_dns_collect(pa, la, pb, lb, 4660, 4660, www, 15, out, 2) != 2 { return 1; }
+    0
+}
+fn naes_dt_case36() -> i64 {
+    let pkt: i64 = __mind_alloc(256);
+    let pb: i64 = __mind_alloc(256);
+    let www: i64 = __mind_alloc(32);
+    let out: i64 = __mind_alloc(24 * 4);
+    let _w: i64 = naes_dt_name_www(www);
+    // question h1.example.com, answer www A 1.2.3.4: no answer to www
+    let o: i64 = naes_dt_hdr(pkt, 4660, 33152, 1, 1);
+    let o2: i64 = naes_dt_q_h(pkt, o, 1);
+    let o3: i64 = naes_dt_wr8(pkt, o2, 7023474701627782915, 8);
+    let o4: i64 = naes_dt_wr8(pkt, o3, 7885630338786685037, 8);
+    let o5: i64 = naes_dt_rr(pkt, naes_dt_b(pkt, o4, 0), 1, 1, 4);
+    let l1: i64 = naes_dt_wr8(pkt, o5, 67305985, 4);
+    if naes_dns_question_ok(pkt, l1, www, 15, 1) != 0 { return 1; }
+    // positive control: the answer section alone would be taken
+    if naes_dns_parse_response(pkt, l1, 4660, www, 15, out, 4) != 1 { return 1; }
+    if naes_dns_collect(pkt, l1, 0, 0, 4660, 4660, www, 15, out, 4) != 0 - 3 { return 1; }
+    // an A answer offered as the AAAA response, and a wrong AAAA id
+    let la: i64 = naes_dt_mk_a(pkt, 4660);
+    let lb: i64 = naes_dt_mk_aaaa(pb, 4660);
+    if naes_dns_collect(0, 0, pkt, la, 4660, 4660, www, 15, out, 4) != 0 - 3 { return 1; }
+    if naes_dns_collect(pkt, la, pb, lb, 4660, 4661, www, 15, out, 4) != 0 - 3 { return 1; }
+    // and a wrong A id: the A reply is checked against id_a, never id_b
+    if naes_dns_collect(pkt, la, pb, lb, 4661, 4660, www, 15, out, 4) != 0 - 3 { return 1; }
+    // two questions, or class CH, are no echo of the query
+    let _q: i64 = naes_dns_wr16(pkt, 4, 2);
+    if naes_dns_question_ok(pkt, la, www, 15, 1) != 0 { return 1; }
+    let _r: i64 = naes_dns_wr16(pkt, 4, 1);
+    let _c: i64 = naes_dns_wr16(pkt, 31, 3);
+    if naes_dns_question_ok(pkt, la, www, 15, 1) != 0 { return 1; }
+    let _d: i64 = naes_dns_wr16(pkt, 31, 1);
+    // qtype/class cut off by pkt_n; controls: the echoed question passes,
+    // with and without the root dot
+    if naes_dns_question_ok(pkt, 31, www, 15, 1) != 0 { return 1; }
+    if naes_dns_question_ok(pkt, 33, www, 15, 1) != 1 { return 1; }
+    if naes_dns_question_ok(pkt, la, www, 15, 1) != 1 { return 1; }
+    __mind_store_i8(www + 15, 46);
+    if naes_dns_question_ok(pb, lb, www, 16, 28) != 1 { return 1; }
+    if naes_dns_collect(pkt, la, pb, lb, 4660, 4660, www, 16, out, 4) != 2 { return 1; }
+    0
+}
+fn naes_dt_case37() -> i64 {
+    let first: i64 = naes_dns_random_ids();
+    if first < 0 { return 1; }
+    if (first & 65535) == ((first >> 16) & 65535) { return 1; }
+    if (first >> 32) != 0 { return 1; }
+    // four draws all equal would mean a fixed id (chance 2^-96 if random)
+    let mut same: i64 = 1;
+    let mut i: i64 = 0;
+    while i < 3 {
+        let ids: i64 = naes_dns_random_ids();
+        if ids < 0 { return 1; }
+        if ids != first { same = 0; }
+        i = i + 1;
+    }
+    if same == 1 { return 1; }
+    // equal random words still give distinct ids; distinct words are kept
+    let b: i64 = __mind_alloc(8);
+    let _e: i64 = naes_dt_wr8(b, 0, 873608210, 4);
+    if naes_dns_ids_from(b) != 4660 + 4661 * 65536 { return 1; }
+    let _f: i64 = naes_dt_wr8(b, 0, 1450718226, 4);
+    if naes_dns_ids_from(b) != 4660 + 30806 * 65536 { return 1; }
+    let _g: i64 = naes_dt_wr8(b, 0, 65535 + 65535 * 65536, 4);
+    if naes_dns_ids_from(b) != 65535 { return 1; }
+    0
+}
+fn naes_dt_case38() -> i64 {
+    let pa: i64 = __mind_alloc(256);
+    let pb: i64 = __mind_alloc(256);
+    let www: i64 = __mind_alloc(32);
+    let out: i64 = __mind_alloc(24 * 4);
+    let ns: i64 = __mind_alloc(24);
+    let tx: i64 = __mind_alloc(104);
+    let _w: i64 = naes_dt_name_www(www);
+    let _n: i64 = naes_dt_zero(ns, 24);
+    __mind_store_i64(ns, 2);
+    let la: i64 = naes_dt_mk_a(pa, 4660);
+    let lb: i64 = naes_dt_mk_empty(pb, 28);
+    // control: no loss, one A and one AAAA exchange, 1.2.3.4
+    let _s0: i64 = naes_dt_script(tx, pa, la, pb, lb, 0);
+    if naes_dns_resolve_at(tx, ns, 2, www, 15, out, 4) != 1 { return 1; }
+    if __mind_load_i64(tx) != 2 || naes_dt_xq(tx, 0) != 1 || naes_dt_xq(tx, 1) != 28 { return 1; }
+    // the first A datagram lost while the AAAA reply arrives: the A is
+    // asked again with a fresh id, and the address is found
+    let _s1: i64 = naes_dt_script(tx, pa, la, pb, lb, 1);
+    __mind_store_i64(out, 0);
+    if naes_dns_resolve_at(tx, ns, 2, www, 15, out, 4) != 1 { return 1; }
+    if naes_dt_ckn(out, 8, 4, 67305985) == 0 { return 1; }
+    if __mind_load_i64(tx) != 3 || naes_dt_xq(tx, 0) != 1 || naes_dt_xq(tx, 1) != 1 || naes_dt_xq(tx, 2) != 28 { return 1; }
+    if (__mind_load_i64(tx + 48) & 65535) == (__mind_load_i64(tx + 56) & 65535) { return 1; }
+    // the A never answered: err_transport (-6), not err_nx
+    let _s2: i64 = naes_dt_script(tx, pa, la, pb, lb, 3);
+    if naes_dns_resolve_at(tx, ns, 2, www, 15, out, 4) != 0 - 6 { return 1; }
+    if __mind_load_i64(tx) != 2 { return 1; }
+    // the first AAAA lost: asked again; both AAAA lost: err_transport
+    let _s3: i64 = naes_dt_script(tx, pa, la, pb, lb, 2);
+    if naes_dns_resolve_at(tx, ns, 2, www, 15, out, 4) != 1 { return 1; }
+    if __mind_load_i64(tx) != 3 || naes_dt_xq(tx, 1) != 28 || naes_dt_xq(tx, 2) != 28 { return 1; }
+    let _s4: i64 = naes_dt_script(tx, pa, la, pb, lb, 6);
+    if naes_dns_resolve_at(tx, ns, 2, www, 15, out, 4) != 0 - 6 { return 1; }
+    // positive control for err_nx: two replies, neither with an address
+    let le: i64 = naes_dt_mk_empty(pa, 1);
+    let _s5: i64 = naes_dt_script(tx, pa, le, pb, lb, 0);
+    if naes_dns_resolve_at(tx, ns, 2, www, 15, out, 4) != 0 - 8 { return 1; }
+    // /dev/zero: four 0 bytes. The A id is the low half (0). The AAAA id is
+    // the high half, stepped to 1 because the halves match. mk_empty above
+    // overwrote pa, so the A fixture is rebuilt first.
+    let zpath: i64 = naes_dt_lit_zero();
+    let lap: i64 = naes_dt_mk_a(pa, 4660);
+    let _e0: i64 = naes_dt_entropy(naes_dt_script(tx, pa, lap, pb, lb, 0), zpath);
+    if naes_dns_resolve_at(tx, ns, 2, www, 15, out, 4) != 1 { return 1; }
+    if __mind_load_i64(tx) != 2 { return 1; }
+    if naes_dt_xq(tx, 0) != 1 || naes_dt_xid(tx, 0) != 0 { return 1; }
+    if naes_dt_xq(tx, 1) != 28 || naes_dt_xid(tx, 1) != 1 { return 1; }
+    // lost first A: attempt 0 stays 0, attempt 1 steps to 1, and the AAAA
+    // id steps from 1 because that is the answered A id
+    let _e1: i64 = naes_dt_entropy(naes_dt_script(tx, pa, lap, pb, lb, 1), zpath);
+    if naes_dns_resolve_at(tx, ns, 2, www, 15, out, 4) != 1 { return 1; }
+    if __mind_load_i64(tx) != 3 { return 1; }
+    if naes_dt_xq(tx, 0) != 1 || naes_dt_xid(tx, 0) != 0 { return 1; }
+    if naes_dt_xq(tx, 1) != 1 || naes_dt_xid(tx, 1) != 1 { return 1; }
+    if naes_dt_xq(tx, 2) != 28 || naes_dt_xid(tx, 2) != 2 { return 1; }
+    // lost first AAAA: the A id stays 0; the first AAAA id is 1, the retry
+    // steps to 2
+    let _e2: i64 = naes_dt_entropy(naes_dt_script(tx, pa, lap, pb, lb, 2), zpath);
+    if naes_dns_resolve_at(tx, ns, 2, www, 15, out, 4) != 1 { return 1; }
+    if __mind_load_i64(tx) != 3 { return 1; }
+    if naes_dt_xq(tx, 0) != 1 || naes_dt_xid(tx, 0) != 0 { return 1; }
+    if naes_dt_xq(tx, 1) != 28 || naes_dt_xid(tx, 1) != 1 { return 1; }
+    if naes_dt_xq(tx, 2) != 28 || naes_dt_xid(tx, 2) != 2 { return 1; }
+    // /proc/self/exe: the four bytes are 7f 45 4c 46. The halves differ,
+    // so the wire ids are those halves with no step-up.
+    let xpath: i64 = naes_dt_lit_exe();
+    let _e4: i64 = naes_dt_entropy(naes_dt_script(tx, pa, lap, pb, lb, 0), xpath);
+    if naes_dns_resolve_at(tx, ns, 2, www, 15, out, 4) != 1 { return 1; }
+    if __mind_load_i64(tx) != 2 { return 1; }
+    if naes_dt_xq(tx, 0) != 1 || naes_dt_xid(tx, 0) != 32581 { return 1; }
+    if naes_dt_xq(tx, 1) != 28 || naes_dt_xid(tx, 1) != 19526 { return 1; }
+    // a missing entropy file fails closed: err_io, and no query is sent
+    let bad: i64 = naes_dt_lit_noent();
+    let _e3: i64 = naes_dt_entropy(naes_dt_script(tx, pa, lap, pb, lb, 0), bad);
+    if naes_dns_resolve_at(tx, ns, 2, www, 15, out, 4) != 0 - 7 { return 1; }
+    if __mind_load_i64(tx) != 0 { return 1; }
+    0
+}
+// Run cases 29..38; returns the number that failed.
+fn naes_dt_seam_run() -> i64 {
+    let mut f: i64 = naes_dt_guard_one(29, naes_dt_case29());
+    f = f + naes_dt_guard_one(30, naes_dt_case30());
+    f = f + naes_dt_guard_one(31, naes_dt_case31());
+    f = f + naes_dt_guard_one(32, naes_dt_case32());
+    f = f + naes_dt_guard_one(33, naes_dt_case33());
+    f = f + naes_dt_guard_one(34, naes_dt_case34());
+    f = f + naes_dt_guard_one(35, naes_dt_case35());
+    f = f + naes_dt_guard_one(36, naes_dt_case36());
+    f = f + naes_dt_guard_one(37, naes_dt_case37());
+    f = f + naes_dt_guard_one(38, naes_dt_case38());
+    f
+}

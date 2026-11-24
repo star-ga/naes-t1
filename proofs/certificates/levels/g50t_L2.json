@@ -1,0 +1,39 @@
+{
+  "artifact_sha256": [
+    {
+      "kind": "safe_statement_count_extract",
+      "sha256": "d75c690f46a0353a675bd5fb656429d7129fec87b94fb62e280f095054b0031e"
+    },
+    {
+      "kind": "authority_ledger_label",
+      "sha256": "9cb40128d3010514d932ebac373183f76143c54fedf03969f4d3e5615df7a750"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "1fb34bc00e9d0e00153f88741352a260d39f7837c753c46fd6e2c3bc77196d6d"
+    }
+  ],
+  "floor": 31,
+  "game": "g50t",
+  "game_id": "g50t-5849a774",
+  "game_levels": 7,
+  "level": 2,
+  "lower_bound": {
+    "kind": "relay_algebra_ablation_stable_lb_meets_verified_win+lemma",
+    "statement": "A relaxed relay cost algebra gives necessary cost 31. The recorded checks cover movement, required handoffs and gate behavior; the witness attains 31.",
+    "value": 31
+  },
+  "naes_t1_actions": 31,
+  "proof_class": "Matching bounds",
+  "proof_detail": "relay_algebra_ablation_stable_lb_meets_verified_win+lemma",
+  "schema_version": 1,
+  "source_certificate_sha256": "b5f6af822602815e8aa2b0bca897cd28cca9290162cb0104e51cf999bc5cb72a",
+  "status": "proven",
+  "upper_bound": {
+    "expected_levels_completed": 2,
+    "length": 31,
+    "opening_reset_counted": false,
+    "route": "3 3 5 2 2 2 2 3 3 3 3 1 1 3 3 5 1 1 1 3 3 3 3 3 3 3 2 2 4 4 4",
+    "seed": 0
+  }
+}

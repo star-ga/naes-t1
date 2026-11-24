@@ -1,0 +1,59 @@
+{
+  "artifact_sha256": [
+    {
+      "kind": "safe_statement_count_extract",
+      "sha256": "3846197ffb1d9d6b717d603aab58f90ac536c38a1dc0ac01143405fd880eea0f"
+    },
+    {
+      "kind": "authority_ledger_label",
+      "sha256": "4c14a8b031ce88180914817357433a28586fbaa66bf8c3ceea8b5f11988dc138"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "ce1e9684ca44a16428d21793c40948b7529053161ae3c737c15da67ca393fcca"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "e85eb62f98afe516fa97c93098c283846cd2518b83dee02f3170f9304e681062"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "5bdfadaf67099b99d1c40e025d6dce044c22658fc49353919299df2d16921556"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "7a92c98c048163640fc0a542adf1ba891116c20bc2ae6b274837e1dc0587c265"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "9f72de73e3a600660cc76f90325cce508d740266dbff4681441e3c196c0f309f"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "05f9318d4948de0ce2dd9d45b558cbffdae9c5621d04b1a02b9fb584c7615fc2"
+    }
+  ],
+  "floor": 13,
+  "game": "r11l",
+  "game_id": "r11l-495a7899",
+  "game_levels": 6,
+  "level": 4,
+  "lower_bound": {
+    "kind": "relaxed_placement_enumeration_select_place_count",
+    "statement": "Every necessary placement needs a place action and, except for the initially usable body, a select action. Exact relaxed placement enumeration gives d=7 and bound 2d-1=13. The proof relaxed_placement_enumeration_select_place_count establishes lower bound 13, equal to the floor.",
+    "value": 13
+  },
+  "naes_t1_actions": 13,
+  "proof_class": "Matching bounds",
+  "proof_detail": "relaxed_placement_enumeration_select_place_count",
+  "schema_version": 1,
+  "source_certificate_sha256": "7ca50715cb965b939bed0a313e677cc39494bd3cbaea56b801bbf6689617b6e6",
+  "status": "proven",
+  "upper_bound": {
+    "expected_levels_completed": 4,
+    "length": 13,
+    "opening_reset_counted": false,
+    "route": "6@0,44 6@39,6 6@62,50 6@46,52 6@19,47 6@46,36 6@16,61 6@27,52 6@41,8 6@10,47 6@59,8 6@17,36 6@50,20",
+    "seed": 0
+  }
+}

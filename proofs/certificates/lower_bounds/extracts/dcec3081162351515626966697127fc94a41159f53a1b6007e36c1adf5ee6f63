@@ -1,0 +1,326 @@
+{
+ "levels": {
+  "1": {
+   "level": 1,
+   "status": "PROVEN",
+   "floor": 14,
+   "min_path": [
+    "D",
+    "D",
+    "L",
+    "D",
+    "D",
+    "L",
+    "D",
+    "L",
+    "U",
+    "U",
+    "U",
+    "L",
+    "D",
+    "D"
+   ],
+   "proof_kind": "graph_exhausted+lemma",
+   "proof": "uniform-cost layers 1..13 exhausted below the replay-verified 14-move win",
+   "scope": "replay_alphabet",
+   "alphabet_n": 4,
+   "graph_exhausted": false,
+   "route_seeded_win": false,
+   "nodes": 329170,
+   "replay_verified": true,
+   "human_best": 37,
+   "f_le_human": true,
+   "route_len": 191,
+   "guidance": "none",
+   "start_source": "cascade_bootstrap",
+   "alphabet_origin": "cascade_trace",
+   "floor_measured_from": "level_start_snapshot",
+   "bootstrap_moves_excluded": 0,
+   "ub": 14,
+   "lb": 14,
+   "<key withheld>": "<word withheld>",
+   "scoped_lb": {
+    "scope": "replay_alphabet",
+    "alphabet_n": 4,
+    "value": 14
+   },
+   "lemma": {
+    "dispatch_lemma": "tr87 cd924810, all levels incl. L1: advertised=[1,2,3,4] (tr87.py:908); accepted = ids branched on by step() = {1,2,3,4} (tr87.py:996-1016) plus fallthrough for every other non-RESET id = noop (tr87.py:1020-1022: no branch, no counter decrement, no state write; base_game.py:269-279 dispatches every id unfiltered; no ACTION7/undo handler in base_game; game never reads _action_count). RESET excluded per <label withheld>. probe: {states: 3 (route prefixes 0/5/13), ids_tested: [5,6,7], semantic_diff_zero: true, key: tile names + cursor index + step budget + animation counter + score + state}. No timer, enemy or per-action world tick exists in-level (the only per-action tick, yfetxjexviz, is entered only after the win predicate bsqsshqpox() is true), so a wait/no-op cannot shorten a play.",
+    "coverage_lemma": "Alphabet-independent closed-form minimality (same instrument as certificate tr87 L2/L3/L4, <path> + best_walk, applied to set_level(0)): L1 is non-alter (alter_rules=None), N=5, cur=[1,7,2,4,6], unique target=[3,2,6,5,1], cursor0=0. Every accepted state-changing action is exactly one of: rotate the piece under the cursor by +-1 on Z_7, or move the cursor +-1 on the 5-cycle. Rotation cost >= sum min-ring = 2+2+3+1+2 = 10; cover-walk cost >= 4 (exhaustive (l,r) arc sweep on the 5-cycle); costs decouple, so LB=14 over the FULL accepted alphabet, independent of the enumerated 4-id alphabet. Existence: constructed 14-action route wins at exactly 14 on a fresh restore; 13-prefix does not win. Consistency: measured engine steps 14 (docs/prf0_measured/tr87.json), no engine win < 14 (F10). Second check: scoped uniform-cost exhaustion layers 1..13 over the 4-id alphabet, 329170 nodes (fdb2 row), agrees. Rerun of <path>/tr87_floor_prove.py with idx 0 included gives rot_total=10 walk=4 FLOOR=14 replay win_at=14.",
+    "argument_kind": "closed_form",
+    "source_pin": null,
+    "verified": true
+   }
+  },
+  "2": {
+   "level": 2,
+   "status": "PROVEN",
+   "floor": 25,
+   "proof_kind": "rotation_group_closed_form_nonalter",
+   "proof": "Non-alter tr87: |A|={A1,A2,A3,A4}. A1/A2 rotate selected piece on Z_7; A3/A4 move cursor on cycle of size 7. Win requires bottom piece types [7, 6, 1, 3, 5, 5, 4] -> [3, 1, 5, 1, 2, 2, 7]. Necessary rot cost = sum min-ring = 19; necessary visit cover cost = 6 (BFS over cycle). Product independent => floor = rot+nav = 25. Plan length 25 matches; engine wins at 25.",
+   "path": [
+    2,
+    2,
+    2,
+    3,
+    2,
+    2,
+    2,
+    3,
+    1,
+    1,
+    1,
+    3,
+    1,
+    1,
+    1,
+    3,
+    1,
+    1,
+    3,
+    1,
+    1,
+    1,
+    3,
+    2,
+    2
+   ],
+   "replay_verified": true,
+   "independent_check": "host A fresh-engine replay from acquire_level_starts: wins at exactly 25, does NOT win at 24.",
+   "lower_bound_argument": "CLOSED-FORM MINIMALITY: the non-alter tr87 algebra decomposes. ROTATION: each piece must rotate at least its minimal ring distance on Z_7 (min(CW, CCW) \u2014 closed-form per-piece optimum, <path>), so every play needs >= sum(min-ring) rotations. NAVIGATION: the cursor only advances one step per action on the size-7 cycle, and best_walk enumerates EVERY (l, r) arc pair (exhaustive arc sweep \u2014 the complete set of cover candidates), so the minimum cover walk is exact, not heuristic. The two costs decouple (a piece rotates exactly when the cursor visits it), so LB = sum(min-ring) + min-cover-walk is ADMISSIBLE and TIGHT: LB == UB == F. The constructed plan has length exactly F and replay-wins on a fresh acquire_level_starts restore (wins at F, does NOT win at F-1).",
+   "replay_won_at": 25
+  },
+  "3": {
+   "level": 3,
+   "status": "PROVEN",
+   "floor": 21,
+   "proof_kind": "rotation_group_closed_form_nonalter",
+   "proof": "Non-alter tr87: |A|={A1,A2,A3,A4}. A1/A2 rotate selected piece on Z_7; A3/A4 move cursor on cycle of size 7. Win requires bottom piece types [3, 4, 4, 5, 1, 4, 6] -> [4, 6, 7, 7, 5, 6, 1]. Necessary rot cost = sum min-ring = 15; necessary visit cover cost = 6 (BFS over cycle). Product independent => floor = rot+nav = 21. Plan length 21 matches; engine wins at 21.",
+   "path": [
+    2,
+    3,
+    2,
+    2,
+    3,
+    2,
+    2,
+    3,
+    1,
+    1,
+    1,
+    3,
+    2,
+    2,
+    3,
+    2,
+    2,
+    2,
+    3,
+    2,
+    2
+   ],
+   "replay_verified": true,
+   "independent_check": "host A fresh-engine replay from acquire_level_starts: wins at exactly 21, does NOT win at 20.",
+   "lower_bound_argument": "CLOSED-FORM MINIMALITY: the non-alter tr87 algebra decomposes. ROTATION: each piece must rotate at least its minimal ring distance on Z_7 (min(CW, CCW) \u2014 closed-form per-piece optimum, <path>), so every play needs >= sum(min-ring) rotations. NAVIGATION: the cursor only advances one step per action on the size-7 cycle, and best_walk enumerates EVERY (l, r) arc pair (exhaustive arc sweep \u2014 the complete set of cover candidates), so the minimum cover walk is exact, not heuristic. The two costs decouple (a piece rotates exactly when the cursor visits it), so LB = sum(min-ring) + min-cover-walk is ADMISSIBLE and TIGHT: LB == UB == F. The constructed plan has length exactly F and replay-wins on a fresh acquire_level_starts restore (wins at F, does NOT win at F-1).",
+   "replay_won_at": 21
+  },
+  "4": {
+   "level": 4,
+   "status": "PROVEN",
+   "floor": 21,
+   "proof_kind": "rotation_group_closed_form_nonalter",
+   "proof": "Non-alter tr87: |A|={A1,A2,A3,A4}. A1/A2 rotate selected piece on Z_7; A3/A4 move cursor on cycle of size 7. Win requires bottom piece types [6, 5, 3, 1, 7, 6, 6] -> [3, 2, 7, 1, 2, 3, 7]. Necessary rot cost = sum min-ring = 15; necessary visit cover cost = 6 (BFS over cycle). Product independent => floor = rot+nav = 21. Plan length 21 matches; engine wins at 21.",
+   "path": [
+    1,
+    1,
+    1,
+    3,
+    2,
+    3,
+    1,
+    1,
+    1,
+    3,
+    2,
+    2,
+    3,
+    3,
+    1,
+    1,
+    1,
+    3,
+    1,
+    1,
+    1
+   ],
+   "replay_verified": true,
+   "independent_check": "host A fresh-engine replay from acquire_level_starts: wins at exactly 21, does NOT win at 20.",
+   "lower_bound_argument": "CLOSED-FORM MINIMALITY: the non-alter tr87 algebra decomposes. ROTATION: each piece must rotate at least its minimal ring distance on Z_7 (min(CW, CCW) \u2014 closed-form per-piece optimum, <path>), so every play needs >= sum(min-ring) rotations. NAVIGATION: the cursor only advances one step per action on the size-7 cycle, and best_walk enumerates EVERY (l, r) arc pair (exhaustive arc sweep \u2014 the complete set of cover candidates), so the minimum cover walk is exact, not heuristic. The two costs decouple (a piece rotates exactly when the cursor visits it), so LB = sum(min-ring) + min-cover-walk is ADMISSIBLE and TIGHT: LB == UB == F. The constructed plan has length exactly F and replay-wins on a fresh acquire_level_starts restore (wins at F, does NOT win at F-1).",
+   "replay_won_at": 21
+  },
+  "5": {
+   "level": 5,
+   "status": "PROVEN",
+   "floor": 14,
+   "proof_kind": "alter_offset_exhaust_enum_min_rot_plus_walk",
+   "proof": "Alter tr87 L5: 8 rule-sides, offsets in Z_7. Complete enum of 7^8 offset vectors; 2 winning vectors under engine-faithful parse_win (left/right chain letter+digit match). Min over winners of (sum min-ring(offset) + min cycle cover walk) = 14. Both halves necessary (independent rot/cursor axes). Path replay-verified from acquire_level_starts; wins at exactly 14. Self-check: same pipeline matches L1 non-alter=14.",
+   "path": [
+    4,
+    2,
+    4,
+    1,
+    4,
+    1,
+    4,
+    2,
+    4,
+    1,
+    1,
+    4,
+    4,
+    2
+   ],
+   "replay_verified": true,
+   "independent_check": "host A fresh-engine replay from acquire_level_starts: wins at exactly 14, does NOT win at 13.",
+   "lower_bound_argument": "EXHAUSTIVE-ENUMERATION MINIMALITY: for the alter tr87 variant, ALL 7^8 offset vectors were enumerated completely (<path> tr87_alter_solve.py) under the engine-faithful parse_win; the min over winning vectors of (sum min-ring(offset) + min cycle-cover walk) is therefore the exact global optimum \u2014 every alternative schedule was enumerated and rejected. The min-ring and cycle-cover halves are each closed-form necessary costs (same Z_7 algebra as the non-alter family). LB == UB == F; the winning plan replay-wins at exactly F on a fresh restore (F-1 loses).",
+   "replay_won_at": 14
+  },
+  "6": {
+   "level": 6,
+   "status": "PROVEN",
+   "human_best": 119,
+   "route_len": 75,
+   "start_source": "cascade_bootstrap",
+   "alphabet_origin": "cascade_trace",
+   "floor_measured_from": "level_start_snapshot",
+   "bootstrap_moves_excluded": 149,
+   "floor": 23,
+   "proof_kind": "alter_offset_complete_enumeration_disjoint_cost_partition",
+   "ub_source": "legal_solver_win_verified",
+   "replay_verified": true,
+   "adversarially_verified": true,
+   "proof": "PROVEN 23. Independent live replay from acquire_level_starts wins at EXACTLY 23 on a fresh restore. replay-wins at exactly 23, 22 loses; minimality by COMPLETE enumeration three independent ways (347M-leaf pruned DFS, unpruned 13.8B-vector sweep -> 420 winners mincost 23, factored bijection agreeing on all 420) under the cost IDENTITY |play| = n_rot + n_cur from disjoint action classes; 4,800-transition engine bisim, 0 mismatches",
+   "ub": null,
+   "lb": null,
+   "path": [
+    [
+     1,
+     null,
+     null
+    ],
+    [
+     1,
+     null,
+     null
+    ],
+    [
+     3,
+     null,
+     null
+    ],
+    [
+     1,
+     null,
+     null
+    ],
+    [
+     1,
+     null,
+     null
+    ],
+    [
+     1,
+     null,
+     null
+    ],
+    [
+     4,
+     null,
+     null
+    ],
+    [
+     4,
+     null,
+     null
+    ],
+    [
+     1,
+     null,
+     null
+    ],
+    [
+     4,
+     null,
+     null
+    ],
+    [
+     2,
+     null,
+     null
+    ],
+    [
+     4,
+     null,
+     null
+    ],
+    [
+     1,
+     null,
+     null
+    ],
+    [
+     4,
+     null,
+     null
+    ],
+    [
+     4,
+     null,
+     null
+    ],
+    [
+     2,
+     null,
+     null
+    ],
+    [
+     2,
+     null,
+     null
+    ],
+    [
+     4,
+     null,
+     null
+    ],
+    [
+     1,
+     null,
+     null
+    ],
+    [
+     1,
+     null,
+     null
+    ],
+    [
+     4,
+     null,
+     null
+    ],
+    [
+     4,
+     null,
+     null
+    ],
+    [
+     2,
+     null,
+     null
+    ]
+   ],
+   "lower_bound_argument": "EXHAUSTIVE-ENUMERATION MINIMALITY: the alter tr87 L6 offset space was enumerated COMPLETELY two independent ways \u2014 a 347,377,281-leaf pruned DFS and an unpruned 13.8B-vector sweep \u2014 agreeing on exactly 420 winning vectors with min cost 23 (out_<label withheld>_tr87.json, out_recovered2.json; counts independently reproduced). Cost decomposes as sum(min-ring(offset)) + min cycle-cover walk (closed-form necessary halves, disjoint cost partition). Every lower-cost vector was enumerated and refuted. The 23-action plan replay-wins at exactly 23 on a fresh acquire_level_starts restore; 22 loses.",
+   "replay_won_at": 23
+  }
+ }
+}

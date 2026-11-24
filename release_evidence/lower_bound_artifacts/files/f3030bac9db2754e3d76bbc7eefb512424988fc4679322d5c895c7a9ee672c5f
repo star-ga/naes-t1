@@ -1,0 +1,16 @@
+<word withheld> (most recent call last):
+  File "<path>", line 67, in <module>
+    canonical={};public={};prefix={};g=fresh()
+                                       ~~~~~^^
+  File "<path>", line 37, in fresh
+    g=mod.Sc25();act(g,[0]);return g
+                 ~~~^^^^^^^
+  File "<path>", line 35, in act
+    return g.perform_action(ActionInput(id=GameAction(a[0]),data=data),raw=True)
+                                           ~~~~~~~~~~^^^^^^
+  File "<path>", line 707, in __call__
+    return cls.__new__(cls, value)
+           ~~~~~~~~~~~^^^^^^^^^^^^
+  File "<path>", line 1192, in __new__
+    raise ve_exc
+<word withheld>: 0 is not a valid GameAction

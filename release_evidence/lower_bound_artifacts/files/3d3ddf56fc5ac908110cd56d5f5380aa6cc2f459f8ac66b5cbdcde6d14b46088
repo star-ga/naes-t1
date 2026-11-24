@@ -1,0 +1,248 @@
+{
+  "<key withheld>": false,
+  "status": "<word withheld>",
+  "rows": [
+    {
+      "game": "sp80",
+      "level": 2,
+      "instance": "sp80-0ee2d095",
+      "<key withheld>": "<word withheld>",
+      "floor": 7,
+      "lb": 7,
+      "ub": 7,
+      "source_sha256": "47ed137edd130c58ce8dfbb3997952437713273241c11107123d4aece3482df2",
+      "proof_kind": "source_cost_lower_bound_plus_complete_configuration_enumeration_and_native_witness",
+      "action_scope": "native IDs1..7 with legal display clicks0..63; lower-bound relaxation also covers raw integer selection coordinates; RESET canonical-suffix dominance",
+      "proof": "SP80_THEOREM.md",
+      "canonical_start_sha256": "4befce3429de5b0bee25f2b6077cbb1fccaa9484c75c4701d7fb653da1d90457",
+      "witness": [
+        [
+          4,
+          null,
+          null
+        ],
+        [
+          4,
+          null,
+          null
+        ],
+        [
+          6,
+          17,
+          17
+        ],
+        [
+          4,
+          null,
+          null
+        ],
+        [
+          4,
+          null,
+          null
+        ],
+        [
+          4,
+          null,
+          null
+        ],
+        [
+          5,
+          null,
+          null
+        ]
+      ],
+      "witness_sha256": "95b12935e5da3188215aa8665048dfbb433df86532ffe114a6163f96578fdc4b",
+      "native_first_completion": 7,
+      "F_minus_1_not_complete": true,
+      "sweep": {
+        "0": {
+          "tested": 1,
+          "wins": 0
+        },
+        "1": {
+          "tested": 4,
+          "wins": 0
+        },
+        "2": {
+          "tested": 15,
+          "wins": 0
+        },
+        "3": {
+          "tested": 53,
+          "wins": 0
+        },
+        "4": {
+          "tested": 152,
+          "wins": 0
+        },
+        "5": {
+          "tested": 385,
+          "wins": 0
+        },
+        "6": {
+          "tested": 886,
+          "wins": 1
+        }
+      },
+      "<key withheld 2>": [
+        "R",
+        "R",
+        "CLK(12,16)",
+        "R",
+        "R",
+        "R",
+        "A5"
+      ],
+      "<key withheld 3>": [
+        "failed commits may select a different nearest piece; charge both clicks and failed commits as selection events",
+        "set_level does not re-clone an already-played level; proof uses canonical first entry",
+        "cost expression used as lower bound, not universal exact attainability under click shadowing"
+      ],
+      "receipt_pins": {
+        "SP80_THEOREM.md": "bc1d12ddd95a9245141a096d1fd40939eb8489336e8f5530260de99fa9dad4dc",
+        "sp80-source-manifest.json": "b33db521977d5dfadcd1f1dce776012ecab07dcf310adf5bd2c8533fb060877c",
+        "sp80-trust-base-comparison.json": "9b592757a9a9e7a7710e572caec95c8dccd678f269f654e2bfc67652b73ef1da",
+        "sp80-results/fresh-enumeration.json": "788f296cf7ae92638b8e89549975d1800cf3eda9c8a37c4c0989acbffc1cc908",
+        "sp80-results/fresh-native-controls.json": "49b7b68fb8c8f149d103c2f5ff7402a1f377d69dd0e4dd2a65b0720c42a274b4",
+        "sp80-results/independent-domain-controls.json": "8cb30b5671a5af7cc1dc281eb868898b03d9199d7bbf6447acec97ef7b8e6fb6"
+      }
+    },
+    {
+      "game": "sp80",
+      "level": 3,
+      "instance": "sp80-0ee2d095",
+      "<key withheld>": "<word withheld>",
+      "floor": 10,
+      "lb": 10,
+      "ub": 10,
+      "source_sha256": "47ed137edd130c58ce8dfbb3997952437713273241c11107123d4aece3482df2",
+      "proof_kind": "source_cost_lower_bound_plus_complete_configuration_enumeration_and_native_witness",
+      "action_scope": "native IDs1..7 with legal display clicks0..63; lower-bound relaxation also covers raw integer selection coordinates; RESET canonical-suffix dominance",
+      "proof": "SP80_THEOREM.md",
+      "canonical_start_sha256": "8c1f24e14ad5d048d0d96c4bfc00c67b892a687d773f2c2f8747608e667e9c7c",
+      "witness": [
+        [
+          4,
+          null,
+          null
+        ],
+        [
+          6,
+          57,
+          29
+        ],
+        [
+          3,
+          null,
+          null
+        ],
+        [
+          3,
+          null,
+          null
+        ],
+        [
+          6,
+          29,
+          33
+        ],
+        [
+          3,
+          null,
+          null
+        ],
+        [
+          3,
+          null,
+          null
+        ],
+        [
+          6,
+          21,
+          21
+        ],
+        [
+          4,
+          null,
+          null
+        ],
+        [
+          5,
+          null,
+          null
+        ]
+      ],
+      "witness_sha256": "0c3879271e266d076e08dbe2e6dddd40e7d7b2f32e4b31c58bfe5df48e373af2",
+      "native_first_completion": 10,
+      "F_minus_1_not_complete": true,
+      "sweep": {
+        "0": {
+          "tested": 1,
+          "wins": 0
+        },
+        "1": {
+          "tested": 4,
+          "wins": 0
+        },
+        "2": {
+          "tested": 19,
+          "wins": 0
+        },
+        "3": {
+          "tested": 78,
+          "wins": 0
+        },
+        "4": {
+          "tested": 256,
+          "wins": 0
+        },
+        "5": {
+          "tested": 770,
+          "wins": 0
+        },
+        "6": {
+          "tested": 2123,
+          "wins": 0
+        },
+        "7": {
+          "tested": 5315,
+          "wins": 0
+        },
+        "8": {
+          "tested": 12206,
+          "wins": 0
+        },
+        "9": {
+          "tested": 26008,
+          "wins": 1
+        }
+      },
+      "<key withheld 2>": [
+        "R",
+        "CLK(14,22)",
+        "R",
+        "CLK(50,30)",
+        "L",
+        "L",
+        "CLK(18,34)",
+        "L",
+        "L",
+        "A5"
+      ],
+      "<key withheld 3>": [
+        "failed commits may select a different nearest piece; charge both clicks and failed commits as selection events",
+        "set_level does not re-clone an already-played level; proof uses canonical first entry",
+        "cost expression used as lower bound, not universal exact attainability under click shadowing"
+      ],
+      "receipt_pins": {
+        "SP80_THEOREM.md": "bc1d12ddd95a9245141a096d1fd40939eb8489336e8f5530260de99fa9dad4dc",
+        "sp80-source-manifest.json": "b33db521977d5dfadcd1f1dce776012ecab07dcf310adf5bd2c8533fb060877c",
+        "sp80-trust-base-comparison.json": "9b592757a9a9e7a7710e572caec95c8dccd678f269f654e2bfc67652b73ef1da",
+        "sp80-results/fresh-enumeration.json": "788f296cf7ae92638b8e89549975d1800cf3eda9c8a37c4c0989acbffc1cc908",
+        "sp80-results/fresh-native-controls.json": "49b7b68fb8c8f149d103c2f5ff7402a1f377d69dd0e4dd2a65b0720c42a274b4",
+        "sp80-results/independent-domain-controls.json": "8cb30b5671a5af7cc1dc281eb868898b03d9199d7bbf6447acec97ef7b8e6fb6"
+      }
+    }
+  ]
+}

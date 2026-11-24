@@ -1,0 +1,204 @@
+fn signed_plan_word(raw: i64, off: i64) -> i64 {
+    let v: i64 = rd_u32(raw, off);
+    if v >= 2147483648 { return v - 4294967296; }
+    v
+}
+// Validate every gate's reference order and proven magnitude bound, then each
+// coefficient of every output. This is exact algebra, with no hashes or probes.
+fn plan_matches(lay: i64, raw: i64, ng: i64, len: i64) -> i64 {
+    if raw == 0 || ng != 2048 || len < 8 + ng * 12 || rd_u32(raw, 4) != 64 { return 0; }
+    let bank: i64 = alloc_zero(576 + ng);
+    let mut g: i64 = 0;
+    while g < 576 { let _s: i64 = st(bank, g, 1); g = g + 1; }
+    g = 0;
+    while g < ng {
+        let a: i64 = rd_u32(raw, 8 + g * 12);
+        let b: i64 = rd_u32(raw, 12 + g * 12);
+        let r: i64 = signed_plan_word(raw, 16 + g * 12);
+        if a >= 576 + g || b >= 576 + g || (r != 1 && r != 0 - 1) { return 0; }
+        let norm: i64 = ld(bank, a) + ld(bank, b);
+        if norm > 64 { return 0; }
+        let _s: i64 = st(bank, 576 + g, norm);
+        g = g + 1;
+    }
+    let mut cur0: i64 = 8 + ng * 12;
+    let mut row0: i64 = 0;
+    while row0 < 64 {
+        if cur0 + 4 > len { return 0; }
+        let nt0: i64 = rd_u32(raw, cur0);
+        if nt0 > 2624 || cur0 + 4 + nt0 * 4 > len { return 0; }
+        cur0 = cur0 + 4 + nt0 * 4;
+        row0 = row0 + 1;
+    }
+    if cur0 != len { return 0; }
+    let t: i64 = ld(lay, 4);
+    let mut basis: i64 = 0;
+    while basis < 576 {
+        let _z: i64 = zero_i64(bank, 576);
+        let _b: i64 = st(bank, basis, 1);
+        g = 0;
+        while g < ng {
+            let a: i64 = rd_u32(raw, 8 + g * 12);
+            let b: i64 = rd_u32(raw, 12 + g * 12);
+            let r: i64 = signed_plan_word(raw, 16 + g * 12);
+            let _s: i64 = st(bank, 576 + g, ld(bank, a) + r * ld(bank, b));
+            g = g + 1;
+        }
+        let mut cur: i64 = 8 + ng * 12;
+        let mut o: i64 = 0;
+        while o < 64 {
+            let nt: i64 = rd_u32(raw, cur);
+            if nt > 2624 { return 0; }
+            cur = cur + 4;
+            let mut sum: i64 = 0;
+            let mut j: i64 = 0;
+            while j < nt {
+                let node: i64 = signed_plan_word(raw, cur + j * 4);
+                if node == 0 || node > 576 + ng || node < 0 - 576 - ng { return 0; }
+                if node > 0 { sum = sum + ld(bank, node - 1); }
+                else { sum = sum - ld(bank, 0 - node - 1); }
+                j = j + 1;
+            }
+            if sum != ld(t, o * 576 + basis) { return 0; }
+            cur = cur + nt * 4;
+            o = o + 1;
+        }
+        basis = basis + 1;
+    }
+    1
+}
+fn build_block_list(lay: i64, ch: i64, which: i64, plans: i64) -> i64 {
+    if plans == 0 { return build_triple_list(lay, ch); }
+    let data: i64 = ld(plans, 0);
+    let off: i64 = rd_u32(data, 16 + which * 8);
+    let len: i64 = rd_u32(data, 20 + which * 8);
+    if off < 80 || len < 8 || off + len > ld(plans, 1) { return build_triple_list(lay, ch); }
+    let raw: i64 = data + off;
+    let ng: i64 = rd_u32(raw, 0);
+    if plan_matches(lay, raw, ng, len) == 0 { return build_triple_list(lay, ch); }
+    let starts: i64 = alloc_zero(ch * 3);
+    let offsets: i64 = alloc_zero(ch * (576 + ng));
+    let mut cursor: i64 = 8 + ng * 12;
+    let mut count: i64 = 0;
+    let mut o: i64 = 0;
+    while o < ch {
+        let nt: i64 = rd_u32(raw, cursor);
+        cursor = cursor + 4;
+        let mut sign: i64 = 1;
+        while sign >= 0 - 1 {
+            let _s: i64 = st(starts, o * 3 + (1 - sign) / 2, count);
+            let mut j: i64 = 0;
+            while j < nt {
+                let node: i64 = signed_plan_word(raw, cursor + j * 4);
+                if node * sign > 0 {
+                    let _p: i64 = st(offsets, count, (node * sign - 1) * 16 * 8);
+                    count = count + 1;
+                }
+                j = j + 1;
+            }
+            sign = sign - 2;
+        }
+        let _e: i64 = st(starts, o * 3 + 2, count);
+        cursor = cursor + nt * 4;
+        o = o + 1;
+    }
+    let rec: i64 = alloc_zero(6);
+    let _r1: i64 = st(rec, 0, starts);
+    let _r2: i64 = st(rec, 1, offsets);
+    let _r3: i64 = st(rec, 2, __mind_alloc((576 + ng) * 16 * 8));
+    let _r4: i64 = st(rec, 3, raw + 8);
+    let _r5: i64 = st(rec, 4, ng);
+    let _r6: i64 = st(rec, 5, 1);
+    rec
+}
+fn pair_bank(lay: i64, ch: i64, hin: i64, bank: i64, y: i64, x: i64, gates: i64, ngates: i64) -> i64 {
+    let dilation: i64 = ld(lay, 3);
+    let mut k: i64 = 0;
+    while k < ch * 9 {
+        let src: i64 = hin + ((k / 9) * plane() + origin() + (y + ((k % 9) / 3 - 1) * dilation) * pw() + x + (k % 3 - 1) * dilation) * 8;
+        let dst: i64 = bank + k * 16 * 8;
+        let mut p: i64 = 0;
+        while p < 128 {
+            __mind_store_i64(dst + p, __mind_load_i64(src + p));
+            p = p + 8;
+        }
+        k = k + 1;
+    }
+    let mut gate: i64 = 0;
+    while gate < ngates {
+        let srca: i64 = bank + rd_u32(gates, gate * 12) * 16 * 8;
+        let srcb: i64 = bank + rd_u32(gates, gate * 12 + 4) * 16 * 8;
+        let rel: i64 = rd_u32(gates, gate * 12 + 8);
+        let dst: i64 = bank + (576 + gate) * 16 * 8;
+        let mut p: i64 = 0;
+        if rel == 1 {
+            while p < 128 {
+                __mind_store_i64(dst + p, __mind_load_i64(srca + p) + __mind_load_i64(srcb + p));
+                p = p + 8;
+            }
+        } else {
+            while p < 128 {
+                __mind_store_i64(dst + p, __mind_load_i64(srca + p) - __mind_load_i64(srcb + p));
+                p = p + 8;
+            }
+        }
+        gate = gate + 1;
+    }
+    0
+}
+
+fn block_pairs(lay: i64, list: i64, ch: i64, hin: i64, hout: i64, acc: i64) -> i64 {
+    let starts: i64 = ld(list, 0);
+    let offs: i64 = ld(list, 1);
+    let bank: i64 = ld(list, 2);
+    let ms: i64 = __mind_load_i64(lay + 40);
+    let es: i64 = __mind_load_i64(lay + 48);
+    let bs: i64 = __mind_load_i64(lay + 56);
+    let mut y: i64 = 0;
+    while y < 64 {
+        let mut x: i64 = 0;
+        while x < 64 {
+            let _t: i64 = pair_bank(lay, ch, hin, bank, y, x, ld(list, 3), ld(list, 4));
+            let mut o: i64 = 0;
+            while o < ch {
+                let j0: i64 = ld(starts, o * 3);
+                let j1: i64 = ld(starts, o * 3 + 1);
+                let j2: i64 = ld(starts, o * 3 + 2);
+                let dst: i64 = acc + (o * 64 + x) * 8;
+                let _c1: i64 = conv_tile8(bank, offs, j0, j1, j2, dst);
+                let _c2: i64 = conv_tile8(bank + 64, offs, j0, j1, j2, dst + 64);
+                o = o + 1;
+            }
+            x = x + 16;
+        }
+        let mut o: i64 = 0;
+        while o < ch {
+            if finish_row(acc + o * 64 * 8, ld(ms, o), 0 - ld(es, o), ld(bs, o), hin, hout, o * plane() + origin() + y * pw()) < 0 {
+                return 0 - 1;
+            }
+            o = o + 1;
+        }
+        y = y + 1;
+    }
+    0
+}
+
+fn block(lay: i64, list: i64, ch: i64, hin: i64, hout: i64, acc: i64) -> i64 {
+    if ld(list, 5) == 1 { return block_pairs(lay, list, ch, hin, hout, acc); }
+    block_triple(lay, list, ch, hin, hout, acc)
+}
+
+// Encoded input indices are 0..16 (colour), 0..8 (action/run), or0..1
+// (click); ternary table entries are -1/0/+1. These exact ranges fit bytes.
+fn alloc_zero_bytes(n: i64) -> i64 {
+    let p: i64 = __mind_alloc(n);
+    let mut i: i64 = 0;
+    while i < n { __mind_store_i8(p + i, 0); i = i + 1; }
+    p
+}
+fn st8(base: i64, i: i64, v: i64) -> i64 { __mind_store_i8(base + i, v); 0 }
+fn ldu8(base: i64, i: i64) -> i64 { __mind_load_i8(base + i) }
+fn lds8(base: i64, i: i64) -> i64 {
+    let x: i64 = __mind_load_i8(base + i);
+    x - ((x >> 7) << 8)
+}

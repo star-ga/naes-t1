@@ -1,0 +1,40 @@
+{
+ "total": {
+  "levels": 7,
+  "ref_levels": 7,
+  "actions": 275,
+  "ref_actions": 275,
+  "games_full": 1,
+  "games": 1,
+  "perturb": 0
+ },
+ "games": [
+  {
+   "game": "g50t-5849a774",
+   "levels": 7,
+   "ref_levels": 7,
+   "actions": 275,
+   "ref_actions": 275,
+   "per_level": [
+    18,
+    31,
+    64,
+    31,
+    50,
+    40,
+    41
+   ],
+   "ref_per_level": [
+    17,
+    31,
+    64,
+    31,
+    50,
+    40,
+    41
+   ],
+   "resets": 1,
+   "over_ref_levels": []
+  }
+ ]
+}

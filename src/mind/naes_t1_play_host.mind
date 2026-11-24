@@ -1,0 +1,46 @@
+// naes_t1_play_host.mind — transport choice for the play client's --host.
+//
+// HTTPS is the default. Plain HTTP carries the X-API-Key header in
+// cleartext, so it is never chosen silently for a host that can be off the
+// machine: only --plain-http, or a loopback IPv4 literal (127.0.0.0/8, the
+// local toolkit gateway of the offline replay), selects it. Any other IPv4
+// literal is refused, because HTTPS needs a DNS name to verify the server
+// certificate against. Pure: reads only the host bytes.
+// Byte length of the NUL-terminated host, -1 past 255 bytes.
+fn play_host_len(p: i64) -> i64 {
+    if p == 0 { return 0; }
+    let mut n: i64 = 0;
+    while n < 256 { if __mind_load_i8(p + n) == 0 { return n; } n = n + 1; }
+    0 - 1
+}
+// 1 when host is an IPv4 dotted quad (7..15 bytes, three dots, digits only,
+// no empty part), else 0.
+fn play_host_is_quad(host: i64) -> i64 {
+    let hl: i64 = play_host_len(host);
+    if hl < 7 || hl > 15 { return 0; }
+    let mut dots: i64 = 0;
+    let mut digits: i64 = 0;
+    let mut j: i64 = 0;
+    while j < hl {
+        let c: i64 = __mind_load_i8(host + j);
+        if c == 46 {
+            if digits == 0 { return 0; }
+            dots = dots + 1;
+            digits = 0;
+        } else {
+            if c < 48 || c > 57 { return 0; }
+            digits = digits + 1;
+        }
+        j = j + 1;
+    }
+    if dots != 3 || digits == 0 { return 0; }
+    1
+}
+// Transport for `host`: 1 plain HTTP, 0 HTTPS, -1 refused. `plain` is 1
+// when --plain-http was given.
+fn play_transport(host: i64, plain: i64) -> i64 {
+    if plain == 1 { return 1; }
+    if play_host_is_quad(host) == 0 { return 0; }
+    if __mind_load_i8(host) == 49 && __mind_load_i8(host + 1) == 50 && __mind_load_i8(host + 2) == 55 && __mind_load_i8(host + 3) == 46 { return 1; }
+    0 - 1
+}

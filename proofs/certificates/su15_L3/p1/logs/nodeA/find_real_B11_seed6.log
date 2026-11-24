@@ -1,0 +1,13 @@
+ROOT h=11 (rule 1) bound B=11 flags=3 mode=find 
+DEPTH 0 expanded=1 clicks=4096 noop=2845 fail=245 lossy=0 distinct_children=992 hcalls=4 pruned_R_MASS=0 pruned_R_H=3 pruned_R_TT=0 win_clicks=0
+DEPTH 1 expanded=1 clicks=4096 noop=2819 fail=164 lossy=0 distinct_children=1097 hcalls=1 pruned_R_MASS=0 pruned_R_H=0 pruned_R_TT=0 win_clicks=0
+DEPTH 2 expanded=1 clicks=4096 noop=2953 fail=161 lossy=0 distinct_children=967 hcalls=6 pruned_R_MASS=0 pruned_R_H=5 pruned_R_TT=0 win_clicks=0
+DEPTH 3 expanded=1 clicks=4096 noop=2994 fail=90 lossy=0 distinct_children=982 hcalls=4 pruned_R_MASS=0 pruned_R_H=3 pruned_R_TT=0 win_clicks=0
+DEPTH 4 expanded=1 clicks=4096 noop=3088 fail=169 lossy=0 distinct_children=810 hcalls=27 pruned_R_MASS=0 pruned_R_H=26 pruned_R_TT=1 win_clicks=0
+DEPTH 5 expanded=1 clicks=4096 noop=3159 fail=90 lossy=0 distinct_children=817 hcalls=70 pruned_R_MASS=0 pruned_R_H=69 pruned_R_TT=0 win_clicks=0
+DEPTH 6 expanded=1 clicks=4096 noop=3219 fail=42 lossy=0 distinct_children=805 hcalls=128 pruned_R_MASS=0 pruned_R_H=127 pruned_R_TT=0 win_clicks=0
+DEPTH 7 expanded=1 clicks=4096 noop=3234 fail=42 lossy=0 distinct_children=790 hcalls=556 pruned_R_MASS=0 pruned_R_H=555 pruned_R_TT=15 win_clicks=0
+DEPTH 8 expanded=1 clicks=4096 noop=3371 fail=0 lossy=0 distinct_children=722 hcalls=506 pruned_R_MASS=0 pruned_R_H=505 pruned_R_TT=4 win_clicks=0
+DEPTH 9 expanded=1 clicks=4096 noop=3529 fail=10 lossy=0 distinct_children=555 hcalls=298 pruned_R_MASS=0 pruned_R_H=297 pruned_R_TT=18 win_clicks=0
+DEPTH 10 expanded=1 clicks=4096 noop=3616 fail=96 lossy=0 distinct_children=0 hcalls=0 pruned_R_MASS=0 pruned_R_H=0 pruned_R_TT=0 win_clicks=1
+WIN_FOUND len=11 route: 57,29 48,29 5,23 40,33 28,21 26,27 33,39 13,23 19,30 23,38 27,46

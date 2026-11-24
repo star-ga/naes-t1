@@ -1,0 +1,51 @@
+{
+  "artifact_sha256": [
+    {
+      "kind": "safe_statement_count_extract",
+      "sha256": "eaa47e0c8dd318d0bc581b570b30a9ec818b167d8adb24b7ba5721caec90aa8d"
+    },
+    {
+      "kind": "authority_ledger_label",
+      "sha256": "e546261f74caf1af4fb4e09a3cb731c0b63e8841c891dbc0fb50b1f0629ecde8"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "cb6a48eb2a88e1a955b4d97e82cef43529b7cae7a19304aebab6f137608da553"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "f6d543a7322f278aa3cdcc54edd8a89f66c5d83cc2ee4dd011fff7dd8f0d83f7"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "1ade519f70593e7dfbee83522405c1c0add4ddbb63db669e35ec6350c81430f9"
+    },
+    {
+      "kind": "historical_method_or_search_output",
+      "sha256": "e859290984560142536e83a24c24ee82d223031c1b2b915cee803546237fc96c"
+    }
+  ],
+  "floor": 20,
+  "game": "cn04",
+  "game_id": "cn04-2fe56bfb",
+  "game_levels": 6,
+  "level": 3,
+  "lower_bound": {
+    "kind": "relaxed_object_distance_matching_configuration_enumeration",
+    "statement": "Each action changes at most one object mode; every winning route costs at least the sum of relaxed per-object distances plus required selection changes. Complete matching and configuration enumeration minimizes this bound to 20. The proof relaxed_object_distance_matching_configuration_enumeration establishes lower bound 20, equal to the floor.",
+    "value": 20
+  },
+  "naes_t1_actions": 20,
+  "proof_class": "Matching bounds",
+  "proof_detail": "relaxed_object_distance_matching_configuration_enumeration",
+  "schema_version": 1,
+  "source_certificate_sha256": "592cd748cab3a003396c4201422db9aee4fe1df462627a5e352006e13aa14634",
+  "status": "proven",
+  "upper_bound": {
+    "expected_levels_completed": 3,
+    "length": 20,
+    "opening_reset_counted": false,
+    "route": "4 4 4 6@33,15 3 2 2 2 2 2 2 6@30,36 5 5 1 1 1 1 1 1",
+    "seed": 0
+  }
+}

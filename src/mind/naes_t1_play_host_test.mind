@@ -1,0 +1,29 @@
+// naes_t1_play_host_test.mind — tests for play_transport
+// (naes_t1_play_host.mind). Build (repo root):
+//   cat src/mind/naes_t1_play_host.mind src/mind/naes_t1_play_host_test.mind \
+//       > build/play_host_unit.mind
+//   mindc build build/play_host_unit.mind --no-cache --out naes_t1_play_host_test
+// Run: naes_t1_play_host_test; exit 0 when every case holds, else the
+// number of the first failing case. Cases:
+//   1 DNS name -> HTTPS            2 127.0.0.1 -> plain (offline gateway)
+//   3 127.1.2.3 -> plain           4 192.0.2.1 without --plain-http -> refused
+//   5 10.0.0.1 -> refused          6 192.0.2.1 with --plain-http -> plain
+//   7 1270.0.0.1 -> refused        8 DNS name with --plain-http -> plain
+//   9 digit-and-dot name that is no quad (1.2.3.4.5) -> HTTPS
+fn play_ht_str(s: String) -> i64 { s.addr }
+fn play_ht_case(n: i64, host: String, plain: i64, want: i64) -> i64 {
+    if play_transport(play_ht_str(host), plain) != want { return n; }
+    0
+}
+fn main(os_argc: i64, argv: i64) -> i64 {
+    let mut f: i64 = play_ht_case(1, "three.arcprize.org\0", 0, 0);
+    if f == 0 { f = play_ht_case(2, "127.0.0.1\0", 0, 1); }
+    if f == 0 { f = play_ht_case(3, "127.1.2.3\0", 0, 1); }
+    if f == 0 { f = play_ht_case(4, "192.0.2.1\0", 0, 0 - 1); }
+    if f == 0 { f = play_ht_case(5, "10.0.0.1\0", 0, 0 - 1); }
+    if f == 0 { f = play_ht_case(6, "192.0.2.1\0", 1, 1); }
+    if f == 0 { f = play_ht_case(7, "1270.0.0.1\0", 0, 0 - 1); }
+    if f == 0 { f = play_ht_case(8, "three.arcprize.org\0", 1, 1); }
+    if f == 0 { f = play_ht_case(9, "1.2.3.4.5\0", 0, 0); }
+    f
+}

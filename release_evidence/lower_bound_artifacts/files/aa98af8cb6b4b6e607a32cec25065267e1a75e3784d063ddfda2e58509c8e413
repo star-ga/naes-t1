@@ -1,0 +1,14 @@
+{
+ "kind": "index0_precise_pf_solve",
+ "status": "SAT_CANDIDATE",
+ "solver": "cadical195",
+ "cnf_path": "<path>",
+ "cnf_sha256": "d9e471b3c119ae38f0e48a9e68b26b3a094b08337c633b5d4697905f2f288af9",
+ "clauses": 571515,
+ "started_utc": "2026-11-05T04:26:15.028310+00:00",
+ "finished_utc": "2026-11-05T04:26:47.947783+00:00",
+ "seconds": 32.92,
+ "command": "<path>",
+ "worker_sha256": "eb6f4ea72278462c8409034cdfa64de8f1a12ca9b7dd2cab42c7ab8ff547b9b4",
+ "model_file": "<path>"
+}

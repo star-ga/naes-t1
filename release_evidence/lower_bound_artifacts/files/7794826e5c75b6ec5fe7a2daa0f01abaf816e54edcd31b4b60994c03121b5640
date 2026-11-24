@@ -1,0 +1,8 @@
+INFO:arc_agi.scorecard:Initialized ScorecardManager with idle_for=0:15:00 and max_open_for=3 days, 0:00:00
+2026-09-22 14:54:10 | INFO | Created new scorecard: a6d5e546-ce10-414e-b0e6-c9cca4ee6399
+INFO:arc_agi.base:Created new scorecard: a6d5e546-ce10-414e-b0e6-c9cca4ee6399
+2026-09-22 14:54:10 | INFO | Successfully loaded game class Su15 from <path>
+INFO:arc_agi.base:Successfully loaded game class Su15 from <path>
+[replay-backend] cls=Su15 kwargs={} deterministic=yes deepcopy_cache=on
+[engine] su15-4c352900 starts=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10] alphabet=replay_oracle guidance=none
+[gbfs] depth 1: frontier 3396 nodes 3400 win=None 70s

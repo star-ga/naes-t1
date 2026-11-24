@@ -1,0 +1,171 @@
+// Row epilogue of the grouped-sum kernel: scale, round and clamp one row of
+// sums (finish_row4), its vector form (finish_row4v) and the choice between
+// them (finish_row_epi).
+// Entry points: finish_row4, finish_row_epi, finish_row4v.
+
+fn finish_row4(acc: i64, m: i64, sh: i64, bq: i64, hin: i64, hout: i64, cell0: i64) -> i64 {
+    if sh < 1 {
+        return finish_row(acc, m, sh, bq, hin, hout, cell0);
+    }
+    let mut um: i64 = m;
+    let mut mneg: i64 = 0;
+    if m < 0 {
+        um = 0 - m;
+        mneg = 1;
+    }
+    let s: i64 = sh - 1;
+    let t: i64 = s - 32;
+    let src: i64 = hin + cell0 * 8;
+    let dst: i64 = hout + cell0 * 8;
+    let mut i: i64 = 0;
+    while i < 512 {
+        let a: i64 = __mind_load_i64(acc + i);
+        let mut ua: i64 = a;
+        let mut neg: i64 = mneg;
+        if a < 0 {
+            ua = 0 - a;
+            neg = 1 - neg;
+        }
+        let x: i64 = (ua >> 32) * um;
+        let lo: i64 = (ua & 4294967295) * um;
+        let mut q: i64 = 0;
+        if s >= 32 {
+            if t <= 62 {
+                q = (x + (lo >> 32)) >> t;
+            }
+        } else {
+            q = (x << (32 - s)) + (lo >> s);
+        }
+        let mut v: i64 = (q + 1) >> 1;
+        if neg == 1 {
+            v = 0 - v;
+        }
+        v = v + bq;
+        if v < 0 {
+            v = 0;
+        }
+        let nv: i64 = v + __mind_load_i64(src + i);
+        if nv >= act_limit() {
+            return 0 - 1;
+        }
+        __mind_store_i64(dst + i, nv);
+        i = i + 8;
+    }
+    0
+}
+
+fn epi_put4(p: i64, v: i64) -> i64 {
+    __mind_store_i64(p, v);
+    __mind_store_i64(p + 8, v);
+    __mind_store_i64(p + 16, v);
+    __mind_store_i64(p + 24, v);
+    0
+}
+
+fn w4_epi_cells() -> i64 { 18 }
+
+fn epi_cells(w4: i64) -> i64 {
+    let mut k: i64 = ld(w4, w4_epi_cells());
+    if k == 0 {
+        k = alloc_zero(32);
+        if k == 0 {
+            return 0;
+        }
+        epi_put4(k + 96, 1);
+        epi_put4(k + 128, act_limit() - 1);
+        __mind_store_i64(k + 176, 63);
+        __mind_store_i64(k + 184, 32);
+        st(w4, w4_epi_cells(), k);
+    }
+    k
+}
+
+fn finish_row_epi(w4: i64, acc: i64, m: i64, sh: i64, bq: i64, src: i64, dst: i64) -> i64 {
+    if ld(w4, w4_epi()) == 1 || sh < 1 || m > 2147483647 || m < 0 - 2147483647 {
+        return finish_row4(acc, m, sh, bq, src, dst, 0);
+    }
+    let k: i64 = epi_cells(w4);
+    if k == 0 {
+        return 0 - 1;
+    }
+    let s: i64 = sh - 1;
+    let mut hi: i64 = 0;
+    if m < 0 {
+        epi_put4(k, 0 - m);
+        epi_put4(k + 32, 0 - 1);
+    } else {
+        epi_put4(k, m);
+        epi_put4(k + 32, 0);
+    }
+    epi_put4(k + 64, bq);
+    if s >= 32 {
+        hi = 1;
+        __mind_store_i64(k + 160, s - 32);
+    } else {
+        __mind_store_i64(k + 160, 32 - s);
+        __mind_store_i64(k + 168, s);
+    }
+    finish_row4v(acc, src, dst, k, hi)
+}
+
+// Vector leaf: it calls no other function and uses literal registers and
+// displacements.
+fn finish_row4v(acc: i64, src: i64, dst: i64, k: i64, hi: i64) -> i64 {
+    __mind_ymm_vpsubq_i64x4_r(5, 5, 5);
+    __mind_ymm_vpsubq_i64x4_r(4, 4, 4);
+    __mind_ymm_vmovdqu_ld(6, k, 0);
+    __mind_ymm_vmovdqu_ld(7, k, 32);
+    __mind_ymm_vmovdqu_ld(8, k, 64);
+    __mind_ymm_vmovdqu_ld(9, k, 96);
+    __mind_ymm_vmovdqu_ld(10, k, 128);
+    __mind_ymm_vmovdqu_ld(11, k, 160);
+    __mind_ymm_vmovdqu_ld(12, k, 168);
+    __mind_ymm_vmovdqu_ld(13, k, 176);
+    __mind_ymm_vmovdqu_ld(14, k, 184);
+    let mut i: i64 = 0;
+    while i < 512 {
+        __mind_ymm_vmovdqu_ld(0, acc + i, 0);
+        __mind_ymm_vpcmpgtq_i64x4_r(1, 5, 0);
+        __mind_ymm_vpand_i64x4_r(3, 0, 1);
+        __mind_ymm_vpsubq_i64x4_r(0, 0, 3);
+        __mind_ymm_vpsubq_i64x4_r(0, 0, 3);
+        __mind_ymm_vpsubq_i64x4_r(1, 1, 7);
+        __mind_ymm_vpand_i64x4_r(1, 1, 9);
+        __mind_ymm_vpsubq_i64x4_r(1, 5, 1);
+        __mind_ymm_vpsrlq_i64x4_r(2, 0, 14);
+        __mind_ymm_vpmuludq_i64x4_r(2, 2, 6);
+        __mind_ymm_vpmuludq_i64x4_r(0, 0, 6);
+        if hi == 1 {
+            __mind_ymm_vpsrlq_i64x4_r(0, 0, 14);
+            __mind_ymm_vpaddq_i64x4_r(0, 0, 2);
+            __mind_ymm_vpsrlq_i64x4_r(0, 0, 11);
+            __mind_ymm_vpaddq_i64x4_r(0, 0, 9);
+            __mind_ymm_vpsrlq_i64x4_r(0, 0, 9);
+        } else {
+            __mind_ymm_vpsllq_i64x4_r(2, 2, 11);
+            __mind_ymm_vpsrlq_i64x4_r(0, 0, 12);
+            __mind_ymm_vpaddq_i64x4_r(0, 0, 2);
+            __mind_ymm_vpaddq_i64x4_r(0, 0, 9);
+            __mind_ymm_vpcmpgtq_i64x4_r(3, 5, 0);
+            __mind_ymm_vpsrlq_i64x4_r(0, 0, 9);
+            __mind_ymm_vpsllq_i64x4_r(3, 3, 13);
+            __mind_ymm_vpor_i64x4_r(0, 0, 3);
+        }
+        __mind_ymm_vpand_i64x4_r(3, 0, 1);
+        __mind_ymm_vpsubq_i64x4_r(0, 0, 3);
+        __mind_ymm_vpsubq_i64x4_r(0, 0, 3);
+        __mind_ymm_vpaddq_i64x4_r(0, 0, 8);
+        __mind_ymm_vpcmpgtq_i64x4_r(3, 0, 5);
+        __mind_ymm_vpand_i64x4_r(0, 0, 3);
+        __mind_ymm_vpaddq_i64x4_m(0, src + i, 0);
+        __mind_ymm_vpcmpgtq_i64x4_r(3, 0, 10);
+        __mind_ymm_vpor_i64x4_r(4, 4, 3);
+        __mind_ymm_vmovdqu_st(0, dst + i, 0);
+        i = i + 32;
+    }
+    __mind_ymm_vmovdqu_st(4, k, 224);
+    if (__mind_load_i64(k + 224) | __mind_load_i64(k + 232) | __mind_load_i64(k + 240) | __mind_load_i64(k + 248)) != 0 {
+        return 0 - 1;
+    }
+    0
+}

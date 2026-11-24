@@ -1,0 +1,181 @@
+{
+ "level": 3,
+ "ub": 11,
+ "sources": "all",
+ "canonical_prefix_actions": 18,
+ "canonical_dir": 0,
+ "canonical_ijh": "fibcey",
+ "canonical_key": "5b4e2a04717baf8c283433b1a1f5686a22e17bc38916bbb5d18d286ba15303e7",
+ "canonical_matches_variant": [],
+ "source_keys": {
+  "dir0_ijh__on_set_level__": "eb9a48b12e316804a4640872f7e9575b8b8333e97e64bc84457fa84828d0503d",
+  "dir1_ijh__on_set_level__": "e64ccd75274d6b157e57410e826b055a00657693a39b64f52dcf301e5d8c3772",
+  "dir2_ijh__on_set_level__": "2e40c80f21b6fd6a6daa452effe3681a4de3ecb14df330eb4c55f46d3b461421",
+  "dir3_ijh__on_set_level__": "0c1c42992b66283ee6efae9c395413ddb6846875f029697ef6a79d2bf15150d1"
+ },
+ "src_sha256": "871a507cf340d1e4a3271205a71bb5433f20c2b0e427f7ce40da47060cdd4392",
+ "stats": {
+  "expanded": 437,
+  "edges": 4799,
+  "full_reset_pruned": 8,
+  "game_over": 0,
+  "unstable": 0,
+  "classified_coords": 1789952,
+  "min_toggle_class_size": 25,
+  "missing_toggle_cells": 0,
+  "label_sets": [
+   [
+    "demo:fibcey=100,flash=3707,toggle:0,0=36,toggle:0,1=30,toggle:0,2=36,toggle:1,0=30,toggle:1,1=25,toggle:1,2=30,toggle:2,0=36,toggle:2,1=30,toggle:2,2=36",
+    264
+   ],
+   [
+    "flash=3707,legend:fibcey=100,toggle:0,0=36,toggle:0,1=30,toggle:0,2=36,toggle:1,0=30,toggle:1,1=25,toggle:1,2=30,toggle:2,0=36,toggle:2,1=30,toggle:2,2=36",
+    173
+   ]
+  ],
+  "intermediate_cast_trigger": 0
+ },
+ "per_cost_settled": [
+  [
+   0,
+   4
+  ],
+  [
+   1,
+   8
+  ],
+  [
+   2,
+   19
+  ],
+  [
+   3,
+   32
+  ],
+  [
+   4,
+   36
+  ],
+  [
+   5,
+   49
+  ],
+  [
+   6,
+   87
+  ],
+  [
+   7,
+   104
+  ],
+  [
+   8,
+   69
+  ],
+  [
+   9,
+   24
+  ],
+  [
+   10,
+   5
+  ]
+ ],
+ "states_settled": 437,
+ "layers_closed_through_cost": 10,
+ "min_goal_cost_found": 9,
+ "goals_found": 8,
+ "goal_costs": [
+  9,
+  10,
+  11
+ ],
+ "witness": {
+  "source": "dir3_ijh__on_set_level__",
+  "actions": [
+   [
+    6,
+    28,
+    47
+   ],
+   [
+    6,
+    28,
+    53
+   ],
+   [
+    6,
+    28,
+    58
+   ],
+   [
+    2
+   ],
+   [
+    2
+   ],
+   [
+    3
+   ],
+   [
+    3
+   ],
+   [
+    2
+   ],
+   [
+    3
+   ]
+  ],
+  "macro": [
+   [
+    [
+     6,
+     28,
+     47
+    ],
+    [
+     6,
+     28,
+     53
+    ],
+    [
+     6,
+     28,
+     58
+    ]
+   ],
+   [
+    [
+     2
+    ]
+   ],
+   [
+    [
+     2
+    ]
+   ],
+   [
+    [
+     3
+    ]
+   ],
+   [
+    [
+     3
+    ]
+   ],
+   [
+    [
+     2
+    ]
+   ],
+   [
+    [
+     3
+    ]
+   ]
+  ]
+ },
+ "runtime_s": 71.6
+}

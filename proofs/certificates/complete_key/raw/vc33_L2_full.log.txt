@@ -1,0 +1,8 @@
+LAYER level=2 depth=1 frontier=6 visited=7 edges=4103 t=15.9
+LAYER level=2 depth=2 frontier=9 visited=16 edges=28721 t=109.7
+LAYER level=2 depth=3 frontier=16 visited=32 edges=65648 t=247.7
+LAYER level=2 depth=4 frontier=18 visited=50 edges=131296 t=476.2
+LAYER level=2 depth=5 frontier=21 visited=71 edges=205150 t=628.0
+LAYER level=2 depth=6 frontier=19 visited=90 edges=291313 t=806.5
+RESULT game=vc33 level=2 verdict=CONFIRMED states=90 edges=291313 seconds=806.515
+rc=0

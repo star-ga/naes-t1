@@ -1,0 +1,13 @@
+k=0 h=11 true_remaining<=11 ok
+k=1 h=10 true_remaining<=10 ok
+k=2 h=9 true_remaining<=9 ok
+k=3 h=8 true_remaining<=8 ok
+k=4 h=7 true_remaining<=7 ok
+k=5 h=6 true_remaining<=6 ok
+k=6 h=5 true_remaining<=5 ok
+k=7 h=4 true_remaining<=4 ok
+k=8 h=3 true_remaining<=3 ok
+k=9 h=2 true_remaining<=2 ok
+k=10 h=1 true_remaining<=1 ok
+final click status=3 (3=win)
+ROUTE_ADMISSIBILITY flags=3 violations=0

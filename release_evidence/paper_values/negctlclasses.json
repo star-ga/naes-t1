@@ -1,0 +1,20 @@
+{
+ "macro": "negctlclasses",
+ "value": "one planted false lemma per class M (ar25 L3), B (su15 L1) and A (lf52 L1), each rejected by that row's checker",
+ "summary": "negctl/SUMMARY.md",
+ "logs": {
+  "negctl_ar25_L3.txt": "7141a43f8e0087e7224d9275e4620838836164a884575190655e35b40d9a4d95",
+  "negctl_su15_L1.txt": "ad9b8f642545f8caf3f0556a5406c438549363ce814d8fd1eb8a8f1e8c0e0e55",
+  "negctl_lf52_L1.txt": "b6f13edf7455efddda703263437cac6545b616d6ab233f40fd1e3c71fa1e3fa3"
+ },
+ "rejected": {
+  "M ar25 L3": true,
+  "B su15 L1": true,
+  "A lf52 L1": true
+ },
+ "exit_codes": {
+  "M": 0,
+  "B": 0,
+  "A": 0
+ }
+}

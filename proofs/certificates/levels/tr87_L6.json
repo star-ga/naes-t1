@@ -1,0 +1,47 @@
+{
+  "artifact_sha256": [
+    {
+      "kind": "safe_statement_count_extract",
+      "sha256": "a3701c4a7bec7d1a127f6297bc998ff34b112bdad2728fcdde184f6cf5b67198"
+    },
+    {
+      "kind": "authority_ledger_label",
+      "sha256": "dcec3081162351515626966697127fc94a41159f53a1b6007e36c1adf5ee6f63"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "ce1e9684ca44a16428d21793c40948b7529053161ae3c737c15da67ca393fcca"
+    },
+    {
+      "kind": "historical_method_or_search_output",
+      "sha256": "937cc95e516347a42722406d6fd3305c92d0f644426ebf32feaaf2f0cc5280fb"
+    },
+    {
+      "kind": "historical_method_or_search_output",
+      "sha256": "1ab9c3083634b34d1aedc0c88bb0710cf4561fda10926c9af52f11b5bdcccaab"
+    }
+  ],
+  "floor": 23,
+  "game": "tr87",
+  "game_id": "tr87-cd924810",
+  "game_levels": 6,
+  "level": 6,
+  "lower_bound": {
+    "kind": "alter_offset_complete_enumeration_disjoint_cost_partition",
+    "statement": "Complete offset-vector enumeration checks every winning rotation assignment; sum of minimal ring rotations plus minimum cycle-cover walk is minimized to 23. The proof alter_offset_complete_enumeration_disjoint_cost_partition establishes lower bound 23, equal to the floor.",
+    "value": 23
+  },
+  "naes_t1_actions": 23,
+  "proof_class": "Exact math",
+  "proof_detail": "alter_offset_complete_enumeration_disjoint_cost_partition",
+  "schema_version": 1,
+  "source_certificate_sha256": "c637f4d58136543e3f9e2d5383518d17d9f1b4086eddddd2b8e56d9f836d966e",
+  "status": "proven",
+  "upper_bound": {
+    "expected_levels_completed": 6,
+    "length": 23,
+    "opening_reset_counted": false,
+    "route": "1 1 3 1 1 1 4 4 1 4 2 4 1 4 4 2 2 4 1 1 4 4 2",
+    "seed": 0
+  }
+}

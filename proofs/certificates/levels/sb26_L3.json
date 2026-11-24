@@ -1,0 +1,40 @@
+{
+  "artifact_sha256": [
+    {
+      "kind": "safe_statement_count_extract",
+      "sha256": "22db4e2136ebd175184d9206b8f53166358464fe5479784752519113d38408aa"
+    },
+    {
+      "kind": "authority_ledger_label",
+      "sha256": "2672460b0aaa56ec5ba65e11e827c927f88604a32d108af7514e4bf37fe5be2e"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "bb8731b42868241753d417191d2cae370f68244baa7757f7881c2135703a1897",
+      "status": "withheld"
+    }
+  ],
+  "floor": 15,
+  "game": "sb26",
+  "game_id": "sb26-7fbdac44",
+  "game_levels": 8,
+  "level": 3,
+  "lower_bound": {
+    "kind": "walk-topology exhaustion + exact placement counting",
+    "statement": "Complete injective placement enumeration checks 1 topologies and finds 1 feasible ones. Every unsatisfied slot requires a distinct pick-and-place pair; with U=7, minimum cost 2U+1=15 includes the mandatory verification action. The proof walk-topology exhaustion + exact placement counting establishes lower bound 15, equal to the floor.",
+    "value": 15
+  },
+  "naes_t1_actions": 15,
+  "proof_class": "Exact math",
+  "proof_detail": "walk-topology exhaustion + exact placement counting",
+  "schema_version": 1,
+  "source_certificate_sha256": "58b89e5b544773ae8ce8d2e3526cdadc9f66bd4535dab3b14025e2b1cb696461",
+  "status": "proven",
+  "upper_bound": {
+    "expected_levels_completed": 3,
+    "length": 15,
+    "opening_reset_counted": false,
+    "route": "6@52,58 6@19,23 6@17,58 6@19,35 6@24,58 6@25,35 6@31,58 6@31,23 6@45,58 6@37,35 6@38,58 6@43,35 6@10,58 6@43,23 5",
+    "seed": 0
+  }
+}

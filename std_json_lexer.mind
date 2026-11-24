@@ -1,0 +1,319 @@
+fn jv_encode_utf8(sb: i64, cp: i64) -> i64 {
+    if cp < 128 {
+        let _ = jvsb_push(sb, cp);
+    } else {
+        if cp < 2048 {
+            let _ = jvsb_push(sb, 192 + (cp / 64));
+            let _ = jvsb_push(sb, 128 + (cp - (cp / 64) * 64));
+        } else {
+            if cp < 65536 {
+                let _ = jvsb_push(sb, 224 + (cp / 4096));
+                let _ = jvsb_push(sb, 128 + ((cp / 64) - (cp / 4096) * 64));
+                let _ = jvsb_push(sb, 128 + (cp - (cp / 64) * 64));
+            } else {
+                let _ = jvsb_push(sb, 240 + (cp / 262144));
+                let _ = jvsb_push(sb, 128 + ((cp / 4096) - (cp / 262144) * 64));
+                let _ = jvsb_push(sb, 128 + ((cp / 64) - (cp / 4096) * 64));
+                let _ = jvsb_push(sb, 128 + (cp - (cp / 64) * 64));
+            }
+        }
+    }
+    0
+}
+
+// --- Parse string (pos is after opening `"`) ---
+// Returns jvpr with [pos_after_close_quote, jv_string_handle].
+// Returns jvpr with [pos, 0] on error.
+
+// jv_decode_surrogate -- finish a JSON \uXXXX escape once its four hex
+// digits have parsed to scalar `cp`, with `pos` pointing just past them.
+// Emits the scalar's UTF-8 into `sb`. A high surrogate (\uD800..\uDBFF) is
+// combined with a following \uXXXX low surrogate (\uDC00..\uDFFF) into one
+// scalar per RFC 8259 sec 7, so valid UTF-8 is emitted (not WTF-8). Returns
+// the new buffer position (advanced past a consumed low-surrogate escape when
+// combined), or -1 on a lone/unpaired/invalid surrogate -- a hard parse error.
+// Extracted from jv_parse_string so its recursive-descent body stays shallow:
+// a deeply-nested inline pyramid overflows the compiler's lowering stack.
+fn jv_decode_surrogate(buf: i64, pos: i64, len: i64, cp: i64, sb: i64) -> i64 {
+    if cp < 55296 {
+        // Ordinary BMP scalar below the surrogate block.
+        let _ = jv_encode_utf8(sb, cp);
+        return pos;
+    }
+    if cp > 57343 {
+        // Ordinary BMP scalar above the surrogate block.
+        let _ = jv_encode_utf8(sb, cp);
+        return pos;
+    }
+    if cp > 56319 {
+        // 0xDC00..0xDFFF: a bare low surrogate is invalid.
+        return -1;
+    }
+    // High surrogate 0xD800..0xDBFF: require a following \uXXXX low surrogate.
+    if pos + 5 >= len {
+        return -1;
+    }
+    if jv_load_byte(buf, pos) != 92 {
+        return -1;
+    }
+    if jv_load_byte(buf, pos + 1) != 117 {
+        return -1;
+    }
+    let l0: i64 = jv_load_byte(buf, pos + 2);
+    let l1: i64 = jv_load_byte(buf, pos + 3);
+    let l2: i64 = jv_load_byte(buf, pos + 4);
+    let l3: i64 = jv_load_byte(buf, pos + 5);
+    if jv_is_hex(l0) == 0 {
+        return -1;
+    }
+    if jv_is_hex(l1) == 0 {
+        return -1;
+    }
+    if jv_is_hex(l2) == 0 {
+        return -1;
+    }
+    if jv_is_hex(l3) == 0 {
+        return -1;
+    }
+    let lo: i64 = jv_hex_val(l0) * 4096 + jv_hex_val(l1) * 256 + jv_hex_val(l2) * 16 + jv_hex_val(l3);
+    if lo < 56320 {
+        return -1;
+    }
+    if lo > 57343 {
+        return -1;
+    }
+    let comb: i64 = 65536 + (cp - 55296) * 1024 + (lo - 56320);
+    let _ = jv_encode_utf8(sb, comb);
+    return pos + 6;
+}
+
+fn jv_parse_string(buf: i64, i: i64, len: i64) -> i64 {
+    let sb: i64 = jvsb_new();
+    let mut pos: i64 = i;
+    let mut done: i64 = 0;
+    let mut ok: i64 = 1;
+    while done == 0 {
+        if pos >= len {
+            ok = 0;
+            done = 1;
+        } else {
+            let b: i64 = jv_load_byte(buf, pos);
+            if b == 34 {
+                // closing quote
+                pos = pos + 1;
+                done = 1;
+            } else {
+                if b == 92 {
+                    // backslash escape
+                    pos = pos + 1;
+                    if pos >= len {
+                        ok = 0;
+                        done = 1;
+                    } else {
+                        let e: i64 = jv_load_byte(buf, pos);
+                        if e == 34 {
+                            let _ = jvsb_push(sb, 34);
+                            pos = pos + 1;
+                        } else {
+                            if e == 92 {
+                                let _ = jvsb_push(sb, 92);
+                                pos = pos + 1;
+                            } else {
+                                if e == 47 {
+                                    let _ = jvsb_push(sb, 47);
+                                    pos = pos + 1;
+                                } else {
+                                    if e == 110 {
+                                        let _ = jvsb_push(sb, 10);
+                                        pos = pos + 1;
+                                    } else {
+                                        if e == 116 {
+                                            let _ = jvsb_push(sb, 9);
+                                            pos = pos + 1;
+                                        } else {
+                                            if e == 114 {
+                                                let _ = jvsb_push(sb, 13);
+                                                pos = pos + 1;
+                                            } else {
+                                                if e == 98 {
+                                                    let _ = jvsb_push(sb, 8);
+                                                    pos = pos + 1;
+                                                } else {
+                                                    if e == 102 {
+                                                        let _ = jvsb_push(sb, 12);
+                                                        pos = pos + 1;
+                                                    } else {
+                                                        if e == 117 {
+                                                            // \uXXXX
+                                                            pos = pos + 1;
+                                                            if pos + 3 < len {
+                                                                let h0: i64 = jv_load_byte(buf, pos);
+                                                                let h1: i64 = jv_load_byte(buf, pos + 1);
+                                                                let h2: i64 = jv_load_byte(buf, pos + 2);
+                                                                let h3: i64 = jv_load_byte(buf, pos + 3);
+                                                                if jv_is_hex(h0) == 1 {
+                                                                    if jv_is_hex(h1) == 1 {
+                                                                        if jv_is_hex(h2) == 1 {
+                                                                            if jv_is_hex(h3) == 1 {
+                                                                                let cp: i64 = jv_hex_val(h0) * 4096 + jv_hex_val(h1) * 256 + jv_hex_val(h2) * 16 + jv_hex_val(h3);
+                                                                                pos = pos + 4;
+                                                                                // RFC 8259 sec 7: a codepoint above the BMP is
+                                                                                // encoded as a UTF-16 surrogate pair \uD800..\uDBFF
+                                                                                // followed by \uDC00..\uDFFF. Combine them into a
+                                                                                // single scalar so we emit valid UTF-8 (not WTF-8).
+                                                                                // A lone/unpaired surrogate is a hard parse error.
+                                                                                let np: i64 = jv_decode_surrogate(buf, pos, len, cp, sb);
+                                                                                if np < 0 {
+                                                                                    ok = 0;
+                                                                                    done = 1;
+                                                                                } else {
+                                                                                    pos = np;
+                                                                                }
+                                                                            } else {
+                                                                                ok = 0;
+                                                                                done = 1;
+                                                                            }
+                                                                        } else {
+                                                                            ok = 0;
+                                                                            done = 1;
+                                                                        }
+                                                                    } else {
+                                                                        ok = 0;
+                                                                        done = 1;
+                                                                    }
+                                                                } else {
+                                                                    ok = 0;
+                                                                    done = 1;
+                                                                }
+                                                            } else {
+                                                                ok = 0;
+                                                                done = 1;
+                                                            }
+                                                        } else {
+                                                            // invalid escape
+                                                            ok = 0;
+                                                            done = 1;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    // control characters are invalid in JSON strings
+                    if b < 32 {
+                        ok = 0;
+                        done = 1;
+                    } else {
+                        let _ = jvsb_push(sb, b);
+                        pos = pos + 1;
+                    }
+                }
+            }
+        }
+    }
+    if ok == 0 {
+        if __mind_load_i64(sb + 0) != 0 {
+            let _ = __mind_free(__mind_load_i64(sb + 0));
+        }
+        let _ = __mind_free(sb);
+        jvpr_new(pos, 0)
+    } else {
+        let sb_addr: i64 = __mind_load_i64(sb + 0);
+        let sb_len: i64 = __mind_load_i64(sb + 8);
+        let jvs: i64 = jv_make_string(sb_addr, sb_len, sb_len);
+        let _ = __mind_free(sb);
+        jvpr_new(pos, jvs)
+    }
+}
+
+// --- Parse number (pos at first digit or '-') ---
+// Returns jvpr [pos_after, jv_number_handle] or [pos, 0] on error.
+
+fn jv_parse_number(buf: i64, i: i64, len: i64) -> i64 {
+    let mut pos: i64 = i;
+    // Consume a leading '-'. This MUST be an if-STATEMENT, not an if-expression.
+    let mut neg: i64 = 0;
+    if pos < len {
+        if jv_load_byte(buf, pos) == 45 {
+            pos = pos + 1;
+            neg = 1;
+        }
+    }
+    if pos >= len {
+        return jvpr_new(pos, 0);
+    }
+    // integer part
+    let mut int_part: i64 = 0;
+    let mut has_digit: i64 = 0;
+    let mut running: i64 = 1;
+    while running == 1 {
+        if pos >= len {
+            running = 0;
+        } else {
+            let b: i64 = jv_load_byte(buf, pos);
+            if jv_is_digit(b) == 1 {
+                int_part = int_part * 10 + (b - 48);
+                has_digit = 1;
+                pos = pos + 1;
+            } else {
+                running = 0;
+            }
+        }
+    }
+    if has_digit == 0 {
+        return jvpr_new(pos, 0);
+    }
+    // fractional part
+    let mut frac: i64 = 0;
+    let mut frac_d: i64 = 1;
+    let mut is_int: i64 = 1;
+    if pos < len {
+        if jv_load_byte(buf, pos) == 46 {
+            pos = pos + 1;
+            is_int = 0;
+            let mut frac_n: i64 = 0;
+            let mut frun: i64 = 1;
+            while frun == 1 {
+                if pos >= len {
+                    frun = 0;
+                } else {
+                    let fb: i64 = jv_load_byte(buf, pos);
+                    if jv_is_digit(fb) == 1 {
+                        frac = frac * 10 + (fb - 48);
+                        frac_d = frac_d * 10;
+                        frac_n = frac_n + 1;
+                        pos = pos + 1;
+                    } else {
+                        frun = 0;
+                    }
+                }
+            }
+            // RFC 8259: a decimal point must be followed by at least one digit;
+            // `1.` is not a valid number.
+            if frac_n == 0 {
+                return jvpr_new(pos, 0);
+            }
+        }
+    }
+    // Phase 1: reject exponent notation
+    if pos < len {
+        let nb: i64 = jv_load_byte(buf, pos);
+        if nb == 101 {
+            return jvpr_new(pos, 0);
+        }
+        if nb == 69 {
+            return jvpr_new(pos, 0);
+        }
+    }
+    let h: i64 = jv_make_number(int_part, frac, frac_d, neg, is_int);
+    jvpr_new(pos, h)
+}
+
+// --- Parse value ---
+// Returns jvpr [pos_after, handle] or [pos, 0] on error.
+

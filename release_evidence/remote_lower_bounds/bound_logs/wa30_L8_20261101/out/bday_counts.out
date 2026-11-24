@@ -1,0 +1,12 @@
+depth 20: N=8000000 distinct=6732 colliding_pairs=979945601879 birthday_est=3.265e+01 conservative_est=3.265e+01 exact=204737
+depth 22: N=8000000 distinct=9114 colliding_pairs=923081279727 birthday_est=3.467e+01 conservative_est=3.467e+01 exact=686475
+depth 24: N=8000000 distinct=11965 colliding_pairs=871601622447 birthday_est=3.671e+01 conservative_est=3.671e+01 exact=2412029
+depth 26: N=8000000 distinct=15807 colliding_pairs=824590336396 birthday_est=3.881e+01 conservative_est=3.881e+01 exact=9136446
+depth 27: N=8000000 distinct=18121 colliding_pairs=802536493806 birthday_est=3.987e+01 conservative_est=3.987e+01 exact=18018144
+depth 30: N=8000000 distinct=25798 colliding_pairs=725803620763 birthday_est=4.409e+01 conservative_est=4.409e+01 exact=-
+depth 35: N=8000000 distinct=47447 colliding_pairs=614238481025 birthday_est=5.210e+01 conservative_est=5.210e+01 exact=-
+depth 40: N=8000000 distinct=75279 colliding_pairs=532382924471 birthday_est=6.011e+01 conservative_est=6.011e+01 exact=-
+depth 45: N=8000000 distinct=108227 colliding_pairs=466541242839 birthday_est=6.859e+01 conservative_est=6.859e+01 exact=-
+depth 50: N=8000000 distinct=159656 colliding_pairs=410558216741 birthday_est=7.794e+01 conservative_est=7.794e+01 exact=-
+depth 55: N=8000000 distinct=235761 colliding_pairs=364418947462 birthday_est=8.781e+01 conservative_est=8.781e+01 exact=-
+depth 60: N=8000000 distinct=305626 colliding_pairs=325377131008 birthday_est=9.835e+01 conservative_est=9.835e+01 exact=-

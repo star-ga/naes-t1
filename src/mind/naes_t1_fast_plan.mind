@@ -1,0 +1,243 @@
+// Plans of the grouped-sum kernel: the tap groups of every block (build_plans4),
+// the group bank sizes (bank_build4), the padded copies used by the row walk
+// (pad_plans4, pad_bank4), the descriptor cell fill (gsum_fill) and the summary
+// line of the plans (emit_plan_line).
+// Entry points: build_plans4, bank_build4, pad_plans4, pad_bank4.
+
+fn pl_starts() -> i64 { 0 }
+fn pl_offs() -> i64 { 1 }
+fn pl_terms() -> i64 { 2 }
+fn pl_adds() -> i64 { 3 }
+fn pl_nseg() -> i64 { 4 }
+
+fn bank_row_bytes() -> i64 {
+    768
+}
+
+fn group_raw(t: i64, o: i64, g: i64, gsz: i64, k: i64) -> i64 {
+    let mut raw: i64 = 0;
+    let mut j: i64 = 0;
+    while j < gsz {
+        let c: i64 = g * gsz + j;
+        let mut w: i64 = 0;
+        if c < 64 {
+            w = __mind_load_i64(t + ((o * 64 + c) * 9 + k) * 8);
+        }
+        raw = raw * 3 + w;
+        j = j + 1;
+    }
+    raw
+}
+
+fn start_index(seg: i64, o: i64, ky: i64) -> i64 {
+    ((seg * 64 + o) * 3 + ky) * 3
+}
+
+// Output rows that one vertical tap reaches: 64 - |ky-1|*dil (0 if none).
+fn rows_reached(ky: i64, dil: i64) -> i64 {
+    if ky == 1 {
+        return 64;
+    }
+    if dil >= 64 {
+        return 0;
+    }
+    64 - dil
+}
+
+fn plan_segment(lay: i64, gsz: i64, cg: i64, seg: i64, o: i64, ky: i64, plan: i64) -> i64 {
+    let t: i64 = ld(lay, 4);
+    let dil: i64 = ld(lay, 3);
+    let codes: i64 = n_codes(gsz);
+    let ng: i64 = n_groups(gsz);
+    let starts: i64 = ld(plan, pl_starts());
+    let offs: i64 = ld(plan, pl_offs());
+    let base: i64 = start_index(seg, o, ky);
+    let mut count: i64 = ld(plan, pl_terms());
+    let mut adds: i64 = ld(plan, pl_adds());
+    let mut sign: i64 = 1;
+    while sign >= 0 - 1 {
+        st(starts, base + (1 - sign) / 2, count);
+        let mut g: i64 = seg * cg;
+        while g < (seg + 1) * cg && g < ng {
+            let mut kx: i64 = 0;
+            while kx < 3 {
+                let raw: i64 = group_raw(t, o, g, gsz, ky * 3 + kx);
+                if raw * sign > 0 {
+                    let row: i64 = (g - seg * cg) * codes + raw * sign - 1;
+                    st(offs, count, row * bank_row_bytes() + (16 + (kx - 1) * dil) * 8);
+                    count = count + 1;
+                    adds = adds + rows_reached(ky, dil) * 64;
+                }
+                kx = kx + 1;
+            }
+            g = g + 1;
+        }
+        sign = sign - 2;
+    }
+    st(starts, base + 2, count);
+    st(plan, pl_terms(), count);
+    st(plan, pl_adds(), adds)
+}
+
+fn build_plan4(lay: i64, gsz: i64, cg: i64) -> i64 {
+    let nseg: i64 = n_segs(gsz, cg);
+    let plan: i64 = alloc_zero(8);
+    if plan == 0 {
+        return 0;
+    }
+    let starts: i64 = alloc_zero(nseg * 64 * 9);
+    let offs: i64 = alloc_zero(64 * n_groups(gsz) * 9 + 1);
+    if starts == 0 || offs == 0 {
+        return 0;
+    }
+    st(plan, pl_starts(), starts);
+    st(plan, pl_offs(), offs);
+    st(plan, pl_nseg(), nseg);
+    let mut seg: i64 = 0;
+    while seg < nseg {
+        let mut o: i64 = 0;
+        while o < 64 {
+            let mut ky: i64 = 0;
+            while ky < 3 {
+                plan_segment(lay, gsz, cg, seg, o, ky, plan);
+                ky = ky + 1;
+            }
+            o = o + 1;
+        }
+        seg = seg + 1;
+    }
+    plan
+}
+
+// One plan per block. emit_plan_line prints the totals of these plans on one
+// summary line.
+fn build_plans4(model: i64, gsz: i64, cg: i64) -> i64 {
+    let nb: i64 = __mind_load_i64(model + 8);
+    let plans: i64 = alloc_zero(nb);
+    if plans == 0 {
+        return 0;
+    }
+    let mut b: i64 = 0;
+    while b < nb {
+        let p: i64 = build_plan4(model_layer(model, b + 1), gsz, cg);
+        if p == 0 {
+            return 0;
+        }
+        st(plans, b, p);
+        b = b + 1;
+    }
+    plans
+}
+
+fn plans_total(plans: i64, nb: i64, field: i64) -> i64 {
+    let mut s: i64 = 0;
+    let mut b: i64 = 0;
+    while b < nb {
+        s = s + ld(ld(plans, b), field);
+        b = b + 1;
+    }
+    s
+}
+
+fn emit_plan_line(fd: i64, plans: i64, nb: i64, gsz: i64, cg: i64, tile: i64) -> i64 {
+    emit_word(fd, 138751855696, 0, 5);
+    print_i64(fd, gsz);
+    emit_sp(fd);
+    print_i64(fd, cg);
+    emit_sp(fd);
+    print_i64(fd, tile);
+    emit_sp(fd);
+    print_i64(fd, plans_total(plans, nb, pl_terms()));
+    emit_sp(fd);
+    print_i64(fd, plans_total(plans, nb, pl_adds()));
+    emit_sp(fd);
+    print_i64(fd, cg * n_codes(gsz) * bank_row_bytes());
+    emit_nl(fd)
+}
+
+fn chan_row(hin: i64, c: i64, sy: i64, zero: i64) -> i64 {
+    if c >= 64 {
+        return zero;
+    }
+    hin + (c * plane() + origin() + sy * pw()) * 8
+}
+
+fn bank_build4(hin: i64, bank: i64, sy: i64, seg: i64, gsz: i64, cg: i64, zero: i64) -> i64 {
+    let ng: i64 = n_groups(gsz);
+    let mut gl: i64 = 0;
+    while gl < cg && seg * cg + gl < ng {
+        bank_group(hin, bank, gl, seg * cg + gl, gsz, sy, zero);
+        gl = gl + 1;
+    }
+    0
+}
+
+fn gsum_off_shift() -> i64 {
+    0
+}
+
+fn gsum_align64(p: i64) -> i64 {
+    let r: i64 = p % 64;
+    if r == 0 {
+        return p;
+    }
+    p + 64 - r
+}
+
+fn pad_plans4(plans: i64, model: i64, gsz: i64, cg: i64) -> i64 {
+    if plans == 0 || model == 0 || gsz == 0 || cg == 0 {
+        return 0;
+    }
+    let nb: i64 = __mind_load_i64(model + 8);
+    let mut b: i64 = 0;
+    while b < nb {
+        if gsum_fill(ld(plans, b)) == 0 {
+            return 0;
+        }
+        b = b + 1;
+    }
+    plans
+}
+
+fn pad_bank4(gsz: i64, cg: i64) -> i64 {
+    let raw: i64 = alloc_zero((cg * n_codes(gsz) + 1) * 96 + 16);
+    if raw == 0 {
+        return 0;
+    }
+    gsum_align64(raw)
+}
+
+// Three cells per (seg, o, ky), same index as start_index: address, pos, neg.
+fn gsum_fill(plan: i64) -> i64 {
+    let nseg: i64 = ld(plan, pl_nseg());
+    let starts: i64 = ld(plan, pl_starts());
+    let offs: i64 = ld(plan, pl_offs());
+    let table: i64 = alloc_zero(nseg * 64 * 9);
+    if table == 0 || starts == 0 || offs == 0 {
+        return 0;
+    }
+    let shift: i64 = gsum_off_shift();
+    let mut seg: i64 = 0;
+    while seg < nseg {
+        let mut o: i64 = 0;
+        while o < 64 {
+            let mut ky: i64 = 0;
+            while ky < 3 {
+                let b: i64 = start_index(seg, o, ky);
+                let j0: i64 = ld(starts, b);
+                let j1: i64 = ld(starts, b + 1);
+                let j2: i64 = ld(starts, b + 2);
+                let pos: i64 = j1 - j0;
+                let neg: i64 = j2 - j1;
+                st(table, b, offs + j0 * 8 + shift);
+                st(table, b + 1, pos);
+                st(table, b + 2, neg);
+                ky = ky + 1;
+            }
+            o = o + 1;
+        }
+        seg = seg + 1;
+    }
+    st(plan, 5, table);
+    1
+}

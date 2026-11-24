@@ -1,0 +1,317 @@
+{
+  "game_id": "re86-8af5384d",
+  "advertised": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "key_variants": {
+    "full_minus_action": [
+      {
+        "tape_len": 0,
+        "a6_eq_parent": false,
+        "a6_coord_stable": true,
+        "a7_eq_parent": false,
+        "a7_eq_a6": true,
+        "reset_key": "e8891004a57c4690",
+        "reset_eq_start": true,
+        "a1_eq_parent": false,
+        "paint_pending": false
+      },
+      {
+        "tape_len": 1,
+        "a6_eq_parent": false,
+        "a6_coord_stable": true,
+        "a7_eq_parent": false,
+        "a7_eq_a6": true,
+        "reset_key": "4efba7de29bfc3ef",
+        "reset_eq_start": false,
+        "a1_eq_parent": false,
+        "paint_pending": false
+      },
+      {
+        "tape_len": 5,
+        "a6_eq_parent": false,
+        "a6_coord_stable": true,
+        "a7_eq_parent": false,
+        "a7_eq_a6": true,
+        "reset_key": "4efba7de29bfc3ef",
+        "reset_eq_start": false,
+        "a1_eq_parent": false,
+        "paint_pending": false
+      },
+      {
+        "tape_len": 11,
+        "a6_eq_parent": false,
+        "a6_coord_stable": true,
+        "a7_eq_parent": false,
+        "a7_eq_a6": true,
+        "reset_key": "4efba7de29bfc3ef",
+        "reset_eq_start": false,
+        "a1_eq_parent": false,
+        "paint_pending": false
+      },
+      {
+        "tape_len": 12,
+        "a6_eq_parent": false,
+        "a6_coord_stable": true,
+        "a7_eq_parent": false,
+        "a7_eq_a6": true,
+        "reset_key": "4efba7de29bfc3ef",
+        "reset_eq_start": false,
+        "a1_eq_parent": false,
+        "paint_pending": false
+      },
+      {
+        "tape_len": 19,
+        "a6_eq_parent": false,
+        "a6_coord_stable": true,
+        "a7_eq_parent": false,
+        "a7_eq_a6": true,
+        "reset_key": "4efba7de29bfc3ef",
+        "reset_eq_start": false,
+        "a1_eq_parent": false,
+        "paint_pending": false
+      }
+    ],
+    "minus_action_count": [
+      {
+        "tape_len": 0,
+        "a6_eq_parent": false,
+        "a6_coord_stable": true,
+        "a7_eq_parent": false,
+        "a7_eq_a6": true,
+        "reset_key": "568976a5b51f7f51",
+        "reset_eq_start": true,
+        "a1_eq_parent": false,
+        "paint_pending": false
+      },
+      {
+        "tape_len": 1,
+        "a6_eq_parent": true,
+        "a6_coord_stable": true,
+        "a7_eq_parent": true,
+        "a7_eq_a6": true,
+        "reset_key": "f836516f59a47da1",
+        "reset_eq_start": false,
+        "a1_eq_parent": false,
+        "paint_pending": false
+      },
+      {
+        "tape_len": 5,
+        "a6_eq_parent": true,
+        "a6_coord_stable": true,
+        "a7_eq_parent": true,
+        "a7_eq_a6": true,
+        "reset_key": "f836516f59a47da1",
+        "reset_eq_start": false,
+        "a1_eq_parent": false,
+        "paint_pending": false
+      },
+      {
+        "tape_len": 11,
+        "a6_eq_parent": true,
+        "a6_coord_stable": true,
+        "a7_eq_parent": true,
+        "a7_eq_a6": true,
+        "reset_key": "f836516f59a47da1",
+        "reset_eq_start": false,
+        "a1_eq_parent": false,
+        "paint_pending": false
+      },
+      {
+        "tape_len": 12,
+        "a6_eq_parent": true,
+        "a6_coord_stable": true,
+        "a7_eq_parent": true,
+        "a7_eq_a6": true,
+        "reset_key": "f836516f59a47da1",
+        "reset_eq_start": false,
+        "a1_eq_parent": false,
+        "paint_pending": false
+      },
+      {
+        "tape_len": 19,
+        "a6_eq_parent": true,
+        "a6_coord_stable": true,
+        "a7_eq_parent": true,
+        "a7_eq_a6": true,
+        "reset_key": "f836516f59a47da1",
+        "reset_eq_start": false,
+        "a1_eq_parent": false,
+        "paint_pending": false
+      }
+    ],
+    "minus_count_fullreset": [
+      {
+        "tape_len": 0,
+        "a6_eq_parent": true,
+        "a6_coord_stable": true,
+        "a7_eq_parent": true,
+        "a7_eq_a6": true,
+        "reset_key": "048606f7ddd94d37",
+        "reset_eq_start": true,
+        "a1_eq_parent": false,
+        "paint_pending": false
+      },
+      {
+        "tape_len": 1,
+        "a6_eq_parent": true,
+        "a6_coord_stable": true,
+        "a7_eq_parent": true,
+        "a7_eq_a6": true,
+        "reset_key": "048606f7ddd94d37",
+        "reset_eq_start": true,
+        "a1_eq_parent": false,
+        "paint_pending": false
+      },
+      {
+        "tape_len": 5,
+        "a6_eq_parent": true,
+        "a6_coord_stable": true,
+        "a7_eq_parent": true,
+        "a7_eq_a6": true,
+        "reset_key": "048606f7ddd94d37",
+        "reset_eq_start": true,
+        "a1_eq_parent": false,
+        "paint_pending": false
+      },
+      {
+        "tape_len": 11,
+        "a6_eq_parent": true,
+        "a6_coord_stable": true,
+        "a7_eq_parent": true,
+        "a7_eq_a6": true,
+        "reset_key": "048606f7ddd94d37",
+        "reset_eq_start": true,
+        "a1_eq_parent": false,
+        "paint_pending": false
+      },
+      {
+        "tape_len": 12,
+        "a6_eq_parent": true,
+        "a6_coord_stable": true,
+        "a7_eq_parent": true,
+        "a7_eq_a6": true,
+        "reset_key": "048606f7ddd94d37",
+        "reset_eq_start": true,
+        "a1_eq_parent": false,
+        "paint_pending": false
+      },
+      {
+        "tape_len": 19,
+        "a6_eq_parent": true,
+        "a6_coord_stable": true,
+        "a7_eq_parent": true,
+        "a7_eq_a6": true,
+        "reset_key": "048606f7ddd94d37",
+        "reset_eq_start": true,
+        "a1_eq_parent": false,
+        "paint_pending": false
+      }
+    ],
+    "minus_count_fullreset_state": [
+      {
+        "tape_len": 0,
+        "a6_eq_parent": true,
+        "a6_coord_stable": true,
+        "a7_eq_parent": true,
+        "a7_eq_a6": true,
+        "reset_key": "94412b9b5c736e6e",
+        "reset_eq_start": true,
+        "a1_eq_parent": false,
+        "paint_pending": false
+      },
+      {
+        "tape_len": 1,
+        "a6_eq_parent": true,
+        "a6_coord_stable": true,
+        "a7_eq_parent": true,
+        "a7_eq_a6": true,
+        "reset_key": "94412b9b5c736e6e",
+        "reset_eq_start": true,
+        "a1_eq_parent": false,
+        "paint_pending": false
+      },
+      {
+        "tape_len": 5,
+        "a6_eq_parent": true,
+        "a6_coord_stable": true,
+        "a7_eq_parent": true,
+        "a7_eq_a6": true,
+        "reset_key": "94412b9b5c736e6e",
+        "reset_eq_start": true,
+        "a1_eq_parent": false,
+        "paint_pending": false
+      },
+      {
+        "tape_len": 11,
+        "a6_eq_parent": true,
+        "a6_coord_stable": true,
+        "a7_eq_parent": true,
+        "a7_eq_a6": true,
+        "reset_key": "94412b9b5c736e6e",
+        "reset_eq_start": true,
+        "a1_eq_parent": false,
+        "paint_pending": false
+      },
+      {
+        "tape_len": 12,
+        "a6_eq_parent": true,
+        "a6_coord_stable": true,
+        "a7_eq_parent": true,
+        "a7_eq_a6": true,
+        "reset_key": "94412b9b5c736e6e",
+        "reset_eq_start": true,
+        "a1_eq_parent": false,
+        "paint_pending": false
+      },
+      {
+        "tape_len": 19,
+        "a6_eq_parent": true,
+        "a6_coord_stable": true,
+        "a7_eq_parent": true,
+        "a7_eq_a6": true,
+        "reset_key": "94412b9b5c736e6e",
+        "reset_eq_start": true,
+        "a1_eq_parent": false,
+        "paint_pending": false
+      }
+    ]
+  },
+  "full_vs_level_reset_same_content": true,
+  "full_reset_key": "048606f7ddd94d37",
+  "level_reset_key": "048606f7ddd94d37",
+  "game_source_reads": {
+    "_full_reset": false,
+    "_action_count": false,
+    "_state": false,
+    "_score": false
+  },
+  "paint_pending_along_min_path": [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+  ],
+  "restore_pure_15_per_s": 46.88,
+  "deepcopy_act_key_per_s": 219.5
+}

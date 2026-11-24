@@ -1,0 +1,307 @@
+{
+  "run": "tu93 full-alphabet reset-inclusive exact-byte exhaustion",
+  "instance": "tu93-2b534c15",
+  "source_sha256": {
+    "environment_files/tu93/2b534c15/tu93.py": "782e88eb0817402d0000f25a4325940f45f4194746ffa7c7e3ed86914311d83f",
+    "tools/mmae_minimum.py": "28bf4afb6666aa19a3a00cf79c2557f7943afec559f203e89c8abca69f30c41b"
+  },
+  "engine_source_sha256": {
+    "arcengine/base_game.py": "5b5f41f3bec4c0c97a727fda7326114991dc0d4a5642d489b40ee4aa87e6b15f",
+    "arcengine/enums.py": "94ebef48f6fe950a18679a1b991c366e8e28c32ab58c9335f385e19bea21950e",
+    "arcengine/level.py": "f74db969772b251018b2fcce6ec42f3522adeef4e9c03c036e455d2a35e3215a",
+    "arcengine/camera.py": "f06e16807b0f97d86cafb5481bb3969213f27768f789d898c6b8b07e957de397",
+    "arcengine/sprites.py": "ea9d3d02c7db0814954134a0e0ea6a3cb9b80066930dbdbfc5865befb54c493f"
+  },
+  "script_sha256": "0c826f4aecbe05b75a9dc266adfb86d20de292f25c37a7187145c3676699989c",
+  "source_facts": {
+    "self_action_occurrences": 4,
+    "self_action_id_occurrences": 4,
+    "dot_data_occurrences_in_game": 0,
+    "available_actions_literal": true,
+    "random_import": false,
+    "arcengine_action_data_reads": 0
+  },
+  "advertised": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "accepted": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "state_key": "mm.whitebox_sig_bytes raw bytes, no digest; only the root _action record omitted (write-before-read); _action_count/_score/_state/_full_reset kept",
+  "mm_key_exclude_after_init": [],
+  "deepcopy_ok": true,
+  "alphabet_per_state": "RESET(0), 1,2,3,4,5,7 and ACTION6 at one representative coordinate",
+  "interpreter": "<interp-version>",
+  "host": "REMOTE",
+  "levels": {
+    "2": {
+      "start_tape": [
+        [
+          4,
+          null,
+          null
+        ],
+        [
+          2,
+          null,
+          null
+        ],
+        [
+          2,
+          null,
+          null
+        ],
+        [
+          4,
+          null,
+          null
+        ],
+        [
+          1,
+          null,
+          null
+        ],
+        [
+          4,
+          null,
+          null
+        ],
+        [
+          2,
+          null,
+          null
+        ],
+        [
+          2,
+          null,
+          null
+        ],
+        [
+          3,
+          null,
+          null
+        ],
+        [
+          3,
+          null,
+          null
+        ],
+        [
+          2,
+          null,
+          null
+        ],
+        [
+          4,
+          null,
+          null
+        ],
+        [
+          4,
+          null,
+          null
+        ],
+        [
+          2,
+          null,
+          null
+        ],
+        [
+          4,
+          null,
+          null
+        ],
+        [
+          1,
+          null,
+          null
+        ],
+        [
+          4,
+          null,
+          null
+        ],
+        [
+          2,
+          null,
+          null
+        ]
+      ],
+      "start_level_index": 1,
+      "start_tape_len": 18,
+      "candidate_floor": 10,
+      "candidate_path": [
+        [
+          1,
+          null,
+          null
+        ],
+        [
+          4,
+          null,
+          null
+        ],
+        [
+          4,
+          null,
+          null
+        ],
+        [
+          2,
+          null,
+          null
+        ],
+        [
+          4,
+          null,
+          null
+        ],
+        [
+          4,
+          null,
+          null
+        ],
+        [
+          1,
+          null,
+          null
+        ],
+        [
+          4,
+          null,
+          null
+        ],
+        [
+          4,
+          null,
+          null
+        ],
+        [
+          1,
+          null,
+          null
+        ]
+      ],
+      "fresh_replay_win_at": 10,
+      "fresh_replay_Fminus1_win_at": null,
+      "search_through_Fminus1_including_reset": {
+        "status": "CLOSED_NO_WIN",
+        "layers_complete": 9,
+        "requested_depth": 9,
+        "per_layer": [
+          {
+            "depth": 1,
+            "expanded_states": 1,
+            "edges": 8,
+            "next_frontier": 4,
+            "visited": 5
+          },
+          {
+            "depth": 2,
+            "expanded_states": 4,
+            "edges": 32,
+            "next_frontier": 10,
+            "visited": 15
+          },
+          {
+            "depth": 3,
+            "expanded_states": 10,
+            "edges": 80,
+            "next_frontier": 21,
+            "visited": 36
+          },
+          {
+            "depth": 4,
+            "expanded_states": 21,
+            "edges": 168,
+            "next_frontier": 35,
+            "visited": 71
+          },
+          {
+            "depth": 5,
+            "expanded_states": 35,
+            "edges": 280,
+            "next_frontier": 54,
+            "visited": 125
+          },
+          {
+            "depth": 6,
+            "expanded_states": 54,
+            "edges": 432,
+            "next_frontier": 77,
+            "visited": 202
+          },
+          {
+            "depth": 7,
+            "expanded_states": 77,
+            "edges": 616,
+            "next_frontier": 105,
+            "visited": 307
+          },
+          {
+            "depth": 8,
+            "expanded_states": 105,
+            "edges": 840,
+            "next_frontier": 141,
+            "visited": 448
+          },
+          {
+            "depth": 9,
+            "expanded_states": 141,
+            "edges": 1128,
+            "next_frontier": 190,
+            "visited": 638
+          }
+        ],
+        "nodes": 3584,
+        "visited": 638,
+        "expanded_total": 448,
+        "noop_class_checks": 448,
+        "phase0_checks": 448,
+        "replay_checked_states": 638,
+        "click_sweeps": [
+          {
+            "depth": 1,
+            "coords": 4096,
+            "identical": true,
+            "coord_delivered_to_engine": 4096
+          },
+          {
+            "depth": 4,
+            "coords": 4096,
+            "identical": true,
+            "coord_delivered_to_engine": 4096
+          },
+          {
+            "depth": 4,
+            "coords": 4096,
+            "identical": true,
+            "coord_delivered_to_engine": 4096
+          }
+        ],
+        "elapsed_s": 116.95
+      },
+      "mutation_control_from_start_plus_one": {
+        "status": "EARLY_WIN",
+        "win_depth": 9,
+        "expected_win_depth": 9,
+        "nodes": 3666,
+        "expanded_total": 459,
+        "elapsed_s": 27.76
+      },
+      "result": "PASS",
+      "level_elapsed_s": 144.91
+    }
+  },
+  "maxrss_kb": "<memory>"
+}

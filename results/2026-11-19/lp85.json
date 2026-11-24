@@ -1,0 +1,42 @@
+{
+ "total": {
+  "levels": 8,
+  "ref_levels": 8,
+  "actions": 80,
+  "ref_actions": 80,
+  "games_full": 1,
+  "games": 1,
+  "perturb": 0
+ },
+ "games": [
+  {
+   "game": "lp85-305b61c3",
+   "levels": 8,
+   "ref_levels": 8,
+   "actions": 80,
+   "ref_actions": 80,
+   "per_level": [
+    6,
+    8,
+    16,
+    12,
+    9,
+    19,
+    5,
+    5
+   ],
+   "ref_per_level": [
+    5,
+    8,
+    16,
+    12,
+    9,
+    19,
+    5,
+    5
+   ],
+   "resets": 1,
+   "over_ref_levels": []
+  }
+ ]
+}

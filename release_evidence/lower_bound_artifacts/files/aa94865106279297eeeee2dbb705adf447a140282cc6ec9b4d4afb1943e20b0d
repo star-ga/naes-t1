@@ -1,0 +1,57 @@
+{
+  "verdict": "<word withheld>",
+  "checked_files": 119,
+  "controls": {
+    "canonical_start": {
+      "native_RESET": true,
+      "bootstrap": [
+        [
+          3
+        ],
+        [
+          2
+        ],
+        [
+          2
+        ],
+        [
+          4
+        ],
+        [
+          5
+        ]
+      ],
+      "score": 1,
+      "level_index": 1,
+      "action_count": 0,
+      "nonterminal": true
+    },
+    "first_two_layer_edges": 239,
+    "layer2_branch_counts": [
+      14,
+      15,
+      15,
+      15,
+      15,
+      15,
+      15,
+      15,
+      15,
+      15,
+      15,
+      15,
+      15,
+      15,
+      15
+    ],
+    "full_root_click_transitions": 4096,
+    "late_witness_prefix_effects": 75,
+    "partial_OOR_before_and_after_RESET_comparisons": 54,
+    "witness_trace": "see receipt",
+    "first_target_action": 6,
+    "F_minus_1_not_target": true,
+    "full_object_comparison": "independent deterministic complete-object graph encoding retaining mutable container aliases, arrays and caches; only current root action omitted for input-class comparisons"
+  },
+  "elapsed_s": 29.957,
+  "receipt_sha256": "ff6bf7bebdddee5be656f2d2a72bfc6fe1bbac55eca63ebe966cb76da894f90c"
+}

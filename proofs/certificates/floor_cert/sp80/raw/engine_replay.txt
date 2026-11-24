@@ -1,0 +1,6 @@
+{"level": 1, "route_len": 4, "full": {"win_at": 4, "state": "NOT_FINISHED", "score": 1}, "prefix": {"win_at": null, "state": "NOT_FINISHED", "score": 0, "steps": 3}}
+{"level": 2, "route_len": 7, "full": {"win_at": 7, "state": "NOT_FINISHED", "score": 1}, "prefix": {"win_at": null, "state": "NOT_FINISHED", "score": 0, "steps": 6}}
+{"level": 3, "route_len": 10, "full": {"win_at": 10, "state": "NOT_FINISHED", "score": 1}, "prefix": {"win_at": null, "state": "NOT_FINISHED", "score": 0, "steps": 9}}
+{"level": 4, "route_len": 20, "full": {"win_at": 20, "state": "NOT_FINISHED", "score": 1}, "prefix": {"win_at": null, "state": "NOT_FINISHED", "score": 0, "steps": 19}}
+{"level": 5, "route_len": 17, "full": {"win_at": 17, "state": "NOT_FINISHED", "score": 1}, "prefix": {"win_at": null, "state": "NOT_FINISHED", "score": 0, "steps": 16}}
+{"level": 6, "route_len": 28, "full": {"win_at": 28, "state": "WIN", "score": 1}, "prefix": {"win_at": null, "state": "NOT_FINISHED", "score": 0, "steps": 27}}

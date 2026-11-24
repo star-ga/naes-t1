@@ -1,0 +1,148 @@
+{
+ "1": {
+  "game": "bp35",
+  "level": 1,
+  "player": [
+   3,
+   23
+  ],
+  "gem": [
+   3,
+   7
+  ],
+  "h_start": 15,
+  "ub_seed": 15,
+  "alphabet": "complete (theorem A): L,R + every on-screen single-clickable cell + one no-op parity click on L1-3",
+  "heuristic": "max(h_A free-vertical dig, h_B layered no-dig); h_C layered+dig when no flippers remain",
+  "budget_limit": 64,
+  "start_source": "cascade_bootstrap",
+  "consistency_violations": 0,
+  "route_verified_ub": 15,
+  "nodes": 0,
+  "edges": 0,
+  "seconds": 0.0,
+  "keys": 1,
+  "h_calls": 1,
+  "branching": {},
+  "unknown_content": [],
+  "replay_verified": true,
+  "replay_won_at": 15,
+  "replay_shorter_wins": false,
+  "status": "PROVEN",
+  "floor": 15,
+  "lb": 15,
+  "ub": 15,
+  "path": [
+   "R",
+   "R",
+   "R",
+   "R",
+   "CLK(47,34)",
+   "CLK(26,39)",
+   "CLK(27,33)",
+   "L",
+   "L",
+   "L",
+   "R",
+   "CLK(34,32)",
+   "CLK(33,34)",
+   "L",
+   "L"
+  ],
+  "min_path": [
+   "R",
+   "R",
+   "R",
+   "R",
+   "CLK(47,34)",
+   "CLK(26,39)",
+   "CLK(27,33)",
+   "L",
+   "L",
+   "L",
+   "R",
+   "CLK(34,32)",
+   "CLK(33,34)",
+   "L",
+   "L"
+  ],
+  "path_actions": [
+   [
+    4,
+    null,
+    null
+   ],
+   [
+    4,
+    null,
+    null
+   ],
+   [
+    4,
+    null,
+    null
+   ],
+   [
+    4,
+    null,
+    null
+   ],
+   [
+    6,
+    47,
+    34
+   ],
+   [
+    6,
+    26,
+    39
+   ],
+   [
+    6,
+    27,
+    33
+   ],
+   [
+    3,
+    null,
+    null
+   ],
+   [
+    3,
+    null,
+    null
+   ],
+   [
+    3,
+    null,
+    null
+   ],
+   [
+    4,
+    null,
+    null
+   ],
+   [
+    6,
+    34,
+    32
+   ],
+   [
+    6,
+    33,
+    34
+   ],
+   [
+    3,
+    null,
+    null
+   ],
+   [
+    3,
+    null,
+    null
+   ]
+  ],
+  "proof": "A* over the COMPLETE alphabet (theorem A) with an admissible heuristic (theorem C) and node re-opening terminated with min-f over OPEN >= incumbent 15, which proves no win of length < 15 exists; the route replays on a fresh engine from the cascade level start winning at exactly 15 and its 14-action prefix does not win"
+ }
+}

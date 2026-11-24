@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "game": "tr87",
+  "level": 2,
+  "family": "Exact math",
+  "recorded_floor": 25,
+  "command": "nice -n 15 timeout 1800 \"$PYTHON\" lower_replay/exact_math_extended.txt tr87 2",
+  "command_origin": "Reconstructed callable invocation of hash-pinned archived tools, with source binding and canonical prefix setup.",
+  "environment": {
+    "SOURCE_ROOT": "external proof source checkout",
+    "ARTIFACT_ROOT": "external proof artifact archive as listed in exact_math_extended_inputs.json",
+    "GAMES_DIR": "pinned public game directory",
+    "PACK_ROOT": "this certificate pack",
+    "RUN_DIR": "a directory that does not yet exist"
+  },
+  "rc": 0,
+  "bound_obtained": 25,
+  "equals_recorded_floor": true,
+  "verdict": "MATCH",
+  "scope": "Current pinned public game reached by replaying the frozen canonical prefix; complete archived rotation and cursor-walk cost enumeration.",
+  "prerequisites": [
+    {
+      "path": "GAMES_DIR/tr87/cd924810/tr87.py",
+      "sha256": "3274657a6499af5c7a52390d58a5c5441497ed70b84388e418fdfa6c9601e305"
+    },
+    {
+      "path": "PACK_ROOT/certificates/tr87_L1.json",
+      "sha256": "ac9993edde4288be836137f8a1645f36aa06e67f799904b4df35eeeb140ba1a6"
+    },
+    {
+      "path": "ARTIFACT_ROOT/w30_tr87_audit_l1_l5.py",
+      "sha256": "243c109fe1a6060cf488e77fb1a4090ed4f192ae2dd167bdd8251995a2d88176"
+    }
+  ],
+  "runner_sha256": "6187648dd69820305353b6e04da337da3a637fc420258a84fd6b5a02ba018f82",
+  "input_manifest_sha256": "5ebe7b47ba4a92651aab2d8f1c2add8c669dce0d46393d5f623060c9d49cac71",
+  "runtime": {
+    "python": "<interp-version>",
+    "packages": {
+      "numpy": "2.5.0",
+      "arcengine": "0.9.3",
+      "arc-agi": "0.9.9",
+      "pydantic": "2.13.4"
+    }
+  },
+  "raw_output": {
+    "path": "lower_replay/exact_math_tr87_L2.txt",
+    "sha256": "82222fc7ed2e294b5ee77b32d46ed6bdae2af494fb5de97cf318496609db0409",
+    "filter": "Structured result emitted by the command; unrelated import diagnostics omitted from public file.",
+    "unfiltered_private_output_sha256": "82222fc7ed2e294b5ee77b32d46ed6bdae2af494fb5de97cf318496609db0409"
+  },
+  "derivation_statement": "exact_math_extended_derivations.md",
+  "counts": {
+    "walk_cases": 49
+  },
+  "source_correspondence": "Direct hash binding to the frozen public game. tr87/cn04 targets reached through the frozen canonical earlier-level witnesses; ft09 retains the archived cascade-start acquisition and native replay controls."
+}

@@ -1,0 +1,59 @@
+{
+ "kind": "index0_precise_control",
+ "level": 7,
+ "k": 40,
+ "K": 2,
+ "P": 1,
+ "T": 39,
+ "budget": 39,
+ "status": "SAT_CANDIDATE",
+ "solver": "cadical195",
+ "started_utc": "2026-11-04T23:09:54.694274+00:00",
+ "finished_utc": "2026-11-04T23:10:12.853546+00:00",
+ "seconds": 18.159,
+ "hashes": {
+  "tools/g50t_bmc3.py": "1b6ea6a032a32fc7d40b27b32b3a1b4ec81060f499539c1afa2e58f763548b41",
+  "tools/g50t_bmc2.py": "9044d5866aa64b654e38ae04d24e610bf1986fa9e1637754e190d6bf0526b6cb",
+  "tools/g50t_sim.py": "2a1e65e601bf3bc9d8d8deae4dd592c37ee6b2e13b9a7bb7975cc110a73f511f",
+  "environment_files/g50t/5849a774/g50t.py": "6f21f2065744e484ac38534f940158034e69f39add3b10a3d9fd258de7293aa9",
+  "<path>": "3e1eb93df7cc6df06134afa5d91016d071a65ef34a4d53225f2d65cf0cc8ee5d"
+ },
+ "instrumentation_sha256": "07c29a8bd68b7f4b834d743b639ef015e2799873d5e2ea87040e4133c1354eb5",
+ "variables": 139038,
+ "clauses": 565133,
+ "target_count": 1,
+ "live_replay_performed": false,
+ "floor_refuted": false,
+ "selected_targets": [
+  {
+   "pass": 0,
+   "literal": true
+  }
+ ],
+ "decoded_passes": [
+  {
+   "pass": 0,
+   "moves": [
+    "L",
+    "R",
+    "D",
+    "D",
+    "L",
+    "R",
+    "L",
+    "R",
+    "U",
+    "U",
+    "L",
+    "L"
+   ],
+   "resumes": [
+    "('E', 0, 0, 0)",
+    "('R', 0, 1)"
+   ],
+   "phantom_start": false,
+   "R0": true
+  }
+ ],
+ "solver_model_file": "index0_pctrl_P01.model.json.gz"
+}

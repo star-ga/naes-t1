@@ -1,0 +1,71 @@
+{
+  "artifact_sha256": [
+    {
+      "kind": "safe_statement_count_extract",
+      "sha256": "1890adeb2ae1069e537c016f9e093343a90e257eb52f1211df5dabfdfa26ba73"
+    },
+    {
+      "kind": "authority_ledger_label",
+      "sha256": "b1e813ef7134ed36f9bc2390fd6bccd3b4a8463cd0f514679dcd548bef6d100d"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "754a70b1187139bb8b2ad8a5a359b58ea270bb4dd482726a1e34e603fdf26c3e"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "c49c5ed311f11e075dd0f086bac739b934d1490484700e91134090988b64c107"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "836976f4ae87fbbe3fa8606b8d0ef51f787e6d55b35d8e8508facd281496efe1"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "5bdfadaf67099b99d1c40e025d6dce044c22658fc49353919299df2d16921556"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "3c35ef6ca4eeb3f623edb44e15f3d4bff33be098f280d02b9aad8a15f6751762"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "f9c9d5dec90b77b7ae16a51721c50509579b56ddc4103eada8d225ed789a5480"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "3512192224ae57d7d5ee02521f8356177d3dada7a97cb80da8db5db8964af0ed"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "234505637eb78253e6aaea60f6b614a430d71ddfc14b0527f7fd85ee7ecfeae7"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "05eadac23fd4e4db20efeff0551d71de340edf8f59b51b6d909a7f77f689017f"
+    }
+  ],
+  "floor": 11,
+  "game": "ar25",
+  "game_id": "ar25-0c556536",
+  "game_levels": 8,
+  "level": 2,
+  "lower_bound": {
+    "kind": "closed_form_exhaustive_endpoint",
+    "statement": "Complete enumeration of all 6426 legal endpoint configurations yields minimum action lower bound 11; canonical native replay first completes at exactly 11.",
+    "value": 11
+  },
+  "naes_t1_actions": 11,
+  "proof_class": "Exact math",
+  "proof_detail": "closed_form_exhaustive_endpoint",
+  "schema_version": 1,
+  "source_certificate_sha256": "f92212207c1a7d87684622199ac8720c00d815b5b1e3a6835cd65b41adb6f50c",
+  "status": "proven",
+  "upper_bound": {
+    "expected_levels_completed": 2,
+    "length": 11,
+    "opening_reset_counted": false,
+    "route": "3 3 5 2 2 2 2 2 2 2 2",
+    "seed": 0
+  }
+}

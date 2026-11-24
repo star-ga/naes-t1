@@ -1,0 +1,345 @@
+// Record queue and process groups of the multi-worker bench path: shared
+// blocks, pipes, the hand-over of records between groups and its report.
+// Entry points: mig_cover, mig_stop, mig_bad, mig_hand.
+
+fn mig_force() -> i64 { 0 }
+
+// Group count override. Always 0: the group count follows the allowed CPUs.
+fn mig_groups_force() -> i64 { 0 }
+
+// Layer switch of the record hand-over. Constant.
+fn mig_layer(c: i64) -> i64 { c }
+
+// Early hand-over switch. Constant.
+fn mig_early() -> i64 { 0 }
+
+// Coverage check switch. Constant.
+fn mig_cover() -> i64 { 1 }
+
+// Busy-group switch. Constant.
+fn mig_busy_ok(v: i64) -> i64 { 1 - v }
+fn mig_stop() -> i64 { 0 - 2 }
+fn mig_bad() -> i64 { 0 - 3 }
+fn mig_hand() -> i64 { 1099511627776 }
+fn mig_bytes() -> i64 { 1056768 }
+fn mig_wp() -> i64 { 3220 }
+fn mig_wt() -> i64 { 3224 }
+fn mig_wi() -> i64 { 3248 }
+fn mig_slot(mc: i64, s: i64) -> i64 { ld(mc, 0) + s * mig_bytes() }
+fn mig_add(sh: i64, w: i64, v: i64) -> i64 { st(sh, w, ld(sh, w) + v) }
+
+fn mig_groups(ncpu: i64, t: i64) -> i64 {
+    if mig_groups_force() > 0 {
+        return mig_groups_force();
+    }
+    (ncpu + t - 1) / t
+}
+
+fn mig_pipe(r: i64, w: i64, i: i64, fds: i64, fl: i64) -> i64 {
+    if __mind_sys_pipe2(fds, fl) < 0 {
+        return 0 - 1;
+    }
+    st(r, i, __mind_load_i32(fds));
+    st(w, i, __mind_load_i32(fds + 4))
+}
+
+fn mig_open(sh: i64, groups: i64, slots: i64) -> i64 {
+    let mc: i64 = mw_alloc_zero(32);
+    let fds: i64 = mw_alloc_zero(2);
+    let dr: i64 = mw_alloc_zero(groups + 1);
+    let dw: i64 = mw_alloc_zero(groups + 1);
+    if mc == 0 || fds == 0 || dr == 0 || dw == 0 || groups < 1 || groups > 24 {
+        return 0;
+    }
+    st(mc, 0, __mind_sys_mmap(0, slots * mig_bytes(), 3, 33, 0 - 1, 0));
+    st(mc, 1, groups);
+    st(mc, 11, dr);
+    st(mc, 12, dw);
+    st(mc, 13, sh);
+    let mut bad: i64 = mig_pipe(mc + 16, mc + 24, 0, fds, 0) + mig_pipe(mc + 32, mc + 56, 0, fds, 0);
+    bad = bad + mig_pipe(mc + 64, mc + 72, 0, fds, 2048);
+    let mut g: i64 = 0;
+    while g < groups {
+        bad = bad + mig_pipe(dr, dw, g, fds, 0);
+        g = g + 1;
+    }
+    if bad != 0 || ld(mc, 0) <= 0 || __mind_sys_fcntl(ld(mc, 2), 4, 2048) < 0 {
+        return 0;
+    }
+    mc
+}
+
+fn mig_rd(fd: i64, b: i64) -> i64 {
+    read_some(fd, b, 8)
+}
+
+fn mig_ns(sh: i64, g: i64) -> i64 {
+    let c: i64 = ld(sh, 96 + g);
+    if c < 1 {
+        return 1;
+    }
+    ld(sh, 64 + g) / c
+}
+
+fn mig_slow(mc: i64) -> i64 {
+    let sh: i64 = ld(mc, 13);
+    let mut lo: i64 = mig_ns(sh, 0);
+    let mut h: i64 = 1;
+    while h < ld(mc, 1) {
+        if mig_ns(sh, h) < lo {
+            lo = mig_ns(sh, h);
+        }
+        h = h + 1;
+    }
+    if mig_ns(sh, ld(mc, 5)) * 10 > lo * 13 {
+        return 1;
+    }
+    0
+}
+
+fn mig_next(mc: i64) -> i64 {
+    let sh: i64 = ld(mc, 13);
+    let g: i64 = ld(mc, 5);
+    let b: i64 = mc + 128;
+    let mut v: i64 = 0 - 1;
+    while v == 0 - 1 {
+        if mig_rd(ld(mc, 2), b) == 8 {
+            mig_add(sh, mig_wt() + g, 1);
+            return ld(b, 0);
+        }
+        if mig_force() == 1 || mig_slow(mc) == 0 {
+            st(mc, 10, ld(mc, 10) + 1);
+            __mind_atomic_store_release_i64(sh + (mig_wi() + g) * 8, ld(mc, 10));
+            st(mc, 18, g * 4294967296 + ld(mc, 10));
+            write_some(ld(mc, 9), mc + 144, 8);
+        }
+        v = mig_bad();
+        if mw_read_exact(ld(ld(mc, 11), g), b, 8) == 8 {
+            v = ld(b, 0);
+        }
+        __mind_atomic_store_release_i64(sh + (mig_wi() + g) * 8, 0 - 1);
+    }
+    v
+}
+
+fn mig_want(mc: i64, c: i64) -> i64 {
+    if mig_force() == 1 {
+        if c == 4 {
+            return 1;
+        }
+        return 0;
+    }
+    if mig_slow(mc) == 0 {
+        return 0;
+    }
+    let sh: i64 = ld(mc, 13);
+    let mut taken: i64 = 0;
+    let mut h: i64 = 0;
+    while h < ld(mc, 1) {
+        taken = taken + ld(sh, mig_wt() + h);
+        h = h + 1;
+    }
+    if __mind_atomic_load_acquire_i64(sh + mig_wp() * 8) > taken {
+        return 0;
+    }
+    1
+}
+
+fn mig_pick(mc: i64) -> i64 {
+    let g: i64 = ld(mc, 5);
+    let n: i64 = ld(mc, 1);
+    let b: i64 = mc + 176;
+    let mut tries: i64 = 0;
+    while tries < 2 * n + 2 {
+        tries = tries + 1;
+        if mig_rd(ld(mc, 8), b) != 8 {
+            tries = 2 * n + 2;
+        } else {
+            let h: i64 = ld(b, 0) / 4294967296;
+            if h != g && h >= 0 && h < n {
+                if __mind_atomic_load_acquire_i64(ld(mc, 13) + (mig_wi() + h) * 8) == ld(b, 0) % 4294967296 {
+                    return h;
+                }
+            }
+        }
+    }
+    if mig_force() == 1 {
+        return (g + 1) % n;
+    }
+    0 - 1
+}
+
+fn mig_hook(p: i64, b: i64, nb: i64, ph: i64) -> i64 {
+    let mc: i64 = ld(p, 13);
+    let c: i64 = b + 1;
+    if mc == 0 || ph + mig_early() != 1 || c >= nb || ld(p, 14) < 1 {
+        return 0;
+    }
+    if mig_want(mc, c) == 0 {
+        return 0;
+    }
+    let h: i64 = mig_pick(mc);
+    let s: i64 = ld(p, 14) - 1;
+    if h < 0 {
+        return 0;
+    }
+    st(mig_slot(mc, s), 2, mig_layer(c));
+    st(mig_slot(mc, s), 5, ld(mc, 5));
+    st(mc, 19, mig_hand() + s * 256 + mig_layer(c));
+    if write_fd_all(ld(ld(mc, 12), h), mc + 152, 8) < 0 {
+        return 0;
+    }
+    st(p, 14, 0);
+    mig_add(ld(mc, 13), 3272 + ld(mc, 5), 1);
+    if ph == 0 {
+        st(mc, 24, 0);
+        st(mc, 25, 2000000);
+        __mind_sys_nanosleep(mc + 192, 0);
+    }
+    1
+}
+
+fn mig_on(w4: i64, mc: i64) -> i64 {
+    let p: i64 = ld(w4, 26);
+    if p == 0 {
+        return 0;
+    }
+    if ld(p, 0) != 1 {
+        return 0;
+    }
+    if ld(mc, 6) == 0 {
+        st(mc, 6, ld(p, 1));
+    }
+    p
+}
+
+fn mig_free(mc: i64) -> i64 {
+    let g: i64 = ld(mc, 5);
+    if mig_busy_ok(__mind_atomic_load_acquire_i64(mig_slot(mc, g) + 32)) == 1 {
+        return g;
+    }
+    if mig_busy_ok(__mind_atomic_load_acquire_i64(mig_slot(mc, g + ld(mc, 1)) + 32)) == 1 {
+        return g + ld(mc, 1);
+    }
+    0 - 1
+}
+
+fn mig_bind(w4: i64, mc: i64, i: i64, k: i64) -> i64 {
+    let p: i64 = mig_on(w4, mc);
+    if p == 0 {
+        return 0 - 1;
+    }
+    let s: i64 = mig_free(mc);
+    st(p, 1, ld(mc, 6));
+    st(p, 13, mc);
+    st(p, 14, s + 1);
+    if s < 0 {
+        return mig_add(ld(mc, 13), 3344 + ld(mc, 5), 1) - 1;
+    }
+    st(mig_slot(mc, s), 0, i);
+    st(mig_slot(mc, s), 1, k);
+    st(mig_slot(mc, s), 4, 1);
+    st(p, 1, mig_slot(mc, s) + 128);
+    s
+}
+
+fn mig_release(mc: i64, s: i64) -> i64 {
+    if s >= 0 {
+        __mind_atomic_store_release_i64(mig_slot(mc, s) + 32, 0);
+    }
+    0
+}
+
+fn mig_resume(w4: i64, mc: i64, s: i64, c: i64) -> i64 {
+    let p: i64 = mig_on(w4, mc);
+    if p == 0 {
+        return 0 - 1;
+    }
+    st(p, 1, mig_slot(mc, s) + 128);
+    st(p, 14, 0);
+    st(p, 15, c);
+    ld(p, 6)
+}
+
+fn mig_taken(w4: i64, mc: i64, s: i64, f0: i64) -> i64 {
+    let mut trip: i64 = 1;
+    if f0 >= 0 {
+        trip = ld(ld(w4, 26), 6) - f0;
+    }
+    st(mig_slot(mc, s), 3, trip);
+    mig_add(ld(mc, 13), 3320 + ld(mc, 5), trip);
+    mig_add(ld(mc, 13), 3296 + ld(mc, 5), 1);
+    mig_release(mc, s)
+}
+
+fn mig_ring(mc: i64, v: i64) -> i64 {
+    st(mc, 19, v);
+    let mut rc: i64 = 0;
+    let mut g: i64 = 0;
+    while g < ld(mc, 1) {
+        if write_fd_all(ld(ld(mc, 12), g), mc + 152, 8) < 0 {
+            rc = 0 - 1;
+        }
+        g = g + 1;
+    }
+    rc
+}
+
+fn mig_post(mc: i64, tk: i64, m: i64) -> i64 {
+    let w: i64 = ld(mc, 13) + mig_wp() * 8;
+    __mind_atomic_store_release_i64(w, __mind_load_i64(w) + m);
+    rot_batch(mc);
+    if write_fd_all(ld(mc, 3), tk, m * 8) < 0 {
+        return 0 - 1;
+    }
+    mig_ring(mc, 0 - 1)
+}
+
+// Field 1 (the process id) or field 4 (the parent process id) of
+// /proc/self/stat; 0 when the file cannot be read or parsed.
+fn mig_stat_num(which: i64) -> i64 {
+    let p: i64 = mw_alloc_zero(2);
+    let b: i64 = mw_alloc_zero(512);
+    if p == 0 || b == 0 {
+        return 0;
+    }
+    st(p, 0, 7310238724270485551);
+    st(p, 1, 32758250075022956);
+    let fd: i64 = __mind_sys_openat(0 - 100, p, 0, 0);
+    if fd < 0 {
+        return 0;
+    }
+    let n: i64 = read_some(fd, b, 4000);
+    close_fd(fd);
+    let mut i: i64 = 0;
+    if which == 4 {
+        i = n - 1;
+        while i > 0 && ldu8(b, i) != 41 {
+            i = i - 1;
+        }
+        if i <= 0 {
+            return 0;
+        }
+        i = i + 4;
+    }
+    let mut v: i64 = 0;
+    while i < n && ldu8(b, i) >= 48 && ldu8(b, i) <= 57 {
+        v = v * 10 + ldu8(b, i) - 48;
+        i = i + 1;
+    }
+    v
+}
+
+// Called by a worker right after the fork. The kernel sends signal 9 to the
+// worker when the main process ends. The parent process id is compared with
+// the id of the main process, so a main process that ended before this call
+// is also seen. Returns 0 when the worker may go on.
+fn mig_orphan(main_pid: i64) -> i64 {
+    if __mind_sys_prctl(1, 9, 0, 0, 0) < 0 {
+        return 1;
+    }
+    if main_pid > 0 && mig_stat_num(4) != main_pid {
+        return 1;
+    }
+    0
+}

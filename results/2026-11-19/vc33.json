@@ -1,0 +1,40 @@
+{
+ "total": {
+  "levels": 7,
+  "ref_levels": 7,
+  "actions": 168,
+  "ref_actions": 168,
+  "games_full": 1,
+  "games": 1,
+  "perturb": 0
+ },
+ "games": [
+  {
+   "game": "vc33-5430563c",
+   "levels": 7,
+   "ref_levels": 7,
+   "actions": 168,
+   "ref_actions": 168,
+   "per_level": [
+    4,
+    7,
+    23,
+    21,
+    44,
+    20,
+    49
+   ],
+   "ref_per_level": [
+    3,
+    7,
+    23,
+    21,
+    44,
+    20,
+    49
+   ],
+   "resets": 1,
+   "over_ref_levels": []
+  }
+ ]
+}

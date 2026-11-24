@@ -1,0 +1,312 @@
+// Multi-worker copy of the base functions, part 1: memory, file reading, the
+// fixed-point helpers and the model loader. The multi-worker path keeps its
+// own copy so that its memory layouts do not depend on the single-worker path.
+// Entry points: mw_alloc_zero, mw_alloc_zero_bytes, mw_read_exact, mw_read_fd_all.
+
+fn mw_alloc_zero(n: i64) -> i64 {
+    let a: i64 = __mind_alloc(n * 8);
+    if a == 0 {
+        return 0;
+    }
+    zero_i64(a, n);
+    a
+}
+
+fn mw_alloc_zero_bytes(n: i64) -> i64 {
+    let p: i64 = __mind_alloc(n);
+    if p == 0 {
+        return 0;
+    }
+    let mut i: i64 = 0;
+    while i < n {
+        __mind_store_i8(p + i, 0);
+        i = i + 1;
+    }
+    p
+}
+
+fn mw_read_exact(fd: i64, buf: i64, n: i64) -> i64 {
+    let mut got: i64 = 0;
+    while got < n {
+        let k: i64 = read_some(fd, buf + got, n - got);
+        if k <= 0 {
+            return got;
+        }
+        got = got + k;
+    }
+    got
+}
+
+fn mw_read_fd_all(fd: i64, rec: i64) -> i64 {
+    let mut cap: i64 = 1048576;
+    let mut buf: i64 = __mind_alloc(cap);
+    let mut got: i64 = 0;
+    let mut done: i64 = 0;
+    while done == 0 {
+        if buf == 0 {
+            return 0 - 1;
+        }
+        if got == cap {
+            cap = cap * 2;
+            buf = __mind_realloc(buf, cap);
+        } else {
+            let n: i64 = read_some(fd, buf + got, cap - got);
+            if n < 0 {
+                return 0 - 1;
+            }
+            if n == 0 {
+                done = 1;
+            }
+            got = got + n;
+        }
+    }
+    __mind_store_i64(rec, buf);
+    __mind_store_i64(rec + 8, got);
+    0
+}
+
+fn mw_q_frac() -> i64 {
+    24
+}
+
+fn mw_act_limit() -> i64 {
+    1099511627776
+}
+
+fn mw_mul_round(a: i64, m: i64, sh: i64) -> i64 {
+    let mut ua: i64 = a;
+    let mut um: i64 = m;
+    let mut neg: i64 = 0;
+    if ua < 0 {
+        ua = 0 - ua;
+        neg = 1 - neg;
+    }
+    if um < 0 {
+        um = 0 - um;
+        neg = 1 - neg;
+    }
+    let x: i64 = (ua >> 32) * um;
+    let lo: i64 = (ua & 4294967295) * um;
+    let mut mag: i64 = 0;
+    if sh <= 0 {
+        mag = ((x << 32) + lo) << (0 - sh);
+    } else {
+        let q: i64 = floor_shift_split(x, lo, sh - 1);
+        mag = (q + 1) >> 1;
+    }
+    if neg == 1 {
+        return 0 - mag;
+    }
+    mag
+}
+
+fn mw_f32_decode(bits: i64, out: i64) -> i64 {
+    let ex: i64 = (bits >> 23) & 255;
+    let fr: i64 = bits & 8388607;
+    if ex == 255 {
+        return 0 - 1;
+    }
+    let mut m: i64 = fr;
+    let mut e: i64 = 0 - 149;
+    if ex != 0 {
+        m = fr + 8388608;
+        e = ex - 150;
+    }
+    if ((bits >> 31) & 1) == 1 {
+        m = 0 - m;
+    }
+    __mind_store_i64(out, m);
+    __mind_store_i64(out + 8, e);
+    0
+}
+
+fn mw_to_q24(m: i64, e: i64) -> i64 {
+    mw_mul_round(m, 1, 0 - (e + mw_q_frac()))
+}
+
+fn mw_finish_row(acc: i64, m: i64, sh: i64, bq: i64, hin: i64, hout: i64, cell0: i64) -> i64 {
+    let mut x: i64 = 0;
+    while x < 64 {
+        let mut v: i64 = mw_mul_round(ld(acc, x), m, sh) + bq;
+        if v < 0 {
+            v = 0;
+        }
+        let nv: i64 = v + ld(hin, cell0 + x);
+        if nv >= mw_act_limit() {
+            return 0 - 1;
+        }
+        st(hout, cell0 + x, nv);
+        x = x + 1;
+    }
+    0
+}
+
+fn mw_n_in() -> i64 {
+    49
+}
+
+fn mw_err_io() -> i64 {
+    0 - 1
+}
+
+fn mw_err_header() -> i64 {
+    0 - 2
+}
+
+fn mw_err_shape() -> i64 {
+    0 - 3
+}
+
+fn mw_err_size() -> i64 {
+    0 - 4
+}
+
+fn mw_err_value() -> i64 {
+    0 - 5
+}
+
+fn mw_shape_ok(i: i64, n: i64, nch: i64, out: i64, inp: i64, k: i64, dil: i64) -> i64 {
+    let mut want_out: i64 = nch;
+    let mut want_in: i64 = nch;
+    let mut want_k: i64 = 3;
+    if i == 0 {
+        want_in = mw_n_in();
+    }
+    if i == n - 2 {
+        want_out = 7;
+        want_in = 2 * nch;
+        want_k = 1;
+    }
+    if i == n - 1 {
+        want_out = 1;
+        want_k = 1;
+    }
+    if out != want_out || inp != want_in || k != want_k {
+        return 0;
+    }
+    let mut want_dil: i64 = 1;
+    if i == 2 || i == 7 {
+        want_dil = 2;
+    }
+    if i == 3 || i == 8 {
+        want_dil = 4;
+    }
+    if i == 4 {
+        want_dil = 8;
+    }
+    if i == 5 {
+        want_dil = 16;
+    }
+    if dil != want_dil {
+        return 0;
+    }
+    1
+}
+
+fn mw_load_scale_bias(buf: i64, off: i64, out: i64, lay: i64) -> i64 {
+    let ms: i64 = __mind_alloc(out * 8);
+    let es: i64 = __mind_alloc(out * 8);
+    let bq: i64 = __mind_alloc(out * 8);
+    let tmp: i64 = __mind_alloc(16);
+    let mut o: i64 = 0;
+    while o < out {
+        if mw_f32_decode(rd_u32(buf, off + o * 4), tmp) < 0 {
+            return 0 - 1;
+        }
+        let sm: i64 = __mind_load_i64(tmp);
+        let se: i64 = __mind_load_i64(tmp + 8);
+        if sm != 0 && se > 0 - 16 {
+            return 0 - 1;
+        }
+        __mind_store_i64(ms + o * 8, sm);
+        __mind_store_i64(es + o * 8, se);
+        if mw_f32_decode(rd_u32(buf, off + out * 4 + o * 4), tmp) < 0 {
+            return 0 - 1;
+        }
+        let bm: i64 = __mind_load_i64(tmp);
+        let be: i64 = __mind_load_i64(tmp + 8);
+        if bm != 0 && be > 0 - 8 {
+            return 0 - 1;
+        }
+        __mind_store_i64(bq + o * 8, mw_to_q24(bm, be));
+        o = o + 1;
+    }
+    __mind_store_i64(lay + 40, ms);
+    __mind_store_i64(lay + 48, es);
+    __mind_store_i64(lay + 56, bq);
+    0
+}
+
+fn mw_parse_named_model(buf: i64, len: i64) -> i64 {
+    if rd_u32(buf, 8) != 1 || rd_u32(buf, 12) != 11 {
+        return mw_err_header();
+    }
+    let layers: i64 = __mind_alloc(88);
+    let mut off: i64 = 16;
+    let mut i: i64 = 0;
+    while i < 11 {
+        if off + 4 > len {
+            return mw_err_size();
+        }
+        let size: i64 = rd_u32(buf, off);
+        off = off + 4;
+        if size < 1 || size > 32 || off + size + 20 > len {
+            return mw_err_size();
+        }
+        if name_at(buf, off, size, i) == 0 {
+            return mw_err_header();
+        }
+        off = off + size;
+        let out: i64 = rd_u32(buf, off);
+        let inp: i64 = rd_u32(buf, off + 4);
+        let kh: i64 = rd_u32(buf, off + 8);
+        let kw: i64 = rd_u32(buf, off + 12);
+        let dil: i64 = rd_u32(buf, off + 16);
+        off = off + 20;
+        if kh != kw || mw_shape_ok(i, 11, 64, out, inp, kh, dil) == 0 {
+            return mw_err_shape();
+        }
+        let cnt: i64 = out * inp * kh * kw;
+        if off + cnt + out * 8 > len {
+            return mw_err_size();
+        }
+        let lay: i64 = __mind_alloc(64);
+        let tern: i64 = __mind_alloc(cnt * 8);
+        __mind_store_i64(lay, out);
+        __mind_store_i64(lay + 8, inp);
+        __mind_store_i64(lay + 16, kh);
+        __mind_store_i64(lay + 24, dil);
+        __mind_store_i64(lay + 32, tern);
+        if load_tern(buf, off, cnt, tern) < 0 {
+            return mw_err_value();
+        }
+        if mw_load_scale_bias(buf, off + cnt, out, lay) < 0 {
+            return mw_err_value();
+        }
+        __mind_store_i64(layers + i * 8, lay);
+        off = off + cnt + out * 8;
+        i = i + 1;
+    }
+    if off != len {
+        return mw_err_size();
+    }
+    let model: i64 = __mind_alloc(24);
+    __mind_store_i64(model, 64);
+    __mind_store_i64(model + 8, 8);
+    __mind_store_i64(model + 16, layers);
+    model
+}
+
+fn mw_parse_model(buf: i64, len: i64) -> i64 {
+    if len < 16 {
+        return mw_err_header();
+    }
+    if rd_u32(buf, 0) == 1397047630 && rd_u32(buf, 4) == 5714260 {
+        return mw_parse_named_model(buf, len);
+    }
+    mw_err_header()
+}
+
+fn mw_model_layer(model: i64, i: i64) -> i64 {
+    __mind_load_i64(__mind_load_i64(model + 16) + i * 8)
+}

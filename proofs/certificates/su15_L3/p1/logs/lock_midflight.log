@@ -1,0 +1,4 @@
+INFO:arc_agi.scorecard:Initialized ScorecardManager with idle_for=0:15:00 and max_open_for=3 days, 0:00:00
+2026-11-19 03:55:28 | INFO | Created new scorecard: e7a8b66b-2955-4f40-acff-69c39c1c08ed
+2026-11-19 03:55:28 | INFO | Successfully loaded game class Su15 from <path>/su15.py
+LOCKSTEP_MIDFLIGHT states 60 clicks 203520 engine_wins 1980 engine_wins_only_mid_flight(mutant says no) 1504 engine_wins_also_end_state 476 mismatch 0 sec 114

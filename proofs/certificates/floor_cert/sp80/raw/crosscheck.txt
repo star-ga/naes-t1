@@ -1,0 +1,34 @@
+=== level 2 ===
+level 2 tested 610 wins 0 capped 0 best_cost -1 seconds 0.001
+detail finished 610
+rc=0
+=== level 3 ===
+level 3 tested 20772 wins 0 capped 0 best_cost -1 seconds 0.997
+detail finished 20772
+rc=0
+=== recorded wins ===
+check 1
+rc=0
+check 1
+rc=0
+check 1
+rc=0
+check 1
+rc=0
+check 1
+rc=0
+check 1
+rc=0
+=== origins ===
+check 0
+rc=0
+check 0
+rc=0
+check 0
+rc=0
+check 0
+rc=0
+check 0
+rc=0
+check 0
+rc=0

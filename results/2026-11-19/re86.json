@@ -1,0 +1,42 @@
+{
+ "total": {
+  "levels": 8,
+  "ref_levels": 8,
+  "actions": 508,
+  "ref_actions": 508,
+  "games_full": 1,
+  "games": 1,
+  "perturb": 0
+ },
+ "games": [
+  {
+   "game": "re86-8af5384d",
+   "levels": 8,
+   "ref_levels": 8,
+   "actions": 508,
+   "ref_actions": 508,
+   "per_level": [
+    21,
+    36,
+    47,
+    42,
+    63,
+    46,
+    98,
+    155
+   ],
+   "ref_per_level": [
+    20,
+    36,
+    47,
+    42,
+    63,
+    46,
+    98,
+    155
+   ],
+   "resets": 1,
+   "over_ref_levels": []
+  }
+ ]
+}

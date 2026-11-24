@@ -1,0 +1,175 @@
+{
+ "receipt": "exactness of the protected TPU builds on the release fixture, TPU v5e",
+ "date": "2026-11-22",
+ "tpu": "TPU v5e, one chip",
+ "vendor_runtime": "libtpu 0.0.50.1",
+ "pjrt_api": "0.116",
+ "devices": 1,
+ "fixture_sha256": "a2dc9485252ddd922d742f7e36191fa92a20bbdb7680a2ca1c378874ecd7b925",
+ "fixture_decisions": 5499,
+ "rows_note": "protected builds pjrt_fb2 and pjrt_fb2r at batch 25 and pjrt_fb2 at batch 1; two runs each; the full set ran two times (pass 1 and pass 2)",
+ "rows": [
+  {
+   "pass": 1,
+   "build": "pjrt_fb2",
+   "build_sha256": "b5a3dc1b9f56cd4807254fb34287505daeacb09536528134dc4890aaf36c834f",
+   "batch": 25,
+   "run": 1,
+   "compared": 5499,
+   "match_line": "MATCH 5499/5499",
+   "stream_sha256": "4d2d98f711a1209eace8f3841952e39d4d75870d48079c3175b361bba9746396"
+  },
+  {
+   "pass": 1,
+   "build": "pjrt_fb2",
+   "build_sha256": "b5a3dc1b9f56cd4807254fb34287505daeacb09536528134dc4890aaf36c834f",
+   "batch": 25,
+   "run": 2,
+   "compared": 5499,
+   "match_line": "MATCH 5499/5499",
+   "stream_sha256": "4d2d98f711a1209eace8f3841952e39d4d75870d48079c3175b361bba9746396"
+  },
+  {
+   "pass": 1,
+   "build": "pjrt_fb2r",
+   "build_sha256": "c51b598be41f10846d8e8660a8643fe3bc1a0eb72a70c9b4e8129d56f86a1b09",
+   "batch": 25,
+   "run": 1,
+   "compared": 5499,
+   "match_line": "MATCH 5499/5499",
+   "stream_sha256": "4d2d98f711a1209eace8f3841952e39d4d75870d48079c3175b361bba9746396"
+  },
+  {
+   "pass": 1,
+   "build": "pjrt_fb2r",
+   "build_sha256": "c51b598be41f10846d8e8660a8643fe3bc1a0eb72a70c9b4e8129d56f86a1b09",
+   "batch": 25,
+   "run": 2,
+   "compared": 5499,
+   "match_line": "MATCH 5499/5499",
+   "stream_sha256": "4d2d98f711a1209eace8f3841952e39d4d75870d48079c3175b361bba9746396"
+  },
+  {
+   "pass": 1,
+   "build": "pjrt_fb2",
+   "build_sha256": "b5a3dc1b9f56cd4807254fb34287505daeacb09536528134dc4890aaf36c834f",
+   "batch": 1,
+   "run": 1,
+   "compared": 5499,
+   "match_line": "MATCH 5499/5499",
+   "stream_sha256": "4d2d98f711a1209eace8f3841952e39d4d75870d48079c3175b361bba9746396"
+  },
+  {
+   "pass": 1,
+   "build": "pjrt_fb2",
+   "build_sha256": "b5a3dc1b9f56cd4807254fb34287505daeacb09536528134dc4890aaf36c834f",
+   "batch": 1,
+   "run": 2,
+   "compared": 5499,
+   "match_line": "MATCH 5499/5499",
+   "stream_sha256": "4d2d98f711a1209eace8f3841952e39d4d75870d48079c3175b361bba9746396"
+  },
+  {
+   "pass": 2,
+   "build": "pjrt_fb2",
+   "build_sha256": "b5a3dc1b9f56cd4807254fb34287505daeacb09536528134dc4890aaf36c834f",
+   "batch": 25,
+   "run": 1,
+   "compared": 5499,
+   "match_line": "MATCH 5499/5499",
+   "stream_sha256": "4d2d98f711a1209eace8f3841952e39d4d75870d48079c3175b361bba9746396"
+  },
+  {
+   "pass": 2,
+   "build": "pjrt_fb2",
+   "build_sha256": "b5a3dc1b9f56cd4807254fb34287505daeacb09536528134dc4890aaf36c834f",
+   "batch": 25,
+   "run": 2,
+   "compared": 5499,
+   "match_line": "MATCH 5499/5499",
+   "stream_sha256": "4d2d98f711a1209eace8f3841952e39d4d75870d48079c3175b361bba9746396"
+  },
+  {
+   "pass": 2,
+   "build": "pjrt_fb2r",
+   "build_sha256": "c51b598be41f10846d8e8660a8643fe3bc1a0eb72a70c9b4e8129d56f86a1b09",
+   "batch": 25,
+   "run": 1,
+   "compared": 5499,
+   "match_line": "MATCH 5499/5499",
+   "stream_sha256": "4d2d98f711a1209eace8f3841952e39d4d75870d48079c3175b361bba9746396"
+  },
+  {
+   "pass": 2,
+   "build": "pjrt_fb2r",
+   "build_sha256": "c51b598be41f10846d8e8660a8643fe3bc1a0eb72a70c9b4e8129d56f86a1b09",
+   "batch": 25,
+   "run": 2,
+   "compared": 5499,
+   "match_line": "MATCH 5499/5499",
+   "stream_sha256": "4d2d98f711a1209eace8f3841952e39d4d75870d48079c3175b361bba9746396"
+  },
+  {
+   "pass": 2,
+   "build": "pjrt_fb2",
+   "build_sha256": "b5a3dc1b9f56cd4807254fb34287505daeacb09536528134dc4890aaf36c834f",
+   "batch": 1,
+   "run": 1,
+   "compared": 5499,
+   "match_line": "MATCH 5499/5499",
+   "stream_sha256": "4d2d98f711a1209eace8f3841952e39d4d75870d48079c3175b361bba9746396"
+  },
+  {
+   "pass": 2,
+   "build": "pjrt_fb2",
+   "build_sha256": "b5a3dc1b9f56cd4807254fb34287505daeacb09536528134dc4890aaf36c834f",
+   "batch": 1,
+   "run": 2,
+   "compared": 5499,
+   "match_line": "MATCH 5499/5499",
+   "stream_sha256": "4d2d98f711a1209eace8f3841952e39d4d75870d48079c3175b361bba9746396"
+  }
+ ],
+ "negative_control": {
+  "what": "the same builds with a changed network module, at batch 25 and at batch 1",
+  "rows": [
+   {
+    "pass": 1,
+    "batch": 25,
+    "match_line": "MATCH 3149/5499",
+    "result": "red, as required"
+   },
+   {
+    "pass": 1,
+    "batch": 1,
+    "match_line": "MATCH 3149/5499",
+    "result": "red, as required"
+   },
+   {
+    "pass": 2,
+    "batch": 25,
+    "match_line": "MATCH 3149/5499",
+    "result": "red, as required"
+   },
+   {
+    "pass": 2,
+    "batch": 1,
+    "match_line": "MATCH 3149/5499",
+    "result": "red, as required"
+   }
+  ]
+ },
+ "known_answer_test": {
+  "build": "pjrt_kat",
+  "match_line": "58/58",
+  "result": "green",
+  "controls": "three changed modules, each red as required: 0/58, 0/58, 6/58",
+  "build_sha256": "b280c208c6f734eda7a2206f1b8eec1d364116576d707b1d6d5000885c600754"
+ },
+ "module_check": {
+  "build": "e3_check",
+  "modules_checked": 9,
+  "result": "E3_OK for each module",
+  "build_sha256": "416b7bea775a6db3c14af9c17085946c650835c0518cca63fafe1a876d93993f"
+ }
+}

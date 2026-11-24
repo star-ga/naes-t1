@@ -1,0 +1,36 @@
+{
+ "old": "old/sp80/0ee2d095/sp80.py",
+ "new": "new/sp80/589a99af/sp80.py",
+ "old_tokens": 3392,
+ "new_tokens": 3392,
+ "renamed": 147,
+ "mapped": 289,
+ "n_hunks": 1,
+ "hunks": [
+  {
+   "op": "map_violation",
+   "where_old": "Sp80:__init__",
+   "where_new": "Sp80:__init__",
+   "old": "camera",
+   "new": "camera",
+   "expected_new": "zgzbkvrwm"
+  }
+ ],
+ "string_map": {
+  "\"\"\".\"\"\"": "\"\"\".\"\"\"",
+  "'change'": "'change'",
+  "'sp80'": "'sp80'",
+  "'ksmzdcblcz'": "'plzwjbfyfli'",
+  "'xsrqllccpx'": "'repwkzbkhxl'",
+  "'uzunfxpwmd'": "'waoewejnqzc'",
+  "'steps'": "'steps'",
+  "'rotation'": "'dojfslwbg'",
+  "'hfjpeygkxy'": "'tuvkdkhdokr'",
+  "'nkrtlkykwe'": "'liolfvkveqg'",
+  "'spill'": "'spill'",
+  "'syaipsfndp'": "'sowlljgtjvn'",
+  "'tags'": "'tags'",
+  "'x'": "'x'",
+  "'y'": "'y'"
+ }
+}

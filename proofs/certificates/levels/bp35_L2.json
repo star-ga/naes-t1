@@ -1,0 +1,39 @@
+{
+  "artifact_sha256": [
+    {
+      "kind": "safe_statement_count_extract",
+      "sha256": "845fd5c06ca876e20673a2e6c6d8453ead37a5a2c43edbc79a408f5c62791bf6"
+    },
+    {
+      "kind": "authority_ledger_label",
+      "sha256": "f9bbb436cc4caeb471392dbef3bc788609f3585e543c7c92394e67b479fdb83b"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "17144347a3dd252a44c4964e68bf8f79709fa0077e63359f1219d9c32a4900e2"
+    }
+  ],
+  "floor": 40,
+  "game": "bp35",
+  "game_id": "bp35-0a0ad940",
+  "game_levels": 9,
+  "level": 2,
+  "lower_bound": {
+    "kind": "relay_algebra_admissible_lb_meets_verified_win",
+    "statement": "An exact relaxed relay dynamic program prices movement, gravity changes and required digs. The recorded admissible root value is 40, equal to the winning route length.",
+    "value": 40
+  },
+  "naes_t1_actions": 40,
+  "proof_class": "Matching bounds",
+  "proof_detail": "relay_algebra_admissible_lb_meets_verified_win",
+  "schema_version": 1,
+  "source_certificate_sha256": "a4a6b6fea4eb4f810fda7a500c8092afa6335203423e129074c2b9e6a8b42146",
+  "status": "proven",
+  "upper_bound": {
+    "expected_levels_completed": 2,
+    "length": 40,
+    "opening_reset_counted": false,
+    "route": "6@39,33 6@39,27 4 4 4 6@33,39 3 6@27,39 3 6@21,39 3 6@15,39 3 6@15,33 4 4 4 6@33,33 6@33,33 3 3 6@21,33 6@21,33 6@21,33 6@27,39 4 6@33,39 4 6@39,39 4 6@45,39 4 6@51,39 4 6@51,33 6@51,33 3 3 3 6@33,33",
+    "seed": 0
+  }
+}

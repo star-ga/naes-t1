@@ -1,0 +1,38 @@
+{
+ "excluded_fields": [
+  "_action_count",
+  "_action",
+  "_full_reset",
+  "current_steps"
+ ],
+ "floor": 7,
+ "game": "vc33",
+ "level": 2,
+ "mode": "full",
+ "official_game_sha256": "8afa9f55054b2a2460b6c44ec5c66e120f6d6f4c2289e24d50832a68d1e3fcfd",
+ "program_sha256": "145ed2c455aefa061e5d1c8fcb4f0d2bf63dcd10d2647999b341c48ef8432262",
+ "replay": {
+  "prefix_wins": false,
+  "route_length": 7,
+  "route_wins": true
+ },
+ "routes_sha256": "30b1f5fbb1fa661f859dd77f9b95b1f711a8cb65f3ae09c5cfb9e3f066031a5e",
+ "search": {
+  "layers_closed": 6,
+  "verdict": "CLOSED"
+ },
+ "seconds": 806.515,
+ "states": 90,
+ "stats": {
+  "class_checks": 0,
+  "classes": 0,
+  "edges": 291313,
+  "game_over": 0,
+  "min_counter": 45,
+  "reset_elsewhere": 0,
+  "reset_leaves_level": 1,
+  "reset_to_start": 70,
+  "shared_checks": 6
+ },
+ "verdict": "CONFIRMED"
+}

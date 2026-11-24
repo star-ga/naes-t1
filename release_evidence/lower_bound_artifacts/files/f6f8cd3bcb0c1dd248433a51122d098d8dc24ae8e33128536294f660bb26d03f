@@ -1,0 +1,77 @@
+{
+ "level": 2,
+ "sample_every": 1,
+ "layers": [
+  {
+   "B": 0,
+   "steps": 1,
+   "configs_in_layer": 1,
+   "checked_real": 1,
+   "agree": 1,
+   "mismatch": 0,
+   "real_wins": 0,
+   "model_wins": 0
+  },
+  {
+   "B": 1,
+   "steps": 2,
+   "configs_in_layer": 4,
+   "checked_real": 4,
+   "agree": 4,
+   "mismatch": 0,
+   "real_wins": 0,
+   "model_wins": 0
+  },
+  {
+   "B": 2,
+   "steps": 3,
+   "configs_in_layer": 15,
+   "checked_real": 15,
+   "agree": 15,
+   "mismatch": 0,
+   "real_wins": 0,
+   "model_wins": 0
+  },
+  {
+   "B": 3,
+   "steps": 4,
+   "configs_in_layer": 53,
+   "checked_real": 53,
+   "agree": 53,
+   "mismatch": 0,
+   "real_wins": 0,
+   "model_wins": 0
+  },
+  {
+   "B": 4,
+   "steps": 5,
+   "configs_in_layer": 152,
+   "checked_real": 152,
+   "agree": 152,
+   "mismatch": 0,
+   "real_wins": 0,
+   "model_wins": 0
+  },
+  {
+   "B": 5,
+   "steps": 6,
+   "configs_in_layer": 385,
+   "checked_real": 385,
+   "agree": 385,
+   "mismatch": 0,
+   "real_wins": 0,
+   "model_wins": 0
+  },
+  {
+   "B": 6,
+   "steps": 7,
+   "configs_in_layer": 886,
+   "checked_real": 886,
+   "agree": 886,
+   "mismatch": 0,
+   "real_wins": 1,
+   "model_wins": 1
+  }
+ ],
+ "secs": 20.4
+}

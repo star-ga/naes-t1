@@ -1,0 +1,118 @@
+fn fr_hash_file(path_cstr: i64) -> i64 {
+    // [digest_addr, nbytes, nlines, ok]
+    let rec: i64 = read_to_string(path_cstr);
+    let out: i64 = __mind_alloc(32);
+    let addr: i64 = __mind_load_i64(rec + 0);
+    let n: i64 = __mind_load_i64(rec + 8);
+    __mind_store_i64(out + 0, 0);
+    __mind_store_i64(out + 8, 0);
+    __mind_store_i64(out + 16, 0);
+    __mind_store_i64(out + 24, 0);
+    if n < 0 {
+        // Nothing hashed. Drop the read record and any file bytes.
+        let _fa: i64 = __mind_free(addr);
+        let _fr: i64 = __mind_free(rec);
+        return out;
+    }
+    let dig: i64 = __mind_alloc(32);
+    let _h: i64 = sha256(addr, n, dig);
+    let mut lines: i64 = 0;
+    let mut i: i64 = 0;
+    while i < n {
+        if (__mind_load_i8(addr + i) & 255) == 10 {
+            lines = lines + 1;
+        }
+        i = i + 1;
+    }
+    __mind_store_i64(out + 0, dig);
+    __mind_store_i64(out + 8, n);
+    __mind_store_i64(out + 16, lines);
+    __mind_store_i64(out + 24, 1);
+    // Digest and counts are in out. The file bytes are not used again.
+    let _fa: i64 = __mind_free(addr);
+    let _fr: i64 = __mind_free(rec);
+    out
+}
+
+fn fr_utc(path_cstr: i64, b: i64) -> i64 {
+    let buf: i64 = __mind_alloc(144);
+    let _z: i64 = memset(buf as *mut u8, 0, 144);
+    let r: i64 = stat(path_cstr as *const u8, buf as *mut u8) as i64;
+    if r != 0 {
+        return 0;
+    }
+    let mut sec: i64 = __mind_load_i64(buf + 88);
+    let nsec: i64 = __mind_load_i64(buf + 96);
+    if nsec >= 999999500 {
+        sec = sec + 1;
+    }
+    if sec < 0 {
+        return 0;
+    }
+    let days: i64 = sec / 86400;
+    let sod: i64 = sec % 86400;
+    let hh: i64 = sod / 3600;
+    let mm_base: i64 = sod % 3600;
+    let mm: i64 = mm_base / 60;
+    let ss: i64 = sod % 60;
+    let z0: i64 = days + 719468;
+    let era: i64 = z0 / 146097;
+    let doe: i64 = z0 - era * 146097;
+    let t1: i64 = doe / 1460;
+    let t2: i64 = doe / 36524;
+    let t3: i64 = doe / 146096;
+    let s1: i64 = doe - t1;
+    let s2: i64 = s1 + t2;
+    let s3: i64 = s2 - t3;
+    let yoe: i64 = s3 / 365;
+    let mut y: i64 = yoe + era * 400;
+    let q1: i64 = yoe / 4;
+    let q2: i64 = yoe / 100;
+    let diy: i64 = 365 * yoe + q1 - q2;
+    let doy: i64 = doe - diy;
+    let five: i64 = 5 * doy;
+    let mp: i64 = (five + 2) / 153;
+    let t153: i64 = 153 * mp;
+    let t153b: i64 = (t153 + 2) / 5;
+    let d0: i64 = doy - t153b;
+    let d: i64 = d0 + 1;
+    let mut m: i64 = mp + 3;
+    if mp >= 10 {
+        m = mp - 9;
+    }
+    if m <= 2 {
+        y = y + 1;
+    }
+    let mut out: i64 = b;
+    out = fr_zw(out, y, 4);
+    out = fr_bpush(out, 45);
+    out = fr_zw(out, m, 2);
+    out = fr_bpush(out, 45);
+    out = fr_zw(out, d, 2);
+    out = fr_bpush(out, 84);
+    out = fr_zw(out, hh, 2);
+    out = fr_bpush(out, 58);
+    out = fr_zw(out, mm, 2);
+    out = fr_bpush(out, 58);
+    out = fr_zw(out, ss, 2);
+    fr_bpush(out, 90)
+}
+
+fn fr_parent_mkdir(path_p: i64, path_n: i64) -> i64 {
+    let mut slash: i64 = 0 - 1;
+    let mut i: i64 = 0;
+    while i < path_n {
+        if (__mind_load_i8(path_p + i) & 255) == 47 {
+            slash = i;
+        }
+        i = i + 1;
+    }
+    let pb: i64 = fr_bnew(path_n + 2);
+    if slash <= 0 {
+        let _d: i64 = fr_bstr(pb, ".");
+    } else {
+        let _d: i64 = fr_bmem(pb, path_p, slash);
+    }
+    mkdir_p(fr_cstr(pb), 493)
+}
+

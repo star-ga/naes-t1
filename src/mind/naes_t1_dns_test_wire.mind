@@ -1,0 +1,178 @@
+// naes_t1_dns_test_wire.mind — byte writers, printers and canned wire images
+// for the naes_t1_dns.mind selftest. Not a program by itself: the build
+// concatenates naes_t1_dns.mind, this file and naes_t1_dns_test.mind (see the
+// header of naes_t1_dns_test.mind). Helpers are prefixed naes_dt_.
+fn naes_dt_wr8(buf: i64, off: i64, word: i64, n: i64) -> i64 {
+    let mut i: i64 = 0;
+    while i < n { __mind_store_i8(buf + off + i, (word >> (i * 8)) & 255); i = i + 1; }
+    off + n
+}
+fn naes_dt_ckn(buf: i64, off: i64, n: i64, word: i64) -> i64 {
+    let mut i: i64 = 0;
+    while i < n {
+        if (__mind_load_i8(buf + off + i) & 255) != ((word >> (i * 8)) & 255) { return 0; }
+        i = i + 1;
+    }
+    1
+}
+fn naes_dt_zero(dst: i64, n: i64) -> i64 {
+    let mut i: i64 = 0;
+    while i < n { __mind_store_i8(dst + i, 0); i = i + 1; }
+    n
+}
+fn naes_dt_say_ch(c: i64) -> i64 {
+    let b: i64 = __mind_alloc(4);
+    __mind_store_i8(b, c);
+    __mind_write(2, b, 1, 0 - 1)
+}
+fn naes_dt_say_num(n: i64) -> i64 {
+    let b: i64 = __mind_alloc(32);
+    let mut v: i64 = n;
+    let mut neg: i64 = 0;
+    if v < 0 { neg = 1; v = 0 - v; }
+    let mut p: i64 = 31;
+    let mut first: i64 = 1;
+    while first == 1 || v > 0 {
+        __mind_store_i8(b + p, 48 + (v % 10));
+        p = p - 1;
+        v = v / 10;
+        first = 0;
+    }
+    if neg == 1 { __mind_store_i8(b + p, 45); p = p - 1; }
+    __mind_write(2, b + p + 1, 31 - p, 0 - 1)
+}
+fn naes_dt_say_hex4(v: i64) -> i64 {
+    let mut shift: i64 = 12;
+    let mut started: i64 = 0;
+    while shift >= 0 {
+        let d: i64 = (v >> shift) & 15;
+        if d > 0 || started == 1 || shift == 0 {
+            let mut ch: i64 = 48 + d;
+            if d > 9 { ch = 87 + d; }
+            let _w: i64 = naes_dt_say_ch(ch);
+            started = 1;
+        }
+        shift = shift - 4;
+    }
+    0
+}
+fn naes_dt_say_addr(fam: i64, p: i64) -> i64 {
+    if fam == 2 {
+        let mut i: i64 = 0;
+        while i < 4 {
+            if i > 0 { let _d: i64 = naes_dt_say_ch(46); }
+            let _n: i64 = naes_dt_say_num(__mind_load_i8(p + i) & 255);
+            i = i + 1;
+        }
+        return naes_dt_say_ch(10);
+    }
+    let mut g: i64 = 0;
+    while g < 8 {
+        if g > 0 { let _d: i64 = naes_dt_say_ch(58); }
+        let v: i64 = (__mind_load_i8(p + g * 2) & 255) * 256 + (__mind_load_i8(p + g * 2 + 1) & 255);
+        let _h: i64 = naes_dt_say_hex4(v);
+        g = g + 1;
+    }
+    naes_dt_say_ch(10)
+}
+fn naes_dt_ok(n: i64) -> i64 {
+    let b: i64 = __mind_alloc(8);
+    let _w: i64 = naes_dt_wr8(b, 0, 2116431, 3);
+    __mind_store_i8(b + 3, 10);
+    let _a: i64 = __mind_write(2, b, 3, 0 - 1);
+    let _c: i64 = naes_dt_say_num(n);
+    __mind_write(2, b + 3, 1, 0 - 1)
+}
+fn naes_dt_fail(n: i64) -> i64 {
+    let b: i64 = __mind_alloc(8);
+    let _w: i64 = naes_dt_wr8(b, 0, 138718822726, 5);
+    __mind_store_i8(b + 5, 10);
+    let _a: i64 = __mind_write(2, b, 5, 0 - 1);
+    let _c: i64 = naes_dt_say_num(n);
+    __mind_write(2, b + 5, 1, 0 - 1)
+}
+// ---- canned wire builders ---------------------------------------------------
+// Question www.example.com A IN at offset 12; returns the next offset.
+fn naes_dt_q_www(buf: i64, off: i64) -> i64 {
+    let o: i64 = naes_dt_wr8(buf, off, 2004317955, 4);
+    let o2: i64 = naes_dt_wr8(buf, o, 7308339910404498695, 8);
+    let o3: i64 = naes_dt_wr8(buf, o2, 1836016387, 5);
+    naes_dt_wr8(buf, o3, 16777472, 4)
+}
+fn naes_dt_hdr(buf: i64, id: i64, flags: i64, qd: i64, an: i64) -> i64 {
+    let o: i64 = naes_dns_wr16(buf, 0, id);
+    let o2: i64 = naes_dns_wr16(buf, o, flags);
+    let o3: i64 = naes_dns_wr16(buf, o2, qd);
+    let o4: i64 = naes_dns_wr16(buf, o3, an);
+    let o5: i64 = naes_dns_wr16(buf, o4, 0);
+    naes_dns_wr16(buf, o5, 0)
+}
+// RR with owner written by the caller-style tail; used by the fixtures below.
+fn naes_dt_rr_ttl60(buf: i64, off: i64, typ: i64, rdlen: i64) -> i64 {
+    let o: i64 = naes_dns_wr16(buf, off, typ);
+    let o2: i64 = naes_dns_wr16(buf, o, 1);
+    let o3: i64 = naes_dns_wr16(buf, o2, 0);
+    let o4: i64 = naes_dns_wr16(buf, o3, 60);
+    naes_dns_wr16(buf, o4, rdlen)
+}
+// A-only response: www.example.com A 1.2.3.4. Returns the packet length.
+fn naes_dt_mk_a(buf: i64, id: i64) -> i64 {
+    let o: i64 = naes_dt_hdr(buf, id, 33152, 1, 1);
+    let o2: i64 = naes_dt_q_www(buf, o);
+    let o3: i64 = naes_dns_wr16(buf, o2, 49152 + 12);
+    let o4: i64 = naes_dt_rr_ttl60(buf, o3, 1, 4);
+    let o5: i64 = naes_dt_wr8(buf, o4, 67305985, 4);
+    o5
+}
+// AAAA-only response: www.example.com AAAA 2001:db8::1 to the question
+// (www.example.com, AAAA, IN). Returns the length.
+fn naes_dt_mk_aaaa(buf: i64, id: i64) -> i64 {
+    let o: i64 = naes_dt_hdr(buf, id, 33152, 1, 1);
+    let o2: i64 = naes_dt_q_www(buf, o);
+    let _t: i64 = naes_dns_wr16(buf, o2 - 4, 28);
+    let o3: i64 = naes_dns_wr16(buf, o2, 49152 + 12);
+    let o4: i64 = naes_dt_rr_ttl60(buf, o3, 28, 16);
+    let o5: i64 = naes_dt_wr8(buf, o4, 3087860000, 4);
+    let o6: i64 = naes_dt_zero(buf + o5, 11) + o5;
+    __mind_store_i8(buf + o6, 1);
+    o6 + 1
+}
+// CNAME chain: www.example.com CNAME e.example.com CNAME d.example.com,
+// then A 93.184.216.34 and AAAA 2001:db8::1 for d.example.com. Returns the
+// packet length (137).
+fn naes_dt_mk_chain(buf: i64) -> i64 {
+    let o: i64 = naes_dt_hdr(buf, 4660, 33152, 1, 4);
+    let o2: i64 = naes_dt_q_www(buf, o);
+    let o3: i64 = naes_dns_wr16(buf, o2, 49152 + 12);
+    let o4: i64 = naes_dt_rr_ttl60(buf, o3, 5, 15);
+    let o5: i64 = naes_dt_wr8(buf, o4, 25857, 2);
+    let o6: i64 = naes_dt_wr8(buf, o5, 7308339910404498695, 8);
+    let o7: i64 = naes_dt_wr8(buf, o6, 1836016387, 5);
+    let o8: i64 = naes_dt_wr8(buf, o7, 25857, 2);
+    let o9: i64 = naes_dns_wr16(buf, o8, 49152 + 16);
+    let o10: i64 = naes_dt_rr_ttl60(buf, o9, 5, 15);
+    let o11: i64 = naes_dt_wr8(buf, o10, 25601, 2);
+    let o12: i64 = naes_dt_wr8(buf, o11, 7308339910404498695, 8);
+    let o13: i64 = naes_dt_wr8(buf, o12, 1836016387, 5);
+    let o14: i64 = naes_dt_wr8(buf, o13, 25601, 2);
+    let o15: i64 = naes_dns_wr16(buf, o14, 49152 + 16);
+    let o16: i64 = naes_dt_rr_ttl60(buf, o15, 1, 4);
+    let o17: i64 = naes_dt_wr8(buf, o16, 584628317, 4);
+    let o18: i64 = naes_dt_wr8(buf, o17, 25601, 2);
+    let o19: i64 = naes_dns_wr16(buf, o18, 49152 + 16);
+    let o20: i64 = naes_dt_rr_ttl60(buf, o19, 28, 16);
+    let o21: i64 = naes_dt_wr8(buf, o20, 3087860000, 4);
+    let o22: i64 = naes_dt_zero(buf + o21, 11) + o21;
+    __mind_store_i8(buf + o22, 1);
+    o22 + 1
+}
+fn naes_dt_name_www(buf: i64) -> i64 {
+    // text "www.example.com" (15 bytes, NUL-terminated)
+    let o: i64 = naes_dt_wr8(buf, 0, 7881713198841689975, 8);
+    naes_dt_wr8(buf, o, 30803244232305776, 8)
+}
+fn naes_dt_want_w(buf: i64) -> i64 {
+    __mind_store_i8(buf, 119);
+    __mind_store_i8(buf + 1, 0);
+    2
+}

@@ -1,0 +1,39 @@
+{
+  "artifact_sha256": [
+    {
+      "kind": "safe_statement_count_extract",
+      "sha256": "c28ff69968c80bf0e8c0d3f00ad50f95396a3c342d8a9ce1f390c86a0327e971"
+    },
+    {
+      "kind": "authority_ledger_label",
+      "sha256": "9cb40128d3010514d932ebac373183f76143c54fedf03969f4d3e5615df7a750"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "22a213ad4c7541eba7f186f9084ef6893f97d089f80feedcaaf811fc6692fc3a"
+    }
+  ],
+  "floor": 17,
+  "game": "g50t",
+  "game_id": "g50t-5849a774",
+  "game_levels": 7,
+  "level": 1,
+  "lower_bound": {
+    "kind": "dfpn_proven",
+    "statement": "Proof-number / iterative-deepening search with an admissible Manhattan relaxation disproves a win within 16 actions and proves a 17-action win. The proof dfpn_proven establishes lower bound 17, equal to the floor.",
+    "value": 17
+  },
+  "naes_t1_actions": 17,
+  "proof_class": "A*",
+  "proof_detail": "dfpn_proven",
+  "schema_version": 1,
+  "source_certificate_sha256": "150246144f6a5a56ca75c5c7718cd8665cd8b24793193a11978a99618695c500",
+  "status": "proven",
+  "upper_bound": {
+    "expected_levels_completed": 1,
+    "length": 17,
+    "opening_reset_counted": false,
+    "route": "4 4 4 4 5 2 2 2 2 2 2 2 4 4 4 4 4",
+    "seed": 0
+  }
+}

@@ -1,0 +1,67 @@
+{
+ "status": "PASS",
+ "level": 6,
+ "verify_manifest": {
+  "rc": 0,
+  "stdout": "{\"files_verified\": 40, \"floor\": 20, \"level\": 6, \"<word withheld>_validation_status\": \"PASS\", \"route_preserved\": true, \"states_expanded\": 7476, \"status\": \"PASS\"}",
+  "stderr": ""
+ },
+ "<key withheld>": {
+  "<key withheld>": {
+   "ok": true,
+   "tag": null,
+   "reasons": []
+  },
+  "<key withheld 2>": {
+   "ok": false,
+   "tag": "<word withheld>"
+  },
+  "floor_plus_one_mutation": {
+   "ok": false,
+   "tag": "refuse_refuted_by_measurement",
+   "reasons": [
+    "(iv) REFUTED: measured engine win 20 < claimed floor 21"
+   ]
+  },
+  "dispatch_removed_mutation": {
+   "ok": false,
+   "tag": "refuse_no_dispatch_record"
+  },
+  "coverage_removed_mutation": {
+   "ok": false,
+   "tag": "refuse_no_coverage_record"
+  },
+  "measured_steps": 20
+ },
+ "staged_gate": {
+  "pass_rc": 0,
+  "pass_tail": "7 passed the gate, 0 rejected.",
+  "floor_plus_one_rc": 1,
+  "floor_plus_one_reject_lines": [
+   "REJECT vc33 L6 floor=21",
+   "    - (iv) REFUTED: measured engine win 20 < claimed floor 21",
+   "    - path length 20 != claimed floor 21"
+  ]
+ },
+ "shared_authorities_unchanged": {
+  "before": {
+   "<path>": "e757059ae87564b3f0c5c45013915a5d1176baef0d538916e7865443432bb145",
+   "docs/mmae_floor_certificates/floors.json": "a5b466874d334a6e9ac44fc4c34efc9eda1501a4f4aca18b25455b3f555bd84d",
+   "docs/prf0_measured/vc33.json": "a948502a7b64d49feb3cb664cc288ad9ef3cba0b336dbbfaeb317aba0607f31a",
+   "tools/floor_claim_gate.py": "a2b83ffd8fef5983f0aa57a289398064488e3f4cf0283686ae18ce598e294744",
+   "tools/floor_admission.py": "b76bb8ed1a7b527861e0d2cddfc9675d434f4f922e0c37faeb76d09ecf4ab4ee",
+   "tools/mmae_minimum.py": "28bf4afb6666aa19a3a00cf79c2557f7943afec559f203e89c8abca69f30c41b",
+   "tools/floor_plan/vc33_prove.py": "014ce1431990405b5d5dfa4e76f04f31056ba3b4c496e429a155bded81ce6784"
+  },
+  "after": {
+   "<path>": "e757059ae87564b3f0c5c45013915a5d1176baef0d538916e7865443432bb145",
+   "docs/mmae_floor_certificates/floors.json": "a5b466874d334a6e9ac44fc4c34efc9eda1501a4f4aca18b25455b3f555bd84d",
+   "docs/prf0_measured/vc33.json": "a948502a7b64d49feb3cb664cc288ad9ef3cba0b336dbbfaeb317aba0607f31a",
+   "tools/floor_claim_gate.py": "a2b83ffd8fef5983f0aa57a289398064488e3f4cf0283686ae18ce598e294744",
+   "tools/floor_admission.py": "b76bb8ed1a7b527861e0d2cddfc9675d434f4f922e0c37faeb76d09ecf4ab4ee",
+   "tools/mmae_minimum.py": "28bf4afb6666aa19a3a00cf79c2557f7943afec559f203e89c8abca69f30c41b",
+   "tools/floor_plan/vc33_prove.py": "014ce1431990405b5d5dfa4e76f04f31056ba3b4c496e429a155bded81ce6784"
+  },
+  "equal": true
+ }
+}

@@ -1,0 +1,59 @@
+{
+  "artifact_sha256": [
+    {
+      "kind": "safe_statement_count_extract",
+      "sha256": "5acb41b58c4d4fece2dc20da212c0988c6099bc4466544222ff6a4976cec60c6"
+    },
+    {
+      "kind": "authority_ledger_label",
+      "sha256": "22d4f8bc0d614886e33d0edf3ca987c162d3a390f8ca77daba5e60dbbf58da1c"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "feeb7ad128d40439c85ce8302d2f919c16012414bb834056f6d19d7223e7f521"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "3fe6be3b619d1eb1aeda33cc155fec5861422f3c9e2362c11525c7baac8adb47"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "15b131b69c12c38eaf8a52ead6983e354823d7c1eed46288aa74dbc3ffde6714"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "1fb34bc00e9d0e00153f88741352a260d39f7837c753c46fd6e2c3bc77196d6d"
+    },
+    {
+      "kind": "record: proofs/certificates/floor_cert/ft09/SUMMARY.md",
+      "sha256": "1ce793e382640ea43169b018af8f9a01445c38c3cefb2c19fca5a3fafcc3186a"
+    },
+    {
+      "kind": "record: proofs/certificates/floor_cert/ft09/levels.json",
+      "sha256": "405bfb9c204e039cb6bcb275306727cade3d24098a7ca17d342a5e28a443e795"
+    }
+  ],
+  "floor": 14,
+  "game": "ft09",
+  "game_id": "ft09-0d8bbf25",
+  "game_levels": 6,
+  "level": 3,
+  "lower_bound": {
+    "kind": "engine_measured_columns_meet_in_middle_min_weight",
+    "statement": "Record: proofs/certificates/floor_cert/ft09 (verdict CONFIRMED on the official game file). Argument: exhaustive classification of all 64x64 display clicks and actions 1,2,3,4,5,7; pixel partition rechecked after one click; every generator column rechecked after every other generator on the engine; cgj predicate checked by paint against the engine; exact meet-in-the-middle minimum on the measured columns. Nodes 6144. The recorded route wins at the floor and the prefix one action shorter does not.",
+    "value": 14
+  },
+  "naes_t1_actions": 14,
+  "proof_class": "Exact math",
+  "proof_detail": "engine_measured_columns_meet_in_middle_min_weight",
+  "schema_version": 1,
+  "source_certificate_sha256": "4bc3067719017a0818559db21c0b70dbe2b8f7aa7e6c89894f7203feca97b64a",
+  "status": "proven",
+  "upper_bound": {
+    "expected_levels_completed": 3,
+    "length": 14,
+    "opening_reset_counted": false,
+    "route": "6@23,7 6@31,7 6@39,7 6@23,15 6@15,23 6@31,23 6@15,31 6@47,31 6@31,39 6@47,39 6@23,47 6@23,55 6@31,55 6@39,55",
+    "seed": 0
+  }
+}

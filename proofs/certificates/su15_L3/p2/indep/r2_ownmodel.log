@@ -1,0 +1,7 @@
+CONSTS R 8 STEP 4 TICKS 4 YMIN 10 YMAX 63 W 64 H 64 SZ [1, 2, 3, 4] ZONES [(5, 46, 9, 9), (19, 46, 9, 9)] GOAL {3: 1, 2: 1} START ((0, 8, 28), (0, 12, 23), (0, 31, 15), (0, 31, 22), (0, 55, 23), (0, 61, 23), (1, 18, 16), (1, 30, 32), (1, 46, 22))
+ENGINE_TABLES v 0 moves 3392 merges 3392 engine_calls 6784 sec 2
+ENGINE_TABLES v 1 moves 3392 merges 3392 engine_calls 13568 sec 4
+ENGINE_TABLES v 2 moves 3392 merges 3392 engine_calls 20352 sec 6
+ENGINE_TABLES v 3 moves 3392 merges 0 engine_calls 23744 sec 7
+TRAJCHECK samples 0 mismatches 0
+R2_OWNMODEL instances=2907572 landing_mismatch_vs_engine_FP=0 landed_rect_not_containing_P=0

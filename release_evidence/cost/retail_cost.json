@@ -1,0 +1,9 @@
+{
+ "receipt": "published retail CPU cost of NAES-T1 (the value that the article and the paper print)",
+ "source": "article data file numbers.json, entry retailcost",
+ "retail_cpu_cost_usd": "0.01",
+ "status": "measured",
+ "scope": "one full 25-game play",
+ "price_list_version": "20261103235716",
+ "method": "C_USD = T_cpu / 3600 x P_instance / n_vCPU, with the price-list entry of cost/retail_tariff.json"
+}

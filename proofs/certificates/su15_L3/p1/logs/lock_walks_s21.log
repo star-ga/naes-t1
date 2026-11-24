@@ -1,0 +1,4 @@
+INFO:arc_agi.scorecard:Initialized ScorecardManager with idle_for=0:15:00 and max_open_for=3 days, 0:00:00
+2026-11-19 03:51:14 | INFO | Created new scorecard: 93517dcb-5b10-4586-aba4-f290574dea0d
+2026-11-19 03:51:14 | INFO | Successfully loaded game class Su15 from <path>/su15.py
+LOCKSTEP_WALKS seed 21 walks 6000 steps 45333 mismatch 0 wins 0 gameover 3 {'ok': 20929, 'noop': 16750, 'fail': 4957, 'win': 0, 'undo': 2697} lossy_clicks 5 sec 21

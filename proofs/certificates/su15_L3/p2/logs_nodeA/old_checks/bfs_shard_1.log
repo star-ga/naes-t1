@@ -1,0 +1,37 @@
+VIOLATION h=8 but no win within depth 2: 4 1 27 14 1 30 32 2 6 24 2 49 20
+BFSROW n=4 h=8 exact=>2 nodes=318942
+VIOLATION h=10 but no win within depth 2: 4 1 27 14 1 30 32 2 3 22 2 53 12
+BFSROW n=4 h=10 exact=>2 nodes=231281
+VIOLATION h=8 but no win within depth 2: 6 0 31 15 0 31 22 1 7 21 1 18 16 1 30 32 2 49 27
+BFSROW n=6 h=8 exact=>2 nodes=409544
+VIOLATION h=7 but no win within depth 2: 4 1 28 32 1 32 15 2 19 24 2 49 27
+BFSROW n=4 h=7 exact=>2 nodes=256963
+VIOLATION h=9 but no win within depth 2: 4 1 24 35 1 32 15 2 16 16 2 49 27
+BFSROW n=4 h=9 exact=>2 nodes=311319
+VIOLATION h=8 but no win within depth 2: 4 1 8 28 1 18 16 2 29 23 2 56 15
+BFSROW n=4 h=8 exact=>2 nodes=259690
+VIOLATION h=8 but no win within depth 2: 4 1 8 28 1 18 16 2 31 19 2 57 20
+BFSROW n=4 h=8 exact=>2 nodes=276822
+VIOLATION h=9 but no win within depth 2: 6 0 31 15 0 31 22 1 30 32 1 46 22 1 55 28 2 12 19
+BFSROW n=6 h=9 exact=>2 nodes=474599
+VIOLATION h=7 but no win within depth 2: 3 2 12 19 2 28 26 2 51 14
+BFSROW n=3 h=7 exact=>2 nodes=183131
+VIOLATION h=8 but no win within depth 2: 3 2 11 13 2 35 21 2 51 14
+BFSROW n=3 h=8 exact=>2 nodes=148236
+VIOLATION h=9 but no win within depth 2: 3 2 7 10 2 41 27 2 55 15
+BFSROW n=3 h=9 exact=>2 nodes=117407
+VIOLATION h=9 but no win within depth 2: 4 1 7 25 1 30 32 2 26 10 2 50 16
+BFSROW n=4 h=9 exact=>2 nodes=262835
+VIOLATION h=9 but no win within depth 2: 6 0 8 28 0 12 23 1 16 12 1 29 20 1 30 32 2 50 23
+BFSROW n=6 h=9 exact=>2 nodes=440132
+VIOLATION h=7 but no win within depth 2: 3 2 14 34 2 19 16 2 52 20
+BFSROW n=3 h=7 exact=>2 nodes=201659
+VIOLATION h=9 but no win within depth 2: 5 1 30 32 1 34 17 1 46 22 1 62 20 2 12 20
+BFSROW n=5 h=9 exact=>2 nodes=423205
+VIOLATION h=8 but no win within depth 2: 4 1 37 33 1 62 20 2 17 21 2 37 22
+BFSROW n=4 h=8 exact=>2 nodes=220513
+VIOLATION h=9 but no win within depth 2: 4 1 35 25 1 62 20 2 17 21 2 46 22
+BFSROW n=4 h=9 exact=>2 nodes=222552
+VIOLATION h=8 but no win within depth 2: 5 0 6 34 0 7 25 1 30 32 2 28 17 2 52 22
+BFSROW n=5 h=8 exact=>2 nodes=427431
+BFSCHECK states=18 exact_found_h_equal=0 exact_found_h_less=0 not_found_within_depth=18 violations=18

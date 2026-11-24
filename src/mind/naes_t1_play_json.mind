@@ -1,0 +1,259 @@
+// naes_t1_play_json.mind — JSON/protocol parsing for the NAES-T1 play client.
+//
+// Frame parsing, field extraction, and the decision-record builder. All
+// helpers are prefixed play_ (0.10.4 rule); no alloc/free runs inside a loop.
+
+fn play_ws(p: i64, n: i64, start: i64) -> i64 {
+    let mut i: i64 = start;
+    while i < n { let c: i64 = __mind_load_i8(p + i); if c != 32 && c != 10 && c != 13 && c != 9 { return i; } i = i + 1; }
+    i
+}
+fn play_string_end(p: i64, n: i64, start: i64) -> i64 {
+    if start >= n || __mind_load_i8(p + start) != 34 { return 0 - 1; }
+    let mut i: i64 = start + 1;
+    while i < n {
+        let c: i64 = __mind_load_i8(p + i);
+        if c == 34 { return i + 1; }
+        if c < 32 { return 0 - 1; }
+        if c == 92 {
+            i = i + 1;
+            if i >= n { return 0 - 1; }
+            let escape: i64 = __mind_load_i8(p + i);
+            if escape == 117 {
+                if i + 4 >= n { return 0 - 1; }
+                let mut k: i64 = 1;
+                while k <= 4 { if play_hex(__mind_load_i8(p + i + k)) == 0 { return 0 - 1; } k = k + 1; }
+                i = i + 4;
+            } else {
+                if escape != 34 && escape != 92 && escape != 47 && escape != 98 && escape != 102 && escape != 110 && escape != 114 && escape != 116 { return 0 - 1; }
+            }
+        }
+        i = i + 1;
+    }
+    0 - 1
+}
+// Skip a JSON value without materializing a tree. Bound nesting at 64.
+fn play_skip(p: i64, n: i64, start: i64) -> i64 {
+    let mut i: i64 = play_ws(p, n, start);
+    if i >= n { return 0 - 1; }
+    let first: i64 = __mind_load_i8(p + i);
+    if first == 34 { return play_string_end(p, n, i); }
+    if first == 91 || first == 123 {
+        let mut depth: i64 = 1;
+        i = i + 1;
+        while i < n {
+            let c: i64 = __mind_load_i8(p + i);
+            if c == 34 { i = play_string_end(p, n, i); if i < 0 { return i; } }
+            else {
+                if c == 91 || c == 123 { depth = depth + 1; if depth > 64 { return 0 - 1; } }
+                if c == 93 || c == 125 { depth = depth - 1; if depth == 0 { return i + 1; } }
+                i = i + 1;
+            }
+        }
+        return 0 - 1;
+    }
+    while i < n { let c: i64 = __mind_load_i8(p + i); if c == 44 || c == 125 || c == 93 || c == 32 || c == 10 || c == 13 { return i; } i = i + 1; }
+    i
+}
+fn play_field(p: i64, n: i64, key: String) -> i64 {
+    let mut i: i64 = play_ws(p, n, 0);
+    if i >= n || __mind_load_i8(p + i) != 123 { return 0 - 1; }
+    i = i + 1;
+    while i < n {
+        i = play_ws(p, n, i);
+        if i >= n { return 0 - 1; }
+        if __mind_load_i8(p + i) == 125 { return 0 - 1; }
+        let end: i64 = play_string_end(p, n, i);
+        if end < 0 { return 0 - 1; }
+        let matches: i64 = play_eq(p + i + 1, end - i - 2, key);
+        i = play_ws(p, n, end);
+        if i >= n || __mind_load_i8(p + i) != 58 { return 0 - 1; }
+        i = play_ws(p, n, i + 1);
+        if matches == 1 { return i; }
+        i = play_skip(p, n, i);
+        if i < 0 { return i; }
+        i = play_ws(p, n, i);
+        if i >= n || __mind_load_i8(p + i) != 44 { return 0 - 1; }
+        i = i + 1;
+    }
+    0 - 1
+}
+fn play_number_field(p: i64, n: i64, key: String) -> i64 {
+    let off: i64 = play_field(p, n, key);
+    if off < 0 { return 0 - 1; }
+    let end: i64 = play_skip(p, n, off);
+    if end < off { return 0 - 1; }
+    play_uint(p + off, end - off)
+}
+// Locate the last animation frame without materializing preceding frames.
+// play_parse validates the entire JSON grammar before this scan.
+fn play_last_frame(p: i64, n: i64, start: i64) -> i64 {
+    let mut i: i64 = start;
+    if i < 0 || i >= n || __mind_load_i8(p + i) != 91 { return 0 - 1; }
+    i = play_ws(p, n, i + 1);
+    let mut last: i64 = 0 - 1;
+    let mut count: i64 = 0;
+    while i < n && __mind_load_i8(p + i) == 91 {
+        last = i;
+        count = count + 1;
+        if count > 4096 { return 0 - 1; }
+        i = play_skip(p, n, i);
+        if i < 0 { return 0 - 1; }
+        i = play_ws(p, n, i);
+        if i >= n { return 0 - 1; }
+        if __mind_load_i8(p + i) == 93 { return last; }
+        if __mind_load_i8(p + i) != 44 { return 0 - 1; }
+        i = play_ws(p, n, i + 1);
+    }
+    0 - 1
+}
+// Parse the settled (last) 64x64 frame directly into the request record.
+fn play_frame(p: i64, n: i64, start: i64, rec: i64) -> i64 {
+    let mut i: i64 = play_last_frame(p, n, start);
+    if i < 0 { return 0; }
+    let mut count: i64 = 0;
+    while i < n && __mind_load_i8(p + i) == 91 {
+        i = play_ws(p, n, i + 1);
+        let mut y: i64 = 0;
+        while y < 64 {
+            if i >= n || __mind_load_i8(p + i) != 91 { return 0; }
+            i = play_ws(p, n, i + 1);
+            let mut x: i64 = 0;
+            while x < 64 {
+                let start_num: i64 = i;
+                while i < n && __mind_load_i8(p + i) >= 48 && __mind_load_i8(p + i) <= 57 { i = i + 1; }
+                let c: i64 = play_uint(p + start_num, i - start_num);
+                if c < 0 || c > 15 { return 0; }
+                __mind_store_i8(rec + y * 64 + x, c);
+                i = play_ws(p, n, i);
+                if x < 63 { if i >= n || __mind_load_i8(p + i) != 44 { return 0; } i = play_ws(p, n, i + 1); }
+                x = x + 1;
+            }
+            if i >= n || __mind_load_i8(p + i) != 93 { return 0; }
+            i = play_ws(p, n, i + 1);
+            if y < 63 { if i >= n || __mind_load_i8(p + i) != 44 { return 0; } i = play_ws(p, n, i + 1); }
+            y = y + 1;
+        }
+        if i >= n || __mind_load_i8(p + i) != 93 { return 0; }
+        i = play_ws(p, n, i + 1);
+        count = count + 1;
+        if count > 1 { return 0; }
+        if i < n && __mind_load_i8(p + i) == 44 { i = play_ws(p, n, i + 1); }
+        else { if i >= n || __mind_load_i8(p + i) != 93 { return 0; } return 1; }
+    }
+    0
+}
+fn play_hex(c: i64) -> i64 {
+    if (c >= 48 && c <= 57) || (c >= 65 && c <= 70) || (c >= 97 && c <= 102) { return 1; }
+    0
+}
+// Validate JSON grammar in place, retaining no parsed tree. The transport's
+// 16-MiB body cap and depth64 bound both memory access and native recursion.
+fn play_json_value(p: i64, n: i64, start: i64, depth: i64) -> i64 {
+    if depth > 64 { return 0 - 1; }
+    let mut i: i64 = play_ws(p, n, start);
+    if i >= n { return 0 - 1; }
+    let c: i64 = __mind_load_i8(p + i);
+    if c == 34 { return play_string_end(p, n, i); }
+    if c == 123 {
+        i = play_ws(p, n, i + 1);
+        if i < n && __mind_load_i8(p + i) == 125 { return i + 1; }
+        while i < n {
+            i = play_string_end(p, n, i);
+            if i < 0 { return 0 - 1; }
+            i = play_ws(p, n, i);
+            if i >= n || __mind_load_i8(p + i) != 58 { return 0 - 1; }
+            i = play_json_value(p, n, i + 1, depth + 1);
+            if i < 0 { return 0 - 1; }
+            i = play_ws(p, n, i);
+            if i >= n { return 0 - 1; }
+            if __mind_load_i8(p + i) == 125 { return i + 1; }
+            if __mind_load_i8(p + i) != 44 { return 0 - 1; }
+            i = play_ws(p, n, i + 1);
+        }
+        return 0 - 1;
+    }
+    if c == 91 {
+        i = play_ws(p, n, i + 1);
+        if i < n && __mind_load_i8(p + i) == 93 { return i + 1; }
+        while i < n {
+            i = play_json_value(p, n, i, depth + 1);
+            if i < 0 { return 0 - 1; }
+            i = play_ws(p, n, i);
+            if i >= n { return 0 - 1; }
+            if __mind_load_i8(p + i) == 93 { return i + 1; }
+            if __mind_load_i8(p + i) != 44 { return 0 - 1; }
+            i = play_ws(p, n, i + 1);
+        }
+        return 0 - 1;
+    }
+    if c == 116 && i + 4 <= n && play_eq(p + i, 4, "true") == 1 { return i + 4; }
+    if c == 102 && i + 5 <= n && play_eq(p + i, 5, "false") == 1 { return i + 5; }
+    if c == 110 && i + 4 <= n && play_eq(p + i, 4, "null") == 1 { return i + 4; }
+    if c == 45 { i = i + 1; }
+    if i >= n { return 0 - 1; }
+    let first: i64 = __mind_load_i8(p + i);
+    if first < 48 || first > 57 { return 0 - 1; }
+    i = i + 1;
+    if first != 48 { while i < n && __mind_load_i8(p + i) >= 48 && __mind_load_i8(p + i) <= 57 { i = i + 1; } }
+    if i < n && __mind_load_i8(p + i) == 46 {
+        i = i + 1;
+        let digits: i64 = i;
+        while i < n && __mind_load_i8(p + i) >= 48 && __mind_load_i8(p + i) <= 57 { i = i + 1; }
+        if i == digits { return 0 - 1; }
+    }
+    if i < n && (__mind_load_i8(p + i) == 101 || __mind_load_i8(p + i) == 69) {
+        i = i + 1;
+        if i < n && (__mind_load_i8(p + i) == 43 || __mind_load_i8(p + i) == 45) { i = i + 1; }
+        let digits: i64 = i;
+        while i < n && __mind_load_i8(p + i) >= 48 && __mind_load_i8(p + i) <= 57 { i = i + 1; }
+        if i == digits { return 0 - 1; }
+    }
+    i
+}
+fn play_game_ok(p: i64, n: i64, game: i64) -> i64 {
+    let off: i64 = play_field(p, n, "game_id");
+    if off < 0 { return 0; }
+    let end: i64 = play_string_end(p, n, off);
+    let len: i64 = play_len(game);
+    if end < 0 || end - off - 2 != len { return 0; }
+    let mut i: i64 = 0;
+    while i < len { if __mind_load_i8(p + off + 1 + i) != __mind_load_i8(game + i) { return 0; } i = i + 1; }
+    1
+}
+
+// Parsed response record: guid buffer, guid length, state, levels, win_levels.
+fn play_parse(p: i64, n: i64, state: i64, rec: i64) -> i64 {
+    let json_end: i64 = play_json_value(p, n, 0, 0);
+    if json_end < 0 || play_ws(p, n, json_end) != n { return 0; }
+    let goff: i64 = play_field(p, n, "guid");
+    if goff < 0 { return 0; }
+    let gend: i64 = play_string_end(p, n, goff);
+    if gend < 0 || play_safe_id(p + goff + 1, gend - goff - 2) == 0 { return 0; }
+    let glen: i64 = gend - goff - 2;
+    if __mind_load_i64(state + 8) > 0 {
+        if glen != __mind_load_i64(state + 8) { return 0; }
+        let mut gi: i64 = 0;
+        while gi < glen { if __mind_load_i8(__mind_load_i64(state) + gi) != __mind_load_i8(p + goff + 1 + gi) { return 0; } gi = gi + 1; }
+    }
+    let _g: i64 = play_copy(__mind_load_i64(state), p + goff + 1, glen);
+    __mind_store_i64(state + 8, glen);
+    let off: i64 = play_field(p, n, "state");
+    if off < 0 { return 0; }
+    let end: i64 = play_string_end(p, n, off);
+    if end < 0 { return 0; }
+    let mut st: i64 = 0;
+    if play_eq(p + off + 1, end - off - 2, "NOT_FINISHED") == 1 { st = 1; }
+    if play_eq(p + off + 1, end - off - 2, "WIN") == 1 { st = 2; }
+    if play_eq(p + off + 1, end - off - 2, "GAME_OVER") == 1 { st = 3; }
+    if play_eq(p + off + 1, end - off - 2, "NOT_PLAYED") == 1 { st = 4; }
+    if st == 0 { return 0; }
+    let levels: i64 = play_number_field(p, n, "levels_completed");
+    let win: i64 = play_number_field(p, n, "win_levels");
+    if levels < __mind_load_i64(state + 24) || levels > 256 || win < levels || win > 256 { return 0; }
+    if st == 2 && (levels != win || win < 1) { return 0; }
+    __mind_store_i64(state + 16, st);
+    __mind_store_i64(state + 24, levels);
+    __mind_store_i64(state + 32, win);
+    play_frame(p, n, play_field(p, n, "frame"), rec)
+}

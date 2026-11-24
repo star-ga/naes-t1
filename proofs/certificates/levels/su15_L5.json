@@ -1,0 +1,63 @@
+{
+  "artifact_sha256": [
+    {
+      "kind": "safe_statement_count_extract",
+      "sha256": "c650d4defe27dd5df966471f3c87fc1a7a2a82cee5c96502c00e701ad6d89584"
+    },
+    {
+      "kind": "authority_ledger_label",
+      "sha256": "1829e0215cabe49836f79dcd2d94901f7d646c1a55acdab4ebe31e5146f60171"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "cb6a48eb2a88e1a955b4d97e82cef43529b7cae7a19304aebab6f137608da553"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "867b7dcaa4ffde6bf6c844431aae94e12ae1eab4d1b7b4036ae10475c662eee0"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "5bdfadaf67099b99d1c40e025d6dce044c22658fc49353919299df2d16921556"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "02e70ac439b6a35e3c39cfe434a9a9d0f6e8096a4785e84870894a79977e3be5"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "74d949f6513cf45fd5e0dd71fee892a7bcd6a039b87427a86e8f69405d1236f0"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "7ae8b97b8a2977f5c3e91c876a70eae0f12033c726910e4a9c5133575093751c"
+    },
+    {
+      "kind": "historical_method_or_search_output",
+      "sha256": "8c5dc13dcb5e9d05594bba5b875dd70b39e0a94684e76e9b687d84d1f6df4843"
+    }
+  ],
+  "floor": 5,
+  "game": "su15",
+  "game_id": "su15-1944f8ab",
+  "game_levels": 9,
+  "level": 5,
+  "lower_bound": {
+    "kind": "complete_state_ucs_reverified",
+    "statement": "The recorded complete uniform-cost search excludes every cost below 5; click effects and state sufficiency are explicit source obligations. The proof complete_state_ucs_reverified establishes lower bound 5, equal to the floor.",
+    "value": 5
+  },
+  "naes_t1_actions": 5,
+  "proof_class": "Exhaustive search",
+  "proof_detail": "complete_state_ucs_reverified",
+  "schema_version": 1,
+  "source_certificate_sha256": "f8d9e7e1b5eb93a7f24e07119219b5ba99602ff7ff2a6732036a12281044435a",
+  "status": "proven",
+  "upper_bound": {
+    "expected_levels_completed": 5,
+    "length": 5,
+    "opening_reset_counted": false,
+    "route": "6@14,22 6@46,23 6@22,22 6@38,23 6@30,19",
+    "seed": 0
+  }
+}

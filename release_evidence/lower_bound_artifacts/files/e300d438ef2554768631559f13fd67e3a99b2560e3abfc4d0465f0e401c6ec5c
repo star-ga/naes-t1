@@ -1,0 +1,18 @@
+LAYER B=0 steps=1 tested=1 wins=0 tickcap=0 shard=0/2
+LAYER B=1 steps=2 tested=4 wins=0 tickcap=0 shard=0/2
+LAYER B=2 steps=3 tested=18 wins=0 tickcap=0 shard=0/2
+LAYER B=3 steps=4 tested=71 wins=0 tickcap=0 shard=0/2
+LAYER B=4 steps=5 tested=232 wins=0 tickcap=0 shard=0/2
+LAYER B=5 steps=6 tested=682 wins=0 tickcap=0 shard=0/2
+LAYER B=6 steps=7 tested=1854 wins=0 tickcap=0 shard=0/2
+LAYER B=7 steps=8 tested=4640 wins=0 tickcap=0 shard=0/2
+LAYER B=8 steps=9 tested=10753 wins=0 tickcap=0 shard=0/2
+LAYER B=9 steps=10 tested=23299 wins=0 tickcap=0 shard=0/2
+LAYER B=10 steps=11 tested=47542 wins=0 tickcap=0 shard=0/2
+LAYER B=11 steps=12 tested=91739 wins=0 tickcap=0 shard=0/2
+LAYER B=12 steps=13 tested=167981 wins=0 tickcap=0 shard=0/2
+LAYER B=13 steps=14 tested=292967 wins=0 tickcap=0 shard=0/2
+LAYER B=14 steps=15 tested=488472 wins=0 tickcap=0 shard=0/2
+LAYER B=15 steps=16 tested=781228 wins=0 tickcap=0 shard=0/2
+WIN 10 12 8 13 4 10 5 7
+LAYER B=16 steps=17 tested=1202155 wins=1 tickcap=0 shard=0/2

@@ -1,0 +1,227 @@
+{
+ "level": 2,
+ "route_states_probed": 26,
+ "ids_tested": [
+  0,
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7
+ ],
+ "fallthrough_bisimilar_all": true,
+ "fallthrough_physics_unchanged_all": true,
+ "undo_buffer_empty_between_actions_all": true,
+ "rows": [
+  {
+   "state_index": 0,
+   "undo_buffer_empty": true,
+   "fallthrough_full_key_bisimilar": true,
+   "fallthrough_physics_unchanged": true,
+   "action6_at_0_0_physics_unchanged": true,
+   "reset_level_index": 0
+  },
+  {
+   "state_index": 1,
+   "undo_buffer_empty": true,
+   "fallthrough_full_key_bisimilar": true,
+   "fallthrough_physics_unchanged": true,
+   "action6_at_0_0_physics_unchanged": true,
+   "reset_level_index": 1
+  },
+  {
+   "state_index": 2,
+   "undo_buffer_empty": true,
+   "fallthrough_full_key_bisimilar": true,
+   "fallthrough_physics_unchanged": true,
+   "action6_at_0_0_physics_unchanged": true,
+   "reset_level_index": 1
+  },
+  {
+   "state_index": 3,
+   "undo_buffer_empty": true,
+   "fallthrough_full_key_bisimilar": true,
+   "fallthrough_physics_unchanged": true,
+   "action6_at_0_0_physics_unchanged": true,
+   "reset_level_index": 1
+  },
+  {
+   "state_index": 4,
+   "undo_buffer_empty": true,
+   "fallthrough_full_key_bisimilar": true,
+   "fallthrough_physics_unchanged": true,
+   "action6_at_0_0_physics_unchanged": true,
+   "reset_level_index": 1
+  },
+  {
+   "state_index": 5,
+   "undo_buffer_empty": true,
+   "fallthrough_full_key_bisimilar": true,
+   "fallthrough_physics_unchanged": true,
+   "action6_at_0_0_physics_unchanged": true,
+   "reset_level_index": 1
+  },
+  {
+   "state_index": 6,
+   "undo_buffer_empty": true,
+   "fallthrough_full_key_bisimilar": true,
+   "fallthrough_physics_unchanged": true,
+   "action6_at_0_0_physics_unchanged": true,
+   "reset_level_index": 1
+  },
+  {
+   "state_index": 7,
+   "undo_buffer_empty": true,
+   "fallthrough_full_key_bisimilar": true,
+   "fallthrough_physics_unchanged": true,
+   "action6_at_0_0_physics_unchanged": true,
+   "reset_level_index": 1
+  },
+  {
+   "state_index": 8,
+   "undo_buffer_empty": true,
+   "fallthrough_full_key_bisimilar": true,
+   "fallthrough_physics_unchanged": true,
+   "action6_at_0_0_physics_unchanged": true,
+   "reset_level_index": 1
+  },
+  {
+   "state_index": 9,
+   "undo_buffer_empty": true,
+   "fallthrough_full_key_bisimilar": true,
+   "fallthrough_physics_unchanged": true,
+   "action6_at_0_0_physics_unchanged": true,
+   "reset_level_index": 1
+  },
+  {
+   "state_index": 10,
+   "undo_buffer_empty": true,
+   "fallthrough_full_key_bisimilar": true,
+   "fallthrough_physics_unchanged": true,
+   "action6_at_0_0_physics_unchanged": true,
+   "reset_level_index": 1
+  },
+  {
+   "state_index": 11,
+   "undo_buffer_empty": true,
+   "fallthrough_full_key_bisimilar": true,
+   "fallthrough_physics_unchanged": true,
+   "action6_at_0_0_physics_unchanged": true,
+   "reset_level_index": 1
+  },
+  {
+   "state_index": 12,
+   "undo_buffer_empty": true,
+   "fallthrough_full_key_bisimilar": true,
+   "fallthrough_physics_unchanged": true,
+   "action6_at_0_0_physics_unchanged": true,
+   "reset_level_index": 1
+  },
+  {
+   "state_index": 13,
+   "undo_buffer_empty": true,
+   "fallthrough_full_key_bisimilar": true,
+   "fallthrough_physics_unchanged": true,
+   "action6_at_0_0_physics_unchanged": true,
+   "reset_level_index": 1
+  },
+  {
+   "state_index": 14,
+   "undo_buffer_empty": true,
+   "fallthrough_full_key_bisimilar": true,
+   "fallthrough_physics_unchanged": true,
+   "action6_at_0_0_physics_unchanged": true,
+   "reset_level_index": 1
+  },
+  {
+   "state_index": 15,
+   "undo_buffer_empty": true,
+   "fallthrough_full_key_bisimilar": true,
+   "fallthrough_physics_unchanged": true,
+   "action6_at_0_0_physics_unchanged": true,
+   "reset_level_index": 1
+  },
+  {
+   "state_index": 16,
+   "undo_buffer_empty": true,
+   "fallthrough_full_key_bisimilar": true,
+   "fallthrough_physics_unchanged": true,
+   "action6_at_0_0_physics_unchanged": true,
+   "reset_level_index": 1
+  },
+  {
+   "state_index": 17,
+   "undo_buffer_empty": true,
+   "fallthrough_full_key_bisimilar": true,
+   "fallthrough_physics_unchanged": true,
+   "action6_at_0_0_physics_unchanged": true,
+   "reset_level_index": 1
+  },
+  {
+   "state_index": 18,
+   "undo_buffer_empty": true,
+   "fallthrough_full_key_bisimilar": true,
+   "fallthrough_physics_unchanged": true,
+   "action6_at_0_0_physics_unchanged": true,
+   "reset_level_index": 1
+  },
+  {
+   "state_index": 19,
+   "undo_buffer_empty": true,
+   "fallthrough_full_key_bisimilar": true,
+   "fallthrough_physics_unchanged": true,
+   "action6_at_0_0_physics_unchanged": true,
+   "reset_level_index": 1
+  },
+  {
+   "state_index": 20,
+   "undo_buffer_empty": true,
+   "fallthrough_full_key_bisimilar": true,
+   "fallthrough_physics_unchanged": true,
+   "action6_at_0_0_physics_unchanged": true,
+   "reset_level_index": 1
+  },
+  {
+   "state_index": 21,
+   "undo_buffer_empty": true,
+   "fallthrough_full_key_bisimilar": true,
+   "fallthrough_physics_unchanged": true,
+   "action6_at_0_0_physics_unchanged": true,
+   "reset_level_index": 1
+  },
+  {
+   "state_index": 22,
+   "undo_buffer_empty": true,
+   "fallthrough_full_key_bisimilar": true,
+   "fallthrough_physics_unchanged": true,
+   "action6_at_0_0_physics_unchanged": true,
+   "reset_level_index": 1
+  },
+  {
+   "state_index": 23,
+   "undo_buffer_empty": true,
+   "fallthrough_full_key_bisimilar": true,
+   "fallthrough_physics_unchanged": true,
+   "action6_at_0_0_physics_unchanged": true,
+   "reset_level_index": 1
+  },
+  {
+   "state_index": 24,
+   "undo_buffer_empty": true,
+   "fallthrough_full_key_bisimilar": true,
+   "fallthrough_physics_unchanged": true,
+   "action6_at_0_0_physics_unchanged": true,
+   "reset_level_index": 1
+  },
+  {
+   "state_index": 25,
+   "undo_buffer_empty": true,
+   "fallthrough_full_key_bisimilar": true,
+   "fallthrough_physics_unchanged": true,
+   "action6_at_0_0_physics_unchanged": true,
+   "reset_level_index": 1
+  }
+ ]
+}

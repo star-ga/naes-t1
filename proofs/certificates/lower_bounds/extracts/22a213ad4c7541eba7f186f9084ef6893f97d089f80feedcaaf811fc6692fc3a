@@ -1,0 +1,1033 @@
+#!/usr/bin/env python3
+"""floor_dfpn — exact MMAE floor prover for DEEP-graph ARC-AGI-3 demo levels.
+
+Two ported techniques (offline whitebox floor-finding, NOT the shipped solver):
+
+  (1) DEPTH-FIRST PROOF-NUMBER SEARCH / iterative-deepening (df-pn, single-agent
+      form = IDA* with a transposition table). We frame floor-finding as proving
+      the predicate  P(d) := "a win exists within d moves"  for increasing d.
+      For a fixed bound d a depth-first search PROVES P(d) (finds a <=d win) or
+      DISPROVES it (exhausts every state with f = g + h <= d and finds none, so
+      floor > d). The smallest d that is PROVEN true is the EXACT floor. Unit move
+      cost + integer admissible h => the only thresholds that matter are the
+      integers d = h(start), h(start)+1, ... so iteration d is exactly "prove
+      P(d)". A transposition table (min-g-per-state, this iteration) shares the
+      enormous number of transpositions on these deep graphs; because a win state
+      has h = 0 (f = its depth) and a consistent h keeps f non-decreasing along
+      every path, iteration d provably visits every <=d win -> disproof of d is a
+      real proof floor > d.
+
+  (2) DERIVED ADMISSIBLE STATE-ABSTRACTION. h(s) is a SOUND lower bound on
+      moves-to-win, computed on the engine's OWN state (whitebox), never pixels:
+        - nav (g50t / dc22 / lf52 agent leg): manhattan(agent_cell, goal_cell);
+        - paint-coverage (re86): a function of the still-unpainted target cells;
+        - push (lf52 box leg): min-cost matching of box cells to target cells.
+      Admissibility is a THEOREM given two per-game facts, both re-verified against
+      the live engine here: (i) h = 0 on every winning state; (ii) every legal
+      move changes h by at most `move_bound` (consistency). (i)+(ii) => h(s) <=
+      dist(s) by induction, so h(start) is itself an instant lower bound and h
+      soundly prunes the df-pn search. A RUNTIME assertion checks (ii) on every
+      expanded edge; ANY violation VOIDS the 'proven' verdict and the level is
+      reported as a lower/upper bound pair instead.
+
+Soundness contract:
+  - 'proven' is emitted ONLY when df-pn disproves d = floor-1 AND proves d = floor
+    (the searched f<=floor-1 region is fully exhausted, not budget-truncated) AND
+    the consistency assertion never fired AND the winning route replay-verifies at
+    exactly `floor` moves on a FRESH engine restore.
+  - Otherwise the level is 'ub': LB = the tightest disproven-depth+1 (df-pn) or
+    h(start) (abstraction), UB = shortest replay-verified winning route. Clearly
+    labelled 'ub', not 'proven'.
+
+Reuses tools/mmae_minimum.py: init_replay_backend / restore / act / frame_of /
+lc_of / whitebox_sig (complete Markov key) / acquire_level_starts / resolve_game_id
+/ verify_replay. Deterministic: node-bounded, fixed action order, no wall-clock in
+the proof logic.
+
+Usage:
+  python3 tools/floor_dfpn.py --game g50t --levels 1,2,3,4,5,6,7,8 \
+      --cache-starts <path>/g50t_starts.pkl --nodes 4000000 \
+      --json <path>/g50t_dfpn.json
+"""
+from __future__ import annotations
+
+import argparse
+import copy
+import json
+import os
+import pickle
+import sys
+import time
+
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, ROOT)
+os.environ.setdefault("OPERATION_MODE", "offline")
+
+import numpy as np  # noqa: E402
+
+import mmae_minimum as M  # noqa: E402
+
+# whitebox complete-state key is mandatory for a sound floor: the frame is a lossy
+# render, so pixel-aliased states would false-merge and could under-count the floor.
+M._WHITEBOX = True
+
+
+# ===========================================================================
+# abstraction framework
+# ===========================================================================
+class Abstraction:
+    """A sound admissible lower bound on moves-to-win, over the live game object.
+
+    h(game)          -> int   admissible LB on remaining moves (>= 0).
+    move_bound       :  int   claimed max change of h per legal move (consistency).
+    argument         :  str   the explicit structural lower-bound argument.
+    ok               :  bool  False => not usable (fields not found / not verified).
+    """
+
+    def __init__(self, name, h, move_bound, argument, ok=True, meta=None):
+        self.name = name
+        self.h = h
+        self.move_bound = move_bound
+        self.argument = argument
+        self.ok = ok
+        self.meta = meta or {}
+
+
+def _leaves_numeric(obj, path=(), out=None, depth=0, seen=None):
+    """Flatten small-integer scalar leaves of an engine object into {path: int}.
+
+    Only ints in a plausible grid-coordinate range are kept; big arrays/strings are
+    skipped. Deterministic. Used to AUTO-DISCOVER the agent coordinate leaves (the
+    scalars that move by exactly one unit under a move action)."""
+    if out is None:
+        out = {}
+    if seen is None:
+        seen = set()
+    if depth > 8:
+        return out
+    oid = id(obj)
+    if oid in seen:
+        return out
+    if isinstance(obj, bool):
+        return out
+    if isinstance(obj, int):
+        if -8 <= obj <= 200:
+            out[path] = obj
+        return out
+    seen = seen | {oid}
+    if isinstance(obj, (list, tuple)):
+        if len(obj) <= 16:
+            for i, e in enumerate(obj):
+                _leaves_numeric(e, path + (i,), out, depth + 1, seen)
+        return out
+    d = getattr(obj, "__dict__", None)
+    if isinstance(obj, dict):
+        d = obj
+    if d:
+        for k in sorted(d, key=str):
+            if isinstance(k, str) and k.startswith("__"):
+                continue
+            _leaves_numeric(d[k], path + (str(k),), out, depth + 1, seen)
+    return out
+
+
+def _manhattan(a, b):
+    return abs(a[0] - b[0]) + abs(a[1] - b[1])
+
+
+# ===========================================================================
+# df-pn / IDA* proof engine  (single-agent depth-first proof-number search)
+# ===========================================================================
+def _avail(g):
+    try:
+        return [int(v) for v in (getattr(g, "_available_actions", None) or [])]
+    except (TypeError, ValueError):
+        return []
+
+
+def _actions_for(tape, game, alphabet, click_probe, hw):
+    """Concrete (a,x,y) actions available at a state. Simple actions from `alphabet`
+    filtered by the live availability; ACTION6 (click) expanded to the SOUND complete
+    per-state click alphabet (probe every cell, cluster by complete-key child) when
+    click_probe is on. Complete over the click space => a BFS/df-pn over it stays a
+    sound floor proof for click games (see mmae_minimum.probe_state_clicks)."""
+    cur = _avail(game)
+    acts = [ak for ak in alphabet if not cur or ak[0] in cur]
+    if click_probe and (not cur or 6 in cur):
+        h, w = hw
+        acts = acts + [(6, x, y) for (x, y) in M.probe_state_clicks(tape, h, w)]
+    return acts
+
+
+class ProofResult:
+    def __init__(self):
+        self.floor = None          # proven exact floor (int) or None
+        self.proven = False
+        self.path = []             # in-level winning action sequence at `floor`
+        self.lb = 0                # best proven lower bound
+        self.ub = None             # best known upper bound (route or found win)
+        self.nodes = 0
+        self.consistency_ok = True
+        self.consistency_violation = None
+        self.budget_hit = False
+        self.iters = []            # per-d: (d, "win@L" | "exhausted" | "budget")
+
+
+def dfpn_floor(start_z, base_lc, alphabet, absn: Abstraction, node_cap,
+               d_lo, d_hi, progress=True, click_probe=False, hw=(64, 64)):
+    """Iterative-deepening df-pn. Proves P(d) := exists win within d moves, for
+    d = d_lo .. d_hi. First proven d = exact floor (given absn admissible).
+    Returns ProofResult. `alphabet` = list of (a, x, y). h from absn.h(game)."""
+    res = ProofResult()
+    hstart_g = M.restore(start_z)
+    M.frame_of(M.act(M.restore(start_z), 0)) if False else None  # keep import warm
+    # h at start
+    try:
+        h0 = absn.h(hstart_g)
+    except Exception as e:  # noqa: BLE001
+        res.consistency_ok = False
+        res.consistency_violation = f"h(start) failed: {e!r}"
+        return res
+    res.lb = max(res.lb, h0)
+    bound = absn.move_bound
+    t0 = time.time()
+
+    for d in range(max(d_lo, h0), d_hi + 1):
+        # depth-first search with f = g + h <= d, transposition table on min-g.
+        tt = {}  # state_hash -> min g reached this iteration
+        # stack entries: (tape, g). We (re)restore per node to expand its children.
+        start_hash = M.whitebox_sig(M.restore(start_z))
+        tt[start_hash] = 0
+        stack = [(start_z, 0)]
+        win_path = None
+        iter_budget_hit = False
+        while stack:
+            tape, gv = stack.pop()
+            if res.nodes >= node_cap:
+                iter_budget_hit = True
+                break
+            # expand children
+            children = []  # (child_tape, gnext, child_hash, hc) to push (reverse for det order)
+            gp = M.restore(tape)
+            ph = absn.h(gp)
+            for (a, x, y) in _actions_for(tape, gp, alphabet, click_probe, hw):
+                gc = M.restore(tape)
+                fd = M.act(gc, a, x, y)
+                res.nodes += 1
+                # EmptyFrame => silent engine failure; never fabricate. Propagates.
+                lc = M.lc_of(fd)
+                sstr = str(getattr(fd, "state", ""))
+                if lc > base_lc:
+                    win_path = list(tape)[len(start_z):] + [(a, x, y)]
+                    break
+                if "GAME_OVER" in sstr:
+                    continue
+                M.frame_of(fd)  # validate engine really stepped (raise on empty)
+                hc = absn.h(gc)
+                # consistency (ii): a legal move may change h by at most move_bound.
+                if ph - hc > bound:
+                    res.consistency_ok = False
+                    res.consistency_violation = (
+                        f"h drop {ph}->{hc} > bound {bound} on action {a} at g={gv}")
+                fnext = (gv + 1) + hc
+                if fnext > d:
+                    continue  # admissible prune: cannot reach a win within d
+                ch = M.whitebox_sig(gc)
+                prev = tt.get(ch)
+                if prev is not None and prev <= gv + 1:
+                    continue  # transposition already explored at <= this g
+                tt[ch] = gv + 1
+                children.append((tape + ((a, x, y),), gv + 1))
+            if win_path is not None:
+                break
+            # push children (reversed so leftmost action explored first — determinism)
+            for entry in reversed(children):
+                stack.append(entry)
+        if progress:
+            tag = ("win" if win_path is not None else
+                   "budget" if iter_budget_hit else "exhausted")
+            sys.stderr.write(f"[dfpn] d={d} nodes={res.nodes} tt={len(tt)} "
+                             f"{tag} {time.time() - t0:.0f}s\n")
+        if win_path is not None:
+            res.iters.append((d, f"win@{len(win_path)}"))
+            res.floor = d
+            res.proven = True
+            res.path = win_path
+            res.ub = d if res.ub is None else min(res.ub, d)
+            return res
+        if iter_budget_hit:
+            res.iters.append((d, "budget"))
+            res.budget_hit = True
+            return res
+        # iteration d fully exhausted, no win => floor > d
+        res.iters.append((d, "exhausted"))
+        res.lb = max(res.lb, d + 1)
+    return res
+
+
+# ===========================================================================
+# FAST game-carrying IDA* (movement games, no click probe)
+#
+# The tape-based dfpn_floor above re-restores every node with M.restore(tape),
+# which REPLAYS the whole (level-prefix + in-level) action tape per node — the
+# O(prefix+depth) cost. This variant deepcopies the level-start game
+# ONCE (the only prefix replay) and expands by copy.deepcopy(parent)+act — O(1)
+# make/unmove on the deepcopy-verified backend. Identical proof semantics:
+# iterative deepening on f=g+h, transposition table (min-g/iter) on the whitebox
+# complete key, admissible prune f>d, per-edge consistency assertion. First
+# proven d = exact floor. Used ONLY when click_probe is off (the click alphabet
+# needs the tape for probe_state_clicks); movement games g50t/re86/wa30 qualify.
+# ===========================================================================
+def dfpn_floor_fast(start_z, base_lc, alphabet, absn: Abstraction, node_cap,
+                    d_lo, d_hi, progress=True, time_budget=0):
+    res = ProofResult()
+    sys.setrecursionlimit(1_000_000)
+    try:
+        root = M.restore(start_z)
+        h0 = absn.h(root)
+    except Exception as e:  # noqa: BLE001
+        res.consistency_ok = False
+        res.consistency_violation = f"h(start) failed: {e!r}"
+        return res
+    res.lb = max(res.lb, h0)
+    bound = absn.move_bound
+    t0 = time.time()
+    deadline = (t0 + time_budget) if time_budget else None
+
+    for d in range(max(d_lo, h0), d_hi + 1):
+        tt = {M.whitebox_sig(root): 0}
+        flags = {"budget": False}
+
+        def rec(game, gv, ph, path):
+            if res.nodes >= node_cap or (deadline and time.time() > deadline):
+                flags["budget"] = True
+                return None
+            cur = _avail(game)
+            for (a, x, y) in [ak for ak in alphabet if not cur or ak[0] in cur]:
+                gc = copy.deepcopy(game)
+                fd = M.act(gc, a, x, y)
+                res.nodes += 1
+                lc = M.lc_of(fd)
+                sstr = str(getattr(fd, "state", ""))
+                if lc > base_lc:
+                    return path + [(a, x, y)]        # win found at depth gv+1 == d
+                if "GAME_OVER" in sstr:
+                    continue
+                M.frame_of(fd)                       # raise on silent engine failure
+                hc = absn.h(gc)
+                if ph - hc > bound:                  # consistency (ii) — voids 'proven'
+                    res.consistency_ok = False
+                    res.consistency_violation = (
+                        f"h drop {ph}->{hc} > bound {bound} on action {a} at g={gv}")
+                if gv + 1 + hc > d:
+                    continue                         # admissible prune
+                ch = M.whitebox_sig(gc)
+                prev = tt.get(ch)
+                if prev is not None and prev <= gv + 1:
+                    continue                         # transposition seen at <= this g
+                tt[ch] = gv + 1
+                r = rec(gc, gv + 1, hc, path + [(a, x, y)])
+                if r is not None:
+                    return r
+                if flags["budget"]:
+                    return None
+            return None
+
+        win_path = rec(root, 0, h0, [])
+        if progress:
+            tag = ("win" if win_path is not None else
+                   "budget" if flags["budget"] else "exhausted")
+            sys.stderr.write(f"[dfpn-fast] d={d} nodes={res.nodes} tt={len(tt)} "
+                             f"{tag} {time.time() - t0:.0f}s\n")
+        if win_path is not None:
+            res.iters.append((d, f"win@{len(win_path)}"))
+            res.floor = d
+            res.proven = True
+            res.path = win_path
+            res.ub = d if res.ub is None else min(res.ub, d)
+            return res
+        if flags["budget"]:
+            res.iters.append((d, "budget"))
+            res.budget_hit = True
+            return res
+        res.iters.append((d, "exhausted"))
+        res.lb = max(res.lb, d + 1)
+    return res
+
+
+def precheck_move_bound_fast(start_z, base_lc, alphabet, absn, samples=400):
+    """Game-carrying variant of precheck_move_bound (movement games): deepcopy-BFS
+    up to `samples` states, confirm h never drops by > move_bound on any edge."""
+    from collections import deque
+    root = M.restore(start_z)
+    try:
+        absn.h(root)
+    except Exception:  # noqa: BLE001
+        return False, 10 ** 9, 0
+    seen = {M.whitebox_sig(root)}
+    q = deque([root])
+    checked = 0
+    worst = 0
+    while q and checked < samples:
+        game = q.popleft()
+        try:
+            ph = absn.h(game)
+        except Exception:  # noqa: BLE001
+            return False, 10 ** 9, checked
+        checked += 1
+        cur = _avail(game)
+        for (a, x, y) in [ak for ak in alphabet if not cur or ak[0] in cur]:
+            gc = copy.deepcopy(game)
+            fd = M.act(gc, a, x, y)
+            if M.lc_of(fd) > base_lc:
+                continue
+            if "GAME_OVER" in str(getattr(fd, "state", "")):
+                continue
+            try:
+                M.frame_of(fd)
+                hc = absn.h(gc)
+            except Exception:  # noqa: BLE001
+                continue
+            worst = max(worst, ph - hc)
+            if ph - hc > absn.move_bound:
+                return False, ph - hc, checked
+            ch = M.whitebox_sig(gc)
+            if ch not in seen:
+                seen.add(ch)
+                q.append(gc)
+    return True, worst, checked
+
+
+# ===========================================================================
+# forward layered BFS lower bound (heuristic-FREE, always sound) — for sandwiches
+# ===========================================================================
+def bfs_lower_bound(start_z, base_lc, alphabet, node_cap, depth_cap,
+                    click_probe=False, hw=(64, 64)):
+    """Close BFS layers on the whitebox graph; return (deepest fully-closed layer,
+    hit_win_at or None, nodes). Heuristic-free: if all distinct states at depth
+    < d are exhausted with no win, floor >= d. SOUND only over the COMPLETE action
+    alphabet (simple + click_probe clicks) — a dropped click could hide a shorter
+    win. Uses whitebox_sig dedup."""
+    seen = {M.whitebox_sig(M.restore(start_z)): 0}
+    frontier = [start_z]
+    nodes = 0
+    closed_depth = 0
+    win_at = None
+    for depth in range(1, depth_cap + 1):
+        nxt = []
+        for tape in frontier:
+            gp = M.restore(tape)
+            for (a, x, y) in _actions_for(tape, gp, alphabet, click_probe, hw):
+                gc = M.restore(tape)
+                fd = M.act(gc, a, x, y)
+                nodes += 1
+                lc = M.lc_of(fd)
+                sstr = str(getattr(fd, "state", ""))
+                if lc > base_lc:
+                    win_at = depth if win_at is None else min(win_at, depth)
+                    continue
+                if "GAME_OVER" in sstr:
+                    continue
+                M.frame_of(fd)
+                ch = M.whitebox_sig(gc)
+                if ch not in seen:
+                    seen[ch] = depth
+                    nxt.append(tape + ((a, x, y),))
+            if nodes >= node_cap:
+                return closed_depth, win_at, nodes
+        if win_at is not None and win_at <= depth:
+            # a win appeared at this depth; if the whole layer closed, that's the floor
+            closed_depth = depth
+            return closed_depth, win_at, nodes
+        closed_depth = depth
+        frontier = nxt
+        if not frontier:
+            break
+    return closed_depth, win_at, nodes
+
+
+# ===========================================================================
+# per-game abstraction builders  (fields grounded in each game's source)
+# ===========================================================================
+def _g50t_pos(g):
+    c = g.vgwycxsxjz
+    pl = c.dzxunlkwxt.xmdjbwrpmv
+    go = c.whftgckbcu.xmdjbwrpmv
+    return (int(pl.x), int(pl.y)), (int(go.x), int(go.y))
+
+
+def build_g50t(start_game):
+    """g50t: win <=> player cell == goal cell + (1,1). 6px/cell. ACTION1-4 move the
+    agent <=1 cell (verified); ACTION5 = record-replay teleport to the FIXED start
+    cell only. So floor >= manhattan(start,goal)=m0, and h(s)=min(manhattan(agent,
+    goal), 1+m0) is admissible AND consistent (move_bound=1): any win either walks
+    directly (>= manhattan) or does its last reset to start then walks (>= 1+m0)."""
+    (p0, g0) = _g50t_pos(start_game)
+    gc0 = (g0[0] + 1, g0[1] + 1)
+    m0 = (abs(p0[0] - gc0[0]) + abs(p0[1] - gc0[1])) // 6
+
+    def h(game):
+        (p, go) = _g50t_pos(game)
+        gc = (go[0] + 1, go[1] + 1)
+        man = (abs(p[0] - gc[0]) + abs(p[1] - gc[1])) // 6
+        return min(man, 1 + m0)
+
+    return Abstraction("g50t_manhattan_min", h, 1,
+                       f"floor >= manhattan(start_agent,goal) = {m0} cells (6px/cell). "
+                       "ACTION1-4 move the agent <=1 cell; ACTION5 only teleports to the "
+                       "fixed start, never nearer the goal, so any winning sequence needs "
+                       f">= {m0} unit moves. h(s)=min(manhattan(agent,goal),1+m0) is "
+                       "admissible & consistent (move_bound=1).", meta={"m0": m0})
+
+
+def _dc22_pos(g):
+    a = g.fdvakicpimr
+    go = g.bqxa
+    return (int(a.x), int(a.y)), (int(go.x), int(go.y))
+
+
+def build_dc22(start_game):
+    """dc22: win <=> agent cell == goal cell. 2px/cell. ACTION1-4 move <=1 cell.
+    manhattan(agent,goal) is admissible+consistent ONLY when no reachable ACTION6
+    itki-teleport exists (L1/L2). The move-bound self-check disables it (h=0) when a
+    teleport that moves the agent >1 cell/action is observed (L3-L6)."""
+    (a0, g0) = _dc22_pos(start_game)
+    m0 = (abs(a0[0] - g0[0]) + abs(a0[1] - g0[1])) // 2
+
+    def h(game):
+        (a, go) = _dc22_pos(game)
+        return (abs(a[0] - go[0]) + abs(a[1] - go[1])) // 2
+
+    return Abstraction("dc22_manhattan", h, 1,
+                       f"floor >= manhattan(agent,goal) = {m0} cells (2px/cell): each "
+                       "ACTION1-4 moves the agent <=1 cell. Sound only when no reachable "
+                       "ACTION6 itki-teleport (auto move-bound self-check).", meta={"m0": m0})
+
+
+def _lf52_active(g):
+    sc = g.ikhhdzfmarl
+    pegs = [o for o in sc.hncnfaqaddg.kdsncymzyeb
+            if str(getattr(o, "yrxvacxlgrf", "")).startswith("fozwvlovdui")]
+    blue = int(getattr(sc, "lzoqlpcwzpu", 0) or 0)
+    return len(pegs) - blue
+
+
+def build_lf52(start_game):
+    """lf52: peg-solitaire. win <=> active peg count == T (T=2 on L6/L7 else 1). Each
+    same-color jump removes exactly one peg and costs >=1 click action; pushes/selects/
+    undo remove none. So floor >= N_active-T; h = N_active-T, move_bound=1 (each action
+    changes the count by <=1). NOT sokoban/matching (no box targets)."""
+    sc = start_game.ikhhdzfmarl
+    lvl = int(getattr(sc, "whtqurkphir", 1) or 1)
+    T = 2 if lvl in (6, 7) else 1
+    n0 = _lf52_active(start_game)
+
+    def h(game):
+        return max(0, _lf52_active(game) - T)
+
+    return Abstraction("lf52_pegcount", h, 1,
+                       f"floor >= N_active-T = {n0}-{T} = {n0 - T}: win needs the active "
+                       "peg count reduced to T; each same-color jump removes exactly 1 peg "
+                       "and needs >=1 click action; other actions remove 0. move_bound=1.",
+                       meta={"T": T, "n0": n0})
+
+
+# re86 runtime tags (copy 8af5384d, the one resolve_game_id loads): the win check
+# jeiavrvavi() reads targets by TARGET tag, movable pieces by MOVABLE tag, and the base
+# canvas asset by BASE key. If get_sprites_by_tag returns nothing (a different copy),
+# U stays 0 and the win_zero self-check disables the abstraction (safe: no LB claimed).
+RE86_TARGET_TAG = "0054xnsuqceejm"
+RE86_MOVABLE_TAG = "0031cppcuvqlbi"
+RE86_BASE_KEY = "0000wbshgbbxxc"
+
+
+def _re86_globals(g):
+    for v in type(g).__dict__.values():
+        if hasattr(v, "__globals__"):
+            return v.__globals__
+    return {}
+
+
+def _re86_unpainted(g):
+    """U = count of target content pixels the piece-canvas does NOT match. Exact
+    complement of the engine win predicate jeiavrvavi() (win <=> U == 0), replicated
+    with the same base canvas + blit + (!=-1 & !=4 & !=canvas) test => sound feature."""
+    gl = _re86_globals(g)
+    spr = gl.get("sprites", {})
+    if RE86_BASE_KEY in spr:
+        canvas = np.array(spr[RE86_BASE_KEY].pixels).copy()
+    else:
+        canvas = np.full((64, 64), -1, dtype=np.int64)
+    ch, cw = canvas.shape
+    lvl = g.current_level
+    for s in lvl.get_sprites_by_tag(RE86_MOVABLE_TAG):
+        px = np.array(s.pixels)
+        ox, oy = int(s.x), int(s.y)
+        H, W = px.shape
+        r0, r1 = max(0, -oy), min(H, ch - oy)
+        c0, c1 = max(0, -ox), min(W, cw - ox)
+        if r1 > r0 and c1 > c0:
+            sub = px[r0:r1, c0:c1]
+            dst = canvas[max(0, oy):min(ch, oy + H), max(0, ox):min(cw, ox + W)]
+            m = sub != -1
+            dst[m] = sub[m]
+    U = 0
+    for t in lvl.get_sprites_by_tag(RE86_TARGET_TAG):
+        tp = np.array(t.pixels)
+        U += int(((tp != -1) & (tp != 4) & (tp != canvas)).sum())
+    return U
+
+
+def build_re86(start_game):
+    """re86: paint-coverage. win <=> every target content pixel is matched by a piece.
+    One action moves ONE 3px-step piece / cycles the active piece, changing at most
+    P_safe = max(max piece footprint, #pieces) target cells. h = ceil(U/P_safe) is
+    admissible; move_bound on h = 1 (U drops by <= P_safe per action)."""
+    lvl = start_game.current_level
+    movs = lvl.get_sprites_by_tag(RE86_MOVABLE_TAG)
+    psafe = 1
+    for s in movs:
+        px = np.array(s.pixels)
+        psafe = max(psafe, int(((px != -1) & (px != 4)).sum()))
+    psafe = max(psafe, len(movs))
+    u0 = _re86_unpainted(start_game)
+
+    def h(game):
+        U = _re86_unpainted(game)
+        return -(-U // psafe)  # ceil(U/psafe)
+
+    return Abstraction("re86_paintcover", h, 1,
+                       f"floor >= ceil(U/P_safe) with U0={u0} unsatisfied target content "
+                       f"px and P_safe={psafe} (max piece footprint): one action moves one "
+                       "piece one 3px step, satisfying <= P_safe cells, so >= ceil(U/P_safe) "
+                       "actions. move_bound on h = 1.", meta={"psafe": psafe, "u0": u0})
+
+
+# wa30 carry-sokoban tags (source environment_files/wa30/ee6fef47/wa30.py):
+#   player  = tag "wbmdvjhthc"   boxes = tag "geezpjgiyd"
+#   targets = self.wyzquhjerd    (set of target-region CELLS, 4px grid, celomdfhbh=4)
+#   win  ymzfopzgbq() = all boxes' (x,y) in wyzquhjerd AND box not grabbed (zmqreragji)
+#   enemies = tags "kdweefinfi" / "ysysltqlke" (auto-move each step -> move boxes -> break
+#             move_bound=1). Only enemy-free levels admit the admissible sokoban LB.
+WA30_BOX_TAG = "geezpjgiyd"
+WA30_ENEMY_TAGS = ("kdweefinfi", "ysysltqlke")
+WA30_CELL = 4
+
+
+def _wa30_boxes_targets(g):
+    boxes = [(int(s.x), int(s.y)) for s in g.current_level.get_sprites_by_tag(WA30_BOX_TAG)]
+    targ = sorted((int(x), int(y)) for (x, y) in getattr(g, "wyzquhjerd", set()) or set())
+    return boxes, targ
+
+
+def _wa30_matching_lb(boxes, targ):
+    """Min-cost matching(boxes -> DISTINCT target cells) with per-pair cost =
+    manhattan/4 IF the target is on the box's 4-grid (a box only reaches targets
+    congruent mod-4 by pure translation), else infeasible. Returns the summed
+    carry-move LB, or None when some box has no reachable target (abstraction n/a)."""
+    if not boxes:
+        return 0
+    if not targ:
+        return None
+    from scipy.optimize import linear_sum_assignment
+    BIG = 10 ** 6
+    cost = np.full((len(boxes), len(targ)), BIG, dtype=np.int64)
+    for i, (bx, by) in enumerate(boxes):
+        for j, (tx, ty) in enumerate(targ):
+            if (tx - bx) % WA30_CELL == 0 and (ty - by) % WA30_CELL == 0:
+                cost[i, j] = (abs(bx - tx) + abs(by - ty)) // WA30_CELL
+    r, c = linear_sum_assignment(cost)
+    tot = int(cost[r, c].sum())
+    return None if tot >= BIG else tot
+
+
+def _wa30_has_enemies(g):
+    return any(g.current_level.get_sprites_by_tag(t) for t in WA30_ENEMY_TAGS)
+
+
+def build_wa30(start_game):
+    """wa30 carry-sokoban. win <=> every box cell lies in the target region and no box
+    is grabbed. 4px/cell. A box moves only while CARRIED, and a carry advances it exactly
+    one cell per player action; enemy-free => uncarried boxes never move. So each box needs
+    >= its (grid) distance to a distinct target cell, one carry-move (=one action) apiece =>
+    floor >= Hungarian box->target matching. h = that matching; move_bound=1 (one action
+    moves at most one box by at most one cell). NOT admissible on enemy levels (enemies move
+    boxes mid-step -> caught by the move-bound self-check + explicit enemy guard)."""
+    boxes, targ = _wa30_boxes_targets(start_game)
+    lb0 = _wa30_matching_lb(boxes, targ)
+    ok = lb0 is not None and not _wa30_has_enemies(start_game)
+
+    def h(game):
+        b, t = _wa30_boxes_targets(game)
+        v = _wa30_matching_lb(b, t)
+        return 0 if v is None else v
+
+    return Abstraction("wa30_sokoban_hungarian", h, 1,
+                       f"floor >= Hungarian(box->distinct target cell) matching = {lb0} "
+                       f"carry-moves ({WA30_CELL}px/cell): each of {len(boxes)} boxes must "
+                       "reach a distinct target cell, a carried box advances 1 cell/action "
+                       "and (enemy-free) uncarried boxes never move. move_bound=1.",
+                       ok=ok, meta={"lb0": lb0, "nb": len(boxes), "nt": len(targ),
+                                    "enemies": _wa30_has_enemies(start_game)})
+
+
+# bp35 gravity-push puzzle (source environment_files/bp35/0a0ad940/bp35.py):
+#   available_actions = [3,4,6,7] = move-left / move-right / click / undo.
+#   Each move: step sideways one cell (blocked by walls) then FALL under gravity
+#   (vivnprldht flips the fall direction; a click on the 'lrpkmzabbfa' button toggles
+#   it). Win = enter/land on the exit gem 'fjlzdjxhant'; spikes 'ubhhgljbnpu'/'hzusueifitk'
+#   lose. Click (ACTION6) toggles solid<->passable blocks (oonshderxef<->yuuqpmlxorv),
+#   spawns blocks (etlsaqqtjvn), teleports (qclfkhjnaac), or flips gravity — a DETERMINISTIC
+#   function of the clicked cell. Levels 1-3 also carry a deterministic moving hazard
+#   (mylefxfaev raises sprites every even move; player on that row => lose). Everything is a
+#   deterministic function of (state, action), so full-state df-pn over whitebox_sig is a
+#   SOUND exact-floor search. No clean geometric LB survives gravity-teleport-flip, so we
+#   run heuristic-free (ok=False): the LB is the df-pn exhausted-depth bound, the UB the
+#   replay-verified route -> honest sandwich unless they collapse.
+def build_bp35(start_game):
+    return Abstraction(
+        "bp35_none", lambda g: 0, 1,
+        "no certified geometric LB (gravity + block-toggle + teleport + gravity-flip "
+        "clicks defeat every static distance bound); LB = heuristic-free df-pn "
+        "exhausted-depth, UB = replay-verified route. Full-state (whitebox_sig) search "
+        "is sound because every bp35 transition is deterministic in (state, action).",
+        ok=False, meta={"note": "heuristic-free exhaustion; deterministic full-state search"})
+
+
+def build_cd82(start_game):
+    def h(game):
+        vstazxqstp = [s for s in game.current_level.get_sprites() if s.name.startswith("eoqnvkspoa-")]
+        notymrgpnm = game.current_level.get_sprites_by_name("xytrjjbyib")
+        if not vstazxqstp or not notymrgpnm:
+            return 0
+        optphfbnep = notymrgpnm[0].pixels
+        pvdfcqjxfe = vstazxqstp[0].pixels
+        poqpfcjieu = np.ones((10, 10), dtype=bool)
+        for i in range(10):
+            poqpfcjieu[i, i] = False
+            poqpfcjieu[i, 9 - i] = False
+        diff = int(np.sum((optphfbnep != pvdfcqjxfe) & poqpfcjieu))
+        return -(-diff // 55)
+
+    return Abstraction("cd82_octantcover", h, 1,
+                       "floor >= ceil(mismatched_px / 55): each action fills at most 55 cells. move_bound=1.",
+                       ok=True)
+
+
+BUILDERS = {"g50t": build_g50t, "dc22": build_dc22,
+            "re86": build_re86, "lf52": build_lf52, "wa30": build_wa30,
+            "bp35": build_bp35, "cd82": build_cd82}
+
+
+# ===========================================================================
+# soundness prechecks
+# ===========================================================================
+def precheck_move_bound(start_z, base_lc, alphabet, absn, samples=400,
+                        click_probe=False, hw=(64, 64)):
+    """BFS-sample up to `samples` states; for each apply every action and confirm h
+    never DROPS by more than move_bound on any edge (consistency). Returns
+    (ok, worst_drop, checked). A False disables the abstraction (h=0) BEFORE the search
+    so the LB stays sound — e.g. dc22 itki-teleport is caught here."""
+    from collections import deque
+    seen = {M.whitebox_sig(M.restore(start_z))}
+    q = deque([start_z])
+    checked = 0
+    worst = 0
+    while q and checked < samples:
+        tape = q.popleft()
+        gp = M.restore(tape)
+        try:
+            ph = absn.h(gp)
+        except Exception:  # noqa: BLE001
+            return False, 10 ** 9, checked
+        checked += 1
+        for (a, x, y) in _actions_for(tape, gp, alphabet, click_probe, hw):
+            gc = M.restore(tape)
+            fd = M.act(gc, a, x, y)
+            if M.lc_of(fd) > base_lc:
+                continue
+            if "GAME_OVER" in str(getattr(fd, "state", "")):
+                continue
+            try:
+                M.frame_of(fd)
+                hc = absn.h(gc)
+            except Exception:  # noqa: BLE001
+                continue
+            worst = max(worst, ph - hc)
+            if ph - hc > absn.move_bound:
+                return False, ph - hc, checked
+            ch = M.whitebox_sig(gc)
+            if ch not in seen:
+                seen.add(ch)
+                q.append(tape + ((a, x, y),))
+    return True, worst, checked
+
+
+def verify_win_zero(start_z, route, base_lc, absn):
+    """Replay the winning route; confirm h hits 0 exactly at the winning step and never
+    drops by > move_bound along it (necessary condition for admissibility)."""
+    g = M.restore(start_z)   # single live game stepped forward: O(n), not O(n^2)
+    hp = absn.h(g)
+    ok_bound = True
+    for (a, x, y) in route:
+        fd = M.act(g, a, x, y)
+        if M.lc_of(fd) > base_lc:
+            return (hp <= absn.move_bound), ok_bound  # h just before win <= 1 step
+        hc = absn.h(g)
+        if hp - hc > absn.move_bound:
+            ok_bound = False
+        hp = hc
+    return False, ok_bound
+
+
+# real level counts (source-verified; the acquisition cascade also snapshots a
+# terminal slot one past the last real level, which we skip).
+REAL_LEVELS = {"g50t": 7, "dc22": 6, "re86": 8, "lf52": 10, "wa30": 9, "bp35": 9, "cd82": 6}
+# per-game action alphabet (simple actions) + whether clicks must be probed.
+# bp35: simple = move-left(3), move-right(4); clicks(6) probed & clustered. ACTION7 is
+# UNDO (svmaaixutx pops the saved-state stack to a PREVIOUSLY VISITED state); a shortest
+# solution never revisits a state, so undo can never shorten the floor -> omitting it from
+# the alphabet is sound and does not raise the proved minimum (it only cuts branching).
+GAME_ALPHA = {
+    "g50t": ([1, 2, 3, 4, 5], False),
+    "re86": [1, 2, 3, 4, 5],
+    "dc22": ([1, 2, 3, 4], True),
+    "lf52": ([1, 2, 3, 4, 7], True),
+    "wa30": ([1, 2, 3, 4, 5], False),
+    "bp35": ([3, 4], True),
+    "cd82": ([1, 2, 3, 4, 5], True),
+}
+
+
+
+def route_win_len(start_z, route, base_lc):
+    """First prefix length of the recorded route that wins the level (its true within-
+    level UB) and whether it replay-verifies. Returns (win_len or None, verified)."""
+    g = M.restore(start_z)
+    for i, (a, x, y) in enumerate(route, 1):
+        fd = M.act(g, a, x, y)
+        if M.lc_of(fd) > base_lc:
+            return i, M.verify_replay(start_z, list(route[:i]), base_lc)
+    return None, False
+
+
+def prove_level(short, game_id, level, starts, args):
+    rec = {"game": game_id, "level": level, "floor": None, "kind": None,
+           "method": None, "lower_bound_argument": None, "replay_verified": False,
+           "nodes_expanded": 0}
+    real = REAL_LEVELS.get(short, 99)
+    if level > real:
+        rec.update(kind="skip", method=f"level past the last (game has {real} real levels)")
+        return rec
+    if level not in starts:
+        rec.update(kind="error", method="level start not reached by cascade")
+        return rec
+    st = starts[level]
+    if not M.verify_restore_fidelity(st["z"], st["frame"]):
+        rec.update(kind="error", method="replay restore diverged from recorded start")
+        return rec
+    start_z, base_lc, route = st["z"], st["lc"], st["solver_trace"]
+    term = str(getattr(M.restore(start_z), "_state", ""))
+    if "WIN" in term or "GAME_OVER" in term:
+        rec.update(kind="skip", method=f"terminal start snapshot ({term.split('.')[-1]})")
+        return rec
+
+    start_game = M.restore(start_z)
+    hw = st["frame"].shape
+    simple, click_probe = (GAME_ALPHA[short] if isinstance(GAME_ALPHA[short], tuple)
+                           else (GAME_ALPHA[short], False))
+    if args.no_clicks:
+        click_probe = False
+    avail = _avail(start_game) or simple
+    alphabet = [(a, None, None) for a in simple if a in avail]
+
+    ub_len, ub_verified = route_win_len(start_z, route, base_lc)
+
+    absn = BUILDERS[short](start_game)
+    try:
+        h0 = absn.h(start_game)
+    except Exception as e:  # noqa: BLE001
+        absn.ok = False
+        h0 = 0
+        absn.meta["build_error"] = repr(e)
+    # soundness prechecks (simple-action move bound; clicks handled per-game below).
+    # Movement games (no click probe) use the fast game-carrying precheck.
+    if click_probe:
+        pc_ok, worst, checked = precheck_move_bound(
+            start_z, base_lc, alphabet, absn, samples=args.precheck,
+            click_probe=False, hw=hw)
+    else:
+        pc_ok, worst, checked = precheck_move_bound_fast(
+            start_z, base_lc, alphabet, absn, samples=args.precheck)
+    wz_ok, wb_ok = (True, True)
+    if ub_len:
+        wz_ok, wb_ok = verify_win_zero(start_z, list(route[:ub_len]), base_lc, absn)
+    # dc22: the ACTION6 itki-teleport (source: L3-L6) moves the agent >1 cell/action, so
+    # manhattan is NOT an admissible floor LB there. Only L1/L2 have no itki pair.
+    dc22_itki = (short == "dc22" and level not in (1, 2))
+    wa30_enemy = (short == "wa30" and
+                  _wa30_has_enemies(start_game))
+    admissible = absn.ok and pc_ok and wb_ok and not dc22_itki and not wa30_enemy
+    if not admissible:
+        h0 = 0  # abstraction not certified here -> no static LB, no h-pruning
+        if dc22_itki:
+            rec["lower_bound_argument_note"] = (
+                "dc22 L3-L6 have ACTION6 itki-teleport (agent jumps >1 cell/action); "
+                "manhattan is NOT admissible here -> no static LB claimed")
+        if wa30_enemy:
+            rec["lower_bound_argument_note"] = (
+                "wa30 enemy level (auto-moving sprites relocate boxes mid-step, and can "
+                "carry a box onto its target for free) -> the sokoban matching is NOT an "
+                "admissible LB on player actions here -> no certified static LB claimed")
+
+    sys.stderr.write(
+        f"[prove] {short} L{level} base_lc={base_lc} avail={avail} "
+        f"h0={h0} route_ub={ub_len}(verified={ub_verified}) "
+        f"absn={absn.name} admissible={admissible} "
+        f"(precheck ok={pc_ok} worst_drop={worst}/{absn.move_bound} checked={checked}; "
+        f"win_zero={wz_ok} win_bound={wb_ok}) clicks={click_probe}\n")
+
+    rec["lower_bound_argument"] = (absn.argument if admissible else
+                                   "no certified admissible abstraction; LB is the "
+                                   "heuristic-free df-pn exhausted-depth bound only")
+
+    # -------- INSTANT SANDWICH-COLLAPSE PROOF (no search) --------
+    # floor >= h0 (admissible abstraction) and floor <= ub_len (replay-verified route);
+    # if h0 == ub_len the sandwich collapses => floor is PROVEN with zero search.
+    if admissible and ub_len and ub_verified and h0 == ub_len:
+        rec.update(floor=h0, kind="proven",
+                   method=f"sandwich collapse: admissible LB h(start)={h0} == "
+                          f"replay-verified route UB={ub_len}; no search needed",
+                   replay_verified=True, nodes_expanded=0)
+        return rec
+
+    # -------- df-pn / IDA* search (skipped in --lb-only) --------
+    d_hi = ub_len if ub_len else args.depth_cap
+    if admissible and h0 > 0:
+        eff_absn = absn
+        d_lo = h0
+    else:
+        eff_absn = Abstraction("h0", lambda g: 0, 1, "no admissible abstraction", ok=False)
+        d_lo = 0
+
+    if args.lb_only:
+        pr = ProofResult()
+        pr.lb = h0 if admissible else 0
+        pr.ub = None
+    elif click_probe:
+        pr = dfpn_floor(start_z, base_lc, alphabet, eff_absn, args.nodes,
+                        d_lo, d_hi, click_probe=click_probe, hw=hw)
+    else:
+        # movement game (no click probe): fast game-carrying IDA* (no per-node replay)
+        pr = dfpn_floor_fast(start_z, base_lc, alphabet, eff_absn, args.nodes,
+                             d_lo, d_hi, time_budget=args.time_budget)
+
+    rec["nodes_expanded"] = pr.nodes
+    # merge lower bounds: certified static h0 + df-pn exhausted-depth
+    lb = max(pr.lb, h0 if admissible else 0)
+    ub = ub_len if ub_len else pr.ub
+
+    if pr.proven and pr.consistency_ok:
+        # exact floor: verify the winning route replays at exactly `floor` on a fresh engine
+        verified = M.verify_replay(start_z, pr.path, base_lc)
+        # and it must be a true minimum: pr.floor == lb-consistent (df-pn disproved floor-1)
+        rec.update(floor=pr.floor, kind="proven",
+                   method=f"df-pn/IDA* + {absn.name}; proved P({pr.floor}) & disproved "
+                          f"P({pr.floor - 1}); nodes={pr.nodes}",
+                   replay_verified=verified)
+        rec["min_path"] = [_fmt(ak) for ak in pr.path]
+        if not verified:
+            rec.update(kind="ub", method=rec["method"] + " [replay FAILED -> downgraded]")
+        return rec
+
+    # post-search sandwich COLLAPSE: df-pn disproved every depth < ub (lb == ub) and
+    # the route wins at ub => floor == ub is PROVEN even without completing iteration ub.
+    if ub and lb == ub and ub_verified and pr.consistency_ok:
+        rec.update(floor=int(ub), kind="proven",
+                   method=f"df-pn/IDA* disproved P({ub - 1}) (all depths < {ub} exhausted) "
+                          f"and route wins at {ub} => floor={ub}; nodes={pr.nodes}",
+                   replay_verified=True)
+        return rec
+
+    # sandwich (honest): proven LB, verified UB
+    method = ("lb-only (abstraction static LB / route UB; no search)" if args.lb_only
+              else "df-pn/IDA* budget-truncated" if pr.budget_hit
+              else "df-pn/IDA* incomplete")
+    if not absn.ok:
+        method += " (abstraction fields unresolved)"
+    elif not admissible:
+        method += f" (abstraction NOT admissible here: precheck drop {worst}>{absn.move_bound})"
+    if pr.consistency_violation:
+        method += f"; consistency VOID: {pr.consistency_violation}"
+    rec.update(floor={"lb": int(lb), "ub": (int(ub) if ub else None)}, kind="ub",
+               method=method + f"; nodes={pr.nodes}; iters={pr.iters[-3:]}",
+               replay_verified=bool(ub_verified))
+    if ub:
+        rec["ub_route_len"] = int(ub)
+    return rec
+
+
+def _fmt(ak):
+    a, x, y = ak
+    return M._NM.get(a, str(a)) + (f"({x},{y})" if x is not None else "")
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--game", required=True)
+    ap.add_argument("--levels", default="1")
+    ap.add_argument("--nodes", type=int, default=3_000_000)
+    ap.add_argument("--time-budget", type=int, default=0,
+                    help="per-level wall-clock budget (s) for the fast search; on expiry "
+                         "the search RETURNS an honest sandwich (deepest exhausted-depth "
+                         "LB + route UB) instead of being killed. 0 = unlimited.")
+    ap.add_argument("--depth-cap", type=int, default=400)
+    ap.add_argument("--precheck", type=int, default=400)
+    ap.add_argument("--lb-only", action="store_true",
+                    help="skip the df-pn search: report the instant abstraction LB / "
+                         "route UB sandwich (and any zero-search collapse proof) only")
+    ap.add_argument("--no-clicks", action="store_true",
+                    help="disable per-state click probing (movement-only; for click "
+                         "games the result is then a restricted-alphabet UB, not a floor)")
+    ap.add_argument("--cache-starts", default=None)
+    ap.add_argument("--env-dir", default="environment_files")
+    ap.add_argument("--json", default=None)
+    args = ap.parse_args()
+
+    import arc_agi
+    env_dir = args.env_dir if os.path.isabs(args.env_dir) else os.path.join(ROOT, args.env_dir)
+    arc = arc_agi.Arcade(operation_mode="offline", environments_dir=env_dir)
+    game_id = M.resolve_game_id(arc, args.game)
+    levels = [int(x) for x in args.levels.split(",")]
+
+    probe_env = arc.make(game_id)
+    probe_env.reset()
+    M.init_replay_backend(probe_env._game)
+
+    starts = None
+    if args.cache_starts and os.path.exists(args.cache_starts):
+        cached = pickle.load(open(args.cache_starts, "rb"))
+        if cached.get("game") == game_id and cached.get("fmt") == "tape":
+            starts = cached["starts"]
+            sys.stderr.write(f"[main] starts from cache: {sorted(starts)}\n")
+    if starts is None:
+        starts = M.acquire_level_starts(arc, game_id, max_level=max(levels))
+        if args.cache_starts:
+            pickle.dump({"game": game_id, "fmt": "tape", "starts": starts},
+                        open(args.cache_starts, "wb"))
+
+    rows = []
+    for lv in levels:
+        rows.append(prove_level(args.game, game_id, lv, starts, args))
+        sys.stderr.write(f"[level-done] {json.dumps(rows[-1], default=str)}\n")
+        if args.json:
+            open(args.json, "w").write(json.dumps({"game": game_id, "results": rows},
+                                                  indent=2, default=str))
+    blob = json.dumps({"game": game_id, "results": rows}, indent=2, default=str)
+    print(blob)
+    if args.json:
+        open(args.json, "w").write(blob)
+
+
+if __name__ == "__main__":
+    main()

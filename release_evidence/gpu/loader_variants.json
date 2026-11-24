@@ -1,0 +1,38 @@
+{
+ "manifest": "the variants of the protected GPU builds: one kernel input for each variant",
+ "note": "the kernel inputs are not part of this repository; backends/README.md gives the range of each build",
+ "variants": [
+  {
+   "variant": "naes_t1_gpu_a_k1",
+   "build": "naes_t1_gpu_a",
+   "kernel": "naes_t1_gpu_a_k1.ptx",
+   "kernel_sha256": "e9ff340fb4521ace2c2ffe863d37f9e21208e8dcd71688a70d6f7691256475de",
+   "compute_capability": "8.0",
+   "built_for": "compute capability 8.0 and above"
+  },
+  {
+   "variant": "naes_t1_gpu_a_k2",
+   "build": "naes_t1_gpu_a",
+   "kernel": "naes_t1_gpu_a_k2.ptx",
+   "kernel_sha256": "1aa59c7d7688450340ab78dd0ff764a36a31896832d5fc494d5be42da3437c3b",
+   "compute_capability": "8.0",
+   "built_for": "compute capability 8.0 and above"
+  },
+  {
+   "variant": "naes_t1_gpu_b_k1",
+   "build": "naes_t1_gpu_b",
+   "kernel": "naes_t1_gpu_b_k1.ptx",
+   "kernel_sha256": "79e5eb79767878dfe75115bcbebe1b57fbafac95b27dc38835b392a868dd62e9",
+   "compute_capability": "7.5",
+   "built_for": "compute capability 7.5"
+  },
+  {
+   "variant": "naes_t1_gpu_b_k2",
+   "build": "naes_t1_gpu_b",
+   "kernel": "naes_t1_gpu_b_k2.ptx",
+   "kernel_sha256": "88fb8de85587d76029bc326ea6d7aa1fd9660e82e316cd643dcbb0e8cb5174cf",
+   "compute_capability": "6.0",
+   "built_for": "compute capability 6.0"
+  }
+ ]
+}

@@ -1,0 +1,322 @@
+{
+ "level": 4,
+ "ks": [
+  30,
+  31
+ ],
+ "workers": "<threads>",
+ "model_sha256": "3e1eb93df7cc6df06134afa5d91016d071a65ef34a4d53225f2d65cf0cc8ee5d",
+ "bmc_sha256": "aac1a580c92eb6d364182b0eeec2f1e71db4755380eab4287c49c19360ba96c9",
+ "sim_sha256": "2a1e65e601bf3bc9d8d8deae4dd592c37ee6b2e13b9a7bb7975cc110a73f511f",
+ "results": [
+  {
+   "level": 4,
+   "k": 30,
+   "P": 1,
+   "T": 30,
+   "status": "UNSAT",
+   "secs": 0.2
+  },
+  {
+   "level": 4,
+   "k": 30,
+   "P": 2,
+   "T": 28,
+   "status": "UNSAT",
+   "secs": 0.4
+  },
+  {
+   "level": 4,
+   "k": 30,
+   "P": 3,
+   "T": 26,
+   "status": "UNSAT",
+   "secs": 0.8
+  },
+  {
+   "level": 4,
+   "k": 30,
+   "P": 4,
+   "T": 24,
+   "status": "UNSAT",
+   "secs": 0.8
+  },
+  {
+   "level": 4,
+   "k": 30,
+   "P": 5,
+   "T": 22,
+   "status": "UNSAT",
+   "secs": 1.3
+  },
+  {
+   "level": 4,
+   "k": 30,
+   "P": 6,
+   "T": 20,
+   "status": "UNSAT",
+   "secs": 1.3
+  },
+  {
+   "level": 4,
+   "k": 30,
+   "P": 7,
+   "T": 18,
+   "status": "UNSAT",
+   "secs": 1.3
+  },
+  {
+   "level": 4,
+   "k": 30,
+   "P": 8,
+   "T": 16,
+   "status": "UNSAT",
+   "secs": 1.4
+  },
+  {
+   "level": 4,
+   "k": 30,
+   "P": 9,
+   "T": 14,
+   "status": "UNSAT",
+   "secs": 1.6
+  },
+  {
+   "level": 4,
+   "k": 30,
+   "P": 10,
+   "T": 12,
+   "status": "UNSAT",
+   "secs": 1.3
+  },
+  {
+   "level": 4,
+   "k": 30,
+   "P": 11,
+   "T": 10,
+   "status": "UNSAT",
+   "secs": 1.2
+  },
+  {
+   "level": 4,
+   "k": 30,
+   "P": 12,
+   "T": 8,
+   "status": "UNSAT",
+   "secs": 1.2
+  },
+  {
+   "level": 4,
+   "k": 30,
+   "P": 13,
+   "T": 6,
+   "status": "UNSAT",
+   "secs": 0.9
+  },
+  {
+   "level": 4,
+   "k": 30,
+   "P": 14,
+   "T": 4,
+   "status": "UNSAT",
+   "secs": 0.6
+  },
+  {
+   "level": 4,
+   "k": 30,
+   "P": 15,
+   "T": 2,
+   "status": "UNSAT",
+   "secs": 0.3
+  },
+  {
+   "level": 4,
+   "k": 31,
+   "P": 1,
+   "T": 31,
+   "status": "UNSAT",
+   "secs": 0.1
+  },
+  {
+   "level": 4,
+   "k": 31,
+   "P": 2,
+   "T": 29,
+   "status": "UNSAT",
+   "secs": 0.4
+  },
+  {
+   "level": 4,
+   "k": 31,
+   "P": 3,
+   "T": 27,
+   "status": "SAT",
+   "secs": 0.7,
+   "witness": [
+    "D",
+    "D",
+    "R",
+    "R",
+    "U",
+    "U",
+    "R",
+    "R",
+    "D",
+    "D",
+    "D",
+    "A5",
+    "D",
+    "D",
+    "R",
+    "D",
+    "A5",
+    "L",
+    "L",
+    "L",
+    "D",
+    "D",
+    "D",
+    "D",
+    "D",
+    "R",
+    "R",
+    "R",
+    "L",
+    "L",
+    "L"
+   ],
+   "witness_len": 31,
+   "sim_won": true
+  },
+  {
+   "level": 4,
+   "k": 31,
+   "P": 4,
+   "T": 25,
+   "status": "UNSAT",
+   "secs": 1.0
+  },
+  {
+   "level": 4,
+   "k": 31,
+   "P": 5,
+   "T": 23,
+   "status": "UNSAT",
+   "secs": 1.2
+  },
+  {
+   "level": 4,
+   "k": 31,
+   "P": 6,
+   "T": 21,
+   "status": "UNSAT",
+   "secs": 1.5
+  },
+  {
+   "level": 4,
+   "k": 31,
+   "P": 7,
+   "T": 19,
+   "status": "UNSAT",
+   "secs": 1.2
+  },
+  {
+   "level": 4,
+   "k": 31,
+   "P": 8,
+   "T": 17,
+   "status": "UNSAT",
+   "secs": 1.2
+  },
+  {
+   "level": 4,
+   "k": 31,
+   "P": 9,
+   "T": 15,
+   "status": "UNSAT",
+   "secs": 1.4
+  },
+  {
+   "level": 4,
+   "k": 31,
+   "P": 10,
+   "T": 13,
+   "status": "UNSAT",
+   "secs": 1.3
+  },
+  {
+   "level": 4,
+   "k": 31,
+   "P": 11,
+   "T": 11,
+   "status": "UNSAT",
+   "secs": 1.2
+  },
+  {
+   "level": 4,
+   "k": 31,
+   "P": 12,
+   "T": 9,
+   "status": "UNSAT",
+   "secs": 1.1
+  },
+  {
+   "level": 4,
+   "k": 31,
+   "P": 13,
+   "T": 7,
+   "status": "UNSAT",
+   "secs": 1.0
+  },
+  {
+   "level": 4,
+   "k": 31,
+   "P": 14,
+   "T": 5,
+   "status": "UNSAT",
+   "secs": 0.7
+  },
+  {
+   "level": 4,
+   "k": 31,
+   "P": 15,
+   "T": 3,
+   "status": "UNSAT",
+   "secs": 0.4
+  },
+  {
+   "level": 4,
+   "k": 31,
+   "P": 16,
+   "T": 1,
+   "status": "UNSAT",
+   "secs": 0.2
+  }
+ ],
+ "wall_s": 5.1,
+ "per_k": {
+  "30": {
+   "jobs": 15,
+   "maxP": 15,
+   "statuses": [
+    "UNSAT"
+   ],
+   "all_unsat": true,
+   "any_sat": false,
+   "max_secs": 1.6,
+   "sum_secs": 14.6
+  },
+  "31": {
+   "jobs": 16,
+   "maxP": 16,
+   "statuses": [
+    "SAT",
+    "UNSAT"
+   ],
+   "all_unsat": false,
+   "any_sat": true,
+   "max_secs": 1.5,
+   "sum_secs": 14.6
+  }
+ }
+}

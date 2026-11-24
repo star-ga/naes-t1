@@ -1,0 +1,289 @@
+fn jv_dump_str_escaped(sb: i64, addr: i64, slen: i64) -> i64 {
+    let mut i: i64 = 0;
+    while i < slen {
+        let b: i64 = jv_load_byte(addr, i);
+        if b == 34 {
+            let _ = jvsb_push(sb, 92);
+            let _ = jvsb_push(sb, 34);
+        } else {
+            if b == 92 {
+                let _ = jvsb_push(sb, 92);
+                let _ = jvsb_push(sb, 92);
+            } else {
+                if b == 10 {
+                    let _ = jvsb_push(sb, 92);
+                    let _ = jvsb_push(sb, 110);
+                } else {
+                    if b == 13 {
+                        let _ = jvsb_push(sb, 92);
+                        let _ = jvsb_push(sb, 114);
+                    } else {
+                        if b == 9 {
+                            let _ = jvsb_push(sb, 92);
+                            let _ = jvsb_push(sb, 116);
+                        } else {
+                            if b == 8 {
+                                let _ = jvsb_push(sb, 92);
+                                let _ = jvsb_push(sb, 98);
+                            } else {
+                                if b == 12 {
+                                    let _ = jvsb_push(sb, 92);
+                                    let _ = jvsb_push(sb, 102);
+                                } else {
+                                    let _ = jvsb_push(sb, b);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        i = i + 1;
+    }
+    0
+}
+
+fn jv_dump_digits(sb: i64, v: i64) -> i64 {
+    if v == 0 {
+        return jvsb_push(sb, 48);
+    }
+    if v < 0 {
+        let _ = jvsb_push(sb, 45);
+        jv_dump_pos_digits(sb, 0 - v)
+    } else {
+        jv_dump_pos_digits(sb, v)
+    }
+}
+
+fn jv_dump_pos_digits(sb: i64, v: i64) -> i64 {
+    if v == 0 {
+        return 0;
+    }
+    let _ = jv_dump_pos_digits(sb, v / 10);
+    jvsb_push(sb, 48 + (v - (v / 10) * 10))
+}
+
+fn jv_dump_indent(sb: i64, depth: i64) -> i64 {
+    let mut i: i64 = 0;
+    while i < depth {
+        let _ = jvsb_push(sb, 32);
+        let _ = jvsb_push(sb, 32);
+        i = i + 1;
+    }
+    0
+}
+
+fn jv_dump_value(sb: i64, h: i64, pretty: i64, depth: i64) -> i64 {
+    let k: i64 = jv_kind(h);
+    if k == jv_kind_null() {
+        let _ = jvsb_push(sb, 110);
+        let _ = jvsb_push(sb, 117);
+        let _ = jvsb_push(sb, 108);
+        let _ = jvsb_push(sb, 108);
+    } else {
+        if k == jv_kind_bool() {
+            if jv_bval(h) == 1 {
+                let _ = jvsb_push(sb, 116);
+                let _ = jvsb_push(sb, 114);
+                let _ = jvsb_push(sb, 117);
+                let _ = jvsb_push(sb, 101);
+            } else {
+                let _ = jvsb_push(sb, 102);
+                let _ = jvsb_push(sb, 97);
+                let _ = jvsb_push(sb, 108);
+                let _ = jvsb_push(sb, 115);
+                let _ = jvsb_push(sb, 101);
+            }
+        } else {
+            if k == jv_kind_number() {
+                if jv_n_neg(h) == 1 {
+                    let _ = jvsb_push(sb, 45);
+                }
+                // jv_dump_digits (not jv_dump_pos_digits) so an integer part of
+                // zero emits "0" rather than nothing; n_int is always >= 0 (the
+                // sign lives in n_neg), so output is unchanged for non-zero.
+                let _ = jv_dump_digits(sb, jv_n_int(h));
+                if jv_n_is_int(h) == 0 {
+                    let _ = jvsb_push(sb, 46);
+                    // dump fractional digits: n_frac with leading zeros based on n_frac_d
+                    let frac: i64 = jv_n_frac(h);
+                    let frac_d: i64 = jv_n_frac_d(h);
+                    // Count digits in frac_d - 1 to know how many digits to emit
+                    let denom_digits: i64 = jv_count_digits(frac_d);
+                    let frac_digits: i64 = jv_count_digits(frac);
+                    // Pad with leading zeros if needed
+                    let needed_zeros: i64 = denom_digits - 1 - frac_digits;
+                    let mut zi: i64 = 0;
+                    while zi < needed_zeros {
+                        let _ = jvsb_push(sb, 48);
+                        zi = zi + 1;
+                    }
+                    // frac == 0 with no padding digit emitted would give "1." —
+                    // emit a "0" so "1.0" dumps "1.0". When needed_zeros > 0 the
+                    // padding already supplied the digit(s), so "1.00" stays "1.0".
+                    if frac == 0 && needed_zeros <= 0 {
+                        let _ = jvsb_push(sb, 48);
+                    } else {
+                        let _ = jv_dump_pos_digits(sb, frac);
+                    }
+                }
+            } else {
+                if k == jv_kind_string() {
+                    let _ = jvsb_push(sb, 34);
+                    let _ = jv_dump_str_escaped(sb, jv_s_addr(h), jv_s_len(h));
+                    let _ = jvsb_push(sb, 34);
+                } else {
+                    if k == jv_kind_array() {
+                        let _ = jvsb_push(sb, 91);
+                        let alen: i64 = jv_arr_len(h);
+                        let mut ai: i64 = 0;
+                        while ai < alen {
+                            if ai > 0 {
+                                let _ = jvsb_push(sb, 44);
+                                // Compact (pretty==0) is deterministic + whitespace-free:
+                                // a given Value always dumps identical bytes. It is NOT a
+                                // canonical form (object key order = insertion order) and
+                                // MUST NOT be an evidence-hash preimage — see `encode`.
+                                if pretty == 1 {
+                                    let _ = jvsb_push(sb, 10);
+                                    let _ = jv_dump_indent(sb, depth + 1);
+                                }
+                            } else {
+                                if pretty == 1 {
+                                    if alen > 0 {
+                                        let _ = jvsb_push(sb, 10);
+                                        let _ = jv_dump_indent(sb, depth + 1);
+                                    }
+                                }
+                            }
+                            let _ = jv_dump_value(sb, jv_arr_get(h, ai), pretty, depth + 1);
+                            ai = ai + 1;
+                        }
+                        if pretty == 1 {
+                            if alen > 0 {
+                                let _ = jvsb_push(sb, 10);
+                                let _ = jv_dump_indent(sb, depth);
+                            }
+                        }
+                        let _ = jvsb_push(sb, 93);
+                    } else {
+                        // object
+                        let _ = jvsb_push(sb, 123);
+                        let tlen: i64 = jv_tbl_len(h);
+                        let tkeys: i64 = jv_tbl_keys(h);
+                        let tvals: i64 = jv_tbl_vals(h);
+                        let mut ti: i64 = 0;
+                        while ti < tlen {
+                            if ti > 0 {
+                                let _ = jvsb_push(sb, 44);
+                                // Compact (pretty==0) is CANONICAL and
+                                // whitespace-free — no space after the comma.
+                                if pretty == 1 {
+                                    let _ = jvsb_push(sb, 10);
+                                    let _ = jv_dump_indent(sb, depth + 1);
+                                }
+                            } else {
+                                if pretty == 1 {
+                                    if tlen > 0 {
+                                        let _ = jvsb_push(sb, 10);
+                                        let _ = jv_dump_indent(sb, depth + 1);
+                                    }
+                                }
+                            }
+                            let kh: i64 = __mind_load_i64(tkeys + ti * 8);
+                            let vh: i64 = __mind_load_i64(tvals + ti * 8);
+                            let _ = jvsb_push(sb, 34);
+                            let _ = jv_dump_str_escaped(sb, __mind_load_i64(kh + 0), __mind_load_i64(kh + 8));
+                            let _ = jvsb_push(sb, 34);
+                            let _ = jvsb_push(sb, 58);
+                            if pretty == 1 {
+                                let _ = jvsb_push(sb, 32);
+                            }
+                            let _ = jv_dump_value(sb, vh, pretty, depth + 1);
+                            ti = ti + 1;
+                        }
+                        if pretty == 1 {
+                            if tlen > 0 {
+                                let _ = jvsb_push(sb, 10);
+                                let _ = jv_dump_indent(sb, depth);
+                            }
+                        }
+                        let _ = jvsb_push(sb, 125);
+                    }
+                }
+            }
+        }
+    }
+    0
+}
+
+fn jv_count_digits(v: i64) -> i64 {
+    if v == 0 {
+        return 1;
+    }
+    let mut n: i64 = 0;
+    let mut x: i64 = v;
+    while x > 0 {
+        x = x / 10;
+        n = n + 1;
+    }
+    n
+}
+
+// jv_dump -- serialise a JsonValue to JSON text.
+// Returns a String heap record handle [addr | len | cap].
+// pretty=1 produces indented output; pretty=0 produces compact output.
+pub fn jv_dump(h: i64, pretty: i64) -> i64 {
+    let sb: i64 = jvsb_new();
+    let _ = jv_dump_value(sb, h, pretty, 0);
+    sb
+}
+
+// --- Public get/get_path API ---
+
+// jv_get -- look up a key in a JSON object.
+// key_addr: i64 address of UTF-8 key bytes; key_len: byte count.
+// Returns JsonValue handle or 0 if not found or not an object.
+pub fn jv_get(h: i64, key_addr: i64, key_len: i64) -> i64 {
+    if jv_kind(h) == jv_kind_object() {
+        jv_tbl_get_raw(h, key_addr, key_len)
+    } else {
+        0
+    }
+}
+
+// jv_get_path -- dotted-path lookup (e.g. "a.b.c").
+// path_addr: i64 address of UTF-8 path bytes; path_len: byte count.
+// Returns JsonValue handle or 0 if not found.
+pub fn jv_get_path(h: i64, path_addr: i64, path_len: i64) -> i64 {
+    if path_len == 0 {
+        return h;
+    }
+    let mut cur: i64 = h;
+    let mut seg_lo: i64 = 0;
+    let mut pos: i64 = 0;
+    let mut running: i64 = 1;
+    while running == 1 {
+        if pos >= path_len {
+            let seg_len: i64 = path_len - seg_lo;
+            cur = jv_get(cur, path_addr + seg_lo, seg_len);
+            running = 0;
+        } else {
+            if (jv_load_byte(path_addr, pos)) == 46 {
+                let seg_len: i64 = pos - seg_lo;
+                let child: i64 = jv_get(cur, path_addr + seg_lo, seg_len);
+                if child == 0 {
+                    cur = 0;
+                    running = 0;
+                } else {
+                    cur = child;
+                    seg_lo = pos + 1;
+                    pos = pos + 1;
+                }
+            } else {
+                pos = pos + 1;
+            }
+        }
+    }
+    cur
+}

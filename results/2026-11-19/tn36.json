@@ -1,0 +1,40 @@
+{
+ "total": {
+  "levels": 7,
+  "ref_levels": 7,
+  "actions": 86,
+  "ref_actions": 86,
+  "games_full": 1,
+  "games": 1,
+  "perturb": 0
+ },
+ "games": [
+  {
+   "game": "tn36-ef4dde99",
+   "levels": 7,
+   "ref_levels": 7,
+   "actions": 86,
+   "ref_actions": 86,
+   "per_level": [
+    8,
+    9,
+    9,
+    12,
+    16,
+    16,
+    16
+   ],
+   "ref_per_level": [
+    7,
+    9,
+    9,
+    12,
+    16,
+    16,
+    16
+   ],
+   "resets": 1,
+   "over_ref_levels": []
+  }
+ ]
+}

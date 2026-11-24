@@ -1,0 +1,10 @@
+endpoint: GET https://three.arcprize.org/api/games
+auth: request header X-Api-Key (value not stored)
+accept: application/json
+retrieval_utc: 2026-11-06T23:09:53Z
+response_shape: list length 25
+field_names: baseline_actions, game_id, tags, title
+baseline field: baseline_actions, a list of integers, one per level, index 0 is level 1
+per-game check: GET https://three.arcprize.org/api/games/sb26
+per-game retrieval_utc: 2026-11-06T23:09:54Z
+per-game field_names: baseline_actions, default_fps, game_id, tags, title

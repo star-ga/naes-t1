@@ -1,0 +1,115 @@
+{
+  "artifact_sha256": [
+    {
+      "kind": "safe_statement_count_extract",
+      "sha256": "151af5dcd376269105de6783bd9655d2804c759cf957207dee381b50586adb09"
+    },
+    {
+      "kind": "authority_ledger_label",
+      "sha256": "a745c964f1a298d5535c036cdb253f534485aece02552dbd5f35ce928322449b"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "1fb34bc00e9d0e00153f88741352a260d39f7837c753c46fd6e2c3bc77196d6d"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "997d21b5ceb27e5b91c5f55eec0a7f08917879f479de7bbf4cc07d18cd48f251"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "5bdfadaf67099b99d1c40e025d6dce044c22658fc49353919299df2d16921556"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "67ed3af22a704571ebb04ac7a817aa632fb67ed903f52b1c8852cec74d3cba3f"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "ec6d226c24786e95755f1e94e1f4b603b34a7d40631307b18e55c6b21e96b392"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "ff9922a581e23c6c2daddb4e1e7ceed92d22a3d5efbcaebee03033ad8d6bc371"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "e6ee425dd836329d4e6926129988a86a65bfc5b7d08f52741232ff30d795ea3c"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "f035327e3df51ddec49d8983a468dc1d79d0c900f18e7a172aab44ccb5becf53"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "17b999e1c261b3945777ff7657829aee2be4e1bd3e003ff3f75e13ee5c287098"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "b57511aa6b6d264587f7388bb8db8a20d660d3b3d5ab906308a398d2f60f3032"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "82b23706113448f184757db433305af611e07eba462e8cbac592ebef07e587fa"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "aa80105127c75d8c543b46626376f7f2021144132941cfd6770df5cd032d1c4c"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "bec8d5179284652adb803dcf2b5b29c764c7af2ec51b899890f4478d73b27f0a"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "0eed0c391d4a08f3132a9d72b54b04934ad3e589f9a1f438f6aabab1e0776b58"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "b19dc0384ca6f363ccff71070eee081d70ebbe706289195768bc4dfea36bab95"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "91f9a111e2a5062000e47ef59fa538118d436505632e0c4712f2056770f30f86"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "5c4ae3900347170aafc6cf0a286f50edde3f48c99ef6ef603dfe265b933952d6"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "2240e5e37a71f6b22b6efbcf2f0c9d54661db1dd30d05865aee78e9a3d46221c"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "c22af81578bdd41c80134a8dfdd8c5864a49e9ecf1e0b035af97c563953017e0"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "c322df46722fddc5b276ebe866d66330ccf7aa33852e66398d82a493357ddbfd"
+    }
+  ],
+  "floor": 21,
+  "game": "tu93",
+  "game_id": "tu93-0768757b",
+  "game_levels": 9,
+  "level": 8,
+  "lower_bound": {
+    "kind": "move_ordering_uniform_cost+lemma",
+    "statement": "Complete uniform-cost or zero-heuristic A* search exhausts every cost below 21 under the recorded action-equivalence lemma.",
+    "value": 21
+  },
+  "naes_t1_actions": 21,
+  "proof_class": "Exhaustive search",
+  "proof_detail": "move_ordering_uniform_cost+lemma",
+  "schema_version": 1,
+  "source_certificate_sha256": "a9b8d9632388a68016d4992d56652c6fdb333c091a6562a40ba64da83812344f",
+  "status": "proven",
+  "upper_bound": {
+    "expected_levels_completed": 8,
+    "length": 21,
+    "opening_reset_counted": false,
+    "route": "4 4 1 1 4 4 3 3 3 2 2 4 1 1 4 4 1 1 1 3 3",
+    "seed": 0
+  }
+}

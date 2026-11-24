@@ -1,0 +1,13 @@
+IDA bound=10 result=NO_WIN_WITHIN_BOUND
+IDA depth 0: nodes=1 pruned_by_h=1 children_generated=0 tt_hits=0
+IDA depth 1: nodes=0 pruned_by_h=0 children_generated=0 tt_hits=0
+IDA depth 2: nodes=0 pruned_by_h=0 children_generated=0 tt_hits=0
+IDA depth 3: nodes=0 pruned_by_h=0 children_generated=0 tt_hits=0
+IDA depth 4: nodes=0 pruned_by_h=0 children_generated=0 tt_hits=0
+IDA depth 5: nodes=0 pruned_by_h=0 children_generated=0 tt_hits=0
+IDA depth 6: nodes=0 pruned_by_h=0 children_generated=0 tt_hits=0
+IDA depth 7: nodes=0 pruned_by_h=0 children_generated=0 tt_hits=0
+IDA depth 8: nodes=0 pruned_by_h=0 children_generated=0 tt_hits=0
+IDA depth 9: nodes=0 pruned_by_h=0 children_generated=0 tt_hits=0
+IDA depth 10: nodes=0 pruned_by_h=0 children_generated=0 tt_hits=0
+IDA sec=0

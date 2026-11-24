@@ -1,0 +1,44 @@
+{
+ "total": {
+  "levels": 9,
+  "ref_levels": 9,
+  "actions": 62,
+  "ref_actions": 62,
+  "games_full": 1,
+  "games": 1,
+  "perturb": 0
+ },
+ "games": [
+  {
+   "game": "su15-1944f8ab",
+   "levels": 9,
+   "ref_levels": 9,
+   "actions": 62,
+   "ref_actions": 62,
+   "per_level": [
+    8,
+    8,
+    11,
+    9,
+    5,
+    4,
+    5,
+    5,
+    7
+   ],
+   "ref_per_level": [
+    7,
+    8,
+    11,
+    9,
+    5,
+    4,
+    5,
+    5,
+    7
+   ],
+   "resets": 1,
+   "over_ref_levels": []
+  }
+ ]
+}

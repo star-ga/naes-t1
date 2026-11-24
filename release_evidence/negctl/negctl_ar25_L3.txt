@@ -1,0 +1,22 @@
+command:
+cd <work> && PROOF_SOURCE=<proof-checkout> CERT_DIR=<certificate-dir> OPERATION_MODE=offline nice -n 15 timeout 420 <interp> <path>/neg_m_ar25_l3.py > <out>/m.txt 2> <out>/m.err; echo RC:$?
+
+rc:
+0
+
+wrapper line:
+RC:0
+
+note:
+Stdout begins with two scorecard lines, copied below, then one game-load line that names the proof checkout. That load line is omitted. The JSON result line is copied unchanged. Stderr repeats the scorecard and the load line; the checkout path in the load line below is replaced by <proof-checkout>. The two replay-backend lines are unchanged. The second replay-backend line is the axis-image trial, which rebuilds the level-3 start after the shapes are snapshotted.
+
+stdout:
+INFO:arc_agi.scorecard:Initialized ScorecardManager with idle_for=0:15:00 and max_open_for=3 days, 0:00:00
+2026-11-06 15:20:26 | INFO | Created new scorecard: 407dd34f-b643-469e-8e0b-0c14a894aefe
+{"axis_counterexample": {"action": 1, "axis_shift": 1, "axis_y_after": 15, "axis_y_before": 16, "cell": [4, 7], "image_shift": 2, "image_y_after": 23, "image_y_before": 25, "shape": "0027crpzfdutil"}, "certified_min_l1_cost": 40, "checker": "ar25_endpoint_enum.enumerate_level cost model (pinned enumerator body)", "class": "M", "configs_enumerated": 2449440, "first_counterexample": {"ax": null, "ay": 9, "certified_l1_cost": 40, "configs_seen_through_this_axis": 1166400, "planted_chebyshev_cost": 28, "s0": [11, 14], "s1": [3, 14]}, "levels_completed_before_L3": 2, "planted_axis_lemma": "a one-cell reflection-axis move shifts every reflected image by at most one cell", "planted_lemma": "one action may change both coordinates, so Chebyshev distance lower-bounds the move cost", "recorded_floor": 40, "rejected": true, "row": "ar25_L3", "winning_configs": 1}
+
+stderr:
+INFO:arc_agi.base:Created new scorecard: 407dd34f-b643-469e-8e0b-0c14a894aefe
+INFO:arc_agi.base:Successfully loaded game class Ar25 from <proof-checkout>/environment_files/ar25/0c556536/ar25.py
+[replay-backend] cls=Ar25 kwargs={} deterministic=yes deepcopy_cache=on
+[replay-backend] cls=Ar25 kwargs={} deterministic=yes deepcopy_cache=on

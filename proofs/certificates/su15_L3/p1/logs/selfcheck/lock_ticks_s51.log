@@ -1,0 +1,3 @@
+CMD python lock_ticks.py 60 51
+LOCK_TICKS states 60 clicks 203520 mismatch 0 engine_wins_by_first_winning_tick {1: 455, 2: 295, 3: 9, 4: 6} sec 109
+rc=0

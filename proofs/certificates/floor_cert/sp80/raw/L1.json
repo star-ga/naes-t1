@@ -1,0 +1,21 @@
+{
+  "level": 1,
+  "method": "official-engine spill of every reachable cell at distance <= 2",
+  "cells": 108,
+  "spill_tested": 12,
+  "max_dist_tested": 2,
+  "wins": [],
+  "seconds": 0.028,
+  "pixel_sweep": {
+    "pixels": 4096,
+    "effects": {"plzwjbfyfli-5": 4096},
+    "position_change_count": 0
+  },
+  "recorded_route": {"length": 4, "win_at": 4, "state": "NOT_FINISHED", "score": 1},
+  "recorded_prefix": {"length": 3, "win_at": null, "state": "NOT_FINISHED", "score": 0},
+  "prespill_ticks": 17,
+  "prespill_sim_equals_engine": true,
+  "origin_engine": {"state": "NOT_FINISHED", "score": 0, "win": false},
+  "raster_mismatches": 0,
+  "note": "A non-final level wins by raising the score. State stays NOT_FINISHED."
+}

@@ -1,0 +1,3 @@
+CMD python undo_check.py 31 1500 24 0.35
+UNDO_CHECK seed 31 walks 1500 actions 35898 undos 12510 actions_at_depth>=10 22398 max_stack 20 undo_to_nonvisited 0 undo_model_mismatch 0 invariant_dmin<=t_violations 0 sim_mismatch 0 sec 8
+rc=0

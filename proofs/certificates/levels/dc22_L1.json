@@ -1,0 +1,59 @@
+{
+  "artifact_sha256": [
+    {
+      "kind": "safe_statement_count_extract",
+      "sha256": "1e4d82cacfd1098810e8d36514b09ae722d0a13ef3bf3fa719e7b8f3fe562add"
+    },
+    {
+      "kind": "authority_ledger_label",
+      "sha256": "a06e16d10fba00a29b511894c73b160ac0ad958933c3785a77079893be5cae61"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "b359df68bdec0e2b9c1ceda4d1ea336872576a7d95af6affd65035153372d0f9"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "05ff39156b7164ca7e2a9dda72d48f66749aeb468bcda5ccfc60c04746e842b7"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "5bdfadaf67099b99d1c40e025d6dce044c22658fc49353919299df2d16921556"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "0490e4bda43a70ae30a7acfb59b3a276de570abef65e0cde8d69aa157e66615a"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "664423d65ee6acaf7f93a81a324fabc6ba66ac7e887bdf361cbce5dfa4c9dc31"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "d27965486ca9634698fc63aee388bbeac39c2afba95074b733b278b809fcbcd9"
+    }
+  ],
+  "floor": 20,
+  "game": "dc22",
+  "game_id": "dc22-fdcac232",
+  "game_levels": 6,
+  "level": 1,
+  "lower_bound": {
+    "kind": "complete_state_ucs_structural_alphabet",
+    "statement": "Complete-state uniform-cost search over the recorded structural action alphabet closes every route cost below 20. The source record supplies the state-key and no-op reduction obligations. The proof complete_state_ucs_structural_alphabet establishes lower bound 20, equal to the floor.",
+    "value": 20
+  },
+  "naes_t1_actions": 20,
+  "proof_class": "Exhaustive search",
+  "proof_detail": "complete_state_ucs_structural_alphabet",
+  "schema_version": 1,
+  "source_certificate_sha256": "50fc4dd25ed62ecd58178bed53930bd80dd4493832dc5af90df5b5f0d947553e",
+  "status": "proven",
+  "upper_bound": {
+    "expected_levels_completed": 1,
+    "length": 20,
+    "opening_reset_counted": false,
+    "route": "1 6@48,36 1 1 1 4 4 4 4 4 1 6@48,19 1 1 1 6@48,36 1 4 4 1",
+    "seed": 0
+  }
+}

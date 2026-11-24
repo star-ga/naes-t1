@@ -1,0 +1,319 @@
+ARC Prize 2026 has finished.
+Thank you to everybody who participated. Results will be announced December 4, 2026.
+Stay up to date here
+.
+View brand kit
+Copy logo image
+Copy logo SVG
+<word withheld>
+Foundation
+Donate
+About
+History
+Jobs
+Leaderboards
+Verified
+Community
+ARC-AGI-3 Competition
+ARC-AGI-2 Competition
+Benchmark
+ARC-AGI Series
+ARC-AGI-1
+ARC-AGI-2
+ARC-AGI-3
+All Tasks
+Prize
+ARC Prize 2026
+ARC Prize 2025
+ARC Prize 2024
+All Competitions
+Research
+Start Here
+Partners
+Platform
+Content
+Blog
+Events
+Community
+Resources
+Foundation
+Leaderboards
+Benchmark
+Prize
+Research
+Content
+Donate
+About
+History
+Jobs
+Verified
+Community
+ARC-AGI-3 Competition
+ARC-AGI-2 Competition
+ARC-AGI Series
+ARC-AGI-1
+ARC-AGI-2
+ARC-AGI-3
+All Tasks
+ARC Prize 2026
+ARC Prize 2025
+ARC Prize 2024
+All Competitions
+Start Here
+Partners
+Platform
+Blog
+Events
+Community
+Resources
+‹ Scorecards
+46dc8e53-0718-4182-84a9-88ffe31e282e
+Published
+11/19/2026, 6:36:08 AM
+Score
+100.00
+%
+Tags
+STARGA
+MIND
+NAES-T1
+agent
+Levels
+183
+/
+183
+Environments
+25
+/
+25
+Total Actions
+5499
+Environments
+Environment
+Score
+Levels
+State
+Actions
+Resets
+Replays
+ar25-0c556536
+100.00
+8
+/ 8
+WIN
+253
+0
+bp35-0a0ad940
+100.00
+9
+/ 9
+WIN
+322
+0
+cd82-fb555c5d
+100.00
+6
+/ 6
+WIN
+69
+0
+cn04-2fe56bfb
+100.00
+6
+/ 6
+WIN
+173
+0
+dc22-fdcac232
+100.00
+6
+/ 6
+WIN
+416
+0
+ft09-0d8bbf25
+100.00
+6
+/ 6
+WIN
+75
+0
+g50t-5849a774
+100.00
+7
+/ 7
+WIN
+274
+0
+ka59-38d34dbb
+100.00
+7
+/ 7
+WIN
+242
+0
+lf52-271a04aa
+100.00
+10
+/ 10
+WIN
+641
+0
+lp85-305b61c3
+100.00
+8
+/ 8
+WIN
+79
+0
+ls20-9607627b
+100.00
+7
+/ 7
+WIN
+309
+0
+m0r0-492f87ba
+100.00
+6
+/ 6
+WIN
+179
+0
+r11l-495a7899
+100.00
+6
+/ 6
+WIN
+57
+0
+re86-8af5384d
+100.00
+8
+/ 8
+WIN
+507
+0
+s5i5-18d95033
+100.00
+8
+/ 8
+WIN
+240
+0
+sb26-7fbdac44
+100.00
+8
+/ 8
+WIN
+124
+0
+sc25-635fd71a
+100.00
+6
+/ 6
+WIN
+121
+0
+sk48-d8078629
+100.00
+8
+/ 8
+WIN
+213
+0
+sp80-589a99af
+100.00
+6
+/ 6
+WIN
+86
+0
+su15-1944f8ab
+100.00
+9
+/ 9
+WIN
+61
+0
+tn36-ef4dde99
+100.00
+7
+/ 7
+WIN
+85
+0
+tr87-cd924810
+100.00
+6
+/ 6
+WIN
+118
+0
+tu93-0768757b
+100.00
+9
+/ 9
+WIN
+185
+0
+vc33-5430563c
+100.00
+7
+/ 7
+WIN
+167
+0
+wa30-ee6fef47
+100.00
+9
+/ 9
+WIN
+503
+0
+Tags
+Tag
+Score
+Levels Completed
+Actions
+Environments
+click
+100.00
+55
+1330
+7
+keyboard
+100.00
+29
+1204
+4
+keyboard_click
+100.00
+93
+2890
+13
+©
+2026
+ARC Prize, Inc.
+Privacy
+Terms
+Testing Policy
+Newsletter
+<word withheld>
+Twitter
+YouTube
+GitHub
+©
+2026
+ARC Prize, Inc.
+Privacy
+Terms
+Testing Policy
+Future ARC Prize Competitions
+Sign up to hear about future ARC Prize competitions, including launch announcements and participation details.
+Get Updates
+No spam. You can unsubscribe at any time.
+ARC Prize: Newsletter
+Subscribe to get started and receive official contest updates and news.
+Subscribe
+No spam. You can unsubscribe at any time.

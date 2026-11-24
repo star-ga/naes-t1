@@ -1,0 +1,13 @@
+{
+ "macro": "archivedate",
+ "retrieval_utc": "2026-11-06T23:08:59Z",
+ "value": "archived on 2026-11-06 with the SHA-256 of every page",
+ "summary": "archive/SUMMARY.md",
+ "manifest": "archive/SHA256SUMS",
+ "manifest_sha256": "926d2c5dd2443b09acfe6935b5d7df725bf672eb576a3a70b9aaf1ce275cdf2c",
+ "leaderboard_2026_11_04_sha256": "5323be99e69f83ef4eef9699a7b2edb6920ceddf49c5edcc470a8d9e193cc9a8",
+ "leaderboard_live_sha256": "9a48553557b4bf996cee8203828ab860c2b6c98632369ec2b3011419768fb206",
+ "scorecard_api_json_ok": "14/14",
+ "cited_row_fields_name_score_cost_date": "UNCHANGED",
+ "files": 19
+}

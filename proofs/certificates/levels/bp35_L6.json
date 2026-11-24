@@ -1,0 +1,51 @@
+{
+  "artifact_sha256": [
+    {
+      "kind": "safe_statement_count_extract",
+      "sha256": "98d4ed2cf17043b064ede02a66793d15bcf6c44272547507dbe7bd91283c393f"
+    },
+    {
+      "kind": "authority_ledger_label",
+      "sha256": "f9bbb436cc4caeb471392dbef3bc788609f3585e543c7c92394e67b479fdb83b"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "5802f561c14b24ad19d56e293a2c0b54d5754a6889acefefafe196d195db6239"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "6903c02e592aab4e7125b16f968708678d9ff96d32476699d47fb2a02991ea33"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "adce23fe7bb1a8cf92cd615afd47f84bdd998a5cd4508eac512339eee5552f4a"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "07678f5edfe91364d4a92368e4692346ff36a311ffe5941952935610dbeed0df"
+    }
+  ],
+  "floor": 41,
+  "game": "bp35",
+  "game_id": "bp35-0a0ad940",
+  "game_levels": 9,
+  "level": 6,
+  "lower_bound": {
+    "kind": "native_model_astar_complete_api_alphabet+lemma",
+    "statement": "A* with reopening and the recorded admissible heuristic terminates with minimum open f at least 41.",
+    "value": 41
+  },
+  "naes_t1_actions": 41,
+  "proof_class": "A*",
+  "proof_detail": "native_model_astar_complete_api_alphabet+lemma",
+  "schema_version": 1,
+  "source_certificate_sha256": "7fefa9e491647497fc3d0c9732e3753cbfafbc75cad7f5dee25483d0ef3257e6",
+  "status": "proven",
+  "upper_bound": {
+    "expected_levels_completed": 6,
+    "length": 41,
+    "opening_reset_counted": false,
+    "route": "4 4 4 4 6@45,51 6@39,33 4 6@27,29 3 3 4 4 3 3 6@33,33 3 3 4 4 4 6@51,3 3 3 6@27,59 3 6@39,35 4 4 3 3 6@39,53 4 4 4 4 3 3 3 3 3 3",
+    "seed": 0
+  }
+}

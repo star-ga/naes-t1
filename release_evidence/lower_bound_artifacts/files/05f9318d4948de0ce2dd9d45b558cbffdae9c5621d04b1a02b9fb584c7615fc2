@@ -1,0 +1,151 @@
+{
+ "n_levels_old": 6,
+ "n_levels_new": 6,
+ "levels": [
+  {
+   "level": 1,
+   "verdict": "ORDER_ONLY",
+   "n_sprites": [
+    5,
+    5
+   ],
+   "diffs": [],
+   "order_changed_layers": [
+    0
+   ],
+   "first_order_difference_index": 0
+  },
+  {
+   "level": 2,
+   "verdict": "ORDER_ONLY",
+   "n_sprites": [
+    11,
+    11
+   ],
+   "diffs": [],
+   "order_changed_layers": [
+    0,
+    1
+   ],
+   "first_order_difference_index": 0
+  },
+  {
+   "level": 3,
+   "verdict": "ORDER_ONLY",
+   "n_sprites": [
+    12,
+    12
+   ],
+   "diffs": [],
+   "order_changed_layers": [
+    0,
+    1
+   ],
+   "first_order_difference_index": 0
+  },
+  {
+   "level": 4,
+   "verdict": "CHANGED",
+   "n_sprites": [
+    18,
+    24
+   ],
+   "diffs": [
+    "geometry: 0 sprites only-old [], 6 only-new [(9, 14, 0), (52, 51, 0), (11, 26, 0), (50, 25, 0), (17, 9, 0), (11, 30, 0)]"
+   ]
+  },
+  {
+   "level": 5,
+   "verdict": "CHANGED",
+   "n_sprites": [
+    14,
+    19
+   ],
+   "diffs": [
+    "geometry: 0 sprites only-old [], 5 only-new [(54, 15, 0), (12, 12, 0), (50, 25, 0), (54, 19, 0), (12, 16, 0)]"
+   ]
+  },
+  {
+   "level": 6,
+   "verdict": "CHANGED",
+   "n_sprites": [
+    19,
+    21
+   ],
+   "diffs": [
+    "geometry: 0 sprites only-old [], 2 only-new [(26, 28, 0), (26, 32, 0)]"
+   ]
+  }
+ ],
+ "string_map_conflicts": {},
+ "string_map": {
+  "bdkaz-kpaac": "roefwu-pumlzd",
+  "bdkazLeg-kpaac": "roefwulewcui-pumlzd",
+  "sys_click": "sys_click",
+  "bvzgd-Level1": "wakneh-Level1",
+  "kzeze-kpaac": "flkdtg-pumlzd",
+  "bdkaz-qniqj": "roefwu-orrqlj",
+  "bdkazLeg-qniqj": "roefwulewcui-orrqlj",
+  "kzeze-qniqj": "flkdtg-orrqlj",
+  "qtwnv-Level3": "defgjl-Level3",
+  "bdkaz-zjgrp": "roefwu-grhcew",
+  "bdkazLeg-zjgrp": "roefwulewcui-grhcew",
+  "bvzgd-Level5": "wakneh-Level5",
+  "kzeze-zjgrp": "flkdtg-grhcew",
+  "qtwnv-Level5": "defgjl-Level5",
+  "bdkaz-pgknepyzud": "roefwu-blxuubrengnt",
+  "bdkaz-qniqjgigctpgknekpaac": "roefwu-orrqljliwocqblxuubpumlzd",
+  "bdkaz-ttyiazjgrp": "roefwu-yeogyfgrhcew",
+  "bdkazLeg-pgknepyzud": "roefwulewcui-blxuubrengnt",
+  "bdkazLeg-qniqjgigctpgknekpaac": "roefwulewcui-orrqljliwocqblxuubpumlzd",
+  "bdkazLeg-ttyiazjgrp": "roefwulewcui-yeogyfgrhcew",
+  "bvzgd-Level7": "wakneh-Level7",
+  "kzeze-anqcf": "flkdtg-dirwzt",
+  "kzeze-pgknepyzud": "flkdtg-blxuubrengnt",
+  "kzeze-qniqjgigctpgknekpaac": "flkdtg-orrqljliwocqblxuubpumlzd",
+  "kzeze-ttyiazjgrp": "flkdtg-yeogyfgrhcew",
+  "qtwnv-Level7": "defgjl-Level7",
+  "txxvz-anqcf": "hawffu-dirwzt",
+  "bdkaz-yukft": "roefwu-whkxtx",
+  "bdkaz-yukft-2": "roefwu-whkxtx-2",
+  "bdkazLeg-yukft": "roefwulewcui-whkxtx",
+  "bdkazLeg-yukft-2": "roefwulewcui-whkxtx-2",
+  "xigcb-txxvzpgkne": "puukul-hawffublxuub",
+  "xigcb-txxvzpyzud": "puukul-hawffurengnt",
+  "xigcb-txxvzttyia": "puukul-hawffuyeogyf",
+  "xigcb-txxvzzjgrp": "puukul-hawffugrhcew",
+  "kzeze-kpaaczjgrppgkne": "flkdtg-pumlzdgrhcewblxuub",
+  "kzeze-ttyiaPinkpgkne": "flkdtg-yeogyfpiocnkblxuub",
+  "xigcb-gigctpgknezzepw": "puukul-liwocqblxuubcoffvq",
+  "xigcb-kpaaczzepw": "puukul-pumlzdcoffvq",
+  "xigcb-Maroon": "puukul-madctp",
+  "xigcb-pgknezzepw": "puukul-blxuubcoffvq",
+  "xigcb-qniqj": "puukul-orrqlj",
+  "xigcb-ttyiazzepw": "puukul-yeogyfcoffvq",
+  "xigcb-txxvzpgkneBottom": "puukul-hawffublxuubbonbid",
+  "xigcb-txxvzPink": "puukul-hawffupiocnk",
+  "xigcb-zjgrp": "puukul-grhcew",
+  ".": ".",
+  "kignw": "roduyfsmiznvg",
+  "mdpcc": "lecfirgqbwunn",
+  "x": "x",
+  "y": "y",
+  "r11l": "r11l",
+  "bdkaz-": "roefwu-",
+  "bdkazLeg-": "roefwulewcui-",
+  "kzeze-": "flkdtg-",
+  "xwdrv": "gosubdcyegamj",
+  "bvzgd-": "wakneh-",
+  "miwyy": "flgzyjcqcspeg",
+  "qnpnk": "flgdcqnkdomzf",
+  "rftjv": "fljpbsiftilwa",
+  "wugiv": "ongkreqtjqjqfq",
+  "meydp": "fssfabihmfrnw",
+  "xigcb-": "puukul-",
+  "mpjrv-bdkaz": "flvobx-roefwu",
+  "mpjrv-kzeze": "flvobx-flkdtg",
+  "qtwnv": "defgjl",
+  "anqcf": "dirwzt"
+ },
+ "non_injective": {}
+}

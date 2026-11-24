@@ -1,0 +1,38 @@
+{
+ "total": {
+  "levels": 6,
+  "ref_levels": 6,
+  "actions": 122,
+  "ref_actions": 122,
+  "games_full": 1,
+  "games": 1,
+  "perturb": 0
+ },
+ "games": [
+  {
+   "game": "sc25-635fd71a",
+   "levels": 6,
+   "ref_levels": 6,
+   "actions": 122,
+   "ref_actions": 122,
+   "per_level": [
+    14,
+    5,
+    11,
+    21,
+    36,
+    35
+   ],
+   "ref_per_level": [
+    13,
+    5,
+    11,
+    21,
+    36,
+    35
+   ],
+   "resets": 1,
+   "over_ref_levels": []
+  }
+ ]
+}

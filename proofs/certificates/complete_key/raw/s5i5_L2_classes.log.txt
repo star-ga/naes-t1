@@ -1,0 +1,27 @@
+LAYER level=2 depth=1 frontier=6 visited=7 edges=20 t=0.3
+LAYER level=2 depth=2 frontier=10 visited=17 edges=140 t=1.7
+LAYER level=2 depth=3 frontier=20 visited=37 edges=340 t=3.5
+LAYER level=2 depth=4 frontier=35 visited=72 edges=740 t=7.3
+LAYER level=2 depth=5 frontier=56 visited=128 edges=1440 t=15.1
+LAYER level=2 depth=6 frontier=84 visited=212 edges=2560 t=26.5
+LAYER level=2 depth=7 frontier=120 visited=332 edges=4240 t=41.9
+LAYER level=2 depth=8 frontier=165 visited=497 edges=6640 t=69.6
+LAYER level=2 depth=9 frontier=209 visited=706 edges=9940 t=112.7
+LAYER level=2 depth=10 frontier=245 visited=951 edges=14120 t=167.3
+LAYER level=2 depth=11 frontier=271 visited=1222 edges=19020 t=223.6
+LAYER level=2 depth=12 frontier=287 visited=1509 edges=24440 t=269.7
+LAYER level=2 depth=13 frontier=299 visited=1808 edges=30180 t=336.9
+LAYER level=2 depth=14 frontier=306 visited=2114 edges=36160 t=408.8
+LAYER level=2 depth=15 frontier=306 visited=2420 edges=42280 t=469.7
+LAYER level=2 depth=16 frontier=305 visited=2725 edges=48400 t=512.5
+LAYER level=2 depth=17 frontier=295 visited=3020 edges=54500 t=548.2
+LAYER level=2 depth=18 frontier=289 visited=3309 edges=60400 t=582.3
+LAYER level=2 depth=19 frontier=273 visited=3582 edges=66180 t=614.5
+LAYER level=2 depth=20 frontier=262 visited=3844 edges=71640 t=646.2
+LAYER level=2 depth=21 frontier=239 visited=4083 edges=76880 t=677.9
+LAYER level=2 depth=22 frontier=221 visited=4304 edges=81660 t=709.4
+LAYER level=2 depth=23 frontier=205 visited=4509 edges=86080 t=737.6
+LAYER level=2 depth=24 frontier=193 visited=4702 edges=90180 t=763.1
+LAYER level=2 depth=25 frontier=190 visited=4892 edges=94040 t=789.1
+RESULT game=s5i5 level=2 verdict=CONFIRMED states=4892 edges=94040 seconds=789.266
+rc=0

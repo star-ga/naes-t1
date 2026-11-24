@@ -1,0 +1,71 @@
+{
+  "artifact_sha256": [
+    {
+      "kind": "safe_statement_count_extract",
+      "sha256": "99821e6dcc05eb449a9dacdfb7a196812bf9f5ba087635de582cdb411990d19e"
+    },
+    {
+      "kind": "authority_ledger_label",
+      "sha256": "c8195b3f0ca5fe6ecf14a199ca36bfa8b53c805f600b9e5137261c86d209afb4"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "4b23dfd6c53febccdb380afdbbb1dcaf274131a129d320d3f2e7e5ed784ffc53"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "ff6bf7bebdddee5be656f2d2a72bfc6fe1bbac55eca63ebe966cb76da894f90c"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "d2e9e0fa234ded89a6b2414aa8da0863105a336399ace245ed77cb8a14ea2f2e"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "aa7f9d0b7cc5d8e98673f6a79ba112559bcdbe8d22e097507fed1f2d530eb8cd"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "17c7ebb4c56e8e0590ed89c98569ceffb1dff8583bf5c11126bc9897f056f58c"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "a8c96e2b7a98d8e5d1429dff96808c1d3ee4762fce1b2471d25bd5f9ba89b9f7"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "8fd0caa9a7b11d5d2b15fb9bab9e25d1573a165b02729340fa73f5a28c329e56"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "aa94865106279297eeeee2dbb705adf447a140282cc6ec9b4d4afb1943e20b0d"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "eb2ea959aa0ed3f9df98f3529f21a7950d432370edd1ae74f0c324384dc83e4d"
+    }
+  ],
+  "floor": 6,
+  "game": "cd82",
+  "game_id": "cd82-fb555c5d",
+  "game_levels": 6,
+  "level": 2,
+  "lower_bound": {
+    "kind": "complete_prefix_tree_licensed_alphabet",
+    "statement": "All 15 root action-class branches close the prefix tree through action 5 without completing the target level: 800129 child edges, with no state deduplication or heuristic pruning.",
+    "value": 6
+  },
+  "naes_t1_actions": 6,
+  "proof_class": "Exhaustive search",
+  "proof_detail": "complete_prefix_tree_licensed_alphabet",
+  "schema_version": 1,
+  "source_certificate_sha256": "1598fbf3127477bab60ff8859882de3d48f6534b98ed854966aa684c1175beb7",
+  "status": "proven",
+  "upper_bound": {
+    "expected_levels_completed": 2,
+    "length": 6,
+    "opening_reset_counted": false,
+    "route": "5 4 2 2 6@46,4 5",
+    "seed": 0
+  }
+}

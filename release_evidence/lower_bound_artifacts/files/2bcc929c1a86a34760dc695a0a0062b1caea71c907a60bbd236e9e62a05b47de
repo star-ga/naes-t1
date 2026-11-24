@@ -1,0 +1,6 @@
+[<label withheld>] starts loaded from cache
+2026-09-21 22:36:52 | INFO | Created new scorecard: abecb80b-cce1-4d53-93d0-5e3d2fd352db
+INFO:arc_agi.base:Created new scorecard: abecb80b-cce1-4d53-93d0-5e3d2fd352db
+2026-09-21 22:36:52 | INFO | Successfully loaded game class Tn36 from <path>
+INFO:arc_agi.base:Successfully loaded game class Tn36 from <path>
+[replay-backend] cls=Tn36 kwargs={} deterministic=yes deepcopy_cache=on

@@ -1,0 +1,8 @@
+2026-11-19 06:18:39 | INFO | Created new scorecard: 46dc8e53-0718-4182-84a9-88ffe31e282e
+CARD_OPENED card_id=46dc8e53-0718-4182-84a9-88ffe31e282e
+2026-11-19 06:36:08 | INFO | Closed scorecard: 46dc8e53-0718-4182-84a9-88ffe31e282e
+CARD_CHECK close_response {"bad": [], "card_id": "46dc8e53-0718-4182-84a9-88ffe31e282e", "competition_mode": true, "full": true, "games_checked": 25, "games_ok": 25, "pass": true, "score": 100.0, "tags": ["STARGA", "MIND", "NAES-T1", "agent"], "tags_expected": ["STARGA", "MIND", "NAES-T1", "agent"], "total_actions": 5499, "total_environments": 25, "total_environments_completed": 25, "total_levels": 183, "total_levels_completed": 183}
+CARD_CHECK_VERDICT PASS
+LIVE_EXIT rc=0 2026-11-19T14:36:08Z
+CARD_TOTAL {"actions": 5499, "audit_ok": true, "card_check": {"close_response": {"pass": true, "score": 100.0, "total_actions": 5499, "total_environments": 25, "total_environments_completed": 25, "total_levels": 183, "total_levels_completed": 183}}, "card_closed": true, "decider": "mind", "exact": true, "games": 25, "games_exact": 25, "levels": 183, "mind": {"decided": 5499, "decider": "gpu", "games_passed": true, "pass": true, "records_match": 5499, "replies_equal_expected_stream": true, "replies_sha256": "4d2d98f711a1209eace8f3841952e39d4d75870d48079c3175b361bba9746396", "serve_sha256": "b4f364f41ea9f3de39c1696ecbf611b980a7f9fb479406b7eda7dcdbe80e7685"}, "records_sha256": "<private>", "ref_actions": 5499, "ref_levels": 183, "resets": 25, "resets_sent": 25, "run": "<label withheld>", "stream_sha256": "<private>", "weights_sha256": "<private>", "wrong_actions": 0, "wrong_clicks": 0, "wrong_decisions": 0}
+CARD_VERDICT PASS

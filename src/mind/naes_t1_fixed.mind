@@ -1,0 +1,104 @@
+// naes_t1_fixed.mind — the integer arithmetic every NAES-T1 layer is built on.
+//
+// Number format
+//   Activations are Q24 fixed point held in i64: a stored integer h means the
+//   real value h / 2^24. Ternary weights are integers in {-1, 0, +1}, so a
+//   convolution accumulator is an exact integer sum of Q24 activations (no
+//   rounding, no overflow under the guards below).
+//
+//   A float32 per-channel scale or bias is decoded bit-exactly into an integer
+//   mantissa m (|m| < 2^24, sign folded in) and a power-of-two exponent e, so
+//   value = m * 2^e with no rounding at all (f32_decode).
+//
+// The ONE rounding primitive
+//   mul_round(a, m, sh) = round(a * m / 2^sh), ties away from zero, computed
+//   exactly (the 88-bit product a*m is never truncated before the shift).
+//   Every rounding step in the network is a call to it; nothing else rounds.
+//
+// Magnitude guards (checked at weight load and after every layer)
+//   |activation| < 2^40 (real value < 65536), |scale| < 2^8, |bias| < 2^16.
+//   Under these, every accumulator stays below 2^61 and every product is
+//   representable, so the integer pipeline never wraps.
+
+// Number of fractional bits in an activation.
+pub fn q_frac() -> i64 {
+    24
+}
+
+// Largest admissible activation magnitude (exclusive), 2^40.
+pub fn act_limit() -> i64 {
+    1099511627776
+}
+
+// floor(P / 2^s) for P = x * 2^32 + lo with x >= 0, 0 <= lo < 2^62, s >= 0.
+// Exact: x * 2^32 is divisible by 2^s when s < 32, and nested floors compose
+// for s >= 32.
+fn floor_shift_split(x: i64, lo: i64, s: i64) -> i64 {
+    if s >= 32 {
+        let t: i64 = s - 32;
+        if t > 62 {
+            return 0;
+        }
+        return (x + (lo >> 32)) >> t;
+    }
+    (x << (32 - s)) + (lo >> s)
+}
+
+// round(a * m / 2^sh), ties away from zero.
+// Preconditions: |a| < 2^62, |m| < 2^24; when sh <= 0 the caller guarantees
+// |a * m| * 2^-sh < 2^62 (only the input layer, where |a| <= 27, reaches it).
+// Rounding: with q = floor(|a*m| / 2^(sh-1)), floor((|a*m| + 2^(sh-1)) / 2^sh)
+// equals (q + 1) >> 1 exactly, so half-way cases move away from zero.
+pub fn mul_round(a: i64, m: i64, sh: i64) -> i64 {
+    let mut ua: i64 = a;
+    let mut um: i64 = m;
+    let mut neg: i64 = 0;
+    if ua < 0 {
+        ua = 0 - ua;
+        neg = 1 - neg;
+    }
+    if um < 0 {
+        um = 0 - um;
+        neg = 1 - neg;
+    }
+    let x: i64 = (ua >> 32) * um;
+    let lo: i64 = (ua & 4294967295) * um;
+    let mut mag: i64 = 0;
+    if sh <= 0 {
+        mag = ((x << 32) + lo) << (0 - sh);
+    } else {
+        let q: i64 = floor_shift_split(x, lo, sh - 1);
+        mag = (q + 1) >> 1;
+    }
+    if neg == 1 {
+        return 0 - mag;
+    }
+    mag
+}
+
+// Decode IEEE-754 binary32 bits (0 <= bits < 2^32) into m * 2^e exactly.
+// Stores m at out+0 and e at out+8. Returns 0, or -1 for Inf/NaN.
+pub fn f32_decode(bits: i64, out: i64) -> i64 {
+    let ex: i64 = (bits >> 23) & 255;
+    let fr: i64 = bits & 8388607;
+    if ex == 255 {
+        return 0 - 1;
+    }
+    let mut m: i64 = fr;
+    let mut e: i64 = 0 - 149;
+    if ex != 0 {
+        m = fr + 8388608;
+        e = ex - 150;
+    }
+    if ((bits >> 31) & 1) == 1 {
+        m = 0 - m;
+    }
+    __mind_store_i64(out, m);
+    __mind_store_i64(out + 8, e);
+    0
+}
+
+// Q24 integer of the exact value m * 2^e (one rounding, ties away from zero).
+pub fn to_q24(m: i64, e: i64) -> i64 {
+    mul_round(m, 1, 0 - (e + q_frac()))
+}

@@ -1,0 +1,540 @@
+{
+ "level": 6,
+ "bound": 39,
+ "K": 2,
+ "mode": "cap",
+ "P": 18,
+ "Pmax": 19,
+ "status": "UNSAT",
+ "line": "v4 L6 mode=cap k=39 K=2 P=18 -> UNSAT vars=280905 clauses=1379739 (31.5s)",
+ "started_utc": "2026-11-04T14:45:04.737562+00:00",
+ "solver_finished_utc": "2026-11-04T14:45:36.218680+00:00",
+ "encoding_sha256": "1b6ea6a032a32fc7d40b27b32b3a1b4ec81060f499539c1afa2e58f763548b41",
+ "engine_sha256": "6f21f2065744e484ac38534f940158034e69f39add3b10a3d9fd258de7293aa9",
+ "partitions": [
+  {
+   "pass": 0,
+   "keys": [
+    [
+     0,
+     3,
+     "cap"
+    ],
+    [
+     0,
+     2,
+     "cap"
+    ],
+    [
+     0,
+     1,
+     "cap"
+    ]
+   ],
+   "targets": [
+    -2133,
+    -4064,
+    -6298
+   ],
+   "index": 0,
+   "selector": 280888,
+   "status": "UNSAT",
+   "seconds": 0.172
+  },
+  {
+   "pass": 1,
+   "keys": [
+    [
+     1,
+     3,
+     "cap"
+    ],
+    [
+     1,
+     2,
+     "cap"
+    ],
+    [
+     1,
+     1,
+     "cap"
+    ]
+   ],
+   "targets": [
+    -12844,
+    -16221,
+    -19997
+   ],
+   "index": 1,
+   "selector": 280889,
+   "status": "UNSAT",
+   "seconds": 0.364
+  },
+  {
+   "pass": 2,
+   "keys": [
+    [
+     2,
+     3,
+     "cap"
+    ],
+    [
+     2,
+     2,
+     "cap"
+    ],
+    [
+     2,
+     1,
+     "cap"
+    ]
+   ],
+   "targets": [
+    -30611,
+    -35444,
+    -40675
+   ],
+   "index": 2,
+   "selector": 280890,
+   "status": "UNSAT",
+   "seconds": 0.284
+  },
+  {
+   "pass": 3,
+   "keys": [
+    [
+     3,
+     3,
+     "cap"
+    ],
+    [
+     3,
+     2,
+     "cap"
+    ],
+    [
+     3,
+     1,
+     "cap"
+    ]
+   ],
+   "targets": [
+    -48646,
+    -50911,
+    -53395
+   ],
+   "index": 3,
+   "selector": 280891,
+   "status": "UNSAT",
+   "seconds": 0.299
+  },
+  {
+   "pass": 4,
+   "keys": [
+    [
+     4,
+     3,
+     "cap"
+    ],
+    [
+     4,
+     2,
+     "cap"
+    ],
+    [
+     4,
+     1,
+     "cap"
+    ]
+   ],
+   "targets": [
+    -60175,
+    -63563,
+    -67349
+   ],
+   "index": 4,
+   "selector": 280892,
+   "status": "UNSAT",
+   "seconds": 0.247
+  },
+  {
+   "pass": 5,
+   "keys": [
+    [
+     5,
+     3,
+     "cap"
+    ],
+    [
+     5,
+     2,
+     "cap"
+    ],
+    [
+     5,
+     1,
+     "cap"
+    ]
+   ],
+   "targets": [
+    -77966,
+    -82799,
+    -88030
+   ],
+   "index": 5,
+   "selector": 280893,
+   "status": "UNSAT",
+   "seconds": 0.41
+  },
+  {
+   "pass": 6,
+   "keys": [
+    [
+     6,
+     3,
+     "cap"
+    ],
+    [
+     6,
+     2,
+     "cap"
+    ],
+    [
+     6,
+     1,
+     "cap"
+    ]
+   ],
+   "targets": [
+    -96007,
+    -98272,
+    -100756
+   ],
+   "index": 6,
+   "selector": 280894,
+   "status": "UNSAT",
+   "seconds": 0.399
+  },
+  {
+   "pass": 7,
+   "keys": [
+    [
+     7,
+     3,
+     "cap"
+    ],
+    [
+     7,
+     2,
+     "cap"
+    ],
+    [
+     7,
+     1,
+     "cap"
+    ]
+   ],
+   "targets": [
+    -107536,
+    -110924,
+    -114710
+   ],
+   "index": 7,
+   "selector": 280895,
+   "status": "UNSAT",
+   "seconds": 0.292
+  },
+  {
+   "pass": 8,
+   "keys": [
+    [
+     8,
+     3,
+     "cap"
+    ],
+    [
+     8,
+     2,
+     "cap"
+    ],
+    [
+     8,
+     1,
+     "cap"
+    ]
+   ],
+   "targets": [
+    -125327,
+    -130160,
+    -135391
+   ],
+   "index": 8,
+   "selector": 280896,
+   "status": "UNSAT",
+   "seconds": 1.617
+  },
+  {
+   "pass": 9,
+   "keys": [
+    [
+     9,
+     3,
+     "cap"
+    ],
+    [
+     9,
+     2,
+     "cap"
+    ],
+    [
+     9,
+     1,
+     "cap"
+    ]
+   ],
+   "targets": [
+    -143368,
+    -145633,
+    -148117
+   ],
+   "index": 9,
+   "selector": 280897,
+   "status": "UNSAT",
+   "seconds": 0.467
+  },
+  {
+   "pass": 10,
+   "keys": [
+    [
+     10,
+     3,
+     "cap"
+    ],
+    [
+     10,
+     2,
+     "cap"
+    ],
+    [
+     10,
+     1,
+     "cap"
+    ]
+   ],
+   "targets": [
+    -154897,
+    -158285,
+    -162071
+   ],
+   "index": 10,
+   "selector": 280898,
+   "status": "UNSAT",
+   "seconds": 2.106
+  },
+  {
+   "pass": 11,
+   "keys": [
+    [
+     11,
+     3,
+     "cap"
+    ],
+    [
+     11,
+     2,
+     "cap"
+    ],
+    [
+     11,
+     1,
+     "cap"
+    ]
+   ],
+   "targets": [
+    -172688,
+    -177521,
+    -182752
+   ],
+   "index": 11,
+   "selector": 280899,
+   "status": "UNSAT",
+   "seconds": 0.331
+  },
+  {
+   "pass": 12,
+   "keys": [
+    [
+     12,
+     3,
+     "cap"
+    ],
+    [
+     12,
+     2,
+     "cap"
+    ],
+    [
+     12,
+     1,
+     "cap"
+    ]
+   ],
+   "targets": [
+    -190729,
+    -192994,
+    -195478
+   ],
+   "index": 12,
+   "selector": 280900,
+   "status": "UNSAT",
+   "seconds": 2.081
+  },
+  {
+   "pass": 13,
+   "keys": [
+    [
+     13,
+     3,
+     "cap"
+    ],
+    [
+     13,
+     2,
+     "cap"
+    ],
+    [
+     13,
+     1,
+     "cap"
+    ]
+   ],
+   "targets": [
+    -202258,
+    -205646,
+    -209432
+   ],
+   "index": 13,
+   "selector": 280901,
+   "status": "UNSAT",
+   "seconds": 0.975
+  },
+  {
+   "pass": 14,
+   "keys": [
+    [
+     14,
+     3,
+     "cap"
+    ],
+    [
+     14,
+     2,
+     "cap"
+    ],
+    [
+     14,
+     1,
+     "cap"
+    ]
+   ],
+   "targets": [
+    -220049,
+    -224882,
+    -230113
+   ],
+   "index": 14,
+   "selector": 280902,
+   "status": "UNSAT",
+   "seconds": 0.306
+  },
+  {
+   "pass": 15,
+   "keys": [
+    [
+     15,
+     3,
+     "cap"
+    ],
+    [
+     15,
+     2,
+     "cap"
+    ],
+    [
+     15,
+     1,
+     "cap"
+    ]
+   ],
+   "targets": [
+    -238090,
+    -240355,
+    -242839
+   ],
+   "index": 15,
+   "selector": 280903,
+   "status": "UNSAT",
+   "seconds": 0.37
+  },
+  {
+   "pass": 16,
+   "keys": [
+    [
+     16,
+     3,
+     "cap"
+    ],
+    [
+     16,
+     2,
+     "cap"
+    ],
+    [
+     16,
+     1,
+     "cap"
+    ]
+   ],
+   "targets": [
+    -249619,
+    -253007,
+    -256793
+   ],
+   "index": 16,
+   "selector": 280904,
+   "status": "UNSAT",
+   "seconds": 0.846
+  },
+  {
+   "pass": 17,
+   "keys": [
+    [
+     17,
+     3,
+     "cap"
+    ],
+    [
+     17,
+     2,
+     "cap"
+    ],
+    [
+     17,
+     1,
+     "cap"
+    ]
+   ],
+   "targets": [
+    -267410,
+    -272243,
+    -277474
+   ],
+   "index": 17,
+   "selector": 280905,
+   "status": "UNSAT",
+   "seconds": 0.527
+  }
+ ],
+ "finished_utc": "2026-11-04T14:45:36.218748+00:00",
+ "elapsed_seconds": 31.481
+}

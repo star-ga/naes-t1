@@ -1,0 +1,102 @@
+[
+ {
+  "game": "ar25",
+  "action_efficiency": 3.166
+ },
+ {
+  "game": "bp35",
+  "action_efficiency": 2.221
+ },
+ {
+  "game": "cd82",
+  "action_efficiency": 2.157
+ },
+ {
+  "game": "cn04",
+  "action_efficiency": 4.836
+ },
+ {
+  "game": "dc22",
+  "action_efficiency": 2.788
+ },
+ {
+  "game": "ft09",
+  "action_efficiency": 2.793
+ },
+ {
+  "game": "g50t",
+  "action_efficiency": 2.967
+ },
+ {
+  "game": "ka59",
+  "action_efficiency": 2.885
+ },
+ {
+  "game": "lf52",
+  "action_efficiency": 2.451
+ },
+ {
+  "game": "lp85",
+  "action_efficiency": 9.905
+ },
+ {
+  "game": "ls20",
+  "action_efficiency": 2.574
+ },
+ {
+  "game": "m0r0",
+  "action_efficiency": 6.387
+ },
+ {
+  "game": "r11l",
+  "action_efficiency": 4.097
+ },
+ {
+  "game": "re86",
+  "action_efficiency": 2.646
+ },
+ {
+  "game": "s5i5",
+  "action_efficiency": 2.613
+ },
+ {
+  "game": "sb26",
+  "action_efficiency": 1.754
+ },
+ {
+  "game": "sc25",
+  "action_efficiency": 2.769
+ },
+ {
+  "game": "sk48",
+  "action_efficiency": 4.952
+ },
+ {
+  "game": "sp80",
+  "action_efficiency": 5.916
+ },
+ {
+  "game": "su15",
+  "action_efficiency": 6.272
+ },
+ {
+  "game": "tn36",
+  "action_efficiency": 3.561
+ },
+ {
+  "game": "tr87",
+  "action_efficiency": 4.106
+ },
+ {
+  "game": "tu93",
+  "action_efficiency": 2.401
+ },
+ {
+  "game": "vc33",
+  "action_efficiency": 2.558
+ },
+ {
+  "game": "wa30",
+  "action_efficiency": 3.868
+ }
+]

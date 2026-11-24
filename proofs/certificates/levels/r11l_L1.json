@@ -1,0 +1,67 @@
+{
+  "artifact_sha256": [
+    {
+      "kind": "safe_statement_count_extract",
+      "sha256": "8f37b5fc4e7a177f529d402c6f5dc6b1cdf4836c5f1888d8db6a7ac623512643"
+    },
+    {
+      "kind": "authority_ledger_label",
+      "sha256": "4c14a8b031ce88180914817357433a28586fbaa66bf8c3ceea8b5f11988dc138"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "e9e3c708b5f282bf89a3f59b6068480780c4bfbf473dc8dc25087fa4627a8b3f"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "1fb34bc00e9d0e00153f88741352a260d39f7837c753c46fd6e2c3bc77196d6d"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "e85eb62f98afe516fa97c93098c283846cd2518b83dee02f3170f9304e681062"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "5bdfadaf67099b99d1c40e025d6dce044c22658fc49353919299df2d16921556"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "7a92c98c048163640fc0a542adf1ba891116c20bc2ae6b274837e1dc0587c265"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "9f72de73e3a600660cc76f90325cce508d740266dbff4681441e3c196c0f309f"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "05f9318d4948de0ce2dd9d45b558cbffdae9c5621d04b1a02b9fb584c7615fc2"
+    },
+    {
+      "kind": "historical_method_or_search_output",
+      "sha256": "04dafbe2389a8981f5998468dab17ffbcc4eae82c709a068a21d81824d852571"
+    }
+  ],
+  "floor": 3,
+  "game": "r11l",
+  "game_id": "r11l-495a7899",
+  "game_levels": 6,
+  "level": 1,
+  "lower_bound": {
+    "kind": "relaxed_placement_enumeration_select_place_count",
+    "statement": "Every necessary placement needs a place action and, except for the initially usable body, a select action. Exact relaxed placement enumeration gives d=2 and bound 2d-1=3.",
+    "value": 3
+  },
+  "naes_t1_actions": 3,
+  "proof_class": "Matching bounds",
+  "proof_detail": "relaxed_placement_enumeration_select_place_count",
+  "schema_version": 1,
+  "source_certificate_sha256": "af62399050610581ddd6cac8456b34af2e4d4f0bbe0752cc3577afd7e5f83f6b",
+  "status": "proven",
+  "upper_bound": {
+    "expected_levels_completed": 1,
+    "length": 3,
+    "opening_reset_counted": false,
+    "route": "6@25,10 6@27,59 6@53,33",
+    "seed": 0
+  }
+}

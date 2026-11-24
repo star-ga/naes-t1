@@ -1,0 +1,5 @@
+# <interp> is the interpreter the producer is written for; <interp-path> is its module search path variable.
+# Rerun. Same producer and --mode arm as arm_leg.txt. Sibling levels 3, 6, 7 and 8
+# use --seconds 4200 under timeout 4500.
+# The outer timeout 4500 does not fire. Search rc is s5i5_L4/rc.txt.
+setsid nohup nice -n 15 timeout 4500 bash -c "cd <proof-checkout>/native_carry && <interp-path>=<proof-checkout>/deps <interp> -u replay_current.txt s5i5 4 --mode arm --seconds 4200 --out <staging>/s5i5_L4; echo \$? > <work>/out/s5i5_L4.rc" </dev/null > <work>/out/s5i5_L4.txt 2>&1 &

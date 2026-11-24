@@ -1,0 +1,354 @@
+// naes_t1_dns_test.mind — canned tests for the DNS resolver (cases 1..13 +
+// main; wire builders and printers live in naes_t1_dns_test_wire.mind, cases
+// 14..28 in naes_t1_dns_test_guard.mind, cases 29..38 in
+// naes_t1_dns_test_seam.mind, cases 40..43 in naes_t1_dns_test_name.mind,
+// case 39 in the leg's socket-test file).
+//
+// Build (repo root; ten files, in this order). Default backend, live UDP:
+//   cat src/mind/naes_t1_libc.mind src/mind/naes_t1_dns.mind \
+//       src/mind/naes_t1_dns_resolve.mind src/mind/naes_t1_dns_udp.mind \
+//       src/mind/naes_t1_dns_test_wire.mind src/mind/naes_t1_dns_test_guard.mind \
+//       src/mind/naes_t1_dns_test_seam.mind src/mind/naes_t1_dns_test_name.mind \
+//       src/mind/naes_t1_dns_test_udp.mind \
+//       src/mind/naes_t1_dns_test.mind > build/dns_unit.mind
+//   mindc build build/dns_unit.mind --no-cache --out naes_t1_dns_test
+// Native lane (no socket rows): drop naes_t1_libc.mind, replace
+// naes_t1_dns_udp.mind with naes_t1_dns_udp_stub.mind and
+// naes_t1_dns_test_udp.mind with naes_t1_dns_test_udp_stub.mind, and build
+// with --backend native --release (cases 39 and 43 then print SKIP).
+// Usage:
+//   naes_t1_dns_test selftest
+//   naes_t1_dns_test parse FILE NAME   (parse a wire response image)
+//   naes_t1_dns_test resolve NAME      (full resolve; err -6 on the native stub)
+// Exit: 0 pass, 1 a case failed, 2 usage.
+// Selftest case numbers:
+//   1 build_query exact bytes           2 trailing dot accepted
+//   3 build_query rejects bad labels    4 parse_name literal + compressed
+//   5 parse_name rejects loop/trunc     6 parse A-only response
+//   7 CNAME chain resolves A+AAAA       8 malformed responses rejected
+//   9 collect merges A and AAAA        10 parse_resolv canned image
+//  11 read_resolv live /etc/resolv.conf 12 resolve() transport seam
+//  13 FQDN want (trailing dot) matches owners in parse and collect
+//  14..28 owner names, CNAME chase and wire bounds (naes_t1_dns_test_guard.mind)
+//  29..38 CNAME rdata bound, chase order, question match, ids, edge bounds,
+//         per-query retry (naes_t1_dns_test_seam.mind)
+//  39 connected resolver socket drops sprayed datagrams
+//         (naes_t1_dns_test_udp.mind; SKIP on the native stub)
+//  40..43 name length and label bytes, question labels, resolver heap use
+//         (naes_t1_dns_test_name.mind)
+// ---- cases ------------------------------------------------------------------
+fn naes_dt_case1() -> i64 {
+    let buf: i64 = __mind_alloc(512);
+    let name: i64 = __mind_alloc(32);
+    let _n: i64 = naes_dt_name_www(name);
+    let len: i64 = naes_dns_build_query(buf, 512, name, 15, 1, 4660);
+    if len != 33 { return 1; }
+    if naes_dns_rd16(buf, 0) != 4660 { return 1; }
+    if naes_dns_rd16(buf, 2) != 256 { return 1; }
+    if naes_dns_rd16(buf, 4) != 1 { return 1; }
+    if naes_dns_rd16(buf, 6) != 0 { return 1; }
+    if naes_dns_rd16(buf, 8) != 0 { return 1; }
+    if naes_dns_rd16(buf, 10) != 0 { return 1; }
+    if naes_dt_ckn(buf, 12, 4, 2004317955) == 0 { return 1; }
+    if naes_dt_ckn(buf, 16, 8, 7308339910404498695) == 0 { return 1; }
+    if naes_dt_ckn(buf, 24, 5, 1836016387) == 0 { return 1; }
+    if naes_dt_ckn(buf, 29, 4, 16777472) == 0 { return 1; }
+    0
+}
+fn naes_dt_case2() -> i64 {
+    let buf: i64 = __mind_alloc(512);
+    let name: i64 = __mind_alloc(32);
+    let _n: i64 = naes_dt_name_www(name);
+    __mind_store_i8(name + 15, 46);
+    __mind_store_i8(name + 16, 0);
+    let len: i64 = naes_dns_build_query(buf, 512, name, 16, 28, 4660);
+    if len != 33 { return 1; }
+    if naes_dns_rd16(buf, 29) != 28 { return 1; }
+    if naes_dns_rd16(buf, 31) != 1 { return 1; }
+    0
+}
+fn naes_dt_case3() -> i64 {
+    let buf: i64 = __mind_alloc(512);
+    let name: i64 = __mind_alloc(80);
+    let _a: i64 = naes_dt_wr8(name, 0, 1647193697, 4);
+    if naes_dns_build_query(buf, 512, name, 4, 1, 4660) >= 0 { return 1; }
+    let _b: i64 = naes_dt_wr8(name, 0, 24878, 2);
+    if naes_dns_build_query(buf, 512, name, 2, 1, 4660) >= 0 { return 1; }
+    if naes_dns_build_query(buf, 512, name, 0, 1, 4660) >= 0 { return 1; }
+    let mut i: i64 = 0;
+    while i < 64 {
+        __mind_store_i8(name + i, 97);
+        i = i + 1;
+    }
+    __mind_store_i8(name + 64, 0);
+    if naes_dns_build_query(buf, 512, name, 64, 1, 4660) >= 0 { return 1; }
+    0
+}
+fn naes_dt_case4() -> i64 {
+    let pkt: i64 = __mind_alloc(64);
+    let out: i64 = __mind_alloc(64);
+    let o: i64 = naes_dt_wr8(pkt, 0, 25857, 2);
+    let o2: i64 = naes_dt_wr8(pkt, o, 2004317955, 4);
+    let o3: i64 = naes_dt_wr8(pkt, o2, 1836016387, 5);
+    let nxt: i64 = naes_dns_parse_name(pkt, 40, 0, out, 64);
+    if nxt != o3 { return 1; }
+    // decoded form is dotted text "e.www.com", not wire format
+    if naes_dt_ckn(out, 0, 8, 8026310051544641125) == 0 { return 1; }
+    if (__mind_load_i8(out + 8) & 255) != 109 { return 1; }
+    // compressed: "www" + pointer to "example.com" at 0
+    let pkt2: i64 = __mind_alloc(64);
+    let out2: i64 = __mind_alloc(64);
+    let p: i64 = naes_dt_wr8(pkt2, 0, 7308339910404498695, 8);
+    let p2: i64 = naes_dt_wr8(pkt2, p, 1836016387, 5);
+    let name2: i64 = p2;
+    let p3: i64 = naes_dt_wr8(pkt2, name2, 2004317955, 4);
+    let p4: i64 = naes_dns_wr16(pkt2, p3, 49152 + 0);
+    let nxt2: i64 = naes_dns_parse_name(pkt2, 40, name2, out2, 64);
+    if nxt2 != p4 { return 1; }
+    if naes_dt_ckn(out2, 0, 8, 7881713198841689975) == 0 { return 1; }
+    0
+}
+fn naes_dt_case5() -> i64 {
+    let pkt: i64 = __mind_alloc(32);
+    let out: i64 = __mind_alloc(64);
+    let _w: i64 = naes_dt_want_w(out);
+    let _p: i64 = naes_dns_wr16(pkt, 0, 49152 + 0);
+    if naes_dns_parse_name(pkt, 16, 0, out, 64) >= 0 { return 1; }
+    let _q: i64 = naes_dt_wr8(pkt, 0, 5, 1);
+    if naes_dns_parse_name(pkt, 3, 0, out, 64) >= 0 { return 1; }
+    0
+}
+fn naes_dt_case6() -> i64 {
+    let pkt: i64 = __mind_alloc(256);
+    let name: i64 = __mind_alloc(32);
+    let out: i64 = __mind_alloc(24 * 4);
+    let _n: i64 = naes_dt_name_www(name);
+    let len: i64 = naes_dt_mk_a(pkt, 4660);
+    let cnt: i64 = naes_dns_parse_response(pkt, len, 4660, name, 15, out, 4);
+    if cnt != 1 { return 1; }
+    if __mind_load_i64(out) != 2 { return 1; }
+    if naes_dt_ckn(out, 8, 4, 67305985) == 0 { return 1; }
+    0
+}
+fn naes_dt_case7() -> i64 {
+    let pkt: i64 = __mind_alloc(256);
+    let name: i64 = __mind_alloc(32);
+    let out: i64 = __mind_alloc(24 * 4);
+    let _n: i64 = naes_dt_name_www(name);
+    let len: i64 = naes_dt_mk_chain(pkt);
+    if len != 137 { return 1; }
+    let cnt: i64 = naes_dns_parse_response(pkt, len, 4660, name, 15, out, 4);
+    if cnt != 2 { return 1; }
+    let mut ok_a: i64 = 0;
+    let mut ok_aaaa: i64 = 0;
+    let mut i: i64 = 0;
+    while i < 2 {
+        if __mind_load_i64(out + i * 24) == 2 {
+            if naes_dt_ckn(out, i * 24 + 8, 4, 584628317) == 1 { ok_a = 1; }
+        }
+        if __mind_load_i64(out + i * 24) == 10 {
+            if naes_dt_ckn(out, i * 24 + 8, 4, 3087860000) == 1 {
+                if naes_dt_ckn(out, i * 24 + 20, 4, 16777216) == 1 { ok_aaaa = 1; }
+            }
+        }
+        i = i + 1;
+    }
+    if ok_a != 1 || ok_aaaa != 1 { return 1; }
+    0
+}
+fn naes_dt_case8() -> i64 {
+    let pkt: i64 = __mind_alloc(256);
+    let name: i64 = __mind_alloc(8);
+    let out: i64 = __mind_alloc(24 * 4);
+    let _w: i64 = naes_dt_want_w(name);
+    // (a) truncated header
+    if naes_dns_parse_response(pkt, 5, 4660, name, 1, out, 4) != 0 - 2 { return 1; }
+    // (b) QR=0
+    let _h1: i64 = naes_dt_hdr(pkt, 4660, 384, 0, 0);
+    if naes_dns_parse_response(pkt, 12, 4660, name, 1, out, 4) != 0 - 3 { return 1; }
+    // (c) TC=1
+    let _h2: i64 = naes_dt_hdr(pkt, 4660, 33664, 0, 0);
+    if naes_dns_parse_response(pkt, 12, 4660, name, 1, out, 4) != 0 - 2 { return 1; }
+    // (d) rcode 3
+    let _h3: i64 = naes_dt_hdr(pkt, 4660, 33155, 0, 0);
+    if naes_dns_parse_response(pkt, 12, 4660, name, 1, out, 4) != 0 - 5 { return 1; }
+    // (e) pointer loop in the question name
+    let _h4: i64 = naes_dt_hdr(pkt, 4660, 33152, 1, 0);
+    let _e: i64 = naes_dns_wr16(pkt, 12, 49152 + 12);
+    if naes_dns_parse_response(pkt, 14, 4660, name, 1, out, 4) != 0 - 3 { return 1; }
+    // (f) rdlen past the end: root owner at 12, RR header 13..22, rdata at 23.
+    // pkt_n 25 covers the whole RR header, so only the rdata bound can fire.
+    let _h5: i64 = naes_dt_hdr(pkt, 4660, 33152, 0, 1);
+    __mind_store_i8(pkt + 12, 0);
+    let _r1: i64 = naes_dt_rr_ttl60(pkt, 13, 1, 100);
+    if naes_dns_parse_response(pkt, 25, 4660, name, 1, out, 4) != 0 - 2 { return 1; }
+    // (f') control: rdlen 2 ends exactly at pkt_n 25 and is accepted (0 addrs)
+    let _r2: i64 = naes_dt_rr_ttl60(pkt, 13, 1, 2);
+    if naes_dns_parse_response(pkt, 25, 4660, name, 1, out, 4) != 0 { return 1; }
+    // (h) RR header itself past the end (pkt_n 17 < header end 23)
+    if naes_dns_parse_response(pkt, 17, 4660, name, 1, out, 4) != 0 - 2 { return 1; }
+    // (g) reserved label type
+    let _h6: i64 = naes_dt_hdr(pkt, 4660, 33152, 1, 0);
+    __mind_store_i8(pkt + 12, 64);
+    if naes_dns_parse_response(pkt, 13, 4660, name, 1, out, 4) != 0 - 3 { return 1; }
+    0
+}
+fn naes_dt_case9() -> i64 {
+    let pa: i64 = __mind_alloc(256);
+    let pb: i64 = __mind_alloc(256);
+    let name: i64 = __mind_alloc(32);
+    let out: i64 = __mind_alloc(24 * 4);
+    let _n: i64 = naes_dt_name_www(name);
+    let la: i64 = naes_dt_mk_a(pa, 4660);
+    let lb: i64 = naes_dt_mk_aaaa(pb, 4660);
+    let cnt: i64 = naes_dns_collect(pa, la, pb, lb, 4660, 4660, name, 15, out, 4);
+    if cnt != 2 { return 1; }
+    if __mind_load_i64(out) == __mind_load_i64(out + 24) { return 1; }
+    0
+}
+fn naes_dt_case10() -> i64 {
+    let buf: i64 = __mind_alloc(64);
+    let out: i64 = __mind_alloc(24);
+    let o: i64 = naes_dt_wr8(buf, 0, 8534995790117822830, 8);
+    let o2: i64 = naes_dt_wr8(buf, o, 2126437, 3);
+    let o3: i64 = naes_dt_wr8(buf, o2, 3330471509296822577, 8);
+    let o4: i64 = naes_dt_wr8(buf, o3, 170995248, 4);
+    let fam: i64 = naes_dns_parse_resolv(buf, o4, out);
+    if fam != 2 { return 1; }
+    if __mind_load_i64(out) != 2 { return 1; }
+    if naes_dt_ckn(out, 8, 4, 16820416) == 0 { return 1; }
+    0
+}
+fn naes_dt_case11() -> i64 {
+    let out: i64 = __mind_alloc(24);
+    let fam: i64 = naes_dns_read_resolv(out);
+    if fam == 2 || fam == 10 {
+        if __mind_load_i64(out) == fam { return 0; }
+    }
+    1
+}
+fn naes_dt_case12() -> i64 {
+    let name: i64 = __mind_alloc(32);
+    let out: i64 = __mind_alloc(24 * 4);
+    let _n: i64 = naes_dt_name_www(name);
+    // the seam: libc sockets on the default backend, err_transport (-6) on
+    // the native-lane stub; a param error would mean the validation is broken.
+    let rc: i64 = naes_dns_resolve(name, 15, out, 4);
+    if rc == 0 - 6 || rc > 0 { return 0; }
+    1
+}
+fn naes_dt_case13() -> i64 {
+    let pkt: i64 = __mind_alloc(256);
+    let pb: i64 = __mind_alloc(256);
+    let name: i64 = __mind_alloc(32);
+    let out: i64 = __mind_alloc(24 * 4);
+    let _n: i64 = naes_dt_name_www(name);
+    __mind_store_i8(name + 15, 46);
+    __mind_store_i8(name + 16, 0);
+    // "www.example.com." must match the dotless decoded owner
+    let len: i64 = naes_dt_mk_a(pkt, 4660);
+    if naes_dns_parse_response(pkt, len, 4660, name, 16, out, 4) != 1 { return 1; }
+    if naes_dt_ckn(out, 8, 4, 67305985) == 0 { return 1; }
+    let lc: i64 = naes_dt_mk_chain(pkt);
+    if naes_dns_parse_response(pkt, lc, 4660, name, 16, out, 4) != 2 { return 1; }
+    // through collect an FQDN must give addresses, never err_nx
+    let la: i64 = naes_dt_mk_a(pkt, 4660);
+    let lb: i64 = naes_dt_mk_aaaa(pb, 4660);
+    if naes_dns_collect(pkt, la, pb, lb, 4660, 4660, name, 16, out, 4) != 2 { return 1; }
+    // a bare "." is no host name
+    if naes_dns_parse_response(pkt, la, 4660, name + 15, 1, out, 4) != 0 - 1 { return 1; }
+    0
+}
+fn naes_dt_selftest() -> i64 {
+    let mut fails: i64 = 0;
+    if naes_dt_case1() == 0 { let _o: i64 = naes_dt_ok(1); } else { let _f: i64 = naes_dt_fail(1); fails = fails + 1; }
+    if naes_dt_case2() == 0 { let _o: i64 = naes_dt_ok(2); } else { let _f: i64 = naes_dt_fail(2); fails = fails + 1; }
+    if naes_dt_case3() == 0 { let _o: i64 = naes_dt_ok(3); } else { let _f: i64 = naes_dt_fail(3); fails = fails + 1; }
+    if naes_dt_case4() == 0 { let _o: i64 = naes_dt_ok(4); } else { let _f: i64 = naes_dt_fail(4); fails = fails + 1; }
+    if naes_dt_case5() == 0 { let _o: i64 = naes_dt_ok(5); } else { let _f: i64 = naes_dt_fail(5); fails = fails + 1; }
+    if naes_dt_case6() == 0 { let _o: i64 = naes_dt_ok(6); } else { let _f: i64 = naes_dt_fail(6); fails = fails + 1; }
+    if naes_dt_case7() == 0 { let _o: i64 = naes_dt_ok(7); } else { let _f: i64 = naes_dt_fail(7); fails = fails + 1; }
+    if naes_dt_case8() == 0 { let _o: i64 = naes_dt_ok(8); } else { let _f: i64 = naes_dt_fail(8); fails = fails + 1; }
+    if naes_dt_case9() == 0 { let _o: i64 = naes_dt_ok(9); } else { let _f: i64 = naes_dt_fail(9); fails = fails + 1; }
+    if naes_dt_case10() == 0 { let _o: i64 = naes_dt_ok(10); } else { let _f: i64 = naes_dt_fail(10); fails = fails + 1; }
+    if naes_dt_case11() == 0 { let _o: i64 = naes_dt_ok(11); } else { let _f: i64 = naes_dt_fail(11); fails = fails + 1; }
+    if naes_dt_case12() == 0 { let _o: i64 = naes_dt_ok(12); } else { let _f: i64 = naes_dt_fail(12); fails = fails + 1; }
+    if naes_dt_case13() == 0 { let _o: i64 = naes_dt_ok(13); } else { let _f: i64 = naes_dt_fail(13); fails = fails + 1; }
+    fails = fails + naes_dt_guard_run();
+    fails = fails + naes_dt_seam_run();
+    fails = fails + naes_dt_name_run();
+    fails = fails + naes_dt_leg_run();
+    let b: i64 = __mind_alloc(16);
+    let _s: i64 = naes_dt_wr8(b, 0, 2330984722564207955, 8);
+    __mind_store_i8(b + 8, 10);
+    let _w1: i64 = __mind_write(2, b, 8, 0 - 1);
+    let _w2: i64 = naes_dt_say_num(fails);
+    let _w3: i64 = naes_dt_say_ch(47);
+    let _w4: i64 = naes_dt_say_num(43);
+    let _w5: i64 = __mind_write(2, b + 8, 1, 0 - 1);
+    if fails == 0 { return 0; }
+    1
+}
+// The image's own id is taken; its question must be (NAME, A or AAAA, IN).
+fn naes_dt_parse_file(path: i64, name: i64) -> i64 {
+    let buf: i64 = __mind_alloc(65536);
+    if buf == 0 { return 1; }
+    let got: i64 = naes_dns_read_file(path, buf, 65536);
+    if got < 12 { return 1; }
+    let nn: i64 = naes_dns_cstr_len(name);
+    let mut asked: i64 = naes_dns_question_ok(buf, got, name, nn, 1);
+    if asked == 0 { asked = naes_dns_question_ok(buf, got, name, nn, 28); }
+    if asked == 0 { return 1; }
+    let id: i64 = naes_dns_rd16(buf, 0);
+    let out: i64 = __mind_alloc(24 * 16);
+    let n: i64 = naes_dns_parse_response(buf, got, id, name, naes_dns_cstr_len(name), out, 16);
+    if n < 0 { return 1; }
+    let mut i: i64 = 0;
+    while i < n {
+        let _s: i64 = naes_dt_say_addr(__mind_load_i64(out + i * 24), out + i * 24 + 8);
+        i = i + 1;
+    }
+    0
+}
+fn naes_dt_resolve_name(name: i64) -> i64 {
+    let out: i64 = __mind_alloc(24 * 16);
+    let n: i64 = naes_dns_resolve(name, naes_dns_cstr_len(name), out, 16);
+    if n < 0 {
+        let _e: i64 = naes_dt_say_num(n);
+        let _n: i64 = naes_dt_say_ch(10);
+        return 1;
+    }
+    let mut i: i64 = 0;
+    while i < n {
+        let _s: i64 = naes_dt_say_addr(__mind_load_i64(out + i * 24), out + i * 24 + 8);
+        i = i + 1;
+    }
+    0
+}
+fn main(os_argc: i64, argv: i64) -> i64 {
+    let mut argc: i64 = 0;
+    while __mind_load_i64(argv + argc * 8) != 0 {
+        argc = argc + 1;
+    }
+    if argc < 2 { return 2; }
+    let cmd: i64 = __mind_load_i64(argv + 8);
+    if argc == 2 {
+        if naes_dt_ckn(cmd, 0, 8, 8391162081330357619) == 1 {
+            if __mind_load_i8(cmd + 8) != 0 { return 2; }
+            return naes_dt_selftest();
+        }
+    }
+    if argc == 3 {
+        if naes_dt_ckn(cmd, 0, 7, 28559180746155378) == 1 {
+            if __mind_load_i8(cmd + 7) != 0 { return 2; }
+            return naes_dt_resolve_name(__mind_load_i64(argv + 16));
+        }
+    }
+    if argc == 4 {
+        if naes_dt_ckn(cmd, 0, 5, 435728572784) == 1 {
+            if __mind_load_i8(cmd + 5) != 0 { return 2; }
+            return naes_dt_parse_file(__mind_load_i64(argv + 16), __mind_load_i64(argv + 24));
+        }
+    }
+    2
+}

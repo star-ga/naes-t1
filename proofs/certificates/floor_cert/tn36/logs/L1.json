@@ -1,0 +1,40 @@
+{
+ "level": 1,
+ "recorded_floor": 7,
+ "recorded_method": "Exhaustive search (uniform cost / breadth-first)",
+ "recorded_method_detail": "qf_bv_exact_unsat_F_minus_1",
+ "recorded_statement": "The normalized program cost is run_count+sum of Hamming edits. The recorded solver reports UNSAT for cost at most 6; failed-run elimination or checkpoint over-approximation covers all concrete run schedules.",
+ "upper_replay": {
+  "won": true,
+  "won_at": 7,
+  "clicks": 7
+ },
+ "search": {
+  "verdict_kind": "no_shorter",
+  "nodes": 6449,
+  "edges": 90286,
+  "visited": 21911,
+  "seconds": 21.197,
+  "depth_nodes": {
+   "0": 1,
+   "1": 11,
+   "2": 55,
+   "3": 265,
+   "4": 1230,
+   "5": 4887
+  },
+  "errors": 0,
+  "dead": 0,
+  "geom_changes": 0,
+  "n_reps": 14,
+  "any_none": false,
+  "closed_depth": 5,
+  "max_expand": 6,
+  "stopped": false,
+  "clone": "inplace-snap"
+ },
+ "found_replay": null,
+ "found_prefix": null,
+ "game_sha256": "43c30052cdeb230017eb1ec23877050d96297756b86071417868ec61138c9fb7",
+ "render_stub": "Camera.render replaced with a 1x1 zero array; step() does not read pixels"
+}

@@ -1,0 +1,95 @@
+{
+  "artifact_sha256": [
+    {
+      "kind": "safe_statement_count_extract",
+      "sha256": "5cddc73da0c7f37aaee06b6e86dd1983cab68f3e4d0eb8c6deaccd3888311dc4"
+    },
+    {
+      "kind": "authority_ledger_label",
+      "sha256": "a06e16d10fba00a29b511894c73b160ac0ad958933c3785a77079893be5cae61"
+    },
+    {
+      "kind": "existing_search_or_enumeration_record",
+      "sha256": "49d9945211bfe0d1b6269cbbd9ba4c789e141b3a1d4567d7f9963802b39512a8"
+    },
+    {
+      "kind": "per_level_certificate_record",
+      "sha256": "679c5936338f82466354b5cbd62d253575b7a33b3ab70eef5cc107729877aed3"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "c40a3aafeb225f8e125af7ff301ff548c975e2ce265b1f4c8970164702e499e7"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "93af1684241c6f1965c980d08dd3b02ca7ae95120696944f50daa69209d78533"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "982a06c9e5e6ed596046090a9617f6170797d1a3bc71cdb8d8af763c37abfa9b"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "b666318a2f1def559217b61b1ed94d03b5433d54cb41702da1124793933c227b"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "9d07b0360d45da9b128f4b67ff15632135a6144a973f71183f37c2540e72359e"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "3b7605580bfe8e69f03ec51176ddb4daa3bbec478e808e4b99232e0548a44ea0"
+    },
+    {
+      "kind": "existing_search_or_enumeration_record",
+      "sha256": "eada58d0f7885d43d0e2dbd44a50ab642fb486e74bb707befc976a95016ce1c7"
+    },
+    {
+      "kind": "existing_search_or_enumeration_record",
+      "sha256": "6932c5fbbe18ec56121c7a971925892db7744d8f84d4e770fc39c4fcd5e212b3"
+    },
+    {
+      "kind": "existing_search_or_enumeration_record",
+      "sha256": "fafff382b7322ffa67d6a160f335ccb8a9308ba2ba184c140edf16941ef2476d"
+    },
+    {
+      "kind": "existing_search_or_enumeration_record",
+      "sha256": "812872482a397da26593d173a7f7ae442d83493b0f2d8d03ed06e925fe9aaaef"
+    },
+    {
+      "kind": "existing_search_or_enumeration_record",
+      "sha256": "080aa2cdb4f43cb905a97ff6419640e1203c340d78a67b76be2448c7a705b335"
+    },
+    {
+      "kind": "existing_search_or_enumeration_record",
+      "sha256": "89ca3ecf1e50e9424deaab3f665e880ba8af2a306f537ca4f06a6b2df1e09052"
+    },
+    {
+      "kind": "existing_search_or_enumeration_record",
+      "sha256": "1bac1401fd7e8aba519a42ebf948922f8153723bfc5270ba7a3f7acf77f8ab57"
+    }
+  ],
+  "floor": 139,
+  "game": "dc22",
+  "game_id": "dc22-fdcac232",
+  "game_levels": 6,
+  "level": 6,
+  "lower_bound": {
+    "kind": "complete_state_bfs_on_sampled_equivalent_simulator",
+    "statement": "Complete layered search closes all states through depth 137 and checks every child through depth 138 without a win: 3083151 distinct states, 26651298 transitions. Sampled lockstep comparison checks model fidelity.",
+    "value": 139
+  },
+  "naes_t1_actions": 139,
+  "proof_class": "Exhaustive search",
+  "proof_detail": "complete_state_bfs_on_sampled_equivalent_simulator",
+  "schema_version": 1,
+  "source_certificate_sha256": "aa38d9b2726be1ac3b9eded06d5b259f5059586d934b8b1292cfdd3314199332",
+  "status": "proven",
+  "upper_bound": {
+    "expected_levels_completed": 6,
+    "length": 139,
+    "opening_reset_counted": false,
+    "route": "6@56,8 6@51,25 3 3 3 3 3 6@56,8 6@56,8 6@56,8 2 2 3 3 3 2 3 6@56,8 1 3 6@56,8 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 4 6@56,8 4 6@56,8 4 6@56,8 4 6@56,8 4 1 1 1 6@51,25 1 1 4 2 2 3 6@51,25 6@50,47 6@50,47 6@50,47 6@51,25 3 6@46,36 6@46,36 6@46,36 6@46,36 6@51,18 4 4 6@54,36 6@54,36 6@54,36 6@54,36 6@54,36 1 3 6@50,32 6@50,32 6@50,32 2 3 6@46,36 6@46,36 1 4 6@50,32 6@50,32 6@50,32 2 6@51,25 6@50,47 6@50,47 6@50,47 6@51,25 2 2 4 4 4 4 4 4 4 4 4 4 4 4 4 4 1 4 4 4 4 4 4 4",
+    "seed": 0
+  }
+}

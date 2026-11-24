@@ -1,0 +1,38 @@
+INFO:arc_agi.scorecard:Initialized ScorecardManager with idle_for=0:15:00 and max_open_for=3 days, 0:00:00
+2026-11-06 15:15:28 | INFO | Created new scorecard: b6265525-abd9-411b-8b41-13996ba156e8
+INFO:arc_agi.base:Created new scorecard: b6265525-abd9-411b-8b41-13996ba156e8
+2026-11-06 15:15:30 | INFO | Successfully loaded game class S5i5 from <proof-checkout>/games/s5i5/18d95033/s5i5.py
+INFO:arc_agi.base:Successfully loaded game class S5i5 from <proof-checkout>/games/s5i5/18d95033/s5i5.py
+[replay-backend] cls=S5i5 kwargs={} deterministic=yes deepcopy_cache=on
+PINS {"current_game": "341f85bac1fb5ca7a3315a367405c3c993a57ce4dd0ff01cc8aaa72bf6c6ed34", "historical_game": "4e0c7d1a813cc7f10a28b7c9f168c811450a4330d8717b1badc9bf76143cbfeb", "runtime": "<interp-version>", "engine_version": "0.1.0", "engine_files": {"base_game.py": "5b5f41f3bec4c0c97a727fda7326114991dc0d4a5642d489b40ee4aa87e6b15f", "level.py": "f74db969772b251018b2fcce6ec42f3522adeef4e9c03c036e455d2a35e3215a", "camera.py": "f06e16807b0f97d86cafb5481bb3969213f27768f789d898c6b8b07e957de397"}, "prefix_actions": 76, "runner": "2d80a8e1e8b9ce0fc24670c96b51427ef230356676aca60274ae9bcd13a2bec7"}
+[alphabet] 4096 clicks -> 10 live classes [('sld', '0067ahrmdjqjop', -1), ('sld', '0067ahrmdjqjop', 1), ('sld', '0068ydjiylapcv', -1), ('sld', '0068ydjiylapcv', 1), ('sld', '0069zlulamypif', -1), ('sld', '0069zlulamypif', 1), ('sld', '0071ogcspsoiwl', -1), ('sld', '0071ogcspsoiwl', 1), ('sld', '0072edqxureewm', -1), ('sld', '0072edqxureewm', 1)]
+[L4] layer 1 reached  nodes=10 states=7 frontier=5 t=0s
+[L4] layer 2 reached  nodes=70 states=27 frontier=19 t=0s
+[L4] layer 3 reached  nodes=270 states=77 frontier=49 t=0s
+[L4] layer 4 reached  nodes=770 states=181 frontier=103 t=5s
+[L4] layer 5 reached  nodes=1810 states=371 frontier=189 t=11s
+[L4] layer 6 reached  nodes=3710 states=681 frontier=309 t=24s
+[L4] layer 7 reached  nodes=6810 states=1141 frontier=459 t=37s
+[L4] layer 8 reached  nodes=11410 states=1773 frontier=631 t=51s
+[L4] layer 9 reached  nodes=17730 states=2583 frontier=809 t=70s
+[L4] layer 10 reached  nodes=25830 states=3559 frontier=975 t=121s
+[L4] layer 11 reached  nodes=35590 states=4665 frontier=1105 t=211s
+[L4] layer 12 reached  nodes=46650 states=5859 frontier=1193 t=291s
+[L4] layer 13 reached  nodes=58590 states=7081 frontier=1221 t=339s
+[L4] layer 14 reached  nodes=70810 states=8277 frontier=1195 t=390s
+[L4] layer 15 reached  nodes=82770 states=9392 frontier=1114 t=421s
+[L4] layer 16 reached  nodes=93920 states=10389 frontier=996 t=475s
+[L4] layer 17 reached  nodes=103890 states=11245 frontier=855 t=528s
+[L4] layer 18 reached  nodes=112450 states=11951 frontier=705 t=582s
+[L4] layer 19 reached  nodes=119510 states=12509 frontier=557 t=634s
+[L4] layer 20 reached  nodes=125090 states=12933 frontier=423 t=661s
+[L4] layer 21 reached  nodes=129330 states=13248 frontier=314 t=680s
+[L4] layer 22 reached  nodes=132480 states=13469 frontier=220 t=700s
+[L4] layer 23 reached  nodes=134690 states=13621 frontier=151 t=716s
+[L4] layer 24 reached  nodes=136210 states=13722 frontier=100 t=728s
+[L4] layer 25 reached  nodes=137220 states=13788 frontier=65 t=732s
+[L4] layer 26 reached  nodes=137880 states=13829 frontier=40 t=736s
+[L4] layer 27 reached  nodes=138290 states=13856 frontier=26 t=738s
+[L4] layer 28 reached  nodes=138560 states=13872 frontier=15 t=740s
+[L4] layer 29 reached  nodes=138720 states=13881 frontier=8 t=740s
+RESULT {"level": 4, "status": "PROVEN", "floor": 30, "proof_kind": "uniform_cost_exhaustion_complete_state", "proof": "uniform-cost layers 1..29 exhausted over the complete arm configuration (full pixel key over 10 mobile sprites) under a structurally COMPLETE click alphabet (|A|=10); first win at depth 30", "alphabet_n": 10, "nodes": 138786, "states": 13884, "step_budget": 100, "replay_verified": true, "replay_win_at": 30, "seconds": 741.8, "min_path": ["CLK(3,54)", "CLK(3,54)", "CLK(3,54)", "CLK(3,54)", "CLK(3,54)", "CLK(3,54)", "CLK(3,54)", "CLK(10,45)", "CLK(10,45)", "CLK(10,45)", "CLK(10,45)", "CLK(10,45)", "CLK(32,51)", "CLK(32,51)", "CLK(32,51)", "CLK(32,51)", "CLK(32,51)", "CLK(32,51)", "CLK(32,51)", "CLK(55,45)", "CLK(55,45)", "CLK(55,45)", "CLK(55,54)", "CLK(32,51)", "CLK(55,54)", "CLK(32,51)", "CLK(55,54)", "CLK(32,51)", "CLK(55,54)", "CLK(32,51)"], "path": [[6, 3, 54], [6, 3, 54], [6, 3, 54], [6, 3, 54], [6, 3, 54], [6, 3, 54], [6, 3, 54], [6, 10, 45], [6, 10, 45], [6, 10, 45], [6, 10, 45], [6, 10, 45], [6, 32, 51], [6, 32, 51], [6, 32, 51], [6, 32, 51], [6, 32, 51], [6, 32, 51], [6, 32, 51], [6, 55, 45], [6, 55, 45], [6, 55, 45], [6, 55, 54], [6, 32, 51], [6, 55, 54], [6, 32, 51], [6, 55, 54], [6, 32, 51], [6, 55, 54], [6, 32, 51]]}

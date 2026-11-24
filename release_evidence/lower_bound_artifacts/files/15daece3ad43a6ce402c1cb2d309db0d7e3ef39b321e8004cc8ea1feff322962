@@ -1,0 +1,13 @@
+{"level": 6, "ub": 35, "sources": "dir1", "canonical_prefix_actions": 86, "canonical_dir": 0, "canonical_ijh": null, "canonical_key": "fba9ce94ac8e06492deb35a5f4cfce29fab492f08056c1a545145d82821c8efa", "canonical_matches_variant": [], "source_keys": {"dir1_ijhNone": "5db128615cdf98fe90fc30364b89d10a552941572907fe140aad19b3223363f3"}, "src_sha256": "871a507cf340d1e4a3271205a71bb5433f20c2b0e427f7ce40da47060cdd4392"}
+{"expanded": 200, "cost": 10, "frontier": 128, "best_goal": null, "t": 56.5}
+{"expanded": 400, "cost": 13, "frontier": 152, "best_goal": null, "t": 110.3}
+{"expanded": 600, "cost": 16, "frontier": 139, "best_goal": null, "t": 161.4}
+{"expanded": 800, "cost": 20, "frontier": 87, "best_goal": null, "t": 210.5}
+{"expanded": 1000, "cost": 25, "frontier": 118, "best_goal": null, "t": 256.0}
+{"expanded": 1200, "cost": 28, "frontier": 245, "best_goal": null, "t": 299.6}
+{"expanded": 1400, "cost": 30, "frontier": 343, "best_goal": null, "t": 342.7}
+{"expanded": 1600, "cost": 31, "frontier": 357, "best_goal": null, "t": 385.9}
+{"expanded": 1800, "cost": 32, "frontier": 306, "best_goal": null, "t": 431.4}
+{"expanded": 2000, "cost": 33, "frontier": 257, "best_goal": null, "t": 478.8}
+{"expanded": 2200, "cost": 34, "frontier": 96, "best_goal": null, "t": 526.3}
+DONE 35 2296 548.2

@@ -1,0 +1,3 @@
+CMD python lock_targeted.py 41 15 d8
+LOCK_TARGETED kind d8 seed 41 states 15 clicks 61440 mismatch 0 {'ok': 7353, 'noop': 53334, 'fail': 667, 'win': 86} lossy_clicks 0 piece_click_pairs_at_distance_exactly_8 401 sec 30
+rc=0

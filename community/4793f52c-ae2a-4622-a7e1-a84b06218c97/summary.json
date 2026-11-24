@@ -1,0 +1,327 @@
+{
+ "name": "OpenClaw",
+ "scorecard_id": "4793f52c-ae2a-4622-a7e1-a84b06218c97",
+ "scorecard_url": "https://arcprize.org/scorecards/4793f52c-ae2a-4622-a7e1-a84b06218c97",
+ "page": {
+  "score": "5.20%",
+  "levels": "28 / 183",
+  "environments": "0 / 25",
+  "total_actions": "9010",
+  "tags_header": "agentopenclaw",
+  "tag_table": [
+   {
+    "tag": "click",
+    "score": 2.41,
+    "levels_completed": 5,
+    "actions": 1720,
+    "environments": 7
+   },
+   {
+    "tag": "keyboard",
+    "score": 5.74,
+    "levels_completed": 5,
+    "actions": 2284,
+    "environments": 4
+   },
+   {
+    "tag": "keyboard_click",
+    "score": 5.41,
+    "levels_completed": 16,
+    "actions": 4879,
+    "environments": 13
+   }
+  ]
+ },
+ "recordings": 25,
+ "recording_actions_counted_in_won_levels": 605,
+ "levels_won": 28,
+ "levels_total": 183,
+ "mean_mmae_183": 0.105139,
+ "legacy_game_versions": {},
+ "mean_mmae_183_current_version_games_only_legacy_counted_0": 0.105139,
+ "levels_at_proven_floor": 13,
+ "levels_at_proven_floor_list": [
+  [
+   "ar25",
+   1,
+   15
+  ],
+  [
+   "ft09",
+   1,
+   4
+  ],
+  [
+   "ft09",
+   2,
+   7
+  ],
+  [
+   "re86",
+   1,
+   20
+  ],
+  [
+   "s5i5",
+   1,
+   13
+  ],
+  [
+   "sb26",
+   1,
+   9
+  ],
+  [
+   "sc25",
+   2,
+   5
+  ],
+  [
+   "sp80",
+   1,
+   4
+  ],
+  [
+   "tn36",
+   1,
+   7
+  ],
+  [
+   "tr87",
+   1,
+   14
+  ],
+  [
+   "tu93",
+   2,
+   10
+  ],
+  [
+   "vc33",
+   1,
+   3
+  ],
+  [
+   "wa30",
+   1,
+   26
+  ]
+ ],
+ "levels_below_floor_count": 0,
+ "levels_below_floor": [],
+ "levels_beat_our_actions_count": 0,
+ "levels_beat_our_actions": [],
+ "page_vs_recording_level_mismatch": [],
+ "won_levels_detail_game_level_actions_floor_mmae": [
+  [
+   "ar25",
+   1,
+   15,
+   15,
+   1.0
+  ],
+  [
+   "ar25",
+   2,
+   45,
+   11,
+   0.059753
+  ],
+  [
+   "bp35",
+   1,
+   51,
+   15,
+   0.086505
+  ],
+  [
+   "dc22",
+   1,
+   24,
+   20,
+   0.694444
+  ],
+  [
+   "ft09",
+   1,
+   4,
+   4,
+   1.0
+  ],
+  [
+   "ft09",
+   2,
+   7,
+   7,
+   1.0
+  ],
+  [
+   "ka59",
+   1,
+   13,
+   11,
+   0.715976
+  ],
+  [
+   "ka59",
+   2,
+   50,
+   30,
+   0.36
+  ],
+  [
+   "lf52",
+   1,
+   20,
+   8,
+   0.16
+  ],
+  [
+   "ls20",
+   1,
+   15,
+   13,
+   0.751111
+  ],
+  [
+   "m0r0",
+   1,
+   22,
+   15,
+   0.464876
+  ],
+  [
+   "m0r0",
+   2,
+   45,
+   23,
+   0.261235
+  ],
+  [
+   "re86",
+   1,
+   20,
+   20,
+   1.0
+  ],
+  [
+   "s5i5",
+   1,
+   13,
+   13,
+   1.0
+  ],
+  [
+   "sb26",
+   1,
+   9,
+   9,
+   1.0
+  ],
+  [
+   "sc25",
+   1,
+   18,
+   13,
+   0.521605
+  ],
+  [
+   "sc25",
+   2,
+   5,
+   5,
+   1.0
+  ],
+  [
+   "sk48",
+   1,
+   23,
+   14,
+   0.37051
+  ],
+  [
+   "sp80",
+   1,
+   4,
+   4,
+   1.0
+  ],
+  [
+   "tn36",
+   1,
+   7,
+   7,
+   1.0
+  ],
+  [
+   "tr87",
+   1,
+   14,
+   14,
+   1.0
+  ],
+  [
+   "tr87",
+   2,
+   35,
+   25,
+   0.510204
+  ],
+  [
+   "tu93",
+   1,
+   24,
+   18,
+   0.5625
+  ],
+  [
+   "tu93",
+   2,
+   10,
+   10,
+   1.0
+  ],
+  [
+   "vc33",
+   1,
+   3,
+   3,
+   1.0
+  ],
+  [
+   "vc33",
+   2,
+   13,
+   7,
+   0.289941
+  ],
+  [
+   "wa30",
+   1,
+   26,
+   26,
+   1.0
+  ],
+  [
+   "wa30",
+   2,
+   70,
+   46,
+   0.431837
+  ]
+ ],
+ "method": "per-level non-RESET actions from public recordings (sc08_levels.py); MMAE=(proven_floor/agent_actions)^2 per won level, 0 otherwise, mean over 183 levels of demo25_levels_mmae.csv",
+ "official_level_actions_crosscheck": {
+  "source": "https://arcprize.org/api/v3/scorecards/4793f52c-ae2a-4622-a7e1-a84b06218c97 (public JSON the scorecard page loads); level_actions of the best run per environment; counts mid-level RESETs as actions",
+  "api_total_levels_completed": 28,
+  "api_total_actions": 9010,
+  "envs_where_recording_count_equals_api": 25,
+  "envs": 25,
+  "levels_won": 28,
+  "mean_mmae_183": 0.105139,
+  "mean_mmae_183_current_version_games_only": 0.105139,
+  "levels_at_proven_floor": 13,
+  "levels_below_floor": [],
+  "levels_beat_our_actions": []
+ }
+}

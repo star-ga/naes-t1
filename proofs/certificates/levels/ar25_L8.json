@@ -1,0 +1,87 @@
+{
+  "artifact_sha256": [
+    {
+      "kind": "safe_statement_count_extract",
+      "sha256": "a319eec0c481cb4c0616dde1b59aa0fb2e7b554f1fa90e92955679e815e4ff37"
+    },
+    {
+      "kind": "authority_ledger_label",
+      "sha256": "b1e813ef7134ed36f9bc2390fd6bccd3b4a8463cd0f514679dcd548bef6d100d"
+    },
+    {
+      "kind": "per_level_certificate_record",
+      "sha256": "7c6518f74bd6d0d7a8798855965ae0fd94c8d1946a168f6d233f446cf2c1f91f"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "c40a3aafeb225f8e125af7ff301ff548c975e2ce265b1f4c8970164702e499e7"
+    },
+    {
+      "kind": "existing_search_or_enumeration_record",
+      "sha256": "1031110f81f217bb6dc52103b40fa7b832fbf45d60936313742a6e9c0c50665c"
+    },
+    {
+      "kind": "existing_search_or_enumeration_record",
+      "sha256": "a17761328792aad738ce5662c19185ccfd94cdb11978e5d3770670fa76e00612"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "4eade5780900893a1418764d692675b8c1febb16dd03f23c615017a593157928"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "06e6a686575e7dfb0c1849c1a5a3109d9250a9a49322407260c167558b9ff084"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "82d21ce7c703d378b431fc2085eb6f63de11222538374b2a1040a0b39eb5606f"
+    },
+    {
+      "kind": "existing_search_or_enumeration_record",
+      "sha256": "00e14851b0ee5c61f16535ccf7df13060ee57f6f7fb6f7b87812457a5486dc9d"
+    },
+    {
+      "kind": "existing_search_or_enumeration_record",
+      "sha256": "bec11f074fe966ef7bad533d1edd500512aa2605a83aa74e1bd74c61706ba7d1"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "234505637eb78253e6aaea60f6b614a430d71ddfc14b0527f7fd85ee7ecfeae7"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "c49c5ed311f11e075dd0f086bac739b934d1490484700e91134090988b64c107"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "05eadac23fd4e4db20efeff0551d71de340edf8f59b51b6d909a7f77f689017f"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "754a70b1187139bb8b2ad8a5a359b58ea270bb4dd482726a1e34e603fdf26c3e"
+    }
+  ],
+  "floor": 47,
+  "game": "ar25",
+  "game_id": "ar25-0c556536",
+  "game_levels": 8,
+  "level": 8,
+  "lower_bound": {
+    "kind": "exact_cost_algebra_exhaustive_endpoint_enumeration",
+    "statement": "Every action costs at least displacement plus required selections. Exhaustive endpoint enumeration checks 46009089 configurations, 1 winning; minimum necessary cost 47; 0 winners cost at most 46.",
+    "value": 47
+  },
+  "naes_t1_actions": 47,
+  "proof_class": "Exact math",
+  "proof_detail": "exact_cost_algebra_exhaustive_endpoint_enumeration",
+  "schema_version": 1,
+  "source_certificate_sha256": "6103f73a4c1badb23f605b3f23c6cc92930f2fbec2a92f5b1ffbcdc3813fb171",
+  "status": "proven",
+  "upper_bound": {
+    "expected_levels_completed": 8,
+    "length": 47,
+    "opening_reset_counted": false,
+    "route": "2 2 2 2 2 2 5 4 4 4 4 4 4 4 4 4 5 3 3 3 3 3 3 3 3 3 1 1 1 1 1 1 1 5 4 4 4 4 4 4 4 4 4 1 1 1 1",
+    "seed": 0
+  }
+}

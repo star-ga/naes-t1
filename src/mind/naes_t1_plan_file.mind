@@ -1,0 +1,27 @@
+extern "C" {
+    unsafe fn readlink(path: *const u8, buf: *mut u8, cap: i64) -> i64;
+}
+fn open_plan_file(proc_path: String, basename: String) -> i64 {
+    let path: i64 = __mind_alloc(4096);
+    let n: i64 = readlink(proc_path.addr as *const u8, path as *mut u8, 4095);
+    if n <= 0 || n >= 4095 { return 0; }
+    let mut slash: i64 = n - 1;
+    while slash >= 0 && __mind_load_i8(path + slash) != 47 { slash = slash - 1; }
+    if slash < 0 || slash + 1 + basename.len >= 4096 { return 0; }
+    let mut p: i64 = 0;
+    while p < basename.len {
+        __mind_store_i8(path + slash + 1 + p, __mind_load_i8(basename.addr + p));
+        p = p + 1;
+    }
+    __mind_store_i8(path + slash + 1 + basename.len, 0);
+    let fd: i64 = __mind_open(path);
+    let _f: i64 = __mind_free(path);
+    if fd < 0 { return 0; }
+    let rec: i64 = alloc_zero(2);
+    if read_fd_all(fd, rec) < 0 || ld(rec, 1) < 80 { return 0; }
+    let raw: i64 = ld(rec, 0);
+    // NAEST1PL, version1, eight residual schedules.
+    if rd_u32(raw, 0) != 1397047630 || rd_u32(raw, 4) != 1280323924 || rd_u32(raw, 8) != 1 || rd_u32(raw, 12) != 8 { return 0; }
+    rec
+}
+fn load_plan_file() -> i64 { open_plan_file("/proc/self/exe\0", "naes_t1.plans.bin") }

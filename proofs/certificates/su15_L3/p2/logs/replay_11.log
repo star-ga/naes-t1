@@ -1,0 +1,9 @@
+su15 L 3 route len 11 result(actions_to_complete,state) (11, 'NOT_FINISHED')
+negative control (drop last action): (0, 'NOT_FINISHED')
+su15 L 3 route len 11 result(actions_to_complete,state) (11, 'NOT_FINISHED')
+negative control (drop last action): (0, 'NOT_FINISHED')
+su15 L 3 route len 11 result(actions_to_complete,state) (11, 'NOT_FINISHED')
+negative control (drop last action): (0, 'NOT_FINISHED')
+IDA(bound 11, uncapped) route:
+su15 L 3 route len 11 result(actions_to_complete,state) (11, 'NOT_FINISHED')
+negative control (drop last action): (0, 'NOT_FINISHED')

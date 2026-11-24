@@ -1,0 +1,380 @@
+{
+  "copied_at_most_4096_bytes": [
+    {
+      "path": "remote_lower_bounds/bound_logs/wa30_L8_20261101/out/cap2_layers18.out",
+      "bytes": 2315,
+      "sha256": "94159b0772e523fc914cb73ad9b8169fa0c77b78e5874a582d308cd58eaefd29"
+    },
+    {
+      "path": "remote_lower_bounds/bound_logs/wa30_L8_20261101/out/r_L8.out",
+      "bytes": 395,
+      "sha256": "dd0caa60f0e110ad8760edc14146e8efb53228b7d5265d0ccf3f2449f4c93c40"
+    },
+    {
+      "path": "remote_lower_bounds/bound_logs/wa30_L8_20261101/out/knuth_B60.out",
+      "bytes": 97,
+      "sha256": "58b89761a82c3d94403f4d86e36b039392c328abdfd53f9f5a9d5192b4536729"
+    },
+    {
+      "path": "remote_lower_bounds/bound_logs/wa30_L8_20261101/out/engine_replay.out",
+      "bytes": 471,
+      "sha256": "bfb1218611ba90d5f29b9796ab7e6fdcdd3967807366819ed09a93e8008bbc7b"
+    },
+    {
+      "path": "remote_lower_bounds/bound_logs/wa30_L8_20261101/out/lem2_layers22.out",
+      "bytes": 613,
+      "sha256": "835dc6fe6f4e3fa4e35c62c634420031d93ce515d9c65c49933bf058e21c42e1"
+    },
+    {
+      "path": "remote_lower_bounds/bound_logs/wa30_L8_20261101/out/est_pool_mut2.out",
+      "bytes": 375,
+      "sha256": "8bfd158605a2162153cff2d65b3d97062fa1556983884124ca19faa45680ebee"
+    },
+    {
+      "path": "remote_lower_bounds/bound_logs/wa30_L8_20261101/out/lem_layers22.out",
+      "bytes": 572,
+      "sha256": "a2887e4b7ef037cf11852702be5be5ed2a4cc4d1e9f0bc2b1c5092e15b976d58"
+    },
+    {
+      "path": "remote_lower_bounds/bound_logs/wa30_L8_20261101/out/run_b55_58.out",
+      "bytes": 168,
+      "sha256": "08c1a8ecd3bc2b4017b7566fdd55fe06c419ce30942ad1c8f464e62f77f59bdd"
+    },
+    {
+      "path": "remote_lower_bounds/bound_logs/wa30_L8_20261101/out/knuth_B70.out",
+      "bytes": 97,
+      "sha256": "5f66e0a7cdfa908f5aaf283f3145fa0af47f4ca24db48b3c8e9eec8fda17f18e"
+    },
+    {
+      "path": "remote_lower_bounds/bound_logs/wa30_L8_20261101/out/regionbfs_L8.out",
+      "bytes": 849,
+      "sha256": "668cee84bac328c172dd074fbcd518de8652e1e36948482f2b4f9b7dd0f0e34b"
+    },
+    {
+      "path": "remote_lower_bounds/bound_logs/wa30_L8_20261101/out/lem2_dive57.out",
+      "bytes": 623,
+      "sha256": "0c3ee876aeb3c2693784968795106aded362967cc4e5dd51175742567bd34601"
+    },
+    {
+      "path": "remote_lower_bounds/bound_logs/wa30_L8_20261101/out/r_L8_lo.out",
+      "bytes": 1700,
+      "sha256": "bd0e8a161a8a80ffd1b87075c71153dbfcd90636990c10b534c6749028009937"
+    },
+    {
+      "path": "remote_lower_bounds/bound_logs/wa30_L8_20261101/out/bday_counts.out",
+      "bytes": 1495,
+      "sha256": "01f284693226dd7c8187e447bb02c63daf97e69bb0add2305fadc2ee04be5bbf"
+    },
+    {
+      "path": "remote_lower_bounds/bound_logs/wa30_L8_20261101/out/patcap_dive57.out",
+      "bytes": 2255,
+      "sha256": "68cea83e7e1b62d8f852e84fa2553533bcdd98429fc3b1d3c2ddede49fbaa686"
+    },
+    {
+      "path": "remote_lower_bounds/bound_logs/wa30_L8_20261101/out/knuth_B48.out",
+      "bytes": 141,
+      "sha256": "aa3ef5c736b10df9e39bdbaa186499ead0fc13539c78332e5090b26b4ea40ce1",
+      "original_sha256": "885b93817439b8ef7a60de5c5db1df7d1d19c891eff2ce27243e1d2ed133985a",
+      "<key withheld>": "run-location token removed"
+    },
+    {
+      "path": "remote_lower_bounds/bound_logs/wa30_L8_20261101/out/knuth_tail65_B25.out",
+      "bytes": 98,
+      "sha256": "d6c67c376775d2e086908f723861d36dd86beb6f2ee77a142d7ec83ca10e4480"
+    },
+    {
+      "path": "remote_lower_bounds/bound_logs/wa30_L8_20261101/out/patcap_L8.out",
+      "bytes": 2119,
+      "sha256": "9591b6843658f9ad9fb800b78e6ae455115ca568215ecaf47be8adf803b6ba89"
+    },
+    {
+      "path": "remote_lower_bounds/bound_logs/wa30_L8_20261101/out/knuth_B80.out",
+      "bytes": 97,
+      "sha256": "f26a89c433cbe14e37f46f3e14ff67c1e5b7360087b7a510e3834be8224de60b"
+    },
+    {
+      "path": "remote_lower_bounds/bound_logs/wa30_L8_20261101/out/cap2_dive57.out",
+      "bytes": 677,
+      "sha256": "426b68f027e5d38c221fa58eb3e3671cec43d6929ce4e50bd5883a2a6a3305cc"
+    },
+    {
+      "path": "remote_lower_bounds/bound_logs/wa30_L8_20261101/out/knuth_tail60_B30.out",
+      "bytes": 98,
+      "sha256": "0360e420134c5eb8750b3b0b447fb3966bae982c65bd2ad2521d68b816d5a256"
+    },
+    {
+      "path": "remote_lower_bounds/bound_logs/wa30_L8_20261101/out/knuth_B56.out",
+      "bytes": 97,
+      "sha256": "bf2494d01fa2e1342012d697405a229aa815cf99b05a2e487d076ddf6f15e2a4"
+    },
+    {
+      "path": "remote_lower_bounds/bound_logs/wa30_L8_20261101/out/knuth_B90.out",
+      "bytes": 97,
+      "sha256": "b5ce4b38ddc50e9b9a7f8f04621966b784b2ec1d8a65b78a89054379d8eb4baa"
+    },
+    {
+      "path": "remote_lower_bounds/bound_logs/wa30_L8_20261101/out/lbfs_L8_to_d30.out",
+      "bytes": 255,
+      "sha256": "87811658371f33da12f074c74a85367b32e91722919fd3629749740d3d0473c9"
+    },
+    {
+      "path": "remote_lower_bounds/bound_logs/wa30_L8_20261101/out/lem_mut1_layers18.out",
+      "bytes": 564,
+      "sha256": "7ff1486800a5af73f498d8d69245d8d1226a754feff3fbc5b5073b197044f2e5"
+    },
+    {
+      "path": "remote_lower_bounds/bound_logs/wa30_L8_20261101/out/lem_mut2_layers18.out",
+      "bytes": 563,
+      "sha256": "aa5bd56db6debde37eb6ebcbe3234dad3d45309a7c454ee9d9090e08ddd56120"
+    },
+    {
+      "path": "remote_lower_bounds/bound_logs/wa30_L8_20261101/out/est_pool.out",
+      "bytes": 68,
+      "sha256": "0bde06e99fd17c07ea80d1c161f2c4d8cf7ffcb57f69e3402398cea02be7a876"
+    },
+    {
+      "path": "remote_lower_bounds/bound_logs/wa30_L8_20261101/out/knuth_B57.out",
+      "bytes": 97,
+      "sha256": "fcbb8c7e18494807562a307b0cc4555a81c5ac3abca496dee037e80a0cdc458d"
+    },
+    {
+      "path": "remote_lower_bounds/bound_logs/wa30_L9_20261101/e1b_aR_ronly.out",
+      "bytes": 416,
+      "sha256": "0691654d9a9b15117d43a85429186ad1ff9cd925de9c3ef21c44f75a3db84d9a"
+    },
+    {
+      "path": "remote_lower_bounds/bound_logs/wa30_L9_20261101/helper0_single_removal.out",
+      "bytes": 347,
+      "sha256": "72c6b5f002a3a59ee170d9c9fa8d8248495afb1cfc4740135503c1c9e35f3e22"
+    },
+    {
+      "path": "remote_lower_bounds/bound_logs/wa30_L9_20261101/SHA256SUMS_src.txt",
+      "bytes": 1455,
+      "sha256": "b7d2d517f319c050390faf973e015f33f825a4fea118e92a90daa304f3fef344",
+      "original_sha256": "0f67936200a01de7969dd502af5b76aae7f50507553b12e952b84266fe8601eb",
+      "original_bytes": 1454,
+      "pin_note": "bytes and sha256 recomputed to the file in this folder; original_* is the earlier recorded pin"
+    },
+    {
+      "path": "remote_lower_bounds/bound_logs/wa30_L9_20261101/e1_ronly_bfs.out",
+      "bytes": 964,
+      "sha256": "71a79c5a7ee0189f80954e5ef9a8cf97075d8e4dc77a8e4c72cf2d694868a38f"
+    },
+    {
+      "path": "remote_lower_bounds/bound_logs/wa30_L9_20261101/e1_ronly_example_paths.out",
+      "bytes": 77,
+      "sha256": "7b9be2597cbe2a063460d08f78e09e3a7b8c246e603cc7b6a9f9a3621124d7d4"
+    },
+    {
+      "path": "remote_lower_bounds/bound_logs/wa30_L9_20261101/src/levels_full.txt",
+      "bytes": 1706,
+      "sha256": "74fde749266c79580cfd7147f6f4b82f84028a698aa0924e3a3176c1d44f651f"
+    },
+    {
+      "path": "remote_lower_bounds/bound_logs/wa30_L9_20261101/src/levels_R.txt",
+      "bytes": 317,
+      "sha256": "7f4d2b05ca3afa08b9e063804b94b9af679f604391750b5d450b56d92d19b904"
+    },
+    {
+      "path": "remote_lower_bounds/bound_logs/wa30_L9_20261101/src/levels_L.txt",
+      "bytes": 331,
+      "sha256": "516e37b816594f94688db9d0cb48241d14ae7a0a38ee17641e1ed61c38fbf43a"
+    },
+    {
+      "path": "remote_lower_bounds/bound_logs/wa30_L9_20261101/lockstep_engine_vs_eng_h.json",
+      "bytes": 129,
+      "sha256": "5e43e83ae5f9ff60dd7f99bfb736e3dc4929defd1dacb7d7c4503afde4708806"
+    }
+  ],
+  "not_copied": [
+    {
+      "path": "wa30_L8_20261101/MANIFEST.sha256",
+      "bytes": 4018
+    },
+    {
+      "path": "wa30_L8_20261101/tools/knuth.c",
+      "bytes": 2025
+    },
+    {
+      "path": "wa30_L8_20261101/tools/patcap.c",
+      "bytes": 5522
+    },
+    {
+      "path": "wa30_L8_20261101/tools/build_pool.sh",
+      "bytes": 1207
+    },
+    {
+      "path": "wa30_L8_20261101/tools/run_lemmas.sh",
+      "bytes": 814
+    },
+    {
+      "path": "wa30_L8_20261101/tools/run_controls.sh",
+      "bytes": 2356
+    },
+    {
+      "path": "wa30_L8_20261101/tools/replay91.py",
+      "bytes": 1444
+    },
+    {
+      "path": "wa30_L8_20261101/tools/regionbfs.c",
+      "bytes": 3064
+    },
+    {
+      "path": "wa30_L8_20261101/tools/lemmas_v2.c",
+      "bytes": 9768
+    },
+    {
+      "path": "wa30_L8_20261101/tools/bday.c",
+      "bytes": 2074
+    },
+    {
+      "path": "wa30_L8_20261101/tools/lemmas.c",
+      "bytes": 9768
+    },
+    {
+      "path": "wa30_L8_20261101/tools/bday_count.py",
+      "bytes": 938
+    },
+    {
+      "path": "wa30_L8_20261101/tools/lbfs.c",
+      "bytes": 1491
+    },
+    {
+      "path": "wa30_L8_20261101/tools/mk_ctl.py",
+      "bytes": 1594
+    },
+    {
+      "path": "wa30_L8_20261101/out/fdb2_min_path_L8.json",
+      "bytes": 273
+    },
+    {
+      "path": "wa30_L8_20261101/out/controls.log",
+      "bytes": 5104
+    },
+    {
+      "path": "wa30_L8_20261101/out/pool.txt",
+      "bytes": 14729
+    },
+    {
+      "path": "wa30_L8_20261101/out/routes_L8.json",
+      "bytes": 1387
+    },
+    {
+      "path": "wa30_L8_20261101/out/wa30r_ctl.c",
+      "bytes": 67016
+    },
+    {
+      "path": "wa30_L9_20261101/README.md",
+      "bytes": 10071
+    },
+    {
+      "path": "wa30_L9_20261101/bin/r_need",
+      "bytes": 26144
+    },
+    {
+      "path": "wa30_L9_20261101/bin/sym2",
+      "bytes": 30648
+    },
+    {
+      "path": "wa30_L9_20261101/bin/e1c_aR_cross",
+      "bytes": 25944
+    },
+    {
+      "path": "wa30_L9_20261101/bin/step_l9",
+      "bytes": 21544
+    },
+    {
+      "path": "wa30_L9_20261101/bin/e1_ronly",
+      "bytes": 26000
+    },
+    {
+      "path": "wa30_L9_20261101/bin/dls",
+      "bytes": 21792
+    },
+    {
+      "path": "wa30_L9_20261101/bin/e1b_aR",
+      "bytes": 25936
+    },
+    {
+      "path": "wa30_L9_20261101/bin/sym_l",
+      "bytes": 30520
+    },
+    {
+      "path": "wa30_L9_20261101/bin/e2_lsearch",
+      "bytes": 26048
+    },
+    {
+      "path": "wa30_L9_20261101/bin/h0sched",
+      "bytes": 21296
+    },
+    {
+      "path": "wa30_L9_20261101/src/eng.h",
+      "bytes": 12092
+    },
+    {
+      "path": "wa30_L9_20261101/src/e2_lsearch.c",
+      "bytes": 2251
+    },
+    {
+      "path": "wa30_L9_20261101/src/eng_track.h",
+      "bytes": 12507
+    },
+    {
+      "path": "wa30_L9_20261101/src/sym2.c",
+      "bytes": 7478
+    },
+    {
+      "path": "wa30_L9_20261101/src/e1b_aR.c",
+      "bytes": 2628
+    },
+    {
+      "path": "wa30_L9_20261101/src/r_need.c",
+      "bytes": 3516
+    },
+    {
+      "path": "wa30_L9_20261101/src/hmap.h",
+      "bytes": 1394
+    },
+    {
+      "path": "wa30_L9_20261101/src/engine_diff.py",
+      "bytes": 5626
+    },
+    {
+      "path": "wa30_L9_20261101/src/hset.h",
+      "bytes": 1196
+    },
+    {
+      "path": "wa30_L9_20261101/src/h0sched.c",
+      "bytes": 1244
+    },
+    {
+      "path": "wa30_L9_20261101/src/routes61.json",
+      "bytes": 126
+    },
+    {
+      "path": "wa30_L9_20261101/src/sym_l.c",
+      "bytes": 5469
+    },
+    {
+      "path": "wa30_L9_20261101/src/dls.c",
+      "bytes": 896
+    },
+    {
+      "path": "wa30_L9_20261101/src/e1_ronly.c",
+      "bytes": 1310
+    },
+    {
+      "path": "wa30_L9_20261101/src/e1c_aR_cross.c",
+      "bytes": 2664
+    },
+    {
+      "path": "wa30_L9_20261101/src/stepper.c",
+      "bytes": 899
+    },
+    {
+      "path": "wa30_L9_20261101/knuth/knuth.c",
+      "bytes": 2083
+    }
+  ],
+  "note": "run_b55_58.out records bound 55 at 17643 s and bound 56 cumulative 59356 s. Bound 56 alone is 59356-17643=41713 s. Files whose names record a host are not bundled. 21 small logs are left out of this bundle because their names record a host. 4 entries are omitted from this manifest because their names record a host."
+}

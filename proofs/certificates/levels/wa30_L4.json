@@ -1,0 +1,44 @@
+{
+  "artifact_sha256": [
+    {
+      "kind": "safe_statement_count_extract",
+      "sha256": "2f1668dcd0a087e541dda9627275e867e08b4f662d86b32ec0f15e418ffa9ba0"
+    },
+    {
+      "kind": "authority_ledger_label",
+      "sha256": "f293e6b784fcfa1c342aa241b3b4fcf122ac8786d0566afc35cf41fa770babad",
+      "status": "withheld"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "cb6a48eb2a88e1a955b4d97e82cef43529b7cae7a19304aebab6f137608da553"
+    },
+    {
+      "kind": "historical_method_or_search_output",
+      "sha256": "accd9e1a970171fb1c29af836925955da1c7225f59b9313869d8a627cf44d248"
+    }
+  ],
+  "floor": 43,
+  "game": "wa30",
+  "game_id": "wa30-ee6fef47",
+  "game_levels": 9,
+  "level": 4,
+  "lower_bound": {
+    "kind": "idastar_bounded_tt_complete_bound_exhaustion",
+    "statement": "Iterative-deepening A* completes every bound from admissible root value 22 through 42 without a win. Contiguous closure excludes every route of at most 42 actions. The proof idastar_bounded_tt_complete_bound_exhaustion establishes lower bound 43, equal to the floor.",
+    "value": 43
+  },
+  "naes_t1_actions": 43,
+  "proof_class": "A*",
+  "proof_detail": "idastar_bounded_tt_complete_bound_exhaustion",
+  "schema_version": 1,
+  "source_certificate_sha256": "a6adebdbfd197513a9bebdfceca58ba7a79bca2122ae5315b01f96bd8b633456",
+  "status": "proven",
+  "upper_bound": {
+    "expected_levels_completed": 4,
+    "length": 43,
+    "opening_reset_counted": false,
+    "route": "4 1 5 1 5 3 5 3 5 4 4 5 4 5 2 2 2 5 2 5 1 1 3 2 5 2 2 5 3 5 1 3 5 3 3 3 3 3 3 3 3 3 3",
+    "seed": 0
+  }
+}

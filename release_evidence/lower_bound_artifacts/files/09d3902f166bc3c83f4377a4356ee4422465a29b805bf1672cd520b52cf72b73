@@ -1,0 +1,134 @@
+{
+ "instance": "sc25-635fd71a",
+ "head": {
+  "model": "sc25_hidden_facing",
+  "game_py": "<path>",
+  "level": 3,
+  "ub": 11,
+  "robust_path": [
+   [
+    3
+   ],
+   [
+    3
+   ],
+   [
+    4
+   ],
+   [
+    6,
+    28,
+    47
+   ],
+   [
+    6,
+    28,
+    53
+   ],
+   [
+    6,
+    28,
+    58
+   ],
+   [
+    2
+   ],
+   [
+    2
+   ],
+   [
+    3
+   ],
+   [
+    2
+   ],
+   [
+    3
+   ]
+  ],
+  "robust_actions": 11,
+  "note": "facing (jdmucabyqar) survives set_level; not drawn at level start (first frame identical under all 4); exhaustive legs = sc25_macro_ucs.py per facing (THEOREM.md)"
+ },
+ "hyps": [
+  {
+   "label": "facing_up",
+   "consistent": true,
+   "fi_min": null,
+   "ub": 11,
+   "exhaustive": true,
+   "states": 174,
+   "depth_closed": 10,
+   "secs": 38.1,
+   "robust_replay": {
+    "won_at": 11,
+    "n": 11
+   }
+  },
+  {
+   "label": "facing_down",
+   "consistent": true,
+   "fi_min": null,
+   "ub": 11,
+   "exhaustive": true,
+   "states": 174,
+   "depth_closed": 10,
+   "secs": 39.2,
+   "robust_replay": {
+    "won_at": 11,
+    "n": 11
+   }
+  },
+  {
+   "label": "facing_left",
+   "consistent": true,
+   "fi_min": null,
+   "ub": 11,
+   "exhaustive": true,
+   "states": 174,
+   "depth_closed": 10,
+   "secs": 39.4,
+   "robust_replay": {
+    "won_at": 11,
+    "n": 11
+   }
+  },
+  {
+   "label": "facing_right",
+   "consistent": true,
+   "fi_min": 9,
+   "ub": 11,
+   "exhaustive": true,
+   "states": 179,
+   "depth_closed": 10,
+   "secs": 35.8,
+   "robust_replay": {
+    "won_at": 11,
+    "n": 11
+   }
+  }
+ ],
+ "robust": {
+  "length": 11,
+  "replays": {
+   "facing_up": 11,
+   "facing_down": 11,
+   "facing_left": 11,
+   "facing_right": 11
+  }
+ },
+ "verdict": {
+  "status": "OBSERVABLE_PROVEN",
+  "value": 11,
+  "lb": 11,
+  "ub": 11,
+  "reasons": [],
+  "hardest_hypotheses": [
+   "facing_down",
+   "facing_left",
+   "facing_up"
+  ],
+  "n_hypotheses": 4,
+  "n_consistent": 4
+ },
+ "full_information_floor_actual": 11
+}

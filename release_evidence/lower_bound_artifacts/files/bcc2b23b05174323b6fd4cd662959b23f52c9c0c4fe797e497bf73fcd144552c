@@ -1,0 +1,16 @@
+{
+ "game": "vc33",
+ "full_id": "vc33-9851e02b",
+ "alphabet_source": "replay_oracle",
+ "levels": {
+  "3": {
+   "level": 3,
+   "status": "<word withheld>",
+   "reason": "<word withheld>",
+   "scope": "licensed",
+   "human_best": null,
+   "route_len": 23,
+   "engine_rev": "d0e83c5dd543"
+  }
+ }
+}

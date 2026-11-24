@@ -1,0 +1,44 @@
+{
+  "artifact_sha256": [
+    {
+      "kind": "safe_statement_count_extract",
+      "sha256": "8078e5285bf91bd44e0d3460388287457b714096122f0cd682957d3428744c3d"
+    },
+    {
+      "kind": "authority_ledger_label",
+      "sha256": "f293e6b784fcfa1c342aa241b3b4fcf122ac8786d0566afc35cf41fa770babad",
+      "status": "withheld"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "aea77e2e810088a897d77ea95376e90feefa6de5087aefe87a562be62a6a6b3c"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "68e998a6d6161c4d9e6029a65fe32623c4cfa1d1a98fea90f55c8f29e602d65a"
+    }
+  ],
+  "floor": 67,
+  "game": "wa30",
+  "game_id": "wa30-ee6fef47",
+  "game_levels": 9,
+  "level": 3,
+  "lower_bound": {
+    "kind": "relay_algebra_admissible_lb_meets_verified_win",
+    "statement": "The component-relay relaxation prices forced handoff and serial final releases using exact dynamic programming over goal sets and helper position; the admissible root lower bound is 67.",
+    "value": 67
+  },
+  "naes_t1_actions": 67,
+  "proof_class": "Matching bounds",
+  "proof_detail": "relay_algebra_admissible_lb_meets_verified_win",
+  "schema_version": 1,
+  "source_certificate_sha256": "40a1d0c6e1fa2a8c6c9af9a735361d7e4da50de294ac8da5ea7e51710f4a8b0e",
+  "status": "proven",
+  "upper_bound": {
+    "expected_levels_completed": 3,
+    "length": 67,
+    "opening_reset_counted": false,
+    "route": "1 1 1 1 3 3 3 1 4 5 2 2 2 4 4 4 4 4 4 5 1 3 3 3 1 4 5 2 2 2 2 4 4 4 5 2 3 3 3 3 3 2 4 5 1 4 4 4 4 4 5 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4",
+    "seed": 0
+  }
+}

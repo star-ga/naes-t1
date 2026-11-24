@@ -1,0 +1,47 @@
+{
+  "artifact_sha256": [
+    {
+      "kind": "safe_statement_count_extract",
+      "sha256": "62237c049eb51f15a340ee7f9a3e8651a7332de3e270ef8e118c5361df429694"
+    },
+    {
+      "kind": "authority_ledger_label",
+      "sha256": "dcec3081162351515626966697127fc94a41159f53a1b6007e36c1adf5ee6f63"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "4d35c23082acaefda75a731a694becc0d59514f7e785e1c08996b6bf9c795c21"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "b500d95a231f21c02df6270bd2effaa18a70f773c3dbafaa002276b9f7272227"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "1fb34bc00e9d0e00153f88741352a260d39f7837c753c46fd6e2c3bc77196d6d"
+    }
+  ],
+  "floor": 14,
+  "game": "tr87",
+  "game_id": "tr87-cd924810",
+  "game_levels": 6,
+  "level": 1,
+  "lower_bound": {
+    "kind": "graph_exhausted+lemma",
+    "statement": "Uniform-cost layers 1 through 13 are exhausted without a win.",
+    "value": 14
+  },
+  "naes_t1_actions": 14,
+  "proof_class": "Exhaustive search",
+  "proof_detail": "graph_exhausted+lemma",
+  "schema_version": 1,
+  "source_certificate_sha256": "ac9993edde4288be836137f8a1645f36aa06e67f799904b4df35eeeb140ba1a6",
+  "status": "proven",
+  "upper_bound": {
+    "expected_levels_completed": 1,
+    "length": 14,
+    "opening_reset_counted": false,
+    "route": "2 2 3 2 2 3 2 3 1 1 1 3 2 2",
+    "seed": 0
+  }
+}

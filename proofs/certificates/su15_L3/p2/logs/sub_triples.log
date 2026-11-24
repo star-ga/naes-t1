@@ -1,0 +1,4 @@
+state: 3 0 31 22 0 31 15 1 30 32
+SUBCHECK n=3 value=2 dmax=3 positions_reached_by_BFS=630 dp_equal=630 dp_less=0 dp_greater(VIOLATION)=0 dp_only_within_dmax=0
+state: 3 0 12 23 0 8 28 1 18 16
+SUBCHECK n=3 value=2 dmax=3 positions_reached_by_BFS=602 dp_equal=598 dp_less=4 dp_greater(VIOLATION)=0 dp_only_within_dmax=1

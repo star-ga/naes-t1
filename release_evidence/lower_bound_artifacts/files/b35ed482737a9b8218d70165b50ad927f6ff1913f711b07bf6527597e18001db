@@ -1,0 +1,9 @@
+INFO:arc_agi.scorecard:Initialized ScorecardManager with idle_for=0:15:00 and max_open_for=3 days, 0:00:00
+2026-09-22 15:16:59 | INFO | Created new scorecard: 9bfec312-97d2-444a-becf-d8260861c698
+INFO:arc_agi.base:Created new scorecard: 9bfec312-97d2-444a-becf-d8260861c698
+2026-09-22 15:16:59 | INFO | Successfully loaded game class Vc33 from <path>
+INFO:arc_agi.base:Successfully loaded game class Vc33 from <path>
+[replay-backend] cls=Vc33 kwargs={} deterministic=yes deepcopy_cache=on
+[engine] vc33-9851e02b starts=[1, 2, 3, 4, 5, 6, 7, 8] alphabet=replay_oracle guidance=none
+[gbfs] depth 1: frontier 11 nodes 16 win=None 8s
+[gbfs] depth 2: frontier 48 nodes 173 win=None 108s

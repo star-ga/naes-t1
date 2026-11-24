@@ -1,0 +1,120 @@
+// Fixed synthetic records and canonical integer-output fingerprint.
+// LCG state begins at 0x4E414553. Every transition is
+// (1664525 * state + 1013904223) mod 2^32, using bounded i64 arithmetic.
+// Per record: 8192 transitions for current then previous colours (top4 bits),
+// then one each for previous action (top3), click, and run (top3).
+// Click is -1 for an even state, otherwise (state >> 16) & 4095.
+// Hash order: for each of 64 records, 7 action logits then all4096 click heats,
+// each signed Q24 integer encoded as eight little-endian bytes.
+
+fn selftest_next(state: i64) -> i64 {
+    (1664525 * state + 1013904223) & 4294967295
+}
+
+fn selftest_record(state: i64, rec: i64) -> i64 {
+    let mut s: i64 = state;
+    let mut i: i64 = 0;
+    while i < 8192 {
+        s = selftest_next(s);
+        __mind_store_i8(rec + i, (s >> 28) & 15);
+        i = i + 1;
+    }
+    s = selftest_next(s);
+    __mind_store_i8(rec + 8192, (s >> 29) & 7);
+    s = selftest_next(s);
+    let mut cell: i64 = 0 - 1;
+    if (s & 1) != 0 { cell = (s >> 16) & 4095; }
+    __mind_store_i16(rec + 8193, cell);
+    s = selftest_next(s);
+    __mind_store_i8(rec + 8195, (s >> 29) & 7);
+    s
+}
+
+fn selftest_store_integer(out: i64, value: i64) -> i64 {
+    let mut b: i64 = 0;
+    while b < 8 {
+        __mind_store_i8(out + b, (value >> (b * 8)) & 255);
+        b = b + 1;
+    }
+    0
+}
+
+fn selftest_hex_digit(n: i64) -> i64 {
+    if n < 10 { return 48 + n; }
+    87 + n
+}
+
+fn selftest_print_digest(label: String, digest: i64) -> i64 {
+    if print_text(1, label) < 0 { return 0 - 1; }
+    let out: i64 = __mind_alloc(65);
+    if out == 0 { return 0 - 1; }
+    let mut i: i64 = 0;
+    while i < 32 {
+        let b: i64 = __mind_load_i8(digest + i);
+        __mind_store_i8(out + i * 2, selftest_hex_digit(b >> 4));
+        __mind_store_i8(out + i * 2 + 1, selftest_hex_digit(b & 15));
+        i = i + 1;
+    }
+    __mind_store_i8(out + 64, 10);
+    let status: i64 = write_all(out, 65);
+    __mind_free(out);
+    status
+}
+
+fn run_selftest(path: i64) -> i64 {
+    let fd: i64 = __mind_open(path);
+    if fd < 0 { return die(3, "naes_t1: cannot open selftest weights\n"); }
+    let image: i64 = __mind_alloc(16);
+    if image == 0 { return die(3, "naes_t1: selftest allocation failed\n"); }
+    if read_fd_all(fd, image) < 0 { return die(3, "naes_t1: cannot read selftest weights\n"); }
+    let bytes: i64 = __mind_load_i64(image);
+    let len: i64 = __mind_load_i64(image + 8);
+    let model: i64 = parse_model(bytes, len);
+    if model < 0 { return die(3, "naes_t1: selftest weights rejected\n"); }
+    let ws: i64 = prepare(model);
+    let rec: i64 = __mind_alloc(8196);
+    let stream: i64 = __mind_alloc(2100736);
+    let digest: i64 = __mind_alloc(32);
+    let weights_digest: i64 = __mind_alloc(32);
+    if ws == 0 || rec == 0 || stream == 0 || digest == 0 || weights_digest == 0 {
+        return die(3, "naes_t1: selftest allocation failed\n");
+    }
+    let click: i64 = model_layer(model, __mind_load_i64(model + 8) + 2);
+    let m: i64 = ld(__mind_load_i64(click + 40), 0);
+    let sh: i64 = 0 - ld(__mind_load_i64(click + 48), 0);
+    let bias: i64 = ld(__mind_load_i64(click + 56), 0);
+    let mut state: i64 = 1312900435;
+    let mut frame: i64 = 0;
+    let mut offset: i64 = 0;
+    while frame < 64 {
+        state = selftest_record(state, rec);
+        if decide(model, ws, rec, 1) < 0 {
+            return die(5, "naes_t1: selftest activation guard tripped\n");
+        }
+        let mut a: i64 = 0;
+        while a < 7 {
+            let stored: i64 = selftest_store_integer(stream + offset, result_logit(ws, a));
+            offset = offset + 8;
+            a = a + 1;
+        }
+        let accum: i64 = ld(ws, ws_acc());
+        let mut p: i64 = 0;
+        while p < 4096 {
+            let heat: i64 = mul_round(ld(accum, p), m, sh) + bias;
+            let stored: i64 = selftest_store_integer(stream + offset, heat);
+            offset = offset + 8;
+            p = p + 1;
+        }
+        frame = frame + 1;
+    }
+    if offset != 2100736 { return die(5, "naes_t1: selftest output size rejected\n"); }
+    let output_hash: i64 = sha256_u(stream, offset, digest);
+    let weights_hash: i64 = sha256_u(bytes, len, weights_digest);
+    if selftest_print_digest("SELFTEST_SHA256 ", digest) < 0 {
+        return die(6, "naes_t1: selftest output write failed\n");
+    }
+    if selftest_print_digest("WEIGHTS_SHA256 ", weights_digest) < 0 {
+        return die(6, "naes_t1: selftest output write failed\n");
+    }
+    0
+}

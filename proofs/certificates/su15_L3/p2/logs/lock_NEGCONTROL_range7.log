@@ -1,0 +1,11 @@
+MISMATCH rec 3 r=0 ew=0 click 38 34 n=9
+MISMATCH rec 12 r=0 ew=0 click 54 34 n=7
+MISMATCH rec 13 r=0 ew=0 click 16 29 n=7
+MISMATCH rec 17 r=0 ew=0 click 5 21 n=9
+MISMATCH rec 19 r=2 ew=0 click 34 15 n=7
+MISMATCH rec 23 r=2 ew=0 click 31 23 n=8
+MISMATCH rec 26 r=2 ew=0 click 9 30 n=7
+MISMATCH rec 33 r=0 ew=0 click 7 37 n=6
+MISMATCH rec 45 r=0 ew=0 click 1 27 n=9
+MISMATCH rec 56 r=2 ew=0 click 50 15 n=7
+LOCKCHECK records=657343 mismatches=57854 engine_wins=0 ok_clicks=174732 merges=21542 noop=468797 fail=13814 excluded_prestate_already_won=0

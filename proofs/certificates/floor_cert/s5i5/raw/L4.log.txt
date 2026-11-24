@@ -1,0 +1,31 @@
+SETUP level=4 floor=30 budget=100 classes=16 pixels=4096 mismatches=0 mobiles=11 static_bytes=572 pose_bytes=4651 probe_win=None reset_level=0
+LAYER level=4 depth=1 expanded=1 visited=7 edges=16 wins=0 t=1.2
+LAYER level=4 depth=2 expanded=7 visited=27 edges=112 wins=0 t=1.3
+LAYER level=4 depth=3 expanded=27 visited=77 edges=432 wins=0 t=1.5
+LAYER level=4 depth=4 expanded=77 visited=181 edges=1232 wins=0 t=2.1
+LAYER level=4 depth=5 expanded=181 visited=371 edges=2896 wins=0 t=3.3
+LAYER level=4 depth=6 expanded=371 visited=681 edges=5936 wins=0 t=5.8
+LAYER level=4 depth=7 expanded=681 visited=1141 edges=10896 wins=0 t=9.9
+LAYER level=4 depth=8 expanded=1141 visited=1773 edges=18256 wins=0 t=16.2
+LAYER level=4 depth=9 expanded=1773 visited=2583 edges=28368 wins=0 t=24.2
+LAYER level=4 depth=10 expanded=2583 visited=3559 edges=41328 wins=0 t=34.8
+LAYER level=4 depth=11 expanded=3559 visited=4665 edges=56944 wins=0 t=46.4
+LAYER level=4 depth=12 expanded=4665 visited=5859 edges=74640 wins=0 t=58.2
+LAYER level=4 depth=13 expanded=5859 visited=7081 edges=93744 wins=0 t=71.4
+LAYER level=4 depth=14 expanded=7081 visited=8277 edges=113296 wins=0 t=83.7
+LAYER level=4 depth=15 expanded=8277 visited=9392 edges=132432 wins=0 t=96.2
+LAYER level=4 depth=16 expanded=9392 visited=10389 edges=150272 wins=0 t=107.0
+LAYER level=4 depth=17 expanded=10389 visited=11245 edges=166224 wins=0 t=117.6
+LAYER level=4 depth=18 expanded=11245 visited=11951 edges=179920 wins=0 t=126.9
+LAYER level=4 depth=19 expanded=11951 visited=12509 edges=191216 wins=0 t=133.3
+LAYER level=4 depth=20 expanded=12509 visited=12933 edges=200144 wins=0 t=139.0
+LAYER level=4 depth=21 expanded=12933 visited=13248 edges=206928 wins=0 t=143.1
+LAYER level=4 depth=22 expanded=13248 visited=13469 edges=211968 wins=0 t=146.1
+LAYER level=4 depth=23 expanded=13469 visited=13621 edges=215504 wins=0 t=148.1
+LAYER level=4 depth=24 expanded=13621 visited=13722 edges=217936 wins=0 t=149.3
+LAYER level=4 depth=25 expanded=13722 visited=13788 edges=219552 wins=0 t=150.3
+LAYER level=4 depth=26 expanded=13788 visited=13829 edges=220608 wins=0 t=150.9
+LAYER level=4 depth=27 expanded=13829 visited=13856 edges=221264 wins=0 t=151.3
+LAYER level=4 depth=28 expanded=13856 visited=13872 edges=221696 wins=0 t=151.5
+LAYER level=4 depth=29 expanded=13872 visited=13881 edges=221952 wins=0 t=151.7
+RESULT level=4 verdict=CONFIRMED states=13881 edges=221952 layers=29 seconds=151.8

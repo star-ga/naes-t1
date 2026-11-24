@@ -1,0 +1,31 @@
+// Entry of the multi-worker bench path, called by bench_main when
+// --threads is 2 or more. It loads its own model and fixture.
+// Entry points: mw_bench_run.
+
+// Multi-worker bench: sets the fixed kernel options, loads its own model and
+// fixture, selects the records, builds the workspace and runs the worker
+// processes. Returns the exit code of the bench mode.
+fn mw_bench_run(cfg: i64, threads: i64) -> i64 {
+    if mw_cfg_set(cfg, threads) < 0 {
+        return die(2, "naes_t1: --threads must be 1 to 24\n");
+    }
+    let model: i64 = mw_load_model(ld(cfg, cf_weights()));
+    if model <= 0 {
+        return die(3, "naes_t1: weights file rejected (unreadable, bad header, shape, size or value)\n");
+    }
+    let fx: i64 = mw_load_fixture4(ld(cfg, cf_fixture()));
+    if fx == 0 {
+        return die(4, "naes_t1: bench fixture rejected\n");
+    }
+    let serve: i64 = mw_build_serve4(fx);
+    let sel: i64 = select4(cfg);
+    if serve == 0 || sel == 0 {
+        return die(4, "naes_t1: bench fixture rejected\n");
+    }
+    let w4: i64 = mw_prepare4(model, cfg);
+    if w4 == 0 {
+        return die(3, "naes_t1: out of memory preparing workspace\n");
+    }
+    emit_plan_line(1, ld(w4, w4_plans()), __mind_load_i64(model + 8), ld(w4, w4_group()), ld(w4, w4_cg()), ld(w4, w4_tile()));
+    mw_pull_run(model, w4, cfg, fx, serve, sel)
+}

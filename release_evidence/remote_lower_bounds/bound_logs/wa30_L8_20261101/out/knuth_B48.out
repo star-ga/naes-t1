@@ -1,0 +1,1 @@
+KNUTH B=48 probes=20000 est_nodes=1.6509e+17 stderr=1.182e+16 mean_probe_depth=25.99 wins_seen=0   (./knuth levels.txt 8 48 20000 1, 10.3 s)

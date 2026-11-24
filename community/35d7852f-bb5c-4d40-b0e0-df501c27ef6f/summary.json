@@ -1,0 +1,103 @@
+{
+ "name": "RGB-Agent",
+ "scorecard_id": "35d7852f-bb5c-4d40-b0e0-df501c27ef6f",
+ "scorecard_url": "https://arcprize.org/scorecards/35d7852f-bb5c-4d40-b0e0-df501c27ef6f",
+ "page": {
+  "score": "Legacy",
+  "levels": "7 / 7",
+  "environments": "1 / 1",
+  "total_actions": "441",
+  "tags_header": "eval-<word withheld>\\_code\\_action\\_agent-<word withheld>-nano-reason-highdebug\\_suiteruns-1workers-5max\\_actions-2000agent",
+  "tag_table": []
+ },
+ "recordings": 1,
+ "recording_actions_counted_in_won_levels": 443,
+ "levels_won": 7,
+ "levels_total": 183,
+ "mean_mmae_183": 0.008554,
+ "legacy_game_versions": {
+  "vc33": "9851e02b"
+ },
+ "mean_mmae_183_current_version_games_only_legacy_counted_0": 0.0,
+ "levels_at_proven_floor": 0,
+ "levels_at_proven_floor_list": [],
+ "levels_below_floor_count": 0,
+ "levels_below_floor": [],
+ "levels_beat_our_actions_count": 0,
+ "levels_beat_our_actions": [],
+ "page_vs_recording_level_mismatch": [],
+ "won_levels_detail_game_level_actions_floor_mmae": [
+  [
+   "vc33",
+   1,
+   19,
+   3,
+   0.024931
+  ],
+  [
+   "vc33",
+   2,
+   13,
+   7,
+   0.289941
+  ],
+  [
+   "vc33",
+   3,
+   28,
+   23,
+   0.674745
+  ],
+  [
+   "vc33",
+   4,
+   113,
+   21,
+   0.034537
+  ],
+  [
+   "vc33",
+   5,
+   113,
+   44,
+   0.151617
+  ],
+  [
+   "vc33",
+   6,
+   68,
+   20,
+   0.086505
+  ],
+  [
+   "vc33",
+   7,
+   89,
+   49,
+   0.303118
+  ]
+ ],
+ "method": "per-level non-RESET actions from public recordings (sc08_levels.py); MMAE=(proven_floor/agent_actions)^2 per won level, 0 otherwise, mean over 183 levels of demo25_levels_mmae.csv",
+ "official_level_actions_crosscheck": {
+  "source": "https://arcprize.org/api/v3/scorecards/35d7852f-bb5c-4d40-b0e0-df501c27ef6f (public JSON the scorecard page loads); level_actions of the best run per environment; counts mid-level RESETs as actions",
+  "api_total_levels_completed": 7,
+  "api_total_actions": 441,
+  "envs_where_recording_count_equals_api": 0,
+  "envs": 1,
+  "levels_won": 7,
+  "mean_mmae_183": 0.008588,
+  "mean_mmae_183_current_version_games_only": 0.0,
+  "levels_at_proven_floor": 0,
+  "levels_below_floor": [],
+  "levels_beat_our_actions": []
+ },
+ "resetfix_recount": {
+  "why": "recording uses numeric action ids (RESET = 0); sc08_levels.py only skips the string 'RESET', so its counts above include RESETs. This recount skips both.",
+  "levels_won": 7,
+  "mean_mmae_183": 0.008837,
+  "mean_mmae_183_current_version_games_only": 0.0,
+  "levels_at_proven_floor": 0,
+  "levels_below_floor": [],
+  "levels_beat_our_actions": []
+ }
+}

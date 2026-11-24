@@ -1,0 +1,51 @@
+{
+  "artifact_sha256": [
+    {
+      "kind": "safe_statement_count_extract",
+      "sha256": "693402bd18fbb2d0f3e00105809aa28b1e30c1507fa20965aa17dfe1d5c280d8"
+    },
+    {
+      "kind": "authority_ledger_label",
+      "sha256": "e0a31b6fe86b85acfd7214174221e7283715147e2bc78bf6d8486f24791feda9"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "e148ace5321f798608e6190399b5a81193a61a179806aa2778b4c9a9d548276e"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "6c4e8104e363769d437098ef15b696ed34166725d8deca9c741ac6d87ba8e9c9"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "1fb34bc00e9d0e00153f88741352a260d39f7837c753c46fd6e2c3bc77196d6d"
+    },
+    {
+      "kind": "historical_method_or_search_output",
+      "sha256": "d6fceeb23dc11a89dd34ef52a9a743f290185eb50f5fc8e6883deacd54c50bb7"
+    }
+  ],
+  "floor": 13,
+  "game": "ls20",
+  "game_id": "ls20-9607627b",
+  "game_levels": 7,
+  "level": 1,
+  "lower_bound": {
+    "kind": "zero_heuristic_astar_click_equiv+lemma",
+    "statement": "Uniform-cost search retains position, shape, color, rotation, used refills, goals and turn phase; keeping maximal fuel for identical state dominates smaller fuel. Every cost below 13 is excluded.",
+    "value": 13
+  },
+  "naes_t1_actions": 13,
+  "proof_class": "Exhaustive search",
+  "proof_detail": "zero_heuristic_astar_click_equiv+lemma",
+  "schema_version": 1,
+  "source_certificate_sha256": "929616ff1fc520bde3064ac8dc035ccc9e15d5566d2ee5a759ff134e8ea8e6b4",
+  "status": "proven",
+  "upper_bound": {
+    "expected_levels_completed": 1,
+    "length": 13,
+    "opening_reset_counted": false,
+    "route": "3 3 3 1 1 1 1 4 4 4 1 1 1",
+    "seed": 0
+  }
+}

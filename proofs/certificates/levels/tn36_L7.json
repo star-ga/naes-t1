@@ -1,0 +1,59 @@
+{
+  "artifact_sha256": [
+    {
+      "kind": "safe_statement_count_extract",
+      "sha256": "d0ef390c18abea5843aae6858a3c550d458a2534505c58a8261f682e3e46c449"
+    },
+    {
+      "kind": "run_bound_log",
+      "sha256": "9bb87068631129ed56775e88b69c5cad6ae6852c71317f36c1c9499d203674a9"
+    },
+    {
+      "kind": "run_count_2_3_log",
+      "sha256": "7840cf0e66638c2cac728b3b0e968833c45d3057a359446feb4f627dba5294df"
+    },
+    {
+      "kind": "replay_log",
+      "sha256": "288134e4059897984a9a94dded74d86824aa060935c6c03fc672eff2aa7aa64a"
+    },
+    {
+      "kind": "record: proofs/certificates/floor_cert/tn36/SUMMARY.md",
+      "sha256": "99e3341581b33c673da941cfe51b60c36809b9b6388bd36b842c9b49008c8f4f"
+    },
+    {
+      "kind": "record: proofs/certificates/floor_cert/tn36/levels.json",
+      "sha256": "29096da4fc2a45d5da20464c79a1ec32911f881a8f7c49c2cf2c09a481d43bb7"
+    },
+    {
+      "kind": "record: proofs/certificates/floor_cert/tn36/logs/bound.json",
+      "sha256": "9bb87068631129ed56775e88b69c5cad6ae6852c71317f36c1c9499d203674a9"
+    },
+    {
+      "kind": "record: proofs/certificates/floor_cert/tn36/logs/replay.json",
+      "sha256": "288134e4059897984a9a94dded74d86824aa060935c6c03fc672eff2aa7aa64a"
+    }
+  ],
+  "floor": 16,
+  "game": "tn36",
+  "game_id": "tn36-ef4dde99",
+  "game_levels": 7,
+  "level": 7,
+  "lower_bound": {
+    "kind": "run_chain_search_max_pop_bound",
+    "statement": "Record: proofs/certificates/floor_cert/tn36 (confirmed on the official game file). Method: run enumeration. No single program wins. The max-pop bound leaves only run counts 2 through 7 able to cost under 16. Run counts 2 and 3 finish with 53 and 1180 nodes, capped 0, and no shorter chain. Run counts 4, 5, 6 and 7 finish with 13222, 31511, 58282 and 46644 nodes, capped 0, and no shorter chain. Every larger run count costs at least 16. Replay of the route wins at 16 and the prefix one action shorter does not. A partial chain whose Hamming distance already exceeds the toggle limit is dropped. proofs/certificates/floor_cert/tn36/logs/bound.json holds the max-pop lower bound by run count and proofs/certificates/floor_cert/tn36/logs/replay.json the route replay.",
+    "value": 16
+  },
+  "naes_t1_actions": 16,
+  "proof_class": "Exhaustive search",
+  "proof_detail": "run_chain_search_max_pop_bound",
+  "schema_version": 1,
+  "source_certificate_sha256": "d0ef390c18abea5843aae6858a3c550d458a2534505c58a8261f682e3e46c449",
+  "status": "proven",
+  "upper_bound": {
+    "expected_levels_completed": 7,
+    "length": 16,
+    "opening_reset_counted": false,
+    "route": "6@49,36 6@54,36 6@54,42 6@59,33 6@59,48 6@57,58 6@34,33 6@34,48 6@39,33 6@39,48 6@44,33 6@44,48 6@49,48 6@54,36 6@54,39 6@57,58",
+    "seed": 0
+  }
+}

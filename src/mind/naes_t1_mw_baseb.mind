@@ -1,0 +1,288 @@
+// Multi-worker copy of the base functions, part 2: the input tables, the
+// reference preparation and the fixture loader of the multi-worker path.
+// Entry points: mw_load_model, mw_rec_prev_cell, mw_rec_prev_run, mw_act_head.
+
+fn mw_load_model(path: i64) -> i64 {
+    let fd: i64 = open_ro(path);
+    if fd < 0 {
+        return mw_err_io();
+    }
+    let rec: i64 = __mind_alloc(16);
+    if mw_read_fd_all(fd, rec) < 0 {
+        close_fd(fd);
+        return mw_err_io();
+    }
+    close_fd(fd);
+    let model: i64 = mw_parse_model(ld(rec, 0), ld(rec, 1));
+    __mind_free(ld(rec, 0));
+    __mind_free(rec);
+    model
+}
+
+fn mw_build_triple_list(lay: i64, nch: i64) -> i64 {
+    let t: i64 = __mind_load_i64(lay + 32);
+    let groups: i64 = nch * 3;
+    let offs: i64 = __mind_alloc(nch * groups * 8);
+    let starts: i64 = __mind_alloc(nch * 3 * 8);
+    let mut count: i64 = 0;
+    let mut o: i64 = 0;
+    while o < nch {
+        let mut sign: i64 = 1;
+        while sign >= 0 - 1 {
+            st(starts, o * 3 + (1 - sign) / 2, count);
+            let mut g: i64 = 0;
+            while g < groups {
+                let index: i64 = o * nch * 9 + g * 3;
+                let code: i64 = triple_code(ld(t, index), ld(t, index + 1), ld(t, index + 2));
+                if code * sign > 0 {
+                    st(offs, count, (g * 13 + code * sign - 1) * 16 * 8);
+                    count = count + 1;
+                }
+                g = g + 1;
+            }
+            sign = sign - 2;
+        }
+        st(starts, o * 3 + 2, count);
+        o = o + 1;
+    }
+    let rec: i64 = mw_alloc_zero(6);
+    st(rec, 0, starts);
+    st(rec, 1, offs);
+    st(rec, 2, __mind_alloc(groups * 13 * 16 * 8));
+    rec
+}
+
+fn mw_build_input_tables(model: i64, ws: i64) -> i64 {
+    let nch: i64 = __mind_load_i64(model);
+    let lay: i64 = mw_model_layer(model, 0);
+    let t: i64 = __mind_load_i64(lay + 32);
+    let tc: i64 = mw_alloc_zero_bytes(nch * 9 * 17);
+    let tp: i64 = mw_alloc_zero_bytes(nch * 9 * 17);
+    let ta: i64 = mw_alloc_zero_bytes(nch * 9 * 9);
+    let tk: i64 = mw_alloc_zero_bytes(nch * 9 * 2);
+    let tr: i64 = mw_alloc_zero_bytes(nch * 9 * 9);
+    let ni: i64 = mw_n_in();
+    let mut o: i64 = 0;
+    while o < nch {
+        let mut k: i64 = 0;
+        while k < 9 {
+            let mut c: i64 = 0;
+            while c < 16 {
+                st8(tc, (o * 9 + k) * 17 + c, ld(t, (o * ni + c) * 9 + k));
+                st8(tp, (o * 9 + k) * 17 + c, ld(t, (o * ni + 16 + c) * 9 + k));
+                c = c + 1;
+            }
+            let mut a: i64 = 0;
+            while a < 8 {
+                st8(ta, (o * 9 + k) * 9 + a, ld(t, (o * ni + 32 + a) * 9 + k));
+                st8(tr, (o * 9 + k) * 9 + a, ld(t, (o * ni + 41 + a) * 9 + k));
+                a = a + 1;
+            }
+            st8(tk, (o * 9 + k) * 2 + 1, ld(t, (o * ni + 40) * 9 + k));
+            k = k + 1;
+        }
+        o = o + 1;
+    }
+    st(ws, ws_tabc(), tc);
+    st(ws, ws_tabp(), tp);
+    st(ws, ws_tabk(), tk);
+    st(ws, ws_tabr(), tr);
+    let lut: i64 = mw_alloc_zero(nch * 91);
+    o = 0;
+    while o < nch {
+        let m: i64 = ld(__mind_load_i64(lay + 40), o);
+        let sh: i64 = 0 - ld(__mind_load_i64(lay + 48), o) - mw_q_frac();
+        let bq: i64 = ld(__mind_load_i64(lay + 56), o);
+        let mut n: i64 = 0 - 45;
+        while n <= 45 {
+            let mut v: i64 = mw_mul_round(n, m, sh) + bq;
+            if v < 0 {
+                v = 0;
+            }
+            st(lut, o * 91 + n + 45, v);
+            n = n + 1;
+        }
+        o = o + 1;
+    }
+    st(ws, ws_lut(), lut);
+    st(ws, ws_taba(), ta)
+}
+
+fn mw_rec_prev_cell(rec: i64) -> i64 {
+    let v: i64 = __mind_load_i8(rec + 8193) + __mind_load_i8(rec + 8194) * 256;
+    if v >= 32768 {
+        return v - 65536;
+    }
+    v
+}
+
+fn mw_rec_prev_run(rec: i64) -> i64 {
+    let r: i64 = __mind_load_i8(rec + 8195);
+    if r > 7 {
+        return 7;
+    }
+    r
+}
+
+fn mw_act_head(model: i64, ws: i64, nch: i64) -> i64 {
+    let lay: i64 = mw_model_layer(model, __mind_load_i64(model + 8) + 1);
+    let t: i64 = __mind_load_i64(lay + 32);
+    let sums: i64 = ld(ws, ws_sum());
+    let maxs: i64 = ld(ws, ws_max());
+    let mut best: i64 = 0;
+    let mut o: i64 = 0;
+    while o < 7 {
+        let mut acc: i64 = 0;
+        let mut c: i64 = 0;
+        while c < nch {
+            acc = acc + ld(t, o * 2 * nch + c) * ld(sums, c);
+            acc = acc + ld(t, o * 2 * nch + nch + c) * (ld(maxs, c) << 12);
+            c = c + 1;
+        }
+        let m: i64 = ld(__mind_load_i64(lay + 40), o);
+        let sh: i64 = 12 - ld(__mind_load_i64(lay + 48), o);
+        let logit: i64 = mw_mul_round(acc, m, sh) + ld(__mind_load_i64(lay + 56), o);
+        st(ws, ws_logit() + o, logit);
+        if logit > ld(ws, ws_logit() + best) {
+            best = o;
+        }
+        o = o + 1;
+    }
+    best + 1
+}
+
+fn mw_result_cell(ws: i64) -> i64 {
+    ld(ws, ws_cell())
+}
+
+fn mw_prepare(model: i64) -> i64 {
+    let nch: i64 = __mind_load_i64(model);
+    let nb: i64 = __mind_load_i64(model + 8);
+    let ws: i64 = mw_alloc_zero(32);
+    let ha: i64 = mw_alloc_zero(nch * plane());
+    let hb: i64 = mw_alloc_zero(nch * plane());
+    if ws == 0 || ha == 0 || hb == 0 {
+        return 0;
+    }
+    st(ws, ws_ha(), ha);
+    st(ws, ws_hb(), hb);
+    st(ws, ws_acc(), mw_alloc_zero(4096));
+    st(ws, ws_cpad(), mw_alloc_zero_bytes(66 * 66));
+    st(ws, ws_ppad(), mw_alloc_zero_bytes(66 * 66));
+    st(ws, ws_apad(), mw_alloc_zero_bytes(66 * 66));
+    st(ws, ws_kpad(), mw_alloc_zero_bytes(66 * 66));
+    st(ws, ws_rpad(), mw_alloc_zero_bytes(66 * 66));
+    st(ws, ws_sum(), mw_alloc_zero(nch));
+    st(ws, ws_max(), mw_alloc_zero(nch));
+    mw_build_input_tables(model, ws);
+    let lists: i64 = mw_alloc_zero(nb);
+    let mut b: i64 = 0;
+    while b < nb {
+        st(lists, b, mw_build_triple_list(mw_model_layer(model, b + 1), nch));
+        b = b + 1;
+    }
+    st(ws, ws_lists(), lists);
+    ws
+}
+
+fn mw_record_ok(rec: i64) -> i64 {
+    let mut i: i64 = 0;
+    while i < 8192 {
+        if __mind_load_i8(rec + i) > 15 {
+            return 0;
+        }
+        i = i + 1;
+    }
+    if __mind_load_i8(rec + 8192) > 7 {
+        return 0;
+    }
+    let cell: i64 = mw_rec_prev_cell(rec);
+    if cell < 0 - 1 || cell > 4095 {
+        return 0;
+    }
+    1
+}
+
+fn mw_fixture_to_request(rec: i64) -> i64 {
+    let run: i64 = __mind_load_i8(rec + 8193);
+    let cell: i64 = signed_i16(rec + 8194);
+    if run > 127 {
+        return 0;
+    }
+    __mind_store_i8(rec + 8193, cell & 255);
+    __mind_store_i8(rec + 8194, (cell >> 8) & 255);
+    __mind_store_i8(rec + 8195, run);
+    mw_record_ok(rec)
+}
+
+fn mw_store_reply(ws: i64, action: i64, out: i64) -> i64 {
+    let cell: i64 = mw_result_cell(ws);
+    let mut x: i64 = 255;
+    let mut y: i64 = 255;
+    if cell >= 0 {
+        x = cell % 64;
+        y = cell / 64;
+    }
+    __mind_store_i8(out, action);
+    __mind_store_i8(out + 1, x);
+    __mind_store_i8(out + 2, y);
+    0
+}
+
+fn mw_build_plan4(lay: i64, gsz: i64, cg: i64) -> i64 {
+    let nseg: i64 = n_segs(gsz, cg);
+    let plan: i64 = mw_alloc_zero(8);
+    if plan == 0 {
+        return 0;
+    }
+    let starts: i64 = mw_alloc_zero(nseg * 64 * 9);
+    let offs: i64 = mw_alloc_zero(64 * n_groups(gsz) * 9 + 1);
+    if starts == 0 || offs == 0 {
+        return 0;
+    }
+    st(plan, pl_starts(), starts);
+    st(plan, pl_offs(), offs);
+    st(plan, pl_nseg(), nseg);
+    let mut seg: i64 = 0;
+    while seg < nseg {
+        let mut o: i64 = 0;
+        while o < 64 {
+            let mut ky: i64 = 0;
+            while ky < 3 {
+                plan_segment(lay, gsz, cg, seg, o, ky, plan);
+                ky = ky + 1;
+            }
+            o = o + 1;
+        }
+        seg = seg + 1;
+    }
+    plan
+}
+
+fn mw_build_plans4(model: i64, gsz: i64, cg: i64) -> i64 {
+    let nb: i64 = __mind_load_i64(model + 8);
+    let plans: i64 = mw_alloc_zero(nb);
+    if plans == 0 {
+        return 0;
+    }
+    let mut b: i64 = 0;
+    while b < nb {
+        let p: i64 = mw_build_plan4(mw_model_layer(model, b + 1), gsz, cg);
+        if p == 0 {
+            return 0;
+        }
+        st(plans, b, p);
+        b = b + 1;
+    }
+    plans
+}
+
+fn mw_bank_build4(hin: i64, bank: i64, sy: i64, seg: i64, gsz: i64, cg: i64, zero: i64) -> i64 {
+    let ng: i64 = n_groups(gsz);
+    let mut gl: i64 = 0;
+    while gl < cg && seg * cg + gl < ng {
+        mw_bank_group(hin, bank, gl, seg * cg + gl, gsz, sy, zero);
+        gl = gl + 1;
+    }
+    0
+}

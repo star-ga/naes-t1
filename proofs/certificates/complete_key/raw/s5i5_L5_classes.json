@@ -1,0 +1,38 @@
+{
+ "excluded_fields": [
+  "_action_count",
+  "_action",
+  "_full_reset",
+  "current_steps"
+ ],
+ "floor": 28,
+ "game": "s5i5",
+ "level": 5,
+ "mode": "classes",
+ "official_game_sha256": "341f85bac1fb5ca7a3315a367405c3c993a57ce4dd0ff01cc8aaa72bf6c6ed34",
+ "program_sha256": "145ed2c455aefa061e5d1c8fcb4f0d2bf63dcd10d2647999b341c48ef8432262",
+ "replay": {
+  "prefix_wins": false,
+  "route_length": 28,
+  "route_wins": true
+ },
+ "routes_sha256": "30b1f5fbb1fa661f859dd77f9b95b1f711a8cb65f3ae09c5cfb9e3f066031a5e",
+ "search": {
+  "layers_closed": 27,
+  "verdict": "CLOSED"
+ },
+ "seconds": 741.541,
+ "states": 3751,
+ "stats": {
+  "class_checks": 46254,
+  "classes": 46254,
+  "edges": 71160,
+  "game_over": 0,
+  "min_counter": 124,
+  "reset_elsewhere": 0,
+  "reset_leaves_level": 1,
+  "reset_to_start": 3557,
+  "shared_checks": 27
+ },
+ "verdict": "CONFIRMED"
+}

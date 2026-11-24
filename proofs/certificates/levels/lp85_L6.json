@@ -1,0 +1,43 @@
+{
+  "artifact_sha256": [
+    {
+      "kind": "safe_statement_count_extract",
+      "sha256": "5574dc1929cb4f10add398577a0557bd08a3886aa33625cee7c191985cb36079"
+    },
+    {
+      "kind": "authority_ledger_label",
+      "sha256": "b5f95e224296893b6d8b9f8981712f7677784fc6db52abf58e77dc707a4a065d"
+    },
+    {
+      "kind": "replay receipt on the current pinned game file (proofs/certificates/lower_replay)",
+      "sha256": "190f2cad12b6c05354f5c61df16c7c13881a79969dc31254d097c1c7cadab1cb"
+    },
+    {
+      "kind": "raw output of that replay",
+      "sha256": "ca7d42c56fc34cc2a31c8bbd379c07c40d1fda583d94253640540c1816331572"
+    }
+  ],
+  "floor": 19,
+  "game": "lp85",
+  "game_id": "lp85-305b61c3",
+  "game_levels": 8,
+  "level": 6,
+  "lower_bound": {
+    "kind": "compound_rotation_state_graph_exhaustion_button_alphabet",
+    "statement": "Complete unit-cost search over the cyclic-track configuration and the complete button-effect alphabet closes every cost below 19; shared track-transfer effects are retained. The proof compound_rotation_state_graph_exhaustion_button_alphabet establishes lower bound 19, equal to the floor. A replay on the current pinned game file obtained the bound 19 (verdict MATCH; proofs/certificates/lower_replay/lp85_L6.json). Scope of that replay: Current pinned public game and canonical prefix; archived complete grouped-click token BFS, complete pixel-alphabet coverage check, and native attaining witness replay. Token-model sufficiency and transition correspondence remain proof obligations.",
+    "value": 19
+  },
+  "naes_t1_actions": 19,
+  "proof_class": "Exhaustive search",
+  "proof_detail": "compound_rotation_state_graph_exhaustion_button_alphabet",
+  "schema_version": 1,
+  "source_certificate_sha256": "c8748e402cf3f7f0f8f228172fe1814e011fb7c90fc129b86bbc6144fc433867",
+  "status": "proven",
+  "upper_bound": {
+    "expected_levels_completed": 6,
+    "length": 19,
+    "opening_reset_counted": false,
+    "route": "6@42,45 6@42,45 6@57,15 6@30,58 6@57,15 6@30,58 6@27,15 6@45,28 6@30,58 6@27,15 6@45,28 6@30,58 6@15,28 6@45,28 6@30,58 6@15,28 6@45,28 6@30,58 6@53,55",
+    "seed": 0
+  }
+}

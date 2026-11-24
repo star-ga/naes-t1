@@ -1,0 +1,27 @@
+{"name": "start", "multi": {}, "viol": 0, "grid": [[false, false, false], [false, false, false], [false, false, false]], "t": 50}
+{"name": "witness_prefix_1", "multi": {}, "viol": 0, "grid": [[false, false, false], [false, false, false], [false, false, false]], "t": 99}
+{"name": "witness_prefix_3", "multi": {}, "viol": 0, "grid": [[false, false, false], [false, false, false], [false, false, false]], "t": 148}
+{"name": "witness_prefix_5", "multi": {}, "viol": 0, "grid": [[false, true, false], [false, true, false], [false, false, false]], "t": 197}
+{"name": "witness_prefix_7", "multi": {}, "viol": 0, "grid": [[false, false, false], [false, false, false], [false, false, false]], "t": 241}
+{"name": "witness_prefix_9", "multi": {}, "viol": 0, "grid": [[false, false, false], [false, false, false], [false, false, false]], "t": 289}
+{"name": "random_0", "multi": {}, "viol": 0, "grid": [[false, false, false], [false, true, false], [false, false, true]], "t": 334}
+{"name": "random_1", "multi": {}, "viol": 0, "grid": [[false, false, false], [false, false, false], [true, false, false]], "t": 382}
+{"name": "random_2", "multi": {}, "viol": 0, "grid": [[true, false, false], [false, false, false], [false, false, false]], "t": 428}
+{"name": "random_3", "multi": {}, "viol": 0, "grid": [[false, true, false], [false, false, false], [false, false, false]], "t": 472}
+{"name": "random_4", "multi": {}, "viol": 0, "grid": [[false, true, false], [false, false, false], [false, true, false]], "t": 517}
+{"name": "random_5", "multi": {}, "viol": 0, "grid": [[false, false, false], [false, false, false], [true, true, false]], "t": 561}
+{"name": "random_6", "multi": {}, "viol": 0, "grid": [[false, false, true], [false, false, false], [false, false, true]], "t": 603}
+{"name": "random_7", "multi": {}, "viol": 0, "grid": [[true, false, false], [true, false, false], [true, false, false]], "t": 647}
+{"name": "random_8", "multi": {}, "viol": 0, "grid": [[false, false, false], [false, false, true], [true, true, false]], "t": 692}
+{"name": "random_9", "multi": {}, "viol": 0, "grid": [[false, false, false], [false, false, false], [false, false, false]], "t": 735}
+{"name": "random_10", "multi": {}, "viol": 0, "grid": [[false, false, false], [true, false, false], [true, false, false]], "t": 780}
+{"name": "random_11", "multi": {}, "viol": 0, "grid": [[false, false, false], [false, true, false], [false, true, false]], "t": 828}
+{"name": "random_12", "multi": {}, "viol": 0, "grid": [[false, false, false], [false, false, false], [false, false, false]], "t": 875}
+{"name": "random_13", "multi": {}, "viol": 0, "grid": [[false, false, false], [false, false, false], [false, true, false]], "t": 919}
+{"name": "random_14", "multi": {}, "viol": 0, "grid": [[true, false, true], [true, false, false], [true, false, true]], "t": 961}
+{"name": "random_15", "multi": {}, "viol": 0, "grid": [[false, false, false], [true, true, false], [true, true, false]], "t": 1009}
+{"name": "random_16", "multi": {}, "viol": 0, "grid": [[false, false, false], [false, true, false], [false, false, false]], "t": 1056}
+{"name": "random_17", "multi": {}, "viol": 0, "grid": [[true, false, false], [false, true, true], [true, true, false]], "t": 1102}
+{"name": "random_18", "multi": {}, "viol": 0, "grid": [[false, true, false], [false, true, true], [false, true, false]], "t": 1149}
+{"name": "random_19", "multi": {}, "viol": 0, "grid": [[false, false, false], [false, false, true], [false, false, false]], "t": 1197}
+DONE all_ok True 26

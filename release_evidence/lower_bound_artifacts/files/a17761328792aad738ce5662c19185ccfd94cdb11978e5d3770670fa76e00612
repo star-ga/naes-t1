@@ -1,0 +1,169 @@
+{
+ "level": 8,
+ "witness": [
+  2,
+  2,
+  2,
+  2,
+  2,
+  2,
+  [
+   6,
+   39,
+   39
+  ],
+  3,
+  3,
+  3,
+  3,
+  3,
+  3,
+  3,
+  3,
+  3,
+  1,
+  1,
+  1,
+  1,
+  1,
+  1,
+  1,
+  [
+   6,
+   21,
+   21
+  ],
+  4,
+  4,
+  4,
+  4,
+  4,
+  4,
+  4,
+  4,
+  4,
+  1,
+  1,
+  1,
+  1,
+  [
+   6,
+   9,
+   0
+  ],
+  4,
+  4,
+  4,
+  4,
+  4,
+  4,
+  4,
+  4,
+  4
+ ],
+ "replay": {
+  "won_at": null,
+  "prefix_wins_before_F": false,
+  "level_index_after": 7,
+  "fresh_from_level_start": true,
+  "method": "fresh Ar25(); set_level(L-1); perform_action per step; win = level_index advances"
+ },
+ "predicate": {
+  "configs_compared": 20013,
+  "per_target_vector_mismatches": 0,
+  "native_wins": 1,
+  "model_wins": 1,
+  "covered_target_bits": 82828
+ },
+ "lockstep": {
+  "rollouts": 300,
+  "steps": 18000,
+  "violations": 0,
+  "move_steps": 11990,
+  "undo_steps": 1496,
+  "sel_steps": 4514,
+  "pixel_changes": 0,
+  "invariant_checks": 18000,
+  "click_probe": {
+   "states_probed": 12,
+   "clicks_executed": 49152,
+   "pos_changes": 0,
+   "nonselection_state_changes": 0,
+   "classes_per_state": [
+    {
+     "2": 3772,
+     "3": 189,
+     "1": 63,
+     "0": 72
+    },
+    {
+     "3": 3781,
+     "2": 180,
+     "1": 63,
+     "0": 72
+    },
+    {
+     "3": 3781,
+     "2": 180,
+     "1": 63,
+     "0": 72
+    },
+    {
+     "0": 3664,
+     "2": 180,
+     "3": 189,
+     "1": 63
+    },
+    {
+     "2": 3772,
+     "3": 189,
+     "1": 63,
+     "0": 72
+    },
+    {
+     "2": 3772,
+     "3": 189,
+     "1": 63,
+     "0": 72
+    },
+    {
+     "1": 3682,
+     "2": 153,
+     "3": 189,
+     "0": 72
+    },
+    {
+     "2": 3772,
+     "3": 189,
+     "1": 63,
+     "0": 72
+    },
+    {
+     "2": 3772,
+     "3": 189,
+     "1": 63,
+     "0": 72
+    },
+    {
+     "0": 3664,
+     "2": 180,
+     "3": 189,
+     "1": 63
+    },
+    {
+     "0": 3664,
+     "2": 180,
+     "3": 189,
+     "1": 63
+    },
+    {
+     "2": 3772,
+     "3": 189,
+     "1": 63,
+     "0": 72
+    }
+   ]
+  }
+ },
+ "runtime_s": 618.7
+}

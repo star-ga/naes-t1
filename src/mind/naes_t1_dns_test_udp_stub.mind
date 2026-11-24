@@ -1,0 +1,12 @@
+// naes_t1_dns_test_udp_stub.mind — case 39 on the native-lane test unit. The
+// native lane has no socket rows, so the connected-socket case cannot run
+// here: it prints "SKIP 39" and is not counted as a pass. The default-backend
+// unit runs it (naes_t1_dns_test_udp.mind).
+fn naes_dt_leg_run() -> i64 {
+    let b: i64 = __mind_alloc(8);
+    let _w: i64 = naes_dt_wr8(b, 0, 138785934163, 5);
+    let _a: i64 = __mind_write(2, b, 5, 0 - 1);
+    let _n: i64 = naes_dt_say_num(39);
+    let _e: i64 = naes_dt_say_ch(10);
+    0
+}

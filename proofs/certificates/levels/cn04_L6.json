@@ -1,0 +1,43 @@
+{
+  "artifact_sha256": [
+    {
+      "kind": "safe_statement_count_extract",
+      "sha256": "806eb8fd2e5573c19c16fd08e135265691b1c39503b2c2cfa3c690a2bcdd6ff8"
+    },
+    {
+      "kind": "authority_ledger_label",
+      "sha256": "e546261f74caf1af4fb4e09a3cb731c0b63e8841c891dbc0fb50b1f0629ecde8"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "cb6a48eb2a88e1a955b4d97e82cef43529b7cae7a19304aebab6f137608da553"
+    },
+    {
+      "kind": "historical_method_or_search_output",
+      "sha256": "46cb1d458c50ba97b82ba9f5fe722362447c9ed5a9f6c8fe27c24017a1c7524f"
+    }
+  ],
+  "floor": 38,
+  "game": "cn04",
+  "game_id": "cn04-2fe56bfb",
+  "game_levels": 6,
+  "level": 6,
+  "lower_bound": {
+    "kind": "relaxed_object_distance_matching_configuration_enumeration",
+    "statement": "Each action changes at most one object mode; every winning route costs at least the sum of relaxed per-object distances plus required selection changes. Complete matching and configuration enumeration minimizes this bound to 38. The proof relaxed_object_distance_matching_configuration_enumeration establishes lower bound 38, equal to the floor.",
+    "value": 38
+  },
+  "naes_t1_actions": 38,
+  "proof_class": "Matching bounds",
+  "proof_detail": "relaxed_object_distance_matching_configuration_enumeration",
+  "schema_version": 1,
+  "source_certificate_sha256": "18975ab8acd7b8470c602d55d78fe851ee065018327786b585fd7a400ec6c8c4",
+  "status": "proven",
+  "upper_bound": {
+    "expected_levels_completed": 6,
+    "length": 38,
+    "opening_reset_counted": false,
+    "route": "4 4 4 2 2 2 6@24,27 5 5 5 5 5 6@39,57 5 5 5 3 3 3 3 1 1 1 6@6,39 4 4 4 1 1 1 6@48,6 3 3 3 3 2 2 2",
+    "seed": 0
+  }
+}

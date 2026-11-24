@@ -1,0 +1,59 @@
+{
+  "artifact_sha256": [
+    {
+      "kind": "safe_statement_count_extract",
+      "sha256": "982602c2b536ecb3ddd2c5bdd52e50017361d2355374a075b107318e90c744f3"
+    },
+    {
+      "kind": "authority_ledger_label",
+      "sha256": "22d4f8bc0d614886e33d0edf3ca987c162d3a390f8ca77daba5e60dbbf58da1c"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "feeb7ad128d40439c85ce8302d2f919c16012414bb834056f6d19d7223e7f521"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "3fe6be3b619d1eb1aeda33cc155fec5861422f3c9e2362c11525c7baac8adb47"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "15b131b69c12c38eaf8a52ead6983e354823d7c1eed46288aa74dbc3ffde6714"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "1fb34bc00e9d0e00153f88741352a260d39f7837c753c46fd6e2c3bc77196d6d"
+    },
+    {
+      "kind": "record: proofs/certificates/floor_cert/ft09/SUMMARY.md",
+      "sha256": "1ce793e382640ea43169b018af8f9a01445c38c3cefb2c19fca5a3fafcc3186a"
+    },
+    {
+      "kind": "record: proofs/certificates/floor_cert/ft09/levels.json",
+      "sha256": "405bfb9c204e039cb6bcb275306727cade3d24098a7ca17d342a5e28a443e795"
+    }
+  ],
+  "floor": 7,
+  "game": "ft09",
+  "game_id": "ft09-0d8bbf25",
+  "game_levels": 6,
+  "level": 2,
+  "lower_bound": {
+    "kind": "engine_bfs_center_tuple",
+    "statement": "Record: proofs/certificates/floor_cert/ft09 (verdict CONFIRMED on the official game file). Argument: exhaustive engine BFS to depth floor-1 (state = control-center tuple, actions = every distinct display-pixel effect) plus exhaustive classification of all 64x64 display clicks and actions 1,2,3,4,5,7; pixel partition rechecked after one click; every generator column rechecked after every other generator on the engine; cgj predicate checked by paint against the engine; exact meet-in-the-middle minimum on the measured columns. Nodes 30940. The recorded route wins at the floor and the prefix one action shorter does not.",
+    "value": 7
+  },
+  "naes_t1_actions": 7,
+  "proof_class": "Exhaustive search",
+  "proof_detail": "engine_bfs_center_tuple",
+  "schema_version": 1,
+  "source_certificate_sha256": "d1fb27e9b4345bed2f7427f8163315a62ba3fc42a1d11de529f4ebdd1cad30aa",
+  "status": "proven",
+  "upper_bound": {
+    "expected_levels_completed": 2,
+    "length": 7,
+    "opening_reset_counted": false,
+    "route": "6@23,17 6@23,25 6@39,25 6@23,33 6@39,33 6@23,49 6@31,49",
+    "seed": 0
+  }
+}

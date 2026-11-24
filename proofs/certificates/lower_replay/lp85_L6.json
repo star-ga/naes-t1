@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "game": "lp85",
+  "level": 6,
+  "family": "Exhaustive/UCS",
+  "recorded_floor": 19,
+  "command": "nice -n 15 timeout 1800 \"$PYTHON\" lower_replay/exact_math_tracks_all.txt lp85 6",
+  "command_origin": "Reconstructed invocation using hash-pinned archived mathematical routines and explicit current-native input/projection controls.",
+  "environment": {
+    "SOURCE_ROOT": "external proof source checkout",
+    "ARTIFACT_ROOT": "external proof archive matching the runner input manifest",
+    "GAMES_DIR": "pinned public game directory",
+    "PACK_ROOT": "this certificate pack",
+    "RUN_DIR": "directory that does not yet exist"
+  },
+  "rc": 0,
+  "bound_obtained": 19,
+  "equals_recorded_floor": true,
+  "verdict": "MATCH",
+  "scope": "Current pinned public game and canonical prefix; archived complete grouped-click token BFS, complete pixel-alphabet coverage check, and native attaining witness replay. Token-model sufficiency and transition correspondence remain proof obligations.",
+  "prerequisites": [
+    {
+      "path": "GAMES_DIR/lp85/305b61c3/lp85.py",
+      "sha256": "7d10baec7dd29d07e574bd47ee1ec7912542a72632077a5446798221f41c4ae9"
+    },
+    {
+      "path": "PACK_ROOT/certificates/lp85_L1.json",
+      "sha256": "686c8c4f8a0f7e3cecb3c9cb16d62b1a642f749a284f72e103ecf48183c0d13d"
+    },
+    {
+      "path": "PACK_ROOT/certificates/lp85_L2.json",
+      "sha256": "60cc14a2338ef878ef9cadfc682b379598f630c387f28c59828065e0ba96f092"
+    },
+    {
+      "path": "PACK_ROOT/certificates/lp85_L3.json",
+      "sha256": "dc172250fd43d0d91e9ec3f06531e18b2d3195283020c31cb93c39b97ce5d227"
+    },
+    {
+      "path": "PACK_ROOT/certificates/lp85_L4.json",
+      "sha256": "c005a5c72904d0f60aad7b2f960a280f8681b9b740760ab8c33b06d8b26c440d"
+    },
+    {
+      "path": "PACK_ROOT/certificates/lp85_L5.json",
+      "sha256": "162c0271ac49f83f7932a7da43f5b74c654576c45399269f99522106ea2083ce"
+    },
+    {
+      "path": "ARTIFACT_ROOT/lp85_token2.py",
+      "sha256": "a55935c9631c876958f8c5eb9ce0d91d7411b737ff13e562553e76dbf38ad3f8"
+    }
+  ],
+  "runner_sha256": "91c01a5d70484a44e209cd0183084a994680202c7f9a181b90e954470be45363",
+  "input_manifest_sha256": "dae6ba5718d10962c8c25e8de33e280619f450f0aa2747a8e06c0625ec36f554",
+  "runtime": {
+    "python": "<interp-version>",
+    "packages": {
+      "numpy": "2.5.0",
+      "arcengine": "0.9.3",
+      "arc-agi": "0.9.9",
+      "pydantic": "2.13.4"
+    }
+  },
+  "raw_output": {
+    "path": "lower_replay/exact_native_lp85_L6.txt",
+    "sha256": "ca7d42c56fc34cc2a31c8bbd379c07c40d1fda583d94253640540c1816331572",
+    "unfiltered_private_output_sha256": "ca7d42c56fc34cc2a31c8bbd379c07c40d1fda583d94253640540c1816331572"
+  },
+  "counts": {
+    "states": 13465,
+    "sat": {
+      "0": 1,
+      "1": 1,
+      "2": 1
+    },
+    "n_actions": 7,
+    "exhausted": false
+  },
+  "derivation_statement": "remaining_native_derivations.md",
+  "source_correspondence": "Current public source loaded directly; frozen earlier-level witnesses replayed where target level exceeds one. Model/theorem obligations remain explicit in the scope and derivation.",
+  "alphabet": {
+    "pixels_checked": 4096,
+    "effect_classes_including_noop": 8,
+    "represented_classes": 7
+  },
+  "native_witness_first_completion": 19,
+  "base_adapter_sha256": "4af0f7ce4e3b6396e08d53aa286a617302bf885897e860770f6817eba8f80b38"
+}

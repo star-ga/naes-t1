@@ -1,0 +1,5 @@
+LAYER B=0 steps=1 tested=1 wins=0 tickcap=0 shard=0/1
+LAYER B=1 steps=2 tested=4 wins=0 tickcap=0 shard=0/1
+LAYER B=2 steps=3 tested=7 wins=0 tickcap=0 shard=0/1
+WIN 6 4
+LAYER B=3 steps=4 tested=9 wins=1 tickcap=0 shard=0/1

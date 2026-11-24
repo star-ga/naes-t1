@@ -1,0 +1,23 @@
+2026-09-22 15:07:48 | INFO | Created new scorecard: d51d9d3c-6e4f-405e-accc-54b5444c9f6e
+INFO:arc_agi.base:Created new scorecard: d51d9d3c-6e4f-405e-accc-54b5444c9f6e
+2026-09-22 15:07:48 | INFO | Successfully loaded game class Vc33 from <path>
+INFO:arc_agi.base:Successfully loaded game class Vc33 from <path>
+[replay-backend] cls=Vc33 kwargs={} deterministic=yes deepcopy_cache=on
+[engine] vc33-9851e02b starts=[1, 2, 3, 4, 5, 6, 7, 8] alphabet=replay_oracle guidance=none
+[level-done] vc33 L6: {"level": 6, "status": "<word withheld>", "reason": "licensed rung refuses stride 4: mm.validate_probe_stride at the level start: stride-4 distinct-child set != the stride-1 set \u2014 a finer click exists between grid points, so the click alphabet wo
+{
+ "game": "vc33",
+ "full_id": "vc33-9851e02b",
+ "alphabet_source": "replay_oracle",
+ "levels": {
+  "6": {
+   "level": 6,
+   "status": "<word withheld>",
+   "reason": "licensed rung refuses stride 4: mm.validate_probe_stride at the level start: stride-4 distinct-child set != the stride-1 set \u2014 a finer click exists between grid points, so the click alphabet would under-approximate",
+   "scope": "licensed",
+   "human_best": null,
+   "route_len": 20,
+   "engine_rev": "d0e83c5dd543"
+  }
+ }
+}

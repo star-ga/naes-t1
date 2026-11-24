@@ -1,0 +1,355 @@
+// naes_t1_dns_test_guard.mind — guard cases 14..28 for the naes_t1_dns.mind
+// selftest: owner-name matching, the CNAME chase (out-of-order answers, the
+// 8-follow limit, bad CNAME rdata) and every bound on untrusted wire input.
+// Not a program by itself: see the build line in naes_t1_dns_test.mind.
+// Each case pairs its negative assertion with a positive control on the
+// same packet, so a fixture that fails to build cannot pass vacuously.
+//  14 owner name gates A, AAAA, CNAME   15 A listed before its CNAME
+//  16 9-hop chain stops, 8-hop resolves 17 bad CNAME rdata -> err_form
+//  18 out_max caps the writes           19 A rdlen != 4, AAAA rdlen != 16
+//  20 non-IN class ignored              21 transaction-ID mismatch
+//  22 decoded-name out_cap guard        23 question with qtype cut off
+//  24 qd / an count caps                25 parse_name pos / pointer bounds
+//  26 build_query name_n > 253          27 collect on no address -> err_nx
+//  28 a 40-label name parses (only pointer jumps count toward the loop cap)
+// Equivalent mutant (no return value can see it): the RR-header bound (any
+// RR header past pkt_n also fails the rdata bound). The retry cap is seen
+// only through the live seam (the stub fails every attempt alike).
+// ---- fixture helpers --------------------------------------------------------
+fn naes_dt_b(buf: i64, off: i64, v: i64) -> i64 { __mind_store_i8(buf + off, v); off + 1 }
+// wire name "h<d>.example.com" (16 bytes); returns the next offset
+fn naes_dt_wn_h(buf: i64, off: i64, d: i64) -> i64 {
+    let o: i64 = naes_dt_b(buf, off, 2);
+    let o2: i64 = naes_dt_b(buf, o, 104);
+    let o3: i64 = naes_dt_b(buf, o2, 48 + d);
+    let o4: i64 = naes_dt_wr8(buf, o3, 7308339910404498695, 8);
+    naes_dt_wr8(buf, o4, 1836016387, 5)
+}
+// text "h<d>.example.com" NUL-terminated; returns its length 14
+fn naes_dt_tn_h(buf: i64, d: i64) -> i64 {
+    __mind_store_i8(buf, 104);
+    __mind_store_i8(buf + 1, 48 + d);
+    let o: i64 = naes_dt_wr8(buf, 2, 7308339910404498734, 8);
+    let _o2: i64 = naes_dt_wr8(buf, o, 1836016430, 5);
+    14
+}
+// RR fixed part: type, class, ttl 60, rdlen; returns the rdata offset
+fn naes_dt_rr(buf: i64, off: i64, typ: i64, cls: i64, rdlen: i64) -> i64 {
+    let o: i64 = naes_dns_wr16(buf, off, typ);
+    let o2: i64 = naes_dns_wr16(buf, o, cls);
+    let o3: i64 = naes_dns_wr16(buf, o2, 0);
+    let o4: i64 = naes_dns_wr16(buf, o3, 60);
+    naes_dns_wr16(buf, o4, rdlen)
+}
+// question "h<d>.example.com" A IN at off; returns the next offset
+fn naes_dt_q_h(buf: i64, off: i64, d: i64) -> i64 {
+    let o: i64 = naes_dt_wn_h(buf, off, d);
+    naes_dt_wr8(buf, o, 16777472, 4)
+}
+// h<d> A <word>; returns the next offset
+fn naes_dt_a_h(buf: i64, off: i64, d: i64, word: i64) -> i64 {
+    let o: i64 = naes_dt_wn_h(buf, off, d);
+    let o2: i64 = naes_dt_rr(buf, o, 1, 1, 4);
+    naes_dt_wr8(buf, o2, word, 4)
+}
+// h<d> CNAME h<e>; returns the next offset
+fn naes_dt_c_h(buf: i64, off: i64, d: i64, e: i64) -> i64 {
+    let o: i64 = naes_dt_wn_h(buf, off, d);
+    let o2: i64 = naes_dt_rr(buf, o, 5, 1, 16);
+    naes_dt_wn_h(buf, o2, e)
+}
+// www.example.com question + one answer whose owner is the question pointer
+// and whose fixed part is (typ, cls, rdlen); returns the rdata offset
+fn naes_dt_www_rr(buf: i64, an: i64, typ: i64, cls: i64, rdlen: i64) -> i64 {
+    let o: i64 = naes_dt_hdr(buf, 4660, 33152, 1, an);
+    let o2: i64 = naes_dt_q_www(buf, o);
+    let o3: i64 = naes_dns_wr16(buf, o2, 49152 + 12);
+    naes_dt_rr(buf, o3, typ, cls, rdlen)
+}
+// h0 CNAME h1 ... CNAME h<n>, then h<n> A 7.7.7.7; returns the length
+fn naes_dt_mk_hops(buf: i64, n: i64) -> i64 {
+    let o: i64 = naes_dt_hdr(buf, 4660, 33152, 1, n + 1);
+    let mut off: i64 = naes_dt_q_h(buf, o, 0);
+    let mut i: i64 = 0;
+    while i < n { off = naes_dt_c_h(buf, off, i, i + 1); i = i + 1; }
+    naes_dt_a_h(buf, off, n, 117901063)
+}
+// ---- cases ------------------------------------------------------------------
+fn naes_dt_case14() -> i64 {
+    let pkt: i64 = __mind_alloc(256);
+    let www: i64 = __mind_alloc(32);
+    let h1: i64 = __mind_alloc(32);
+    let out: i64 = __mind_alloc(24 * 4);
+    let _w: i64 = naes_dt_name_www(www);
+    let _h: i64 = naes_dt_tn_h(h1, 1);
+    // (a) A owned by h1 answers no query for www; control: it answers h1
+    let o: i64 = naes_dt_hdr(pkt, 4660, 33152, 1, 1);
+    let la: i64 = naes_dt_a_h(pkt, naes_dt_q_www(pkt, o), 1, 151587081);
+    if naes_dns_parse_response(pkt, la, 4660, www, 15, out, 4) != 0 { return 1; }
+    if naes_dns_parse_response(pkt, la, 4660, h1, 14, out, 4) != 1 { return 1; }
+    if naes_dt_ckn(out, 8, 4, 151587081) == 0 { return 1; }
+    // (b) AAAA owned by h1
+    let o2: i64 = naes_dt_wn_h(pkt, naes_dt_q_www(pkt, o), 1);
+    let o3: i64 = naes_dt_rr(pkt, o2, 28, 1, 16);
+    let lb: i64 = naes_dt_zero(pkt + o3, 16) + o3;
+    if naes_dns_parse_response(pkt, lb, 4660, www, 15, out, 4) != 0 { return 1; }
+    if naes_dns_parse_response(pkt, lb, 4660, h1, 14, out, 4) != 1 { return 1; }
+    // (c) h1 CNAME h2 + h2 A: not followed for www; control: followed for h1
+    let _h2: i64 = naes_dt_hdr(pkt, 4660, 33152, 1, 2);
+    let o4: i64 = naes_dt_c_h(pkt, naes_dt_q_www(pkt, o), 1, 2);
+    let lc: i64 = naes_dt_a_h(pkt, o4, 2, 151587081);
+    if naes_dns_parse_response(pkt, lc, 4660, www, 15, out, 4) != 0 { return 1; }
+    if naes_dns_parse_response(pkt, lc, 4660, h1, 14, out, 4) != 1 { return 1; }
+    0
+}
+fn naes_dt_case15() -> i64 {
+    let pkt: i64 = __mind_alloc(256);
+    let www: i64 = __mind_alloc(32);
+    let out: i64 = __mind_alloc(24 * 4);
+    let _w: i64 = naes_dt_name_www(www);
+    // h2 A 1.2.3.4 is listed before www CNAME h2: a later pass must take it
+    let o: i64 = naes_dt_hdr(pkt, 4660, 33152, 1, 2);
+    let o2: i64 = naes_dt_a_h(pkt, naes_dt_q_www(pkt, o), 2, 67305985);
+    let o3: i64 = naes_dns_wr16(pkt, o2, 49152 + 12);
+    let o4: i64 = naes_dt_rr(pkt, o3, 5, 1, 16);
+    let len: i64 = naes_dt_wn_h(pkt, o4, 2);
+    if naes_dns_parse_response(pkt, len, 4660, www, 15, out, 4) != 1 { return 1; }
+    if naes_dt_ckn(out, 8, 4, 67305985) == 0 { return 1; }
+    0
+}
+fn naes_dt_case16() -> i64 {
+    let pkt: i64 = __mind_alloc(512);
+    let h0: i64 = __mind_alloc(32);
+    let out: i64 = __mind_alloc(24 * 4);
+    let _h: i64 = naes_dt_tn_h(h0, 0);
+    let l9: i64 = naes_dt_mk_hops(pkt, 9);
+    if naes_dns_parse_response(pkt, l9, 4660, h0, 14, out, 4) != 0 { return 1; }
+    let l8: i64 = naes_dt_mk_hops(pkt, 8);
+    if naes_dns_parse_response(pkt, l8, 4660, h0, 14, out, 4) != 1 { return 1; }
+    if naes_dt_ckn(out, 8, 4, 117901063) == 0 { return 1; }
+    0
+}
+fn naes_dt_case17() -> i64 {
+    let pkt: i64 = __mind_alloc(256);
+    let www: i64 = __mind_alloc(32);
+    let out: i64 = __mind_alloc(24 * 4);
+    let _w: i64 = naes_dt_name_www(www);
+    // www CNAME <rdata = reserved label type 0x40>
+    let o: i64 = naes_dt_www_rr(pkt, 1, 5, 1, 1);
+    let len: i64 = naes_dt_b(pkt, o, 64);
+    if naes_dns_parse_response(pkt, len, 4660, www, 15, out, 4) != 0 - 3 { return 1; }
+    // control: the same CNAME with valid rdata parses (0 addresses)
+    let o2: i64 = naes_dt_www_rr(pkt, 1, 5, 1, 16);
+    let l2: i64 = naes_dt_wn_h(pkt, o2, 2);
+    if naes_dns_parse_response(pkt, l2, 4660, www, 15, out, 4) != 0 { return 1; }
+    0
+}
+fn naes_dt_case18() -> i64 {
+    let pkt: i64 = __mind_alloc(256);
+    let www: i64 = __mind_alloc(32);
+    let out: i64 = __mind_alloc(24 * 3);
+    let _w: i64 = naes_dt_name_www(www);
+    // three distinct A records 10.0.0.1..3 for www
+    let o: i64 = naes_dt_hdr(pkt, 4660, 33152, 1, 3);
+    let mut off: i64 = naes_dt_q_www(pkt, o);
+    let mut i: i64 = 1;
+    while i <= 3 {
+        off = naes_dns_wr16(pkt, off, 49152 + 12);
+        off = naes_dt_rr(pkt, off, 1, 1, 4);
+        off = naes_dt_wr8(pkt, off, 10 + i * 16777216, 4);
+        i = i + 1;
+    }
+    __mind_store_i64(out + 48, 777);
+    if naes_dns_parse_response(pkt, off, 4660, www, 15, out, 2) != 2 { return 1; }
+    if __mind_load_i64(out + 48) != 777 { return 1; }
+    if naes_dns_parse_response(pkt, off, 4660, www, 15, out, 3) != 3 { return 1; }
+    0
+}
+fn naes_dt_case19() -> i64 {
+    let pkt: i64 = __mind_alloc(256);
+    let www: i64 = __mind_alloc(32);
+    let out: i64 = __mind_alloc(24 * 4);
+    let _w: i64 = naes_dt_name_www(www);
+    let o: i64 = naes_dt_www_rr(pkt, 1, 1, 1, 2);
+    let la: i64 = naes_dt_wr8(pkt, o, 513, 2);
+    if naes_dns_parse_response(pkt, la, 4660, www, 15, out, 4) != 0 { return 1; }
+    let o2: i64 = naes_dt_www_rr(pkt, 1, 28, 1, 4);
+    let lb: i64 = naes_dt_wr8(pkt, o2, 67305985, 4);
+    if naes_dns_parse_response(pkt, lb, 4660, www, 15, out, 4) != 0 { return 1; }
+    // control: the same A with rdlen 4 is taken
+    let o3: i64 = naes_dt_www_rr(pkt, 1, 1, 1, 4);
+    let lc: i64 = naes_dt_wr8(pkt, o3, 67305985, 4);
+    if naes_dns_parse_response(pkt, lc, 4660, www, 15, out, 4) != 1 { return 1; }
+    0
+}
+fn naes_dt_case20() -> i64 {
+    let pkt: i64 = __mind_alloc(256);
+    let www: i64 = __mind_alloc(32);
+    let out: i64 = __mind_alloc(24 * 4);
+    let _w: i64 = naes_dt_name_www(www);
+    let o: i64 = naes_dt_www_rr(pkt, 1, 1, 3, 4);
+    let len: i64 = naes_dt_wr8(pkt, o, 67305985, 4);
+    if naes_dns_parse_response(pkt, len, 4660, www, 15, out, 4) != 0 { return 1; }
+    let o2: i64 = naes_dt_www_rr(pkt, 1, 1, 1, 4);
+    let l2: i64 = naes_dt_wr8(pkt, o2, 67305985, 4);
+    if naes_dns_parse_response(pkt, l2, 4660, www, 15, out, 4) != 1 { return 1; }
+    0
+}
+fn naes_dt_case21() -> i64 {
+    let pkt: i64 = __mind_alloc(256);
+    let www: i64 = __mind_alloc(32);
+    let out: i64 = __mind_alloc(24 * 4);
+    let _w: i64 = naes_dt_name_www(www);
+    let len: i64 = naes_dt_mk_a(pkt, 4660);
+    if naes_dns_parse_response(pkt, len, 4661, www, 15, out, 4) != 0 - 3 { return 1; }
+    if naes_dns_parse_response(pkt, len, 4660, www, 15, out, 4) != 1 { return 1; }
+    0
+}
+fn naes_dt_case22() -> i64 {
+    // direct: "ab.cd" needs 6 bytes; with out_cap 4 nothing lands at out+4
+    let pkt: i64 = __mind_alloc(32);
+    let out: i64 = __mind_alloc(32);
+    let len: i64 = naes_dt_wr8(pkt, 0, 110376404541698, 7);
+    __mind_store_i8(out + 4, 90);
+    if naes_dns_parse_name(pkt, len, 0, out, 4) != 0 - 1 { return 1; }
+    if __mind_load_i8(out + 4) != 90 { return 1; }
+    if naes_dns_parse_name(pkt, len, 0, out, 6) != 7 { return 1; }
+    if __mind_load_i8(out + 2) != 46 || __mind_load_i8(out + 5) != 0 { return 1; }
+    // through parse_response: a 63-byte label whose pointer loops back to
+    // itself decodes past 253 characters before the pointer cap; the
+    // 253-character name cap stops it (err_form) before out_cap is reached
+    let p2: i64 = __mind_alloc(128);
+    let www: i64 = __mind_alloc(32);
+    let res: i64 = __mind_alloc(24 * 4);
+    let _w: i64 = naes_dt_name_www(www);
+    let o: i64 = naes_dt_hdr(p2, 4660, 33152, 1, 0);
+    let mut off: i64 = naes_dt_b(p2, o, 63);
+    let mut i: i64 = 0;
+    while i < 63 { off = naes_dt_b(p2, off, 97); i = i + 1; }
+    let l2: i64 = naes_dns_wr16(p2, off, 49152 + 12);
+    if naes_dns_parse_response(p2, l2, 4660, www, 15, res, 4) != 0 - 3 { return 1; }
+    0
+}
+fn naes_dt_case23() -> i64 {
+    let pkt: i64 = __mind_alloc(64);
+    let www: i64 = __mind_alloc(32);
+    let out: i64 = __mind_alloc(24 * 4);
+    let _w: i64 = naes_dt_name_www(www);
+    let o: i64 = naes_dt_hdr(pkt, 4660, 33152, 1, 0);
+    let o2: i64 = naes_dt_wr8(pkt, o, 2004317955, 5);
+    let len: i64 = naes_dt_wr8(pkt, o2, 16777472, 4);
+    if naes_dns_parse_response(pkt, len - 2, 4660, www, 15, out, 4) != 0 - 2 { return 1; }
+    if naes_dns_parse_response(pkt, len, 4660, www, 15, out, 4) != 0 { return 1; }
+    0
+}
+fn naes_dt_case24() -> i64 {
+    let pkt: i64 = __mind_alloc(64);
+    let www: i64 = __mind_alloc(32);
+    let out: i64 = __mind_alloc(24 * 4);
+    let _w: i64 = naes_dt_name_www(www);
+    let _a: i64 = naes_dt_hdr(pkt, 4660, 33152, 33, 0);
+    if naes_dns_parse_response(pkt, 12, 4660, www, 15, out, 4) != 0 - 3 { return 1; }
+    let _b: i64 = naes_dt_hdr(pkt, 4660, 33152, 0, 257);
+    if naes_dns_parse_response(pkt, 12, 4660, www, 15, out, 4) != 0 - 3 { return 1; }
+    // control: at the caps the counts pass and the missing name is truncation
+    let _c: i64 = naes_dt_hdr(pkt, 4660, 33152, 32, 0);
+    if naes_dns_parse_response(pkt, 12, 4660, www, 15, out, 4) != 0 - 2 { return 1; }
+    let _d: i64 = naes_dt_hdr(pkt, 4660, 33152, 0, 256);
+    if naes_dns_parse_response(pkt, 12, 4660, www, 15, out, 4) != 0 - 2 { return 1; }
+    0
+}
+fn naes_dt_case25() -> i64 {
+    let pkt: i64 = __mind_alloc(32);
+    let out: i64 = __mind_alloc(64);
+    let _z: i64 = naes_dt_zero(pkt, 32);
+    // a name may not start at pkt_n even when the byte past it reads as root
+    if naes_dns_parse_name(pkt, 3, 3, out, 64) != 0 - 2 { return 1; }
+    if naes_dns_parse_name(pkt, 4, 3, out, 64) != 4 { return 1; }
+    // pointer whose second byte lies past pkt_n
+    let o: i64 = naes_dt_wr8(pkt, 0, 2004317955, 4);
+    let _p: i64 = naes_dt_b(pkt, o, 192);
+    if naes_dns_parse_name(pkt, 5, 0, out, 64) != 0 - 2 { return 1; }
+    // pointer target past pkt_n
+    let _q: i64 = naes_dns_wr16(pkt, 0, 49152 + 48);
+    if naes_dns_parse_name(pkt, 16, 0, out, 64) != 0 - 3 { return 1; }
+    // label running past pkt_n: truncation, checked before the out_cap guard
+    let _r: i64 = naes_dt_wr8(pkt, 0, 25093, 3);
+    if naes_dns_parse_name(pkt, 3, 0, out, 4) != 0 - 2 { return 1; }
+    0
+}
+fn naes_dt_case26() -> i64 {
+    let buf: i64 = __mind_alloc(512);
+    let name: i64 = __mind_alloc(256);
+    let mut i: i64 = 0;
+    while i < 254 {
+        let mut c: i64 = 97;
+        if i == 50 || i == 101 || i == 152 || i == 203 { c = 46; }
+        __mind_store_i8(name + i, c);
+        i = i + 1;
+    }
+    __mind_store_i8(name + 254, 0);
+    if naes_dns_build_query(buf, 512, name, 254, 1, 4660) != 0 - 1 { return 1; }
+    if naes_dns_build_query(buf, 512, name, 253, 1, 4660) != 271 { return 1; }
+    0
+}
+fn naes_dt_case27() -> i64 {
+    let pkt: i64 = __mind_alloc(256);
+    let www: i64 = __mind_alloc(32);
+    let out: i64 = __mind_alloc(24 * 4);
+    let _w: i64 = naes_dt_name_www(www);
+    if naes_dns_collect(0, 0, 0, 0, 4660, 4660, www, 15, out, 4) != 0 - 8 { return 1; }
+    let o: i64 = naes_dt_hdr(pkt, 4660, 33152, 1, 1);
+    let la: i64 = naes_dt_a_h(pkt, naes_dt_q_www(pkt, o), 1, 151587081);
+    if naes_dns_collect(pkt, la, 0, 0, 4660, 4660, www, 15, out, 4) != 0 - 8 { return 1; }
+    let lm: i64 = naes_dt_mk_a(pkt, 4660);
+    if naes_dns_collect(pkt, lm, 0, 0, 4660, 4660, www, 15, out, 4) != 1 { return 1; }
+    0
+}
+fn naes_dt_case28() -> i64 {
+    // question "a.a. ... .a" (40 labels, 79 characters) + A by pointer
+    let pkt: i64 = __mind_alloc(256);
+    let want: i64 = __mind_alloc(96);
+    let out: i64 = __mind_alloc(24 * 4);
+    let o: i64 = naes_dt_hdr(pkt, 4660, 33152, 1, 1);
+    let mut off: i64 = o;
+    let mut i: i64 = 0;
+    while i < 40 {
+        off = naes_dt_wr8(pkt, off, 24833, 2);
+        __mind_store_i8(want + i * 2, 97);
+        __mind_store_i8(want + i * 2 + 1, 46);
+        i = i + 1;
+    }
+    __mind_store_i8(want + 79, 0);
+    let o2: i64 = naes_dt_b(pkt, off, 0);
+    let o3: i64 = naes_dt_wr8(pkt, o2, 16777472, 4);
+    let o4: i64 = naes_dns_wr16(pkt, o3, 49152 + 12);
+    let o5: i64 = naes_dt_rr(pkt, o4, 1, 1, 4);
+    let len: i64 = naes_dt_wr8(pkt, o5, 84215045, 4);
+    if naes_dns_parse_response(pkt, len, 4660, want, 79, out, 4) != 1 { return 1; }
+    if naes_dt_ckn(out, 8, 4, 84215045) == 0 { return 1; }
+    0
+}
+fn naes_dt_guard_one(n: i64, rc: i64) -> i64 {
+    if rc == 0 { let _o: i64 = naes_dt_ok(n); return 0; }
+    let _f: i64 = naes_dt_fail(n);
+    1
+}
+// Run cases 14..28; returns the number that failed.
+fn naes_dt_guard_run() -> i64 {
+    let mut f: i64 = naes_dt_guard_one(14, naes_dt_case14());
+    f = f + naes_dt_guard_one(15, naes_dt_case15());
+    f = f + naes_dt_guard_one(16, naes_dt_case16());
+    f = f + naes_dt_guard_one(17, naes_dt_case17());
+    f = f + naes_dt_guard_one(18, naes_dt_case18());
+    f = f + naes_dt_guard_one(19, naes_dt_case19());
+    f = f + naes_dt_guard_one(20, naes_dt_case20());
+    f = f + naes_dt_guard_one(21, naes_dt_case21());
+    f = f + naes_dt_guard_one(22, naes_dt_case22());
+    f = f + naes_dt_guard_one(23, naes_dt_case23());
+    f = f + naes_dt_guard_one(24, naes_dt_case24());
+    f = f + naes_dt_guard_one(25, naes_dt_case25());
+    f = f + naes_dt_guard_one(26, naes_dt_case26());
+    f = f + naes_dt_guard_one(27, naes_dt_case27());
+    f = f + naes_dt_guard_one(28, naes_dt_case28());
+    f
+}

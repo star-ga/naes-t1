@@ -1,0 +1,42 @@
+{
+ "total": {
+  "levels": 8,
+  "ref_levels": 8,
+  "actions": 254,
+  "ref_actions": 254,
+  "games_full": 1,
+  "games": 1,
+  "perturb": 0
+ },
+ "games": [
+  {
+   "game": "ar25-0c556536",
+   "levels": 8,
+   "ref_levels": 8,
+   "actions": 254,
+   "ref_actions": 254,
+   "per_level": [
+    16,
+    11,
+    40,
+    22,
+    28,
+    53,
+    37,
+    47
+   ],
+   "ref_per_level": [
+    15,
+    11,
+    40,
+    22,
+    28,
+    53,
+    37,
+    47
+   ],
+   "resets": 1,
+   "over_ref_levels": []
+  }
+ ]
+}

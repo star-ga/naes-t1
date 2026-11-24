@@ -1,0 +1,87 @@
+{
+  "artifact_sha256": [
+    {
+      "kind": "safe_statement_count_extract",
+      "sha256": "23f3f14ac0df98b38db582d2cf6bd480121cb18f831f9f8951d9a53f7e01394c"
+    },
+    {
+      "kind": "authority_ledger_label",
+      "sha256": "e8168e6eefb4e3601174833f98ba2116ff38b5592c077a2ae1ff30ab98282760"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "624b65cda4ef01d3dab34dedfc5db3bd0807defb0ec793d2fb9e485ed32df976"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "d60295f9614c659f5fcf0625b95ad645e13b457c5c06745cdeb41dd5697a536c"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "119de0c86cda82c6bf00d15820e4b28447807e13da984abbebfc81ea0bbb0195"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "fd6e535dd88908d05dd6f76b6adfd945cd4fbc22c5d3bc9601dfae3d4da634eb"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "51963be542af6579aaf5b83e2503af6936b0437c8033334de896ada7d6ef13d2"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "ecd0af8875168338a2a562074703c67260611022bf152caf2f386de7781663b2"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "5bdfadaf67099b99d1c40e025d6dce044c22658fc49353919299df2d16921556"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "a8cbd490caad6aa0dbdaeab82f449387628b133cab000dd66c1814cda728c041"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "a7fd372c57bbf4cd674aec5e47243c9b530f4fc93d30581c0a894ab55ed7a000"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "c024a352ccc54625035bf6c2a0a92c51c1ed96bb6735d9ccda96af8c0f3c8f48"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "b5094c312abbacfe53d02019ea2264b41c5dec5110064c4ce0f9e54b7e8951c5"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "8dfe06e243e97d60bdc39586e97fa125181be785560288182281e30fbe593264"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "26e04d5ef2269fa3eac1f7e0784224d93239e1696b795b64d0b9411767b955d9"
+    }
+  ],
+  "floor": 20,
+  "game": "ka59",
+  "game_id": "ka59-38d34dbb",
+  "game_levels": 7,
+  "level": 5,
+  "lower_bound": {
+    "kind": "complete_state_ucs_native_action_quotient",
+    "statement": "Native breadth-first search closes every layer through 19 under the complete action quotient, with exact start binding and action-coverage records.",
+    "value": 20
+  },
+  "naes_t1_actions": 20,
+  "proof_class": "Exhaustive search",
+  "proof_detail": "complete_state_ucs_native_action_quotient",
+  "schema_version": 1,
+  "source_certificate_sha256": "6a2e5debd3da37c657cc9fede4e28d4724e9bfcf9ea13e5a0a656ea6d68f0af7",
+  "status": "proven",
+  "upper_bound": {
+    "expected_levels_completed": 5,
+    "length": 20,
+    "opening_reset_counted": false,
+    "route": "1 1 2 4 1 1 1 1 1 1 1 1 4 4 4 4 4 4 4 2",
+    "seed": 0
+  }
+}

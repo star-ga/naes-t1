@@ -1,0 +1,101 @@
+{
+  "algebra_replay": {
+    "completed_before": 0,
+    "levels_completed": 1,
+    "ok": true,
+    "played": 4,
+    "state": "NOT_FINISHED",
+    "won_at": 4
+  },
+  "algebra_route_len": 4,
+  "arc_agi_version": "0.9.9",
+  "arcengine_version": "0.9.3",
+  "bad_pixels": [],
+  "brute_cost": 4,
+  "brute_nodes": 256,
+  "camera": {
+    "height": 32,
+    "width": 32,
+    "x": 0,
+    "y": 0
+  },
+  "cgj_at_start": false,
+  "command": "<interp> certify_ft09.py --out <out> --levels 1,2,3,4,5,6 --engine-bfs 1,2",
+  "commutativity": {
+    "doubles": 8,
+    "ok": true,
+    "pairs": 56
+  },
+  "confirmed_floor": 4,
+  "engine_bfs": {
+    "depth_cap": 3,
+    "edges": 296,
+    "incomplete": false,
+    "states": 93,
+    "win_at": null
+  },
+  "game_sha256": "aa5b54f48a29da9f276c3df0dc04de728002f523384ab868c85d56d819cd0783",
+  "generator_pixels": 288,
+  "immediate_wins": [],
+  "k": 2,
+  "level": 1,
+  "method": "exhaustive engine BFS to depth floor-1 (state = control-center tuple, actions = every distinct display-pixel effect) plus exhaustive classification of all 64x64 display clicks and actions 1,2,3,4,5,7; pixel partition rechecked after one click; every generator column rechecked after every other generator on the engine; cgj predicate checked by paint against the engine; exact meet-in-the-middle minimum on the measured columns",
+  "model_verdict": "<word withheld>",
+  "n_cells": 8,
+  "n_checks": 8,
+  "n_generators": 8,
+  "n_skipped_neighbours": 0,
+  "new_verdict": "CONFIRMED",
+  "nodes": 296,
+  "noop_pixels": 3808,
+  "pixel_partition_mismatches": 0,
+  "pixel_probes": 4096,
+  "predicate": {
+    "choice": [
+      1,
+      0,
+      0,
+      1,
+      1,
+      1,
+      0,
+      0
+    ],
+    "n_constrained": 8,
+    "ok": true
+  },
+  "recorded_floor": 4,
+  "recorded_kind": "move_ordering_uniform_cost+lemma",
+  "recorded_method": "lemma-cond",
+  "recorded_replay": {
+    "completed_before": 0,
+    "levels_completed": 1,
+    "ok": true,
+    "played": 4,
+    "state": "NOT_FINISHED",
+    "won_at": 4
+  },
+  "scan_seconds": 67.678,
+  "seconds": 137.498,
+  "solver": {
+    "choice": [
+      1,
+      0,
+      0,
+      1,
+      1,
+      1,
+      0,
+      0
+    ],
+    "cost": 4,
+    "left": 16,
+    "lookups": 16,
+    "n_targets": 1,
+    "nodes": 32,
+    "right": 16,
+    "status": "SAT"
+  },
+  "start_signatures_match": true,
+  "timer": 32
+}

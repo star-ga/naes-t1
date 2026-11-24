@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "game": "lp85",
+  "level": 3,
+  "family": "Exact math",
+  "recorded_floor": 16,
+  "command": "nice -n 15 timeout 1800 \"$PYTHON\" lower_replay/exact_math_tracks.txt lp85 3",
+  "command_origin": "Reconstructed invocation of unchanged archived complete sequential grouped-click token BFS, with native input binding and full pixel-alphabet control.",
+  "environment": {
+    "SOURCE_ROOT": "external proof source checkout",
+    "ARTIFACT_ROOT": "external proof archive containing original lp85_token2.py",
+    "GAMES_DIR": "pinned public game directory",
+    "PACK_ROOT": "this certificate pack",
+    "RUN_DIR": "directory that does not yet exist"
+  },
+  "rc": 0,
+  "bound_obtained": 16,
+  "equals_recorded_floor": true,
+  "verdict": "MATCH",
+  "scope": "Current pinned public game and canonical prefix; archived complete grouped-click token BFS, complete pixel-alphabet coverage check, and native attaining witness replay. Token-model sufficiency and transition correspondence remain proof obligations.",
+  "prerequisites": [
+    {
+      "path": "GAMES_DIR/lp85/305b61c3/lp85.py",
+      "sha256": "7d10baec7dd29d07e574bd47ee1ec7912542a72632077a5446798221f41c4ae9"
+    },
+    {
+      "path": "PACK_ROOT/certificates/lp85_L1.json",
+      "sha256": "686c8c4f8a0f7e3cecb3c9cb16d62b1a642f749a284f72e103ecf48183c0d13d"
+    },
+    {
+      "path": "PACK_ROOT/certificates/lp85_L2.json",
+      "sha256": "60cc14a2338ef878ef9cadfc682b379598f630c387f28c59828065e0ba96f092"
+    },
+    {
+      "path": "ARTIFACT_ROOT/lp85_token2.py",
+      "sha256": "a55935c9631c876958f8c5eb9ce0d91d7411b737ff13e562553e76dbf38ad3f8"
+    }
+  ],
+  "runner_sha256": "4af0f7ce4e3b6396e08d53aa286a617302bf885897e860770f6817eba8f80b38",
+  "input_manifest_sha256": "17ec2db2aa106059241517ed4bc29f30ab49dde23737cfcc4803d07d42af1edc",
+  "runtime": {
+    "python": "<interp-version>",
+    "packages": {
+      "numpy": "2.5.0",
+      "arcengine": "0.9.3",
+      "arc-agi": "0.9.9",
+      "pydantic": "2.13.4"
+    }
+  },
+  "raw_output": {
+    "path": "lower_replay/exact_math_lp85_L3.txt",
+    "sha256": "19a9de59cd5ec37372315382f379ab84bd07f657325f5520ab1807687c4b9100",
+    "unfiltered_private_output_sha256": "19a9de59cd5ec37372315382f379ab84bd07f657325f5520ab1807687c4b9100"
+  },
+  "counts": {
+    "states": 836,
+    "sat": {
+      "0": 1,
+      "1": 1
+    },
+    "n_actions": 4,
+    "exhausted": false
+  },
+  "alphabet": {
+    "pixels_checked": 4096,
+    "effect_classes_including_noop": 5,
+    "represented_classes": 4
+  },
+  "native_witness_first_completion": 16,
+  "derivation_statement": "exact_math_tracks_derivation.md",
+  "source_correspondence": "Current public source loaded directly and canonical earlier-level witnesses replayed. Original ordered grouped-click token transition logic is retained."
+}

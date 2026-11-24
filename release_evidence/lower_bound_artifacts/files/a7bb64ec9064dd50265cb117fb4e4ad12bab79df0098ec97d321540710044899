@@ -1,0 +1,115 @@
+{
+ "n_levels_old": 6,
+ "n_levels_new": 6,
+ "levels": [
+  {
+   "level": 1,
+   "verdict": "ORDER_ONLY",
+   "n_sprites": [
+    7,
+    7
+   ],
+   "diffs": [],
+   "order_changed_layers": [
+    0
+   ],
+   "first_order_difference_index": 0
+  },
+  {
+   "level": 2,
+   "verdict": "ORDER_ONLY",
+   "n_sprites": [
+    10,
+    10
+   ],
+   "diffs": [],
+   "order_changed_layers": [
+    0
+   ],
+   "first_order_difference_index": 0
+  },
+  {
+   "level": 3,
+   "verdict": "ORDER_ONLY",
+   "n_sprites": [
+    15,
+    15
+   ],
+   "diffs": [],
+   "order_changed_layers": [
+    0
+   ],
+   "first_order_difference_index": 0
+  },
+  {
+   "level": 4,
+   "verdict": "ORDER_ONLY",
+   "n_sprites": [
+    13,
+    13
+   ],
+   "diffs": [],
+   "order_changed_layers": [
+    0
+   ],
+   "first_order_difference_index": 0
+  },
+  {
+   "level": 5,
+   "verdict": "ORDER_ONLY",
+   "n_sprites": [
+    16,
+    16
+   ],
+   "diffs": [],
+   "order_changed_layers": [
+    0
+   ],
+   "first_order_difference_index": 0
+  },
+  {
+   "level": 6,
+   "verdict": "ORDER_ONLY",
+   "n_sprites": [
+    14,
+    14
+   ],
+   "diffs": [],
+   "order_changed_layers": [
+    0
+   ],
+   "first_order_difference_index": 0
+  }
+ ],
+ "string_map_conflicts": {},
+ "string_map": {
+  "jgfvrvnkaz": "plzwjbfyfli-5",
+  "ksmzdcblcz": "plzwjbfyfli",
+  "sys_click": "sys_click",
+  "nkrtlkykwe": "liolfvkveqg",
+  "syaipsfndp": "sowlljgtjvn",
+  "uzunfxpwmd": "waoewejnqzc",
+  "uzvelihpxo": "bodekplurlf16",
+  "xsrqllccpx": "repwkzbkhxl",
+  "untfxhpddv": "plzwjbfyfli-3",
+  "odioorqnkn": "plzwjbfyfli-6",
+  "trurgcakbj": "plzwjbfyfli-4",
+  "adbrqflmwi": "plzwjbfyfli-7-sowlljgtjvn",
+  "ttkatugvbk": "bodekplurlf20",
+  "qwsmjdrvqj": "tuvkdkhdokr-riwynidseun",
+  "hfjpeygkxy": "tuvkdkhdokr",
+  "mdhkebfsmg": "plzwjbfyfli-4h",
+  "vkwijvqdla": "tuvkdkhdokr-lexuhyxqrsm",
+  "zgsbadjnjn": "plzwjbfyfli-5-sowlljgtjvn",
+  ".": ".",
+  "change": "change",
+  "sp80": "sp80",
+  "steps": "steps",
+  "rotation": "dojfslwbg",
+  "spill": "spill",
+  "tags": "tags",
+  "x": "x",
+  "y": "y"
+ },
+ "non_injective": {}
+}

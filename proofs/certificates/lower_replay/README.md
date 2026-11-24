@@ -1,0 +1,18 @@
+# Replay runs of the recorded lower bounds
+
+Each row is one run of an earlier lower-bound method on the current pinned game file. The run ended with return code 0, and the bound it obtained equals the floor of the level. The receipt (`<game>_L<level>.json`) holds the command shape, the digest of every input, the runtime and the counts. The raw output is the file named in the last-but-one column, and its digest is in the receipt.
+
+| level | floor | bound obtained | verdict | files | scope |
+|---|---|---|---|---|---|
+| lp85 L3 | 16 | 16 | MATCH | `lp85_L3.json`, `exact_math_lp85_L3.txt` | Current pinned public game and canonical prefix; archived complete grouped-click token BFS, complete pixel-alphabet coverage check, and native attaining witness replay. Token-model sufficiency and transition correspondence remain proof obligations. |
+| lp85 L5 | 9 | 9 | MATCH | `lp85_L5.json`, `exact_math_lp85_L5.txt` | Current pinned public game and canonical prefix; archived complete grouped-click token BFS, complete pixel-alphabet coverage check, and native attaining witness replay. Token-model sufficiency and transition correspondence remain proof obligations. |
+| lp85 L6 | 19 | 19 | MATCH | `lp85_L6.json`, `exact_native_lp85_L6.txt` | Current pinned public game and canonical prefix; archived complete grouped-click token BFS, complete pixel-alphabet coverage check, and native attaining witness replay. Token-model sufficiency and transition correspondence remain proof obligations. |
+| tr87 L2 | 25 | 25 | MATCH | `tr87_L2.json`, `exact_math_tr87_L2.txt` | Current pinned public game reached by replaying the frozen canonical prefix; complete archived rotation and cursor-walk cost enumeration. |
+| tr87 L3 | 21 | 21 | MATCH | `tr87_L3.json`, `exact_math_tr87_L3.txt` | Current pinned public game reached by replaying the frozen canonical prefix; complete archived rotation and cursor-walk cost enumeration. |
+| tr87 L4 | 21 | 21 | MATCH | `tr87_L4.json`, `exact_math_tr87_L4.txt` | Current pinned public game reached by replaying the frozen canonical prefix; complete archived rotation and cursor-walk cost enumeration. |
+| tr87 L5 | 14 | 14 | MATCH | `tr87_L5.json`, `exact_replay_tr87_L5.txt` | Current pinned public game and canonical prefix; complete archived rotation-offset and cursor-walk cost enumeration. Frozen method-family classification is retained separately. |
+| wa30 L1 | 26 | 26 | MATCH_CURRENT_INPUT_MODEL_ONLY | `wa30_L1.json`, `wa30_L1.raw.txt` | Current pinned public engine supplies the level starts by native forward play. Exact A* searches the original external simulator. Its native engine replay and losing proper prefix are checked, but universal simulator/engine coupling is not re-proved; lower-bound scope remains conditional on the original transition and heuristic lemmas. |
+
+What a row does not say: a run on the current game file is a check of the recorded bound for that file. The token model and the engine are tied by sampled checks and by the stated obligations in the derivation files, not by a formal equivalence. Verdict `MATCH_CURRENT_INPUT_MODEL_ONLY` (wa30 L1) means the level start comes from the current engine, the A* search runs on the earlier simulator, and the route and its losing prefix replay on the engine; the lower bound stays conditional on the simulator and heuristic lemmas.
+
+The proof tools that these runs call are not in this repository. The paths in the receipts that begin with the name PACK_ROOT name the route certificates of the earlier levels of the same game, which are used to reach the level start. `cd proofs/certificates/lower_replay && sha256sum -c SHA256SUMS` checks the bytes in this folder.

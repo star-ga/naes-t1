@@ -1,0 +1,7 @@
+=== CLOSED LOOP RUN 3 (independent re-check) ===
+<per-worker lines withheld>
+TOTAL {"actions": 5499, "<key withheld>": "<word withheld>", "elapsed_s": 161.64, "exact": true, "full_corpus": true, "games": 25, "games_exact": 25, "levels": 183, "records_sha256": "<private>", "ref_actions": 5499, "ref_levels": 183, "resets": 25, "run": 3, "stream_sha256": "c8749c520a4e993edcf64ef4199c1764a09da75ba9e3bf5e2c21716b7ffbfcf1", "weights_sha256": "<private>", "workers": "<threads>", "wrong_actions": 0, "wrong_clicks": 0, "wrong_decisions": 0}
+RECHECK_CL_RC=0
+RECHECK levels 183 level_diffs 0 totals [5499, 5499, 5499]
+RECHECK_OK
+

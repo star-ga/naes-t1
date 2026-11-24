@@ -1,0 +1,59 @@
+{
+  "artifact_sha256": [
+    {
+      "kind": "safe_statement_count_extract",
+      "sha256": "8ff7519560b3e451907e6c69c1d458313a3a96d5dd84953e96823dd76399b61e"
+    },
+    {
+      "kind": "authority_ledger_label",
+      "sha256": "c8195b3f0ca5fe6ecf14a199ca36bfa8b53c805f600b9e5137261c86d209afb4"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "7a868b0865efa09f40fb445e316291895c56a3d2d3d3ea91c334f48618c610e8"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "aa94865106279297eeeee2dbb705adf447a140282cc6ec9b4d4afb1943e20b0d"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "aa7f9d0b7cc5d8e98673f6a79ba112559bcdbe8d22e097507fed1f2d530eb8cd"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "eb2ea959aa0ed3f9df98f3529f21a7950d432370edd1ae74f0c324384dc83e4d"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "ff6bf7bebdddee5be656f2d2a72bfc6fe1bbac55eca63ebe966cb76da894f90c"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "4b23dfd6c53febccdb380afdbbb1dcaf274131a129d320d3f2e7e5ed784ffc53"
+    }
+  ],
+  "floor": 13,
+  "game": "cd82",
+  "game_id": "cd82-fb555c5d",
+  "game_levels": 6,
+  "level": 5,
+  "lower_bound": {
+    "kind": "octant_symmetry_uniform_cost_exhaustion",
+    "statement": "Complete exhaustion of the octant-reduced state space (75 states, 55 pops); lb==ub==13 and the plan replay-wins at exactly 13. The proof octant_symmetry_uniform_cost_exhaustion establishes lower bound 13, equal to the floor.",
+    "value": 13
+  },
+  "naes_t1_actions": 13,
+  "proof_class": "Exhaustive search",
+  "proof_detail": "octant_symmetry_uniform_cost_exhaustion",
+  "schema_version": 1,
+  "source_certificate_sha256": "cf0ab59ad905b4695a2634360ee1ccacd3bcf85ef4ac708b6f7bb5ae55680bfc",
+  "status": "proven",
+  "upper_bound": {
+    "expected_levels_completed": 5,
+    "length": 13,
+    "opening_reset_counted": false,
+    "route": "6@59,4 5 6@53,4 6@32,20 3 2 2 6@47,4 5 4 4 6@35,4 5",
+    "seed": 0
+  }
+}

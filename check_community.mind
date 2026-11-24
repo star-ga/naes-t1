@@ -1,0 +1,380 @@
+// Recount community scorecards from per-level records and the reference table.
+// Exit 0 only when every compared value matches. Measured by STARGA; not verified by ARC Prize.
+
+fn cc_cmdrec() -> i64 {
+    let rec: i64 = __mind_alloc(16);
+    let pathb: i64 = cc_bnew(24);
+    let _p: i64 = cc_bstr(pathb, "/proc/self/cmdline");
+    let buf: i64 = __mind_alloc(65536);
+    let n: i64 = read_file_native(cc_cstr(pathb), buf, 65535);
+    __mind_store_i64(rec + 0, buf);
+    __mind_store_i64(rec + 8, n);
+    rec
+}
+
+fn cc_argc() -> i64 {
+    let rec: i64 = cc_cmdrec();
+    let buf: i64 = __mind_load_i64(rec + 0);
+    let n: i64 = __mind_load_i64(rec + 8);
+    if n <= 0 {
+        return 0;
+    }
+    let mut i: i64 = 0;
+    let mut c: i64 = 0;
+    while i < n {
+        if __mind_load_i8(buf + i) == 0 {
+            c = c + 1;
+        }
+        i = i + 1;
+    }
+    c
+}
+
+fn cc_argv(index: i64) -> String {
+    let rec: i64 = cc_cmdrec();
+    let buf: i64 = __mind_load_i64(rec + 0);
+    let n: i64 = __mind_load_i64(rec + 8);
+    let mut i: i64 = 0;
+    let mut seen: i64 = 0;
+    while i < n {
+        if seen == index {
+            let mut j: i64 = i;
+            while j < n {
+                if __mind_load_i8(buf + j) == 0 {
+                    return String { addr: buf + i, len: j - i, cap: 0 };
+                }
+                j = j + 1;
+            }
+            return String { addr: buf + i, len: n - i, cap: 0 };
+        }
+        if __mind_load_i8(buf + i) == 0 {
+            seen = seen + 1;
+        }
+        i = i + 1;
+    }
+    String { addr: buf, len: 0, cap: 0 }
+}
+
+fn cc_eq(a: i64, an: i64, b: i64, bn: i64) -> i64 {
+    if an != bn {
+        return 0;
+    }
+    let mut i: i64 = 0;
+    while i < an {
+        if __mind_load_i8(a + i) != __mind_load_i8(b + i) {
+            return 0;
+        }
+        i = i + 1;
+    }
+    1
+}
+
+fn cc_streq(a: String, b: String) -> i64 {
+    cc_eq(string_addr(a), string_len(a), string_addr(b), string_len(b))
+}
+
+fn cc_starts(a: String, b: String) -> i64 {
+    if string_len(a) < string_len(b) {
+        return 0;
+    }
+    cc_eq(string_addr(a), string_len(b), string_addr(b), string_len(b))
+}
+
+fn cc_bnew(cap: i64) -> i64 {
+    let rec: i64 = __mind_alloc(24);
+    let data: i64 = __mind_alloc(cap);
+    __mind_store_i64(rec + 0, data);
+    __mind_store_i64(rec + 8, 0);
+    __mind_store_i64(rec + 16, cap);
+    rec
+}
+
+fn cc_blen(b: i64) -> i64 {
+    __mind_load_i64(b + 8)
+}
+
+fn cc_bdata(b: i64) -> i64 {
+    __mind_load_i64(b + 0)
+}
+
+fn cc_bclear(b: i64) -> i64 {
+    __mind_store_i64(b + 8, 0);
+    b
+}
+
+fn cc_bpush(b: i64, byte: i64) -> i64 {
+    let n: i64 = cc_blen(b);
+    let cap: i64 = __mind_load_i64(b + 16);
+    if n >= cap {
+        let ncap: i64 = if cap < 64 { 128 } else { cap * 2 };
+        let nd: i64 = __mind_realloc(cc_bdata(b), ncap);
+        __mind_store_i64(b + 0, nd);
+        __mind_store_i64(b + 16, ncap);
+    }
+    __mind_store_i8(cc_bdata(b) + cc_blen(b), byte);
+    __mind_store_i64(b + 8, cc_blen(b) + 1);
+    b
+}
+
+fn cc_bmem(b: i64, p: i64, n: i64) -> i64 {
+    let mut i: i64 = 0;
+    let mut out: i64 = b;
+    while i < n {
+        out = cc_bpush(out, __mind_load_i8(p + i));
+        i = i + 1;
+    }
+    out
+}
+
+fn cc_bstr(b: i64, s: String) -> i64 {
+    cc_bmem(b, string_addr(s), string_len(s))
+}
+
+fn cc_emit(b: i64) -> i64 {
+    print_bytes(cc_bdata(b), cc_blen(b));
+    0
+}
+
+fn cc_cstr(b: i64) -> i64 {
+    let n: i64 = cc_blen(b);
+    let p: i64 = __mind_alloc(n + 1);
+    let mut i: i64 = 0;
+    while i < n {
+        __mind_store_i8(p + i, __mind_load_i8(cc_bdata(b) + i));
+        i = i + 1;
+    }
+    __mind_store_i8(p + n, 0);
+    p
+}
+
+fn cc_bpush_i64(b: i64, n: i64) -> i64 {
+    if n == 0 {
+        return cc_bpush(b, 48);
+    }
+    let mut nn: i64 = n;
+    let mut out: i64 = b;
+    if n < 0 {
+        out = cc_bpush(out, 45);
+        nn = 0 - n;
+    }
+    let mut div: i64 = 1;
+    let mut tmp: i64 = nn;
+    while tmp >= 10 {
+        div = div * 10;
+        tmp = tmp / 10;
+    }
+    while div > 0 {
+        let digit: i64 = (nn / div) % 10;
+        out = cc_bpush(out, 48 + digit);
+        div = div / 10;
+    }
+    out
+}
+
+fn cc_bpush_i64w(b: i64, n: i64, width: i64) -> i64 {
+    let mut nn: i64 = n;
+    if n < 0 {
+        nn = 0 - n;
+    }
+    let mut digits: i64 = 1;
+    let mut tmp: i64 = nn;
+    while tmp >= 10 {
+        digits = digits + 1;
+        tmp = tmp / 10;
+    }
+    if n < 0 {
+        digits = digits + 1;
+    }
+    let mut out: i64 = b;
+    let mut pad: i64 = width - digits;
+    while pad > 0 {
+        out = cc_bpush(out, 32);
+        pad = pad - 1;
+    }
+    cc_bpush_i64(out, n)
+}
+
+fn cc_bpush_f6(b: i64, x: f64) -> i64 {
+    let mut out: i64 = b;
+    let mut ax: f64 = x;
+    if x < 0.0 {
+        out = cc_bpush(out, 45);
+        ax = 0.0 - x;
+    }
+    let scaled: f64 = ax * 1000000.0;
+    let mut whole: i64 = scaled as i64;
+    let back: f64 = whole as f64;
+    let frac: f64 = scaled - back;
+    if frac > 0.5 {
+        whole = whole + 1;
+    } else {
+        if frac == 0.5 {
+            if whole % 2 != 0 {
+                whole = whole + 1;
+            }
+        }
+    }
+    let ip: i64 = whole / 1000000;
+    let fp: i64 = whole % 1000000;
+    out = cc_bpush_i64(out, ip);
+    out = cc_bpush(out, 46);
+    let mut div: i64 = 100000;
+    let mut f: i64 = fp;
+    while div > 0 {
+        let d: i64 = f / div;
+        out = cc_bpush(out, 48 + d);
+        f = f % div;
+        div = div / 10;
+    }
+    out
+}
+
+fn cc_abs_lt(a: f64, b: f64, tol: f64) -> i64 {
+    let mut d: f64 = a - b;
+    if d < 0.0 {
+        d = 0.0 - d;
+    }
+    if d < tol { 1 } else { 0 }
+}
+
+fn cc_num(h: i64) -> f64 {
+    let ip: f64 = jv_n_int(h) as f64;
+    let fr: f64 = jv_n_frac(h) as f64;
+    let den: f64 = jv_n_frac_d(h) as f64;
+    let mut v: f64 = ip;
+    if den != 0.0 {
+        v = ip + (fr / den);
+    }
+    if jv_n_neg(h) == 1 {
+        v = 0.0 - v;
+    }
+    v
+}
+
+fn cc_int(h: i64) -> i64 {
+    if jv_n_neg(h) == 1 {
+        return 0 - jv_n_int(h);
+    }
+    jv_n_int(h)
+}
+
+fn cc_get(obj: i64, key: String) -> i64 {
+    jv_get(obj, string_addr(key), string_len(key))
+}
+
+fn cc_load(path: i64) -> i64 {
+    read_to_string(path)
+}
+
+fn cc_parse_file(path: i64) -> i64 {
+    let rec: i64 = cc_load(path);
+    let n: i64 = __mind_load_i64(rec + 8);
+    if n <= 0 {
+        return 0;
+    }
+    jv_parse(__mind_load_i64(rec + 0), n)
+}
+
+fn cc_is_ws(c: i64) -> i64 {
+    if c == 32 || c == 9 || c == 13 || c == 10 { 1 } else { 0 }
+}
+
+fn cc_skip_ws_span(p: i64, n: i64, at: i64, forward: i64) -> i64 {
+    if forward == 1 {
+        let mut i: i64 = at;
+        while i < n {
+            if cc_is_ws(__mind_load_i8(p + i)) == 1 {
+                i = i + 1;
+            } else {
+                return i;
+            }
+        }
+        return n;
+    }
+    let mut i: i64 = at;
+    while i > 0 {
+        if cc_is_ws(__mind_load_i8(p + i - 1)) == 1 {
+            i = i - 1;
+        } else {
+            return i;
+        }
+    }
+    0
+}
+
+// CSV row splitter. Writes field start/len pairs into parallel arrays. Returns field count.
+fn cc_csv_fields(p: i64, n: i64, starts: i64, lens: i64, cap: i64) -> i64 {
+    let mut i: i64 = 0;
+    let mut nf: i64 = 0;
+    let mut in_q: i64 = 0;
+    let mut field_at: i64 = 0;
+    let mut out_n: i64 = 0;
+    // Fields are copied into a side buffer only when quotes appear. For the
+    // columns this program reads, values are unquoted, so spans point at p.
+    while i <= n {
+        let at_end: i64 = if i == n { 1 } else { 0 };
+        let c: i64 = if at_end == 1 { 10 } else { __mind_load_i8(p + i) };
+        if in_q == 1 {
+            if c == 34 {
+                if i + 1 < n {
+                    if __mind_load_i8(p + i + 1) == 34 {
+                        i = i + 2;
+                    } else {
+                        in_q = 0;
+                        i = i + 1;
+                    }
+                } else {
+                    in_q = 0;
+                    i = i + 1;
+                }
+            } else {
+                i = i + 1;
+            }
+        } else {
+            if c == 34 {
+                in_q = 1;
+                i = i + 1;
+            } else {
+                if c == 44 || c == 10 || c == 13 {
+                    if nf < cap {
+                        let mut a: i64 = field_at;
+                        let mut b: i64 = i;
+                        // drop a single pair of surrounding quotes
+                        if b > a {
+                            if __mind_load_i8(p + a) == 34 {
+                                a = a + 1;
+                            }
+                        }
+                        if b > a {
+                            if __mind_load_i8(p + b - 1) == 34 {
+                                b = b - 1;
+                            }
+                        }
+                        __mind_store_i64(starts + nf * 8, p + a);
+                        __mind_store_i64(lens + nf * 8, b - a);
+                        nf = nf + 1;
+                    }
+                    out_n = nf;
+                    if c == 13 {
+                        i = i + 1;
+                        if i < n {
+                            if __mind_load_i8(p + i) == 10 {
+                                i = i + 1;
+                            }
+                        }
+                        return out_n;
+                    }
+                    if c == 10 || at_end == 1 {
+                        return out_n;
+                    }
+                    i = i + 1;
+                    field_at = i;
+                } else {
+                    i = i + 1;
+                }
+            }
+        }
+    }
+    out_n
+}
+

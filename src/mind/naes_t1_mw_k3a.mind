@@ -1,0 +1,366 @@
+// K3 bank of the multi-worker block walk (k3_* functions): tables and the
+// bank build.
+// Entry points: k3_force_i32, k3_force_zext, k3_srow_alloc, k3_bound_ok.
+
+fn k3_force_i32() -> i64 { 0 }
+fn k3_force_zext() -> i64 { 0 }
+
+fn k3_at(s: i64, x: i64) -> i64 {
+    if x < 0 || x >= 64 {
+        return 0;
+    }
+    ld(s, x)
+}
+
+fn k3_bound_scl(s: i64, dil: i64) -> i64 {
+    let lim: i64 = 2147483648;
+    let mut x: i64 = 0;
+    while x < 64 {
+        let b: i64 = k3_at(s, x - dil) + k3_at(s, x) + k3_at(s, x + dil);
+        if b >= lim {
+            return 0;
+        }
+        x = x + 1;
+    }
+    1
+}
+
+fn k3_srow_alloc() -> i64 {
+    let b: i64 = mw_alloc_zero(104);
+    if b == 0 {
+        return 0;
+    }
+    let mut i: i64 = 96;
+    while i < 100 {
+        st(b, i, 2147483647);
+        i = i + 1;
+    }
+    b + 128
+}
+
+fn k3_bound_ok(s: i64, dil: i64) -> i64 {
+    if dil < 0 || dil > 16 {
+        return k3_bound_scl(s, dil);
+    }
+    k3_bound_vec(s, dil)
+}
+
+fn k3_bound_vec(s: i64, dil: i64) -> i64 {
+    let sm: i64 = s - dil * 8;
+    let sp: i64 = s + dil * 8;
+    __mind_ymm_vmovdqu_ld(3, s, 640);
+    __mind_ymm_vpsubq_i64x4_r(2, 2, 2);
+    let mut d: i64 = 0;
+    while d < 512 {
+        __mind_ymm_vmovdqu_ld(0, sm + d, 0);
+        __mind_ymm_vpaddq_i64x4_m(0, s + d, 0);
+        __mind_ymm_vpaddq_i64x4_m(0, sp + d, 0);
+        __mind_ymm_vpcmpgtq_i64x4_r(1, 0, 3);
+        __mind_ymm_vpor_i64x4_r(2, 2, 1);
+        __mind_ymm_vmovdqu_ld(0, sm + d, 32);
+        __mind_ymm_vpaddq_i64x4_m(0, s + d, 32);
+        __mind_ymm_vpaddq_i64x4_m(0, sp + d, 32);
+        __mind_ymm_vpcmpgtq_i64x4_r(1, 0, 3);
+        __mind_ymm_vpor_i64x4_r(2, 2, 1);
+        d = d + 64;
+    }
+    __mind_ymm_vmovdqu_st(2, s, 672);
+    let m: i64 = __mind_load_i64(s + 672) | __mind_load_i64(s + 680) | __mind_load_i64(s + 688) | __mind_load_i64(s + 696);
+    if m != 0 {
+        return 0;
+    }
+    1
+}
+
+fn k3_max_dil() -> i64 {
+    64
+}
+
+fn k3_wide_fails() -> i64 {
+    4
+}
+
+fn k3_zext_row(row0: i64) -> i64 {
+    let mut o: i64 = 0;
+    while o < 64 {
+        let a: i64 = row0 + o * 576;
+        __mind_store_i64(a, __mind_load_i64(a) + 4294967296);
+        o = o + 1;
+    }
+    0
+}
+
+fn k3_force_neg() -> i64 { 0 }
+
+fn k3_terms(plan: i64, seg: i64, sy: i64, dil: i64) -> i64 {
+    let starts: i64 = ld(plan, pl_starts());
+    let mut t: i64 = 0;
+    let mut ky: i64 = 0;
+    while ky < 3 {
+        let y: i64 = sy - (ky - 1) * dil;
+        if y >= 0 && y < 64 {
+            let mut o: i64 = 0;
+            while o < 64 {
+                let b: i64 = start_index(seg, o, ky);
+                t = t + ld(starts, b + 2) - ld(starts, b);
+                o = o + 1;
+            }
+        }
+        ky = ky + 1;
+    }
+    t
+}
+
+fn k3_terms_tab(plan: i64, dil: i64) -> i64 {
+    let nseg: i64 = ld(plan, pl_nseg());
+    let tab: i64 = mw_alloc_zero(nseg * 64 + 5);
+    let et: i64 = mw_alloc_zero(32768);
+    if tab == 0 || et == 0 {
+        return 0;
+    }
+    st(tab, nseg * 64 + 1, et);
+    let mut seg: i64 = 0;
+    while seg < nseg {
+        let mut sy: i64 = 0;
+        while sy < 64 {
+            st(tab, seg * 64 + sy, k3_terms(plan, seg, sy, dil));
+            sy = sy + 1;
+        }
+        seg = seg + 1;
+    }
+    st(plan, 7, tab);
+    tab
+}
+
+fn k3_half_plan(plan: i64, lay: i64, gsz: i64, cg: i64) -> i64 {
+    if gsz != 3 || cg < 2 || cg % 2 != 0 {
+        return 1;
+    }
+    let hp: i64 = mw_build_plan4(lay, gsz, cg / 2);
+    if hp == 0 {
+        return 0;
+    }
+    if terms_u16(hp) == 0 {
+        return 0;
+    }
+    st(ld(plan, 7), ld(plan, pl_nseg()) * 64 + 4, hp);
+    1
+}
+
+fn k3_half(plan: i64) -> i64 {
+    ld(ld(plan, 7), ld(plan, pl_nseg()) * 64 + 4)
+}
+
+fn k3_full_plan(plan: i64, lay: i64, gsz: i64, cg: i64) -> i64 {
+    if gsz != 3 || n_segs(gsz, cg * 3) != 1 || ld(plan, pl_nseg()) < 2 {
+        return 1;
+    }
+    let fp: i64 = mw_build_plan4(lay, gsz, cg * 3);
+    if fp == 0 {
+        return 0;
+    }
+    if ld(fp, pl_terms()) != ld(plan, pl_terms()) || terms_u16(fp) == 0 {
+        return 1;
+    }
+    st(ld(plan, 7), ld(plan, pl_nseg()) * 64, fp);
+    1
+}
+
+fn k3_full(plan: i64) -> i64 {
+    ld(ld(plan, 7), ld(plan, pl_nseg()) * 64)
+}
+
+fn k3_probe() -> i64 {
+    let ptrs: i64 = mw_alloc_zero(4);
+    let ch: i64 = mw_alloc_zero(8);
+    let dst: i64 = mw_alloc_zero(128);
+    if ptrs == 0 || ch == 0 || dst == 0 {
+        return 0;
+    }
+    st(ch, 0, 0 - 1);
+    st(ptrs, 0, ch);
+    st(ptrs, 1, ch + 16);
+    st(ptrs, 2, ch + 32);
+    st(ptrs, 3, ch + 48);
+    __mind_group_bank_i64(ptrs, dst, 64, 1, 3 | 48);
+    let b0: i64 = __mind_load_i8(dst + 512) & 255;
+    let b4: i64 = __mind_load_i8(dst + 516) & 255;
+    if b0 == 255 && b4 == 0 {
+        return 1;
+    }
+    0
+}
+
+fn k3_lut_ok(ws: i64) -> i64 {
+    if k3_force_neg() == 1 {
+        return 0;
+    }
+    let lut: i64 = ld(ws, ws_lut());
+    if lut == 0 {
+        return 0;
+    }
+    let mut i: i64 = 0;
+    while i < 5824 {
+        if ld(lut, i) < 0 {
+            return 0;
+        }
+        i = i + 1;
+    }
+    1
+}
+
+fn k3_fill_s(hin: i64, seg: i64, gsz: i64, cg: i64, sy: i64, s: i64) -> i64 {
+    let c0: i64 = seg * cg * gsz;
+    let mut c1: i64 = c0 + cg * gsz;
+    if c1 > 64 {
+        c1 = 64;
+    }
+    let mut n: i64 = c1 - c0;
+    if n < 0 {
+        n = 0;
+    }
+    let row0: i64 = hin + (c0 * plane() + origin() + sy * pw()) * 8;
+    k3_fill_vec(row0, n, s);
+    k3_fill_vec(row0 + 256, n, s + 256)
+}
+
+fn k3_fill_vec(row0: i64, n: i64, s: i64) -> i64 {
+    __mind_ymm_vpsubq_i64x4_r(0, 0, 0);
+    __mind_ymm_vpsubq_i64x4_r(1, 1, 1);
+    __mind_ymm_vpsubq_i64x4_r(2, 2, 2);
+    __mind_ymm_vpsubq_i64x4_r(3, 3, 3);
+    __mind_ymm_vpsubq_i64x4_r(4, 4, 4);
+    __mind_ymm_vpsubq_i64x4_r(5, 5, 5);
+    __mind_ymm_vpsubq_i64x4_r(6, 6, 6);
+    __mind_ymm_vpsubq_i64x4_r(7, 7, 7);
+    let mut r: i64 = row0;
+    let e4: i64 = row0 + (n - n % 4) * 73728;
+    while r < e4 {
+        __mind_ymm_vpaddq_i64x4_m(0, r, 0);
+        __mind_ymm_vpaddq_i64x4_m(1, r, 32);
+        __mind_ymm_vpaddq_i64x4_m(2, r, 64);
+        __mind_ymm_vpaddq_i64x4_m(3, r, 96);
+        __mind_ymm_vpaddq_i64x4_m(4, r, 128);
+        __mind_ymm_vpaddq_i64x4_m(5, r, 160);
+        __mind_ymm_vpaddq_i64x4_m(6, r, 192);
+        __mind_ymm_vpaddq_i64x4_m(7, r, 224);
+        __mind_ymm_vpaddq_i64x4_m(0, r, 73728);
+        __mind_ymm_vpaddq_i64x4_m(1, r, 73760);
+        __mind_ymm_vpaddq_i64x4_m(2, r, 73792);
+        __mind_ymm_vpaddq_i64x4_m(3, r, 73824);
+        __mind_ymm_vpaddq_i64x4_m(4, r, 73856);
+        __mind_ymm_vpaddq_i64x4_m(5, r, 73888);
+        __mind_ymm_vpaddq_i64x4_m(6, r, 73920);
+        __mind_ymm_vpaddq_i64x4_m(7, r, 73952);
+        __mind_ymm_vpaddq_i64x4_m(0, r, 147456);
+        __mind_ymm_vpaddq_i64x4_m(1, r, 147488);
+        __mind_ymm_vpaddq_i64x4_m(2, r, 147520);
+        __mind_ymm_vpaddq_i64x4_m(3, r, 147552);
+        __mind_ymm_vpaddq_i64x4_m(4, r, 147584);
+        __mind_ymm_vpaddq_i64x4_m(5, r, 147616);
+        __mind_ymm_vpaddq_i64x4_m(6, r, 147648);
+        __mind_ymm_vpaddq_i64x4_m(7, r, 147680);
+        __mind_ymm_vpaddq_i64x4_m(0, r, 221184);
+        __mind_ymm_vpaddq_i64x4_m(1, r, 221216);
+        __mind_ymm_vpaddq_i64x4_m(2, r, 221248);
+        __mind_ymm_vpaddq_i64x4_m(3, r, 221280);
+        __mind_ymm_vpaddq_i64x4_m(4, r, 221312);
+        __mind_ymm_vpaddq_i64x4_m(5, r, 221344);
+        __mind_ymm_vpaddq_i64x4_m(6, r, 221376);
+        __mind_ymm_vpaddq_i64x4_m(7, r, 221408);
+        r = r + 294912;
+    }
+    let e: i64 = row0 + n * 73728;
+    while r < e {
+        __mind_ymm_vpaddq_i64x4_m(0, r, 0);
+        __mind_ymm_vpaddq_i64x4_m(1, r, 32);
+        __mind_ymm_vpaddq_i64x4_m(2, r, 64);
+        __mind_ymm_vpaddq_i64x4_m(3, r, 96);
+        __mind_ymm_vpaddq_i64x4_m(4, r, 128);
+        __mind_ymm_vpaddq_i64x4_m(5, r, 160);
+        __mind_ymm_vpaddq_i64x4_m(6, r, 192);
+        __mind_ymm_vpaddq_i64x4_m(7, r, 224);
+        r = r + 73728;
+    }
+    __mind_ymm_vmovdqu_st(0, s, 0);
+    __mind_ymm_vmovdqu_st(1, s, 32);
+    __mind_ymm_vmovdqu_st(2, s, 64);
+    __mind_ymm_vmovdqu_st(3, s, 96);
+    __mind_ymm_vmovdqu_st(4, s, 128);
+    __mind_ymm_vmovdqu_st(5, s, 160);
+    __mind_ymm_vmovdqu_st(6, s, 192);
+    __mind_ymm_vmovdqu_st(7, s, 224);
+    0
+}
+
+fn k3_pick(w4: i64, plan: i64, hin: i64, seg: i64, sy: i64, dil: i64) -> i64 {
+    let s: i64 = ld(w4, w4_srow());
+    k3_fill_s(hin, seg, ld(w4, w4_group()), ld(w4, w4_cg()), sy, s);
+    let bound: i64 = k3_bound_ok(s, dil);
+    let mut path: i64 = bound;
+    if ld(ld(w4, w4_census()), 5) == 0 {
+        path = 0;
+    }
+    if k3_force_i32() == 1 {
+        path = 1;
+    }
+    if path == 0 && ld(ld(w4, w4_census()), 5) != 0 {
+        path = k3_pick_half(w4, plan, hin, seg, sy, dil);
+    }
+    path
+}
+
+fn k3_pick_half(w4: i64, plan: i64, hin: i64, seg: i64, sy: i64, dil: i64) -> i64 {
+    let hp: i64 = k3_half(plan);
+    if hp == 0 || 2 * seg + 1 >= ld(hp, pl_nseg()) {
+        return 0;
+    }
+    let s: i64 = ld(w4, w4_srow());
+    let gsz: i64 = ld(w4, w4_group());
+    let ch: i64 = ld(w4, w4_cg()) / 2;
+    k3_fill_s(hin, 2 * seg, gsz, ch, sy, s);
+    if k3_bound_ok(s, dil) == 0 {
+        return 0;
+    }
+    k3_fill_s(hin, 2 * seg + 1, gsz, ch, sy, s);
+    if k3_bound_ok(s, dil) == 0 {
+        return 0;
+    }
+    2
+}
+
+fn k3_pick_all(w4: i64, plan: i64, hin: i64, nseg: i64, sy: i64, dil: i64) -> i64 {
+    let s: i64 = ld(w4, w4_srow());
+    let row0: i64 = hin + (origin() + sy * pw()) * 8;
+    k3_fill_vec(row0, 64, s);
+    k3_fill_vec(row0 + 256, 64, s + 256);
+    if k3_bound_ok(s, dil) == 0 {
+        return 0;
+    }
+    1
+}
+
+fn k3_erec_plane(k: i64, erec: i64, hin: i64, hout: i64, pstep: i64, rstep: i64, c0: i64) -> i64 {
+    let et: i64 = __mind_load_i64(k);
+    if et == 0 {
+        return 0;
+    }
+    if __mind_load_i64(k + 8) == hin && __mind_load_i64(k + 16) == hout {
+        return et;
+    }
+    let mut y: i64 = 0;
+    while y < 64 {
+        let r: i64 = et + y * 4096;
+        let mut i: i64 = 0;
+        while i < 4096 {
+            __mind_store_i64(r + i, __mind_load_i64(erec + i));
+            i = i + 8;
+        }
+        let c: i64 = c0 + y * rstep;
+        erec_fill(r, hin + c, hout + c, pstep);
+        y = y + 1;
+    }
+    __mind_store_i64(k + 8, hin);
+    __mind_store_i64(k + 16, hout);
+    et
+}

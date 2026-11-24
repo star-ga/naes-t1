@@ -1,0 +1,23 @@
+{
+ "old": "old/s5i5/a48e4b1d/s5i5.py",
+ "new": "new/s5i5/18d95033/s5i5.py",
+ "old_tokens": 2179,
+ "new_tokens": 2179,
+ "renamed": 117,
+ "mapped": 244,
+ "n_hunks": 0,
+ "hunks": [],
+ "string_map": {
+  "\"\"\".\"\"\"": "\"\"\".\"\"\"",
+  "'s5i5'": "'s5i5'",
+  "'gdgcpukdrl'": "'0066ghlkyvdbgg'",
+  "'agujdcrunq'": "'0001qwdmnlybkb'",
+  "'zylvdxoiuq'": "'0064ocqkuqacti'",
+  "'Children'": "'Children'",
+  "'StepCounter'": "'StepCounter'",
+  "'cpdhnkdobh'": "'0087vvmblxkzdi'",
+  "'x'": "'x'",
+  "'y'": "'y'",
+  "'myzmclysbl'": "'0089rvqdprjwpz'"
+ }
+}

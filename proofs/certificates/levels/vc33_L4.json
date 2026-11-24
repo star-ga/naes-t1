@@ -1,0 +1,83 @@
+{
+  "artifact_sha256": [
+    {
+      "kind": "safe_statement_count_extract",
+      "sha256": "3adfdbb684958a9a31dd656378628d7a9ca2d440aa94c680e3ca900aa81f2c6f"
+    },
+    {
+      "kind": "authority_ledger_label",
+      "sha256": "9c625f1b00e3a94d96d67b10d7d952c098ed4e377a4ccc9c925c9e6c1b3e076c"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "39855d81eb7be3f98d6c57545125761ef19cf1e1654f30cb14029c5adadce6c1"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "372b60c749280649b8910d11b7642c82eed8cb945a904dd0578dff06c39912e3"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "e15385de4b9d1691152fd91beb9c71b6ca5ea3685ed3d7419e8a0aab4372d1d5"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "e82856667c22d5ee2d063fa350fd11bb834d5906af7ba914851acfd59fbd4d51"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "5bdfadaf67099b99d1c40e025d6dce044c22658fc49353919299df2d16921556"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "e9bd2fbf9f7361095e23cffb61c56cae3191af095f72aa8790c2dcce6930d591"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "cb0a047d7c06d105aa25d2a7d109a3293977486b7b635f423640363f2050a38b"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "65142a27f8a4bf2e8374714fb6ff0277dc3cb4bdd545337df3f8e97b15793c9a"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "70e9677316dd3e32140da24cce40cd128f84ef181c933ba37f65a4a1c3626f7d"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "6bae89331c6205812ede667d647d62ada9643fe7666ccb407f8b4886575a9a60"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "67c799bd0def5d49620b566e47e8106b45fa5e7a9ef454f85616de70e5ee9e5c"
+    },
+    {
+      "kind": "recorded_evidence",
+      "sha256": "d9b7d8978417716006986d6ecb87a959ac026f074cd249a208049d4a63a4ebee"
+    }
+  ],
+  "floor": 21,
+  "game": "vc33",
+  "game_id": "vc33-5430563c",
+  "game_levels": 7,
+  "level": 4,
+  "lower_bound": {
+    "kind": "complete_alphabet_uniform_cost_exhaustion",
+    "statement": "RESET-inclusive exact-key unit-cost search closes every layer through 20 without completing the original target level. Every expanded state partitions all 4096 legal click pixels by their effect; nonclick actions are included.",
+    "value": 21
+  },
+  "naes_t1_actions": 21,
+  "proof_class": "Exhaustive search",
+  "proof_detail": "complete_alphabet_uniform_cost_exhaustion",
+  "schema_version": 1,
+  "source_certificate_sha256": "c841b8dc117bff83db0b11fd5fa53d1f11ce44eaf67a5a5df363c6158c659adc",
+  "status": "proven",
+  "upper_bound": {
+    "expected_levels_completed": 4,
+    "length": 21,
+    "opening_reset_counted": false,
+    "route": "6@16,62 6@16,62 6@13,49 6@16,62 6@16,62 6@16,62 6@40,62 6@40,62 6@52,62 6@40,62 6@28,40 6@52,62 6@40,62 6@52,62 6@40,62 6@52,62 6@40,62 6@52,62 6@40,62 6@52,62 6@40,62",
+    "seed": 0
+  }
+}

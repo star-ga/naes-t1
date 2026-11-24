@@ -1,0 +1,285 @@
+// std/sha256.mind — FIPS 180-4 SHA-256 in MIND.
+//
+// u32 arithmetic is emulated on i64: every intermediate result is masked
+// with `& 4294967295` (= 0xFFFFFFFF) to discard the high 32 bits.
+// Logical right-shift: `(x >> n) & 4294967295`.
+// Rotation: `rotr32(x, n)`.
+//
+// Memory layout:
+//   - Input / output byte buffers: one byte per offset (byte i lives at
+//     base + i), matching std.string discipline.
+//     `__mind_store_i8(base + i, b)` writes byte b and
+//     `__mind_load_i8(base + i)` reads it back (single-byte
+//     load/store throughout; no trailing-7-byte clobber, no tail OOB read).
+//   - W schedule (64 words): word k lives at base + k*8 (stride-8, like Vec).
+//   - H state (8 words): same stride-8 layout, 8*8=64 bytes.
+//
+// Public API:
+//   pub fn sha256(in_addr: i64, in_len: i64, out_addr: i64) -> i64
+//     Reads in_len bytes at in_addr, writes 32-byte big-endian digest to
+//     out_addr (one byte per offset, H0 high byte first), returns 0.
+//
+// Determinism: pure integer arithmetic, no floats, no external calls.
+
+// ---------------------------------------------------------------------------
+// u32-on-i64 primitives
+// ---------------------------------------------------------------------------
+
+// mask32 — discard bits above bit 31.  4294967295 = 0xFFFF_FFFF.
+fn mask32(x: i64) -> i64 {
+    x & 4294967295
+}
+
+// rotr32 — right-rotate in the 32-bit domain.
+fn rotr32(x: i64, n: i64) -> i64 {
+    ((x >> n) | (x << (32 - n))) & 4294967295
+}
+
+// shr32 — logical right-shift in the 32-bit domain.
+fn shr32(x: i64, n: i64) -> i64 {
+    (x >> n) & 4294967295
+}
+
+// ---------------------------------------------------------------------------
+// FIPS 180-4 §4.1.2 Boolean functions
+// ---------------------------------------------------------------------------
+
+// ch(x,y,z) = (x AND y) XOR (NOT x AND z).
+// NOT x in the 32-bit domain: 4294967295 - (x & 4294967295).
+fn ch(x: i64, y: i64, z: i64) -> i64 {
+    let notx: i64 = 4294967295 - (x & 4294967295);
+    mask32((x & y) ^ (notx & z))
+}
+
+// maj(x,y,z) = (x AND y) XOR (x AND z) XOR (y AND z).
+fn maj(x: i64, y: i64, z: i64) -> i64 {
+    mask32((x & y) ^ (x & z) ^ (y & z))
+}
+
+// Σ0(a) = ROTR2(a) XOR ROTR13(a) XOR ROTR22(a).
+fn bsig0(x: i64) -> i64 {
+    mask32(rotr32(x, 2) ^ rotr32(x, 13) ^ rotr32(x, 22))
+}
+
+// Σ1(e) = ROTR6(e) XOR ROTR11(e) XOR ROTR25(e).
+fn bsig1(x: i64) -> i64 {
+    mask32(rotr32(x, 6) ^ rotr32(x, 11) ^ rotr32(x, 25))
+}
+
+// σ0(w) = ROTR7(w) XOR ROTR18(w) XOR SHR3(w).
+fn ssig0(x: i64) -> i64 {
+    mask32(rotr32(x, 7) ^ rotr32(x, 18) ^ shr32(x, 3))
+}
+
+// σ1(w) = ROTR17(w) XOR ROTR19(w) XOR SHR10(w).
+fn ssig1(x: i64) -> i64 {
+    mask32(rotr32(x, 17) ^ rotr32(x, 19) ^ shr32(x, 10))
+}
+
+// ---------------------------------------------------------------------------
+// Round constants K[0..63] — FIPS 180-4 §4.2.2
+//
+// First 32 bits of the fractional parts of the cube roots of the first
+// 64 primes, expressed in decimal.  k_word(i) returns K[i].
+// ---------------------------------------------------------------------------
+
+fn k_word(i: i64) -> i64 {
+    if i == 0 {
+        return 1116352408;
+    }
+    if i == 1 {
+        return 1899447441;
+    }
+    if i == 2 {
+        return 3049323471;
+    }
+    if i == 3 {
+        return 3921009573;
+    }
+    if i == 4 {
+        return 961987163;
+    }
+    if i == 5 {
+        return 1508970993;
+    }
+    if i == 6 {
+        return 2453635748;
+    }
+    if i == 7 {
+        return 2870763221;
+    }
+    if i == 8 {
+        return 3624381080;
+    }
+    if i == 9 {
+        return 310598401;
+    }
+    if i == 10 {
+        return 607225278;
+    }
+    if i == 11 {
+        return 1426881987;
+    }
+    if i == 12 {
+        return 1925078388;
+    }
+    if i == 13 {
+        return 2162078206;
+    }
+    if i == 14 {
+        return 2614888103;
+    }
+    if i == 15 {
+        return 3248222580;
+    }
+    if i == 16 {
+        return 3835390401;
+    }
+    if i == 17 {
+        return 4022224774;
+    }
+    if i == 18 {
+        return 264347078;
+    }
+    if i == 19 {
+        return 604807628;
+    }
+    if i == 20 {
+        return 770255983;
+    }
+    if i == 21 {
+        return 1249150122;
+    }
+    if i == 22 {
+        return 1555081692;
+    }
+    if i == 23 {
+        return 1996064986;
+    }
+    if i == 24 {
+        return 2554220882;
+    }
+    if i == 25 {
+        return 2821834349;
+    }
+    if i == 26 {
+        return 2952996808;
+    }
+    if i == 27 {
+        return 3210313671;
+    }
+    if i == 28 {
+        return 3336571891;
+    }
+    if i == 29 {
+        return 3584528711;
+    }
+    if i == 30 {
+        return 113926993;
+    }
+    if i == 31 {
+        return 338241895;
+    }
+    if i == 32 {
+        return 666307205;
+    }
+    if i == 33 {
+        return 773529912;
+    }
+    if i == 34 {
+        return 1294757372;
+    }
+    if i == 35 {
+        return 1396182291;
+    }
+    if i == 36 {
+        return 1695183700;
+    }
+    if i == 37 {
+        return 1986661051;
+    }
+    if i == 38 {
+        return 2177026350;
+    }
+    if i == 39 {
+        return 2456956037;
+    }
+    if i == 40 {
+        return 2730485921;
+    }
+    if i == 41 {
+        return 2820302411;
+    }
+    if i == 42 {
+        return 3259730800;
+    }
+    if i == 43 {
+        return 3345764771;
+    }
+    if i == 44 {
+        return 3516065817;
+    }
+    if i == 45 {
+        return 3600352804;
+    }
+    if i == 46 {
+        return 4094571909;
+    }
+    if i == 47 {
+        return 275423344;
+    }
+    if i == 48 {
+        return 430227734;
+    }
+    if i == 49 {
+        return 506948616;
+    }
+    if i == 50 {
+        return 659060556;
+    }
+    if i == 51 {
+        return 883997877;
+    }
+    if i == 52 {
+        return 958139571;
+    }
+    if i == 53 {
+        return 1322822218;
+    }
+    if i == 54 {
+        return 1537002063;
+    }
+    if i == 55 {
+        return 1747873779;
+    }
+    if i == 56 {
+        return 1955562222;
+    }
+    if i == 57 {
+        return 2024104815;
+    }
+    if i == 58 {
+        return 2227730452;
+    }
+    if i == 59 {
+        return 2361852424;
+    }
+    if i == 60 {
+        return 2428436474;
+    }
+    if i == 61 {
+        return 2756734187;
+    }
+    if i == 62 {
+        return 3204031479;
+    }
+    3329325298
+}
+
+// ---------------------------------------------------------------------------
+// Initial hash values H0..H7 — FIPS 180-4 §5.3.3
+//
+// First 32 bits of the fractional parts of the square roots of primes 2..19,
+// expressed in decimal.
+// ---------------------------------------------------------------------------
+

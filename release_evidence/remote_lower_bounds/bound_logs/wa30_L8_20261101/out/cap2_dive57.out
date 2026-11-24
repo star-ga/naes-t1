@@ -1,0 +1,10 @@
+C6_EXAMPLE box 12 (4,10)->(4,11) BG 10->9 enemy 1 at (4,12)
+CAP2 dive B=57 N=20000 states=720000 n(CAP2>h)=0 n(capH>h)=51 max(CAP2-h)=-2 mean_h=21.90 mean_CAP2=13.24
+DIVE MUT=0
+  L1 enemy-grab off-egoal                  checks=699288 violations=0
+  L2 enemy-loss egoal|P|kill               checks=513353 violations=0
+  L3 helper-grab unheld off-goal           checks=600171 violations=2
+  L4 helper-loss goal|P|enemy              checks=585333 violations=0
+  L5 box <=1 cell/tick                     checks=48100000 violations=0
+  C6 enemy carry BG non-decreasing         checks=3366263 violations=200739
+  C7 H1 stays bottom while bottom work     checks=3699970 violations=17

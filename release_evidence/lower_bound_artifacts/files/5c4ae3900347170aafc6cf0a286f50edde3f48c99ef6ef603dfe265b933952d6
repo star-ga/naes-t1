@@ -1,0 +1,108 @@
+{
+  "2": {
+    "per_layer_identical": true,
+    "status": [
+      "CLOSED_NO_WIN",
+      "CLOSED_NO_WIN"
+    ],
+    "layers_complete": [
+      9,
+      9
+    ],
+    "expanded_total": [
+      448,
+      448
+    ],
+    "edges": [
+      3584,
+      3584
+    ],
+    "visited": [
+      638,
+      638
+    ],
+    "replay_win_at": [
+      10,
+      10
+    ],
+    "Fminus1_win": [
+      null,
+      null
+    ],
+    "mutation_control": [
+      {
+        "status": "EARLY_WIN",
+        "win_depth": 9,
+        "expected_win_depth": 9,
+        "nodes": 3666,
+        "expanded_total": 459,
+        "elapsed_s": 27.76
+      },
+      {
+        "status": "EARLY_WIN",
+        "win_depth": 9,
+        "expected_win_depth": 9,
+        "nodes": 3666,
+        "expanded_total": 459,
+        "elapsed_s": 39.39
+      }
+    ],
+    "result": [
+      "PASS",
+      "PASS"
+    ]
+  },
+  "7": {
+    "per_layer_identical": true,
+    "status": [
+      "CLOSED_NO_WIN",
+      "CLOSED_NO_WIN"
+    ],
+    "layers_complete": [
+      13,
+      13
+    ],
+    "expanded_total": [
+      2568,
+      2568
+    ],
+    "edges": [
+      20544,
+      20544
+    ],
+    "visited": [
+      3294,
+      3294
+    ],
+    "replay_win_at": [
+      14,
+      14
+    ],
+    "Fminus1_win": [
+      null,
+      null
+    ],
+    "mutation_control": [
+      {
+        "status": "EARLY_WIN",
+        "win_depth": 13,
+        "expected_win_depth": 13,
+        "nodes": 22323,
+        "expanded_total": 2791,
+        "elapsed_s": 142.34
+      },
+      {
+        "status": "EARLY_WIN",
+        "win_depth": 13,
+        "expected_win_depth": 13,
+        "nodes": 22323,
+        "expanded_total": 2791,
+        "elapsed_s": 182.68
+      }
+    ],
+    "result": [
+      "PASS",
+      "PASS"
+    ]
+  }
+}

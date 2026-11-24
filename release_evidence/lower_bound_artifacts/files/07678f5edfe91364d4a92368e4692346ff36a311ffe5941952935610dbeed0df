@@ -1,0 +1,551 @@
+{
+ "4": {
+  "game": "bp35",
+  "level": 4,
+  "player": [
+   4,
+   14
+  ],
+  "gem": [
+   4,
+   27
+  ],
+  "h_start": 11,
+  "ub_seed": 19,
+  "budget_limit": 64,
+  "route_verified_ub": "<word withheld>",
+  "start_source": "cascade_bootstrap",
+  "engine": "native model, bisimulation-gated",
+  "alphabet": "complete (theorem A)",
+  "heuristic": "h_C when no flipper remains, else max(h_A, h_B) (theorem C)",
+  "nodes": 1776,
+  "edges": 14386,
+  "seconds": 1.5,
+  "keys": 4607,
+  "h_calls": 2639,
+  "h_misses": 2639,
+  "lazy_pops": 2638,
+  "exhausted": true,
+  "model_floor": 19,
+  "replay_verified": true,
+  "replay_won_at": 19,
+  "replay_shorter_wins": false,
+  "path": [
+   "CLK(18,54)",
+   "R",
+   "R",
+   "CLK(30,0)",
+   "L",
+   "L",
+   "L",
+   "R",
+   "R",
+   "CLK(42,38)",
+   "CLK(18,38)",
+   "R",
+   "R",
+   "CLK(42,60)",
+   "CLK(30,54)",
+   "L",
+   "L",
+   "L",
+   "CLK(24,38)"
+  ],
+  "path_actions": [
+   [
+    6,
+    18,
+    54
+   ],
+   [
+    4,
+    null,
+    null
+   ],
+   [
+    4,
+    null,
+    null
+   ],
+   [
+    6,
+    30,
+    0
+   ],
+   [
+    3,
+    null,
+    null
+   ],
+   [
+    3,
+    null,
+    null
+   ],
+   [
+    3,
+    null,
+    null
+   ],
+   [
+    4,
+    null,
+    null
+   ],
+   [
+    4,
+    null,
+    null
+   ],
+   [
+    6,
+    42,
+    38
+   ],
+   [
+    6,
+    18,
+    38
+   ],
+   [
+    4,
+    null,
+    null
+   ],
+   [
+    4,
+    null,
+    null
+   ],
+   [
+    6,
+    42,
+    60
+   ],
+   [
+    6,
+    30,
+    54
+   ],
+   [
+    3,
+    null,
+    null
+   ],
+   [
+    3,
+    null,
+    null
+   ],
+   [
+    3,
+    null,
+    null
+   ],
+   [
+    6,
+    24,
+    38
+   ]
+  ],
+  "min_path": [
+   "CLK(18,54)",
+   "R",
+   "R",
+   "CLK(30,0)",
+   "L",
+   "L",
+   "L",
+   "R",
+   "R",
+   "CLK(42,38)",
+   "CLK(18,38)",
+   "R",
+   "R",
+   "CLK(42,60)",
+   "CLK(30,54)",
+   "L",
+   "L",
+   "L",
+   "CLK(24,38)"
+  ],
+  "status": "PROVEN",
+  "floor": 19,
+  "lb": 19,
+  "ub": 19,
+  "proof": "A* over the bisimulation-gated model, with the COMPLETE alphabet (theorem A) and an admissible heuristic (theorem C) and node re-opening, terminated with min-f over OPEN >= incumbent 19: no win of length < 19 exists.  The route replays on a FRESH live engine from the cascade level start winning at exactly 19, and its 18-action prefix does not win.",
+  "gate_clean": true
+ },
+ "6": {
+  "game": "bp35",
+  "level": 6,
+  "player": [
+   3,
+   23
+  ],
+  "gem": [
+   2,
+   31
+  ],
+  "h_start": 12,
+  "ub_seed": 41,
+  "budget_limit": 64,
+  "route_verified_ub": "<word withheld>",
+  "start_source": "cascade_bootstrap",
+  "engine": "native model, bisimulation-gated",
+  "alphabet": "complete (theorem A)",
+  "heuristic": "h_C when no flipper remains, else max(h_A, h_B) (theorem C)",
+  "nodes": 36761,
+  "edges": 295889,
+  "seconds": 18.5,
+  "keys": 48657,
+  "h_calls": 37389,
+  "h_misses": 37389,
+  "lazy_pops": 37388,
+  "exhausted": true,
+  "model_floor": 41,
+  "replay_verified": true,
+  "replay_won_at": 41,
+  "replay_shorter_wins": false,
+  "path": [
+   "R",
+   "R",
+   "R",
+   "R",
+   "R",
+   "CLK(36,30)",
+   "CLK(24,26)",
+   "L",
+   "L",
+   "R",
+   "R",
+   "CLK(30,6)",
+   "L",
+   "L",
+   "L",
+   "L",
+   "R",
+   "R",
+   "R",
+   "CLK(48,0)",
+   "L",
+   "L",
+   "CLK(36,56)",
+   "CLK(24,56)",
+   "L",
+   "R",
+   "R",
+   "L",
+   "L",
+   "R",
+   "CLK(36,50)",
+   "R",
+   "CLK(42,32)",
+   "R",
+   "R",
+   "L",
+   "L",
+   "L",
+   "L",
+   "L",
+   "L"
+  ],
+  "path_actions": [
+   [
+    4,
+    null,
+    null
+   ],
+   [
+    4,
+    null,
+    null
+   ],
+   [
+    4,
+    null,
+    null
+   ],
+   [
+    4,
+    null,
+    null
+   ],
+   [
+    4,
+    null,
+    null
+   ],
+   [
+    6,
+    36,
+    30
+   ],
+   [
+    6,
+    24,
+    26
+   ],
+   [
+    3,
+    null,
+    null
+   ],
+   [
+    3,
+    null,
+    null
+   ],
+   [
+    4,
+    null,
+    null
+   ],
+   [
+    4,
+    null,
+    null
+   ],
+   [
+    6,
+    30,
+    6
+   ],
+   [
+    3,
+    null,
+    null
+   ],
+   [
+    3,
+    null,
+    null
+   ],
+   [
+    3,
+    null,
+    null
+   ],
+   [
+    3,
+    null,
+    null
+   ],
+   [
+    4,
+    null,
+    null
+   ],
+   [
+    4,
+    null,
+    null
+   ],
+   [
+    4,
+    null,
+    null
+   ],
+   [
+    6,
+    48,
+    0
+   ],
+   [
+    3,
+    null,
+    null
+   ],
+   [
+    3,
+    null,
+    null
+   ],
+   [
+    6,
+    36,
+    56
+   ],
+   [
+    6,
+    24,
+    56
+   ],
+   [
+    3,
+    null,
+    null
+   ],
+   [
+    4,
+    null,
+    null
+   ],
+   [
+    4,
+    null,
+    null
+   ],
+   [
+    3,
+    null,
+    null
+   ],
+   [
+    3,
+    null,
+    null
+   ],
+   [
+    4,
+    null,
+    null
+   ],
+   [
+    6,
+    36,
+    50
+   ],
+   [
+    4,
+    null,
+    null
+   ],
+   [
+    6,
+    42,
+    32
+   ],
+   [
+    4,
+    null,
+    null
+   ],
+   [
+    4,
+    null,
+    null
+   ],
+   [
+    3,
+    null,
+    null
+   ],
+   [
+    3,
+    null,
+    null
+   ],
+   [
+    3,
+    null,
+    null
+   ],
+   [
+    3,
+    null,
+    null
+   ],
+   [
+    3,
+    null,
+    null
+   ],
+   [
+    3,
+    null,
+    null
+   ]
+  ],
+  "min_path": [
+   "R",
+   "R",
+   "R",
+   "R",
+   "R",
+   "CLK(36,30)",
+   "CLK(24,26)",
+   "L",
+   "L",
+   "R",
+   "R",
+   "CLK(30,6)",
+   "L",
+   "L",
+   "L",
+   "L",
+   "R",
+   "R",
+   "R",
+   "CLK(48,0)",
+   "L",
+   "L",
+   "CLK(36,56)",
+   "CLK(24,56)",
+   "L",
+   "R",
+   "R",
+   "L",
+   "L",
+   "R",
+   "CLK(36,50)",
+   "R",
+   "CLK(42,32)",
+   "R",
+   "R",
+   "L",
+   "L",
+   "L",
+   "L",
+   "L",
+   "L"
+  ],
+  "status": "PROVEN",
+  "floor": 41,
+  "lb": 41,
+  "ub": 41,
+  "proof": "A* over the bisimulation-gated model, with the COMPLETE alphabet (theorem A) and an admissible heuristic (theorem C) and node re-opening, terminated with min-f over OPEN >= incumbent 41: no win of length < 41 exists.  The route replays on a FRESH live engine from the cascade level start winning at exactly 41, and its 40-action prefix does not win.",
+  "gate_clean": true
+ },
+ "gate": {
+  "levels": {
+   "4": {
+    "ok": true,
+    "steps": 80,
+    "why": null,
+    "coverage": {
+     "L": 26,
+     "R": 17,
+     "noop": 13,
+     "qclfkhjnaac": 19,
+     "etlsaqqtjvn": 0,
+     "yuuqpmlxorv": 0,
+     "oonshderxef": 0,
+     "lrpkmzabbfa": 5,
+     "win": 0,
+     "lose": 2
+    }
+   },
+   "6": {
+    "ok": true,
+    "steps": 80,
+    "why": null,
+    "coverage": {
+     "L": 9,
+     "R": 10,
+     "noop": 6,
+     "qclfkhjnaac": 0,
+     "etlsaqqtjvn": 0,
+     "yuuqpmlxorv": 22,
+     "oonshderxef": 30,
+     "lrpkmzabbfa": 3,
+     "win": 0,
+     "lose": 3
+    }
+   }
+  },
+  "clean": true,
+  "steps": 160,
+  "restarts": 5
+ }
+}

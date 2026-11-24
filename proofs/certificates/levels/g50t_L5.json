@@ -1,0 +1,43 @@
+{
+  "artifact_sha256": [
+    {
+      "kind": "safe_statement_count_extract",
+      "sha256": "3cee984687c93ea458ec2c9e3caf2913ca63e37c7039f96674f9f2c246f53b37"
+    },
+    {
+      "kind": "authority_ledger_label",
+      "sha256": "9cb40128d3010514d932ebac373183f76143c54fedf03969f4d3e5615df7a750"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "50eace24636b50d5b30b92420ac86132d08e943c5b13c9e95b5ced1d830bcc54"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "1fb34bc00e9d0e00153f88741352a260d39f7837c753c46fd6e2c3bc77196d6d"
+    }
+  ],
+  "floor": 50,
+  "game": "g50t",
+  "game_id": "g50t-5849a774",
+  "game_levels": 7,
+  "level": 5,
+  "lower_bound": {
+    "kind": "sat_bmc_unsat_at_F_minus_1_all_pass_counts+lemma",
+    "statement": "Historical bounded encoding reports UNSAT at horizon 49 over the full recorded pass-count range. Later transition auditing identifies assumptions that prevent accepting this alone as a sound bound.",
+    "value": 50
+  },
+  "naes_t1_actions": 50,
+  "proof_class": "Bounded SAT",
+  "proof_detail": "sat_bmc_unsat_at_F_minus_1_all_pass_counts+lemma",
+  "schema_version": 1,
+  "source_certificate_sha256": "dc4817e5bed63942ca50da757976af53f57d0e5ec22d4eb496351bd7dc218226",
+  "status": "proven",
+  "upper_bound": {
+    "expected_levels_completed": 5,
+    "length": 50,
+    "opening_reset_counted": false,
+    "route": "1 2 2 4 4 4 2 2 2 5 2 4 4 4 1 1 4 4 4 2 2 2 4 4 4 5 2 4 4 4 1 1 4 4 4 2 2 2 2 2 4 3 2 3 3 3 3 3 1 1",
+    "seed": 0
+  }
+}

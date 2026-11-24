@@ -1,0 +1,311 @@
+// Bench mode: option parsing, fixture loading, expected replies, the timed and
+// the untimed pass over the fixture, and the entry function.
+// Exit codes (the same list for every worker count): 0 clean, 1 a reply
+// differs or a sample is bad, 2 usage (also --threads outside 1 to 24, and
+// --batch above 1, --offset or --limit with 2 or more workers), 3 weights or
+// workspace failed, 4 fixture failed, 5 activation guard tripped, 6 digest
+// failed, 7 reply digest differs from the recorded value, 8 a worker process
+// failed or a record is not covered (only with 2 or more workers).
+// Entry point: bench_main.
+
+fn fixture_len() -> i64 {
+    12 + 5499 * 8200
+}
+
+fn load_fixture4(path: i64) -> i64 {
+    let fd: i64 = open_ro(path);
+    if fd < 0 {
+        return 0;
+    }
+    let rec: i64 = __mind_alloc(16);
+    if read_fd_all(fd, rec) < 0 {
+        close_fd(fd);
+        return 0;
+    }
+    close_fd(fd);
+    let buf: i64 = ld(rec, 0);
+    if ld(rec, 1) != fixture_len() {
+        return 0;
+    }
+    if rd_u32(buf, 0) != 1397047630 || rd_u32(buf, 4) != 4600148 || rd_u32(buf, 8) != 5499 {
+        return 0;
+    }
+    buf
+}
+
+fn fixture_rec(fx: i64, i: i64) -> i64 {
+    fx + 12 + i * 8200
+}
+
+fn build_serve4(fx: i64) -> i64 {
+    let serve: i64 = __mind_alloc(5499 * 8196);
+    if serve == 0 {
+        return 0;
+    }
+    let mut i: i64 = 0;
+    while i < 5499 {
+        let src: i64 = fixture_rec(fx, i);
+        let dst: i64 = serve + i * 8196;
+        let mut k: i64 = 0;
+        while k < 8192 {
+            __mind_store_i64(dst + k, __mind_load_i64(src + k));
+            k = k + 8;
+        }
+        while k < 8196 {
+            __mind_store_i8(dst + k, __mind_load_i8(src + k));
+            k = k + 1;
+        }
+        if fixture_to_request(dst) == 0 {
+            return 0;
+        }
+        i = i + 1;
+    }
+    serve
+}
+
+fn emit_result_lines(fd: i64, n: i64, matches: i64, dig: i64, sdig: i64) -> i64 {
+    emit_compared(fd);
+    print_i64(fd, n);
+    emit_nl(fd);
+    emit_match(fd);
+    print_i64(fd, matches);
+    emit_slash(fd);
+    print_i64(fd, n);
+    emit_nl(fd);
+    emit_stream(fd);
+    write_hex32(fd, dig);
+    emit_nl(fd);
+    emit_serve(fd);
+    write_hex32(fd, sdig);
+    emit_nl(fd)
+}
+
+fn bf_batch() -> i64 { 14 }
+fn bf_threads() -> i64 { 15 }
+
+// The slot of a bench flag in the configuration, or -1.
+fn bench_flag(p: i64) -> i64 {
+    if str_is(p, 29382749079088429, 0, 7) == 1 { return bf_batch(); }
+    if str_is(p, 7233174018586848557, 115, 9) == 1 { return bf_threads(); }
+    let id: i64 = flag_id(p);
+    if id == cf_weights() || id == cf_fixture() || id == cf_offset() || id == cf_limit() {
+        return id;
+    }
+    0 - 1
+}
+
+// Parses argv[2..] as flag value pairs. Returns the configuration, 0 for a
+// usage error, or -1 when --threads is outside 1 to 24.
+fn bench_args(argc: i64, argv: i64) -> i64 {
+    let cfg: i64 = alloc_zero(16);
+    if cfg == 0 {
+        return 0;
+    }
+    let mut i: i64 = 2;
+    while i < argc {
+        let id: i64 = bench_flag(__mind_load_i64(argv + i * 8));
+        if id < 0 || i + 1 >= argc {
+            return 0;
+        }
+        let v: i64 = __mind_load_i64(argv + (i + 1) * 8);
+        if id == cf_weights() || id == cf_fixture() {
+            st(cfg, id, v);
+        } else {
+            let n: i64 = parse_limit(v);
+            if n < 0 {
+                return 0;
+            }
+            if id == bf_threads() && (n < 1 || n > mw_limit()) {
+                return 0 - 1;
+            }
+            st(cfg, id, n);
+        }
+        i = i + 2;
+    }
+    if ld(cfg, bf_threads()) >= 2 && (ld(cfg, bf_batch()) > 1 || ld(cfg, cf_offset()) != 0 || ld(cfg, cf_limit()) != 0) {
+        return 0;
+    }
+    if ld(cfg, bf_batch()) == 0 {
+        st(cfg, bf_batch(), 1);
+    }
+    if ld(cfg, bf_threads()) == 0 {
+        st(cfg, bf_threads(), 1);
+    }
+    let b: i64 = ld(cfg, bf_batch());
+    if ld(cfg, cf_weights()) == 0 || ld(cfg, cf_fixture()) == 0 || (b != 1 && b != 25) {
+        return 0;
+    }
+    if ld(cfg, cf_offset()) >= 5499 {
+        return 0;
+    }
+    if ld(cfg, cf_limit()) == 0 {
+        st(cfg, cf_limit(), 5499 / b);
+    }
+    if ld(cfg, cf_limit()) > 5499 / b {
+        return 0;
+    }
+    st(cfg, cf_time(), 1);
+    cfg
+}
+
+// The expected reply of each fixture record: action, x, y (255, 255 unless
+// action 6), the same bytes as store_reply writes.
+fn expected_replies(fx: i64) -> i64 {
+    let exp: i64 = alloc_zero_bytes(5499 * 3);
+    if exp == 0 {
+        return 0;
+    }
+    let mut i: i64 = 0;
+    while i < 5499 {
+        let rec: i64 = fixture_rec(fx, i);
+        let cell: i64 = signed_i16(rec + 8198);
+        let mut x: i64 = 255;
+        let mut y: i64 = 255;
+        if cell >= 0 {
+            x = cell % 64;
+            y = cell / 64;
+        }
+        __mind_store_i8(exp + i * 3, __mind_load_i8(rec + 8196));
+        __mind_store_i8(exp + i * 3 + 1, x);
+        __mind_store_i8(exp + i * 3 + 2, y);
+        i = i + 1;
+    }
+    exp
+}
+
+fn reply_ok(got: i64, exp: i64) -> i64 {
+    if __mind_load_i8(got) != __mind_load_i8(exp) {
+        return 0;
+    }
+    if __mind_load_i8(got + 1) != __mind_load_i8(exp + 1) || __mind_load_i8(got + 2) != __mind_load_i8(exp + 2) {
+        return 0;
+    }
+    1
+}
+
+// Untimed pass: every record once, in fixture order. Returns the number of
+// matching replies, or -1 when an activation guard trips.
+fn bench_full(model: i64, w4: i64, serve: i64, exp: i64, out: i64) -> i64 {
+    let ws: i64 = ld(w4, w4_ws());
+    let mut matches: i64 = 0;
+    let mut i: i64 = 0;
+    while i < 5499 {
+        let action: i64 = decide4(model, w4, serve + i * 8196);
+        if action < 0 {
+            return 0 - 1;
+        }
+        store_reply(ws, action, out + i * 3);
+        matches = matches + reply_ok(out + i * 3, exp + i * 3);
+        i = i + 1;
+    }
+    matches
+}
+
+// Timed pass: n samples of batch decisions. tns holds n times, then n bad
+// counts. Returns the nanoseconds from the first sample start to the last
+// sample end, or -1.
+fn bench_timed(model: i64, w4: i64, serve: i64, exp: i64, cfg: i64, idx: i64, tns: i64, tmp: i64) -> i64 {
+    let ws: i64 = ld(w4, w4_ws());
+    let n: i64 = ld(cfg, cf_limit());
+    let batch: i64 = ld(cfg, bf_batch());
+    let t0: i64 = clock4(w4);
+    let mut k: i64 = 0;
+    while k < n {
+        let first: i64 = (ld(cfg, cf_offset()) + k * batch) % 5499;
+        st(idx, k, first);
+        let mut bad: i64 = 0;
+        let ts: i64 = clock4(w4);
+        let mut j: i64 = 0;
+        while j < batch {
+            let i: i64 = (first + j) % 5499;
+            let action: i64 = decide4(model, w4, serve + i * 8196);
+            if action < 0 {
+                return 0 - 1;
+            }
+            store_reply(ws, action, tmp);
+            bad = bad + 1 - reply_ok(tmp, exp + i * 3);
+            j = j + 1;
+        }
+        st(tns, k, clock4(w4) - ts);
+        st(tns, n + k, bad);
+        k = k + 1;
+    }
+    clock4(w4) - t0
+}
+
+fn bench_bad_total(tns: i64, n: i64) -> i64 {
+    let mut bad: i64 = 0;
+    let mut k: i64 = 0;
+    while k < n {
+        bad = bad + ld(tns, n + k);
+        k = k + 1;
+    }
+    bad
+}
+
+// Entry of the bench mode. Returns the exit code listed in the header of this
+// file.
+fn bench_main(argc: i64, argv: i64) -> i64 {
+    let cfg: i64 = bench_args(argc, argv);
+    if cfg < 0 {
+        return die(2, "naes_t1: --threads must be 1 to 24\n");
+    }
+    if cfg == 0 {
+        return die(2, "usage: naes_t1 bench --weights FILE --fixture FILE [--threads 1..24] | one worker only: [--batch 1|25] [--offset N] [--limit N]\n");
+    }
+    let threads: i64 = ld(cfg, bf_threads());
+    if threads >= 2 {
+        return mw_bench_run(cfg, threads);
+    }
+    let model: i64 = load_model(ld(cfg, cf_weights()));
+    if model < 0 {
+        return die(3, "naes_t1: weights file rejected (unreadable, bad header, shape, size or value)\n");
+    }
+    let w4: i64 = fast_prepare(model);
+    if w4 == 0 {
+        return die(3, "naes_t1: out of memory preparing workspace\n");
+    }
+    let fx: i64 = load_fixture4(ld(cfg, cf_fixture()));
+    if fx == 0 {
+        return die(4, "naes_t1: bench fixture rejected\n");
+    }
+    let serve: i64 = build_serve4(fx);
+    let exp: i64 = expected_replies(fx);
+    let out: i64 = alloc_zero_bytes(5499 * 3);
+    let dig: i64 = alloc_zero_bytes(32);
+    let sdig: i64 = alloc_zero_bytes(32);
+    let tmp: i64 = alloc_zero_bytes(8);
+    if serve == 0 || exp == 0 || out == 0 || dig == 0 || sdig == 0 || tmp == 0 {
+        return die(4, "naes_t1: bench fixture rejected\n");
+    }
+    emit_plan_line(1, ld(w4, w4_plans()), __mind_load_i64(model + 8), ld(w4, w4_group()), ld(w4, w4_cg()), ld(w4, w4_tile()));
+    let n: i64 = ld(cfg, cf_limit());
+    let batch: i64 = ld(cfg, bf_batch());
+    let tns: i64 = time_setup4(model, w4, cfg, serve, n);
+    let idx: i64 = alloc_zero(n);
+    if tns <= 0 || idx == 0 {
+        return die(5, "naes_t1: activation guard tripped\n");
+    }
+    let t: i64 = bench_timed(model, w4, serve, exp, cfg, idx, tns, tmp);
+    if t < 0 {
+        return die(5, "naes_t1: activation guard tripped\n");
+    }
+    emit_samples4(w4, idx, tns, n);
+    emit_time_lines(w4, n * batch, t);
+    st(io4(w4), 2, 0);
+    let matches: i64 = bench_full(model, w4, serve, exp, out);
+    if matches < 0 {
+        return die(5, "naes_t1: activation guard tripped\n");
+    }
+    if sha256_u(out, 5499 * 3, dig) != 0 || sha256_u(serve, 5499 * 8196, sdig) != 0 {
+        return 6;
+    }
+    emit_result_lines(1, 5499, matches, dig, sdig);
+    if matches != 5499 || bench_bad_total(tns, n) != 0 {
+        return 1;
+    }
+    if hash_ok(dig) != 1 {
+        return 7;
+    }
+    0
+}

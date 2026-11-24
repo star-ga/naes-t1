@@ -1,0 +1,13 @@
+<word withheld> (most recent call last):
+  File "<path>", line 34, in <module>
+    h = module_from_original('h', '<path>')
+  File "<path>", line 32, in module_from_original
+    exec(compile(src, str(p), 'exec'), m.__dict__)
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<path>", line 15, in <module>
+    import mmae_minimum as mm            # noqa: E402
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<path>", line 67, in <module>
+    import numpy as np  # noqa: E402
+    ^^^^^^^^^^^^^^^^^^
+<word withheld>: No module named 'numpy'

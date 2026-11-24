@@ -1,0 +1,547 @@
+{
+ "game": "su15",
+ "old": "<path>",
+ "new": "<path>",
+ "ignore_tags": [],
+ "opts": {
+  "ignore_names": false,
+  "invisible_layer_free": false
+ },
+ "rollouts": 200,
+ "len": 30,
+ "seed": 20260924,
+ "levels": {
+  "1": {
+   "floor": 7,
+   "chain_old": {
+    "won_at": 7,
+    "ok": true
+   },
+   "chain_new": {
+    "won_at": 7,
+    "ok": true
+   },
+   "direct_old": {
+    "won_at": 7,
+    "ok": true
+   },
+   "direct_new": {
+    "won_at": 7,
+    "ok": true
+   },
+   "static_offset": {
+    "sprites_only_old": [],
+    "sprites_only_new": [],
+    "n_only_old": 0,
+    "n_only_new": 0,
+    "scalars": []
+   },
+   "diff": {
+    "rollouts": 200,
+    "steps_compared": 5943,
+    "rollouts_diverged": 0,
+    "mismatch_components": {},
+    "frame_mismatch_steps": 0,
+    "examples": [],
+    "min_divergence_step": null,
+    "secs": 12.7
+   }
+  },
+  "2": {
+   "floor": 8,
+   "chain_old": {
+    "won_at": 8,
+    "ok": true
+   },
+   "chain_new": {
+    "won_at": 8,
+    "ok": true
+   },
+   "direct_old": {
+    "won_at": 8,
+    "ok": true
+   },
+   "direct_new": {
+    "won_at": 8,
+    "ok": true
+   },
+   "static_offset": {
+    "sprites_only_old": [],
+    "sprites_only_new": [],
+    "n_only_old": 0,
+    "n_only_new": 0,
+    "scalars": []
+   },
+   "diff": {
+    "rollouts": 200,
+    "steps_compared": 5935,
+    "rollouts_diverged": 0,
+    "mismatch_components": {},
+    "frame_mismatch_steps": 5932,
+    "examples": [
+     {
+      "rollout": 0,
+      "kind": "frame_only",
+      "step": 1,
+      "seq": [
+       [
+        6,
+        31,
+        37
+       ]
+      ]
+     },
+     {
+      "rollout": 0,
+      "kind": "frame_only",
+      "step": 2,
+      "seq": [
+       [
+        6,
+        31,
+        37
+       ],
+       [
+        7,
+        null,
+        null
+       ]
+      ]
+     },
+     {
+      "rollout": 0,
+      "kind": "frame_only",
+      "step": 3,
+      "seq": [
+       [
+        6,
+        31,
+        37
+       ],
+       [
+        7,
+        null,
+        null
+       ],
+       [
+        6,
+        37,
+        13
+       ]
+      ]
+     }
+    ],
+    "min_divergence_step": null,
+    "secs": 16.8
+   }
+  },
+  "3": {
+   "floor": "<word withheld>",
+   "chain_old": {
+    "won_at": "<word withheld>",
+    "ok": true
+   },
+   "chain_new": {
+    "won_at": "<word withheld>",
+    "ok": true
+   },
+   "direct_old": {
+    "won_at": "<word withheld>",
+    "ok": true
+   },
+   "direct_new": {
+    "won_at": "<word withheld>",
+    "ok": true
+   },
+   "static_offset": {
+    "sprites_only_old": [],
+    "sprites_only_new": [],
+    "n_only_old": 0,
+    "n_only_new": 0,
+    "scalars": []
+   },
+   "diff": {
+    "rollouts": 200,
+    "steps_compared": 5977,
+    "rollouts_diverged": 0,
+    "mismatch_components": {},
+    "frame_mismatch_steps": 5976,
+    "examples": [
+     {
+      "rollout": 0,
+      "kind": "frame_only",
+      "step": 1,
+      "seq": [
+       [
+        7,
+        null,
+        null
+       ]
+      ]
+     },
+     {
+      "rollout": 0,
+      "kind": "frame_only",
+      "step": 2,
+      "seq": [
+       [
+        7,
+        null,
+        null
+       ],
+       [
+        7,
+        null,
+        null
+       ]
+      ]
+     },
+     {
+      "rollout": 0,
+      "kind": "frame_only",
+      "step": 3,
+      "seq": [
+       [
+        7,
+        null,
+        null
+       ],
+       [
+        7,
+        null,
+        null
+       ],
+       [
+        6,
+        16,
+        43
+       ]
+      ]
+     }
+    ],
+    "min_divergence_step": null,
+    "secs": 19.6
+   }
+  },
+  "4": {
+   "floor": 9,
+   "chain_old": {
+    "won_at": 9,
+    "ok": true
+   },
+   "chain_new": {
+    "won_at": 9,
+    "ok": true
+   },
+   "direct_old": {
+    "won_at": 9,
+    "ok": true
+   },
+   "direct_new": {
+    "won_at": 9,
+    "ok": true
+   },
+   "static_offset": {
+    "sprites_only_old": [],
+    "sprites_only_new": [],
+    "n_only_old": 0,
+    "n_only_new": 0,
+    "scalars": []
+   },
+   "diff": {
+    "rollouts": 200,
+    "steps_compared": 6000,
+    "rollouts_diverged": 0,
+    "mismatch_components": {},
+    "frame_mismatch_steps": 6000,
+    "examples": [
+     {
+      "rollout": 0,
+      "kind": "frame_only",
+      "step": 1,
+      "seq": [
+       [
+        6,
+        12,
+        29
+       ]
+      ]
+     },
+     {
+      "rollout": 0,
+      "kind": "frame_only",
+      "step": 2,
+      "seq": [
+       [
+        6,
+        12,
+        29
+       ],
+       [
+        7,
+        null,
+        null
+       ]
+      ]
+     },
+     {
+      "rollout": 0,
+      "kind": "frame_only",
+      "step": 3,
+      "seq": [
+       [
+        6,
+        12,
+        29
+       ],
+       [
+        7,
+        null,
+        null
+       ],
+       [
+        6,
+        34,
+        34
+       ]
+      ]
+     }
+    ],
+    "min_divergence_step": null,
+    "secs": 19.5
+   }
+  },
+  "5": {
+   "floor": 5,
+   "chain_old": {
+    "won_at": 5,
+    "ok": true
+   },
+   "chain_new": {
+    "won_at": 5,
+    "ok": true
+   },
+   "direct_old": {
+    "won_at": 5,
+    "ok": true
+   },
+   "direct_new": {
+    "won_at": 5,
+    "ok": true
+   },
+   "static_offset": {
+    "sprites_only_old": [],
+    "sprites_only_new": [],
+    "n_only_old": 0,
+    "n_only_new": 0,
+    "scalars": []
+   },
+   "diff": {
+    "rollouts": 200,
+    "steps_compared": 5948,
+    "rollouts_diverged": 0,
+    "mismatch_components": {},
+    "frame_mismatch_steps": 5946,
+    "examples": [
+     {
+      "rollout": 0,
+      "kind": "frame_only",
+      "step": 1,
+      "seq": [
+       [
+        6,
+        17,
+        52
+       ]
+      ]
+     },
+     {
+      "rollout": 0,
+      "kind": "frame_only",
+      "step": 2,
+      "seq": [
+       [
+        6,
+        17,
+        52
+       ],
+       [
+        7,
+        null,
+        null
+       ]
+      ]
+     },
+     {
+      "rollout": 0,
+      "kind": "frame_only",
+      "step": 3,
+      "seq": [
+       [
+        6,
+        17,
+        52
+       ],
+       [
+        7,
+        null,
+        null
+       ],
+       [
+        7,
+        null,
+        null
+       ]
+      ]
+     }
+    ],
+    "min_divergence_step": null,
+    "secs": 23.3
+   }
+  },
+  "6": {
+   "floor": 4,
+   "chain_old": {
+    "won_at": 4,
+    "ok": true
+   },
+   "chain_new": {
+    "won_at": 4,
+    "ok": true
+   },
+   "direct_old": {
+    "won_at": 4,
+    "ok": true
+   },
+   "direct_new": {
+    "won_at": 4,
+    "ok": true
+   },
+   "static_offset": {
+    "sprites_only_old": [],
+    "sprites_only_new": [],
+    "n_only_old": 0,
+    "n_only_new": 0,
+    "scalars": []
+   },
+   "diff": {
+    "rollouts": 200,
+    "steps_compared": 5584,
+    "rollouts_diverged": 0,
+    "mismatch_components": {},
+    "frame_mismatch_steps": 0,
+    "examples": [],
+    "min_divergence_step": null,
+    "secs": 16.2
+   }
+  },
+  "7": {
+   "floor": 5,
+   "chain_old": {
+    "won_at": 5,
+    "ok": true
+   },
+   "chain_new": {
+    "won_at": 5,
+    "ok": true
+   },
+   "direct_old": {
+    "won_at": 5,
+    "ok": true
+   },
+   "direct_new": {
+    "won_at": 5,
+    "ok": true
+   },
+   "static_offset": {
+    "sprites_only_old": [],
+    "sprites_only_new": [],
+    "n_only_old": 0,
+    "n_only_new": 0,
+    "scalars": []
+   },
+   "diff": {
+    "rollouts": 200,
+    "steps_compared": 5785,
+    "rollouts_diverged": 0,
+    "mismatch_components": {},
+    "frame_mismatch_steps": 0,
+    "examples": [],
+    "min_divergence_step": null,
+    "secs": 21.9
+   }
+  },
+  "8": {
+   "floor": 5,
+   "chain_old": {
+    "won_at": 5,
+    "ok": true
+   },
+   "chain_new": {
+    "won_at": 5,
+    "ok": true
+   },
+   "direct_old": {
+    "won_at": 5,
+    "ok": true
+   },
+   "direct_new": {
+    "won_at": 5,
+    "ok": true
+   },
+   "static_offset": {
+    "sprites_only_old": [],
+    "sprites_only_new": [],
+    "n_only_old": 0,
+    "n_only_new": 0,
+    "scalars": []
+   },
+   "diff": {
+    "rollouts": 200,
+    "steps_compared": 5953,
+    "rollouts_diverged": 0,
+    "mismatch_components": {},
+    "frame_mismatch_steps": 0,
+    "examples": [],
+    "min_divergence_step": null,
+    "secs": 21.2
+   }
+  },
+  "9": {
+   "floor": 7,
+   "chain_old": {
+    "won_at": 7,
+    "ok": true
+   },
+   "chain_new": {
+    "won_at": 7,
+    "ok": true
+   },
+   "direct_old": {
+    "won_at": 7,
+    "ok": true
+   },
+   "direct_new": {
+    "won_at": 7,
+    "ok": true
+   },
+   "static_offset": {
+    "sprites_only_old": [],
+    "sprites_only_new": [],
+    "n_only_old": 0,
+    "n_only_new": 0,
+    "scalars": []
+   },
+   "diff": {
+    "rollouts": 200,
+    "steps_compared": 5884,
+    "rollouts_diverged": 0,
+    "mismatch_components": {},
+    "frame_mismatch_steps": 0,
+    "examples": [],
+    "min_divergence_step": null,
+    "secs": 21.4
+   }
+  }
+ }
+}

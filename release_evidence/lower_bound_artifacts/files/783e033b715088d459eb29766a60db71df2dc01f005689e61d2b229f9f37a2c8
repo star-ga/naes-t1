@@ -1,0 +1,194 @@
+{
+ "level": 3,
+ "ub": 11,
+ "sources": "canonical",
+ "canonical_prefix_actions": 18,
+ "canonical_dir": 0,
+ "canonical_ijh": "fibcey",
+ "canonical_key": "38aae426d8d34887c48ac8aa317b1e8b90e9eeb1146ad8fe024f215682e5b407",
+ "canonical_matches_variant": [
+  "canonical_chain"
+ ],
+ "source_keys": {
+  "canonical_chain": "38aae426d8d34887c48ac8aa317b1e8b90e9eeb1146ad8fe024f215682e5b407"
+ },
+ "src_sha256": "871a507cf340d1e4a3271205a71bb5433f20c2b0e427f7ce40da47060cdd4392",
+ "stats": {
+  "expanded": 173,
+  "edges": 1899,
+  "full_reset_pruned": 4,
+  "game_over": 0,
+  "unstable": 0,
+  "classified_coords": 708608,
+  "min_toggle_class_size": 25,
+  "missing_toggle_cells": 0,
+  "label_sets": [
+   [
+    "demo:fibcey=100,flash=3707,toggle:0,0=36,toggle:0,1=30,toggle:0,2=36,toggle:1,0=30,toggle:1,1=25,toggle:1,2=30,toggle:2,0=36,toggle:2,1=30,toggle:2,2=36",
+    89
+   ],
+   [
+    "flash=3707,legend:fibcey=100,toggle:0,0=36,toggle:0,1=30,toggle:0,2=36,toggle:1,0=30,toggle:1,1=25,toggle:1,2=30,toggle:2,0=36,toggle:2,1=30,toggle:2,2=36",
+    84
+   ]
+  ],
+  "intermediate_cast_trigger": 0
+ },
+ "per_cost_settled": [
+  [
+   0,
+   1
+  ],
+  [
+   1,
+   5
+  ],
+  [
+   2,
+   19
+  ],
+  [
+   3,
+   30
+  ],
+  [
+   4,
+   25
+  ],
+  [
+   5,
+   16
+  ],
+  [
+   6,
+   15
+  ],
+  [
+   7,
+   19
+  ],
+  [
+   8,
+   21
+  ],
+  [
+   9,
+   15
+  ],
+  [
+   10,
+   7
+  ]
+ ],
+ "states_settled": 173,
+ "layers_closed_through_cost": 10,
+ "min_goal_cost_found": 11,
+ "goals_found": 1,
+ "goal_costs": [
+  11
+ ],
+ "witness": {
+  "source": "canonical_chain",
+  "actions": [
+   [
+    3
+   ],
+   [
+    3
+   ],
+   [
+    4
+   ],
+   [
+    6,
+    28,
+    47
+   ],
+   [
+    6,
+    28,
+    53
+   ],
+   [
+    6,
+    28,
+    58
+   ],
+   [
+    2
+   ],
+   [
+    2
+   ],
+   [
+    3
+   ],
+   [
+    2
+   ],
+   [
+    3
+   ]
+  ],
+  "macro": [
+   [
+    [
+     3
+    ]
+   ],
+   [
+    [
+     3
+    ]
+   ],
+   [
+    [
+     4
+    ]
+   ],
+   [
+    [
+     6,
+     28,
+     47
+    ],
+    [
+     6,
+     28,
+     53
+    ],
+    [
+     6,
+     28,
+     58
+    ]
+   ],
+   [
+    [
+     2
+    ]
+   ],
+   [
+    [
+     2
+    ]
+   ],
+   [
+    [
+     3
+    ]
+   ],
+   [
+    [
+     2
+    ]
+   ],
+   [
+    [
+     3
+    ]
+   ]
+  ]
+ },
+ "runtime_s": 36.5
+}

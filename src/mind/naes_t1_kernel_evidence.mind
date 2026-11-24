@@ -1,0 +1,25 @@
+// naes_t1_kernel_evidence.mind — the network kernel unit for the compile-time evidence artifact.
+//
+// The unit is these four files, in this order: naes_t1_kernel_evidence.mind,
+// naes_t1_fixed.mind, naes_t1.mind, naes_t1_schedule.mind:
+//   mindc <unit>.mind --emit-evidence <artifact>.mic3
+//   mindc verify <artifact>.mic3 --require-deterministic
+// The unit holds the whole forward pass and decide(). It reads no file, so the
+// compiler attests it as deterministic. The reader of the optional schedule file
+// (naes_t1_plan_file.mind) is not in the unit: load_plan_file() below returns
+// "no file", which selects the exact kernel. n_in, rd_u32 and model_layer are the
+// functions of naes_t1_weights.mind, copied without change.
+
+pub fn n_in() -> i64 {
+    49
+}
+
+fn rd_u32(buf: i64, off: i64) -> i64 {
+    __mind_load_i32(buf + off)
+}
+
+pub fn model_layer(model: i64, i: i64) -> i64 {
+    __mind_load_i64(__mind_load_i64(model + 16) + i * 8)
+}
+
+fn load_plan_file() -> i64 { 0 }

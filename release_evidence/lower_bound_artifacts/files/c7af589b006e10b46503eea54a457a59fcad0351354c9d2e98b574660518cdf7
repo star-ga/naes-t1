@@ -1,0 +1,678 @@
+{
+ "supervisor_pid": "<word withheld>",
+ "started_utc": "2026-11-05T01:04:43.781025+00:00",
+ "max_solver_procs": "<threads>",
+ "solver_plan": [
+  "cadical195",
+  "cadical153",
+  "glucose4"
+ ],
+ "solve_cap": "10h",
+ "cc_trigger_s": 10800,
+ "cc_n_vars": 7,
+ "cases": {
+  "3": {
+   "P": 3,
+   "state": "DONE",
+   "verdict": "UNSAT",
+   "winner": "cadical153",
+   "attempts": [
+    {
+     "phase": "portfolio",
+     "solver": "cadical195",
+     "pid": "<word withheld>",
+     "started_utc": "2026-11-05T02:22:20.041841+00:00",
+     "command": "timeout 10h nice -n 15 taskset -c <cores> <interp> -u <path> solve <path> cadical195 <path>"
+    },
+    {
+     "phase": "portfolio",
+     "solver": "cadical153",
+     "pid": "<word withheld>",
+     "started_utc": "2026-11-05T02:22:20.044306+00:00",
+     "command": "timeout 10h nice -n 15 taskset -c <cores> <interp> -u <path> solve <path> cadical153 <path>",
+     "result": "UNSAT",
+     "seconds": 3931.046,
+     "rc": 0,
+     "finished_utc": "2026-11-05T03:27:56.090992+00:00"
+    },
+    {
+     "phase": "portfolio",
+     "solver": "glucose4",
+     "pid": "<word withheld>",
+     "started_utc": "2026-11-05T02:22:20.046917+00:00",
+     "command": "timeout 10h nice -n 15 taskset -c <cores> <interp> -u <path> solve <path> glucose4 <path>"
+    }
+   ],
+   "workers": {
+    "cadical195": {
+     "pid": "<word withheld>",
+     "solver": "cadical195",
+     "started_utc": "2026-11-05T02:22:20.041763+00:00",
+     "command": "timeout 10h nice -n 15 taskset -c <cores> <interp> -u <path> solve <path> cadical195 <path>",
+     "out_json": "<path>",
+     "result": null
+    },
+    "cadical153": {
+     "pid": "<word withheld>",
+     "solver": "cadical153",
+     "started_utc": "2026-11-05T02:22:20.044247+00:00",
+     "command": "timeout 10h nice -n 15 taskset -c <cores> <interp> -u <path> solve <path> cadical153 <path>",
+     "out_json": "<path>",
+     "result": "UNSAT",
+     "seconds": 3931.046,
+     "rc": 0
+    },
+    "glucose4": {
+     "pid": "<word withheld>",
+     "solver": "glucose4",
+     "started_utc": "2026-11-05T02:22:20.046855+00:00",
+     "command": "timeout 10h nice -n 15 taskset -c <cores> <interp> -u <path> solve <path> glucose4 <path>",
+     "out_json": "<path>",
+     "result": null
+    }
+   },
+   "cc": null,
+   "portfolio_started_utc": "2026-11-05T02:22:20.039453+00:00",
+   "cnf": {
+    "sha256": "395f3964a5ff968ffcbcce4981c01667e3d0fb6a1f01e3af3420b9fd070ff399",
+    "path": "<path>",
+    "clauses": 2992370,
+    "variables_header": 782801,
+    "hashes": {
+     "tools/g50t_bmc3.py": "1b6ea6a032a32fc7d40b27b32b3a1b4ec81060f499539c1afa2e58f763548b41",
+     "tools/g50t_bmc2.py": "9044d5866aa64b654e38ae04d24e610bf1986fa9e1637754e190d6bf0526b6cb",
+     "tools/g50t_sim.py": "2a1e65e601bf3bc9d8d8deae4dd592c37ee6b2e13b9a7bb7975cc110a73f511f",
+     "environment_files/g50t/5849a774/g50t.py": "6f21f2065744e484ac38534f940158034e69f39add3b10a3d9fd258de7293aa9",
+     "<path>": "3e1eb93df7cc6df06134afa5d91016d071a65ef34a4d53225f2d65cf0cc8ee5d"
+    },
+    "seconds": 47.959
+   },
+   "decode": null,
+   "cnf_started": "2026-11-05T01:04:43.782007+00:00",
+   "cnf_pid": null,
+   "encoding_sha256_bmc3": "1b6ea6a032a32fc7d40b27b32b3a1b4ec81060f499539c1afa2e58f763548b41"
+  },
+  "4": {
+   "P": 4,
+   "state": "DONE",
+   "verdict": "UNSAT",
+   "winner": "cadical153",
+   "attempts": [
+    {
+     "phase": "portfolio",
+     "solver": "cadical195",
+     "pid": "<word withheld>",
+     "started_utc": "2026-11-05T02:30:35.193432+00:00",
+     "command": "timeout 10h nice -n 15 taskset -c <cores> <interp> -u <path> solve <path> cadical195 <path>"
+    },
+    {
+     "phase": "portfolio",
+     "solver": "cadical153",
+     "pid": "<word withheld>",
+     "started_utc": "2026-11-05T02:30:35.196179+00:00",
+     "command": "timeout 10h nice -n 15 taskset -c <cores> <interp> -u <path> solve <path> cadical153 <path>",
+     "result": "UNSAT",
+     "seconds": 3940.344,
+     "rc": 0,
+     "finished_utc": "2026-11-05T03:36:31.136661+00:00"
+    },
+    {
+     "phase": "portfolio",
+     "solver": "glucose4",
+     "pid": "<word withheld>",
+     "started_utc": "2026-11-05T02:30:35.198830+00:00",
+     "command": "timeout 10h nice -n 15 taskset -c <cores> <interp> -u <path> solve <path> glucose4 <path>"
+    }
+   ],
+   "workers": {
+    "cadical195": {
+     "pid": "<word withheld>",
+     "solver": "cadical195",
+     "started_utc": "2026-11-05T02:30:35.193320+00:00",
+     "command": "timeout 10h nice -n 15 taskset -c <cores> <interp> -u <path> solve <path> cadical195 <path>",
+     "out_json": "<path>",
+     "result": null
+    },
+    "cadical153": {
+     "pid": "<word withheld>",
+     "solver": "cadical153",
+     "started_utc": "2026-11-05T02:30:35.196073+00:00",
+     "command": "timeout 10h nice -n 15 taskset -c <cores> <interp> -u <path> solve <path> cadical153 <path>",
+     "out_json": "<path>",
+     "result": "UNSAT",
+     "seconds": 3940.344,
+     "rc": 0
+    },
+    "glucose4": {
+     "pid": "<word withheld>",
+     "solver": "glucose4",
+     "started_utc": "2026-11-05T02:30:35.198737+00:00",
+     "command": "timeout 10h nice -n 15 taskset -c <cores> <interp> -u <path> solve <path> glucose4 <path>",
+     "out_json": "<path>",
+     "result": null
+    }
+   },
+   "cc": null,
+   "portfolio_started_utc": "2026-11-05T02:30:35.190425+00:00",
+   "cnf": {
+    "sha256": "b627585f56cf3a90261634c7c7c9806f138cbacff0ffb081c1ebba3318c57f97",
+    "path": "<path>",
+    "clauses": 3329525,
+    "variables_header": 863671,
+    "hashes": {
+     "tools/g50t_bmc3.py": "1b6ea6a032a32fc7d40b27b32b3a1b4ec81060f499539c1afa2e58f763548b41",
+     "tools/g50t_bmc2.py": "9044d5866aa64b654e38ae04d24e610bf1986fa9e1637754e190d6bf0526b6cb",
+     "tools/g50t_sim.py": "2a1e65e601bf3bc9d8d8deae4dd592c37ee6b2e13b9a7bb7975cc110a73f511f",
+     "environment_files/g50t/5849a774/g50t.py": "6f21f2065744e484ac38534f940158034e69f39add3b10a3d9fd258de7293aa9",
+     "<path>": "3e1eb93df7cc6df06134afa5d91016d071a65ef34a4d53225f2d65cf0cc8ee5d"
+    },
+    "seconds": 43.827
+   },
+   "decode": null,
+   "cnf_started": "2026-11-05T01:04:43.785134+00:00",
+   "cnf_pid": null,
+   "encoding_sha256_bmc3": "1b6ea6a032a32fc7d40b27b32b3a1b4ec81060f499539c1afa2e58f763548b41"
+  },
+  "5": {
+   "P": 5,
+   "state": "DONE",
+   "verdict": "UNSAT",
+   "winner": "cadical195",
+   "attempts": [
+    {
+     "phase": "portfolio",
+     "solver": "cadical195",
+     "pid": "<word withheld>",
+     "started_utc": "2026-11-05T01:04:43.860773+00:00",
+     "command": "timeout 10h nice -n 15 taskset -c <cores> <interp> -u <path> solve <path> cadical195 <path>",
+     "result": "UNSAT",
+     "seconds": 5023.25,
+     "rc": 0,
+     "finished_utc": "2026-11-05T02:28:36.855843+00:00"
+    },
+    {
+     "phase": "portfolio",
+     "solver": "cadical153",
+     "pid": "<word withheld>",
+     "started_utc": "2026-11-05T01:04:43.862813+00:00",
+     "command": "timeout 10h nice -n 15 taskset -c <cores> <interp> -u <path> solve <path> cadical153 <path>"
+    },
+    {
+     "phase": "portfolio",
+     "solver": "glucose4",
+     "pid": "<word withheld>",
+     "started_utc": "2026-11-05T01:04:43.865276+00:00",
+     "command": "timeout 10h nice -n 15 taskset -c <cores> <interp> -u <path> solve <path> glucose4 <path>"
+    }
+   ],
+   "workers": {
+    "cadical195": {
+     "pid": "<word withheld>",
+     "solver": "cadical195",
+     "started_utc": "2026-11-05T01:04:43.860731+00:00",
+     "command": "timeout 10h nice -n 15 taskset -c <cores> <interp> -u <path> solve <path> cadical195 <path>",
+     "out_json": "<path>",
+     "result": "UNSAT",
+     "seconds": 5023.25,
+     "rc": 0
+    },
+    "cadical153": {
+     "pid": "<word withheld>",
+     "solver": "cadical153",
+     "started_utc": "2026-11-05T01:04:43.862769+00:00",
+     "command": "timeout 10h nice -n 15 taskset -c <cores> <interp> -u <path> solve <path> cadical153 <path>",
+     "out_json": "<path>",
+     "result": null
+    },
+    "glucose4": {
+     "pid": "<word withheld>",
+     "solver": "glucose4",
+     "started_utc": "2026-11-05T01:04:43.865228+00:00",
+     "command": "timeout 10h nice -n 15 taskset -c <cores> <interp> -u <path> solve <path> glucose4 <path>",
+     "out_json": "<path>",
+     "result": null
+    }
+   },
+   "cc": null,
+   "portfolio_started_utc": "2026-11-05T01:04:43.858945+00:00",
+   "cnf": {
+    "sha256": "3b2aec73fc615466ad5d493d31c141833f6f379dadb88086201a2156f8c3ecbe",
+    "path": "<path>",
+    "clauses": 3988362,
+    "variables_header": 1035319,
+    "hashes": {
+     "tools/g50t_bmc3.py": "1b6ea6a032a32fc7d40b27b32b3a1b4ec81060f499539c1afa2e58f763548b41",
+     "tools/g50t_bmc2.py": "9044d5866aa64b654e38ae04d24e610bf1986fa9e1637754e190d6bf0526b6cb",
+     "tools/g50t_sim.py": "2a1e65e601bf3bc9d8d8deae4dd592c37ee6b2e13b9a7bb7975cc110a73f511f",
+     "environment_files/g50t/5849a774/g50t.py": "6f21f2065744e484ac38534f940158034e69f39add3b10a3d9fd258de7293aa9",
+     "<path>": "3e1eb93df7cc6df06134afa5d91016d071a65ef34a4d53225f2d65cf0cc8ee5d"
+    },
+    "seconds": 39.622
+   },
+   "decode": null,
+   "cnf_started": "2026-11-05T01:04:43.788074+00:00",
+   "cnf_pid": null,
+   "encoding_sha256_bmc3": "1b6ea6a032a32fc7d40b27b32b3a1b4ec81060f499539c1afa2e58f763548b41"
+  },
+  "6": {
+   "P": 6,
+   "state": "DONE",
+   "verdict": "UNSAT",
+   "winner": "cadical153",
+   "attempts": [
+    {
+     "phase": "portfolio",
+     "solver": "cadical195",
+     "pid": "<word withheld>",
+     "started_utc": "2026-11-05T02:30:35.321481+00:00",
+     "command": "timeout 10h nice -n 15 taskset -c <cores> <interp> -u <path> solve <path> cadical195 <path>"
+    },
+    {
+     "phase": "portfolio",
+     "solver": "cadical153",
+     "pid": "<word withheld>",
+     "started_utc": "2026-11-05T02:30:35.324061+00:00",
+     "command": "timeout 10h nice -n 15 taskset -c <cores> <interp> -u <path> solve <path> cadical153 <path>",
+     "result": "UNSAT",
+     "seconds": 4695.782,
+     "rc": 0,
+     "finished_utc": "2026-11-05T03:49:04.238157+00:00"
+    },
+    {
+     "phase": "portfolio",
+     "solver": "glucose4",
+     "pid": "<word withheld>",
+     "started_utc": "2026-11-05T02:30:35.326524+00:00",
+     "command": "timeout 10h nice -n 15 taskset -c <cores> <interp> -u <path> solve <path> glucose4 <path>"
+    }
+   ],
+   "workers": {
+    "cadical195": {
+     "pid": "<word withheld>",
+     "solver": "cadical195",
+     "started_utc": "2026-11-05T02:30:35.321356+00:00",
+     "command": "timeout 10h nice -n 15 taskset -c <cores> <interp> -u <path> solve <path> cadical195 <path>",
+     "out_json": "<path>",
+     "result": null
+    },
+    "cadical153": {
+     "pid": "<word withheld>",
+     "solver": "cadical153",
+     "started_utc": "2026-11-05T02:30:35.323989+00:00",
+     "command": "timeout 10h nice -n 15 taskset -c <cores> <interp> -u <path> solve <path> cadical153 <path>",
+     "out_json": "<path>",
+     "result": "UNSAT",
+     "seconds": 4695.782,
+     "rc": 0
+    },
+    "glucose4": {
+     "pid": "<word withheld>",
+     "solver": "glucose4",
+     "started_utc": "2026-11-05T02:30:35.326458+00:00",
+     "command": "timeout 10h nice -n 15 taskset -c <cores> <interp> -u <path> solve <path> glucose4 <path>",
+     "out_json": "<path>",
+     "result": null
+    }
+   },
+   "cc": null,
+   "portfolio_started_utc": "2026-11-05T02:30:35.318671+00:00",
+   "cnf": {
+    "sha256": "fd5d8e86533eea32c2130214e7ca660db9415ae687043645cfe86d4e21e490a1",
+    "path": "<path>",
+    "clauses": 4977574,
+    "variables_header": 1304024,
+    "hashes": {
+     "tools/g50t_bmc3.py": "1b6ea6a032a32fc7d40b27b32b3a1b4ec81060f499539c1afa2e58f763548b41",
+     "tools/g50t_bmc2.py": "9044d5866aa64b654e38ae04d24e610bf1986fa9e1637754e190d6bf0526b6cb",
+     "tools/g50t_sim.py": "2a1e65e601bf3bc9d8d8deae4dd592c37ee6b2e13b9a7bb7975cc110a73f511f",
+     "environment_files/g50t/5849a774/g50t.py": "6f21f2065744e484ac38534f940158034e69f39add3b10a3d9fd258de7293aa9",
+     "<path>": "3e1eb93df7cc6df06134afa5d91016d071a65ef34a4d53225f2d65cf0cc8ee5d"
+    },
+    "seconds": 57.034
+   },
+   "decode": null,
+   "cnf_started": "2026-11-05T01:04:43.866649+00:00",
+   "cnf_pid": null,
+   "encoding_sha256_bmc3": "1b6ea6a032a32fc7d40b27b32b3a1b4ec81060f499539c1afa2e58f763548b41"
+  },
+  "7": {
+   "P": 7,
+   "state": "DONE",
+   "verdict": "UNSAT",
+   "winner": "cadical195",
+   "attempts": [
+    {
+     "phase": "portfolio",
+     "solver": "cadical195",
+     "pid": "<word withheld>",
+     "started_utc": "2026-11-05T01:04:43.961285+00:00",
+     "command": "timeout 10h nice -n 15 taskset -c <cores> <interp> -u <path> solve <path> cadical195 <path>",
+     "result": "UNSAT",
+     "seconds": 4642.697,
+     "rc": 0,
+     "finished_utc": "2026-11-05T02:22:20.335437+00:00"
+    },
+    {
+     "phase": "portfolio",
+     "solver": "cadical153",
+     "pid": "<word withheld>",
+     "started_utc": "2026-11-05T01:04:43.963808+00:00",
+     "command": "timeout 10h nice -n 15 taskset -c <cores> <interp> -u <path> solve <path> cadical153 <path>"
+    },
+    {
+     "phase": "portfolio",
+     "solver": "glucose4",
+     "pid": "<word withheld>",
+     "started_utc": "2026-11-05T01:04:43.966229+00:00",
+     "command": "timeout 10h nice -n 15 taskset -c <cores> <interp> -u <path> solve <path> glucose4 <path>"
+    }
+   ],
+   "workers": {
+    "cadical195": {
+     "pid": "<word withheld>",
+     "solver": "cadical195",
+     "started_utc": "2026-11-05T01:04:43.961205+00:00",
+     "command": "timeout 10h nice -n 15 taskset -c <cores> <interp> -u <path> solve <path> cadical195 <path>",
+     "out_json": "<path>",
+     "result": "UNSAT",
+     "seconds": 4642.697,
+     "rc": 0
+    },
+    "cadical153": {
+     "pid": "<word withheld>",
+     "solver": "cadical153",
+     "started_utc": "2026-11-05T01:04:43.963730+00:00",
+     "command": "timeout 10h nice -n 15 taskset -c <cores> <interp> -u <path> solve <path> cadical153 <path>",
+     "out_json": "<path>",
+     "result": null
+    },
+    "glucose4": {
+     "pid": "<word withheld>",
+     "solver": "glucose4",
+     "started_utc": "2026-11-05T01:04:43.966151+00:00",
+     "command": "timeout 10h nice -n 15 taskset -c <cores> <interp> -u <path> solve <path> glucose4 <path>",
+     "out_json": "<path>",
+     "result": null
+    }
+   },
+   "cc": null,
+   "portfolio_started_utc": "2026-11-05T01:04:43.958692+00:00",
+   "cnf": {
+    "sha256": "85dca9230e8797358edf4f3bf702cd0355acdc6467d7cea5532335cd250fd32a",
+    "path": "<path>",
+    "clauses": 5040652,
+    "variables_header": 1314911,
+    "hashes": {
+     "tools/g50t_bmc3.py": "1b6ea6a032a32fc7d40b27b32b3a1b4ec81060f499539c1afa2e58f763548b41",
+     "tools/g50t_bmc2.py": "9044d5866aa64b654e38ae04d24e610bf1986fa9e1637754e190d6bf0526b6cb",
+     "tools/g50t_sim.py": "2a1e65e601bf3bc9d8d8deae4dd592c37ee6b2e13b9a7bb7975cc110a73f511f",
+     "environment_files/g50t/5849a774/g50t.py": "6f21f2065744e484ac38534f940158034e69f39add3b10a3d9fd258de7293aa9",
+     "<path>": "3e1eb93df7cc6df06134afa5d91016d071a65ef34a4d53225f2d65cf0cc8ee5d"
+    },
+    "seconds": 71.295
+   },
+   "decode": null,
+   "cnf_started": "2026-11-05T01:04:43.870285+00:00",
+   "cnf_pid": null,
+   "encoding_sha256_bmc3": "1b6ea6a032a32fc7d40b27b32b3a1b4ec81060f499539c1afa2e58f763548b41"
+  },
+  "8": {
+   "P": 8,
+   "state": "DONE",
+   "verdict": "UNSAT",
+   "winner": "cadical153",
+   "attempts": [
+    {
+     "phase": "portfolio",
+     "solver": "cadical195",
+     "pid": "<word withheld>",
+     "started_utc": "2026-11-05T01:06:01.571205+00:00",
+     "command": "timeout 10h nice -n 15 taskset -c <cores> <interp> -u <path> solve <path> cadical195 <path>"
+    },
+    {
+     "phase": "portfolio",
+     "solver": "cadical153",
+     "pid": "<word withheld>",
+     "started_utc": "2026-11-05T01:06:01.574571+00:00",
+     "command": "timeout 10h nice -n 15 taskset -c <cores> <interp> -u <path> solve <path> cadical153 <path>",
+     "result": "UNSAT",
+     "seconds": 4785.994,
+     "rc": 0,
+     "finished_utc": "2026-11-05T02:25:51.718840+00:00"
+    },
+    {
+     "phase": "portfolio",
+     "solver": "glucose4",
+     "pid": "<word withheld>",
+     "started_utc": "2026-11-05T01:06:01.577499+00:00",
+     "command": "timeout 10h nice -n 15 taskset -c <cores> <interp> -u <path> solve <path> glucose4 <path>"
+    }
+   ],
+   "workers": {
+    "cadical195": {
+     "pid": "<word withheld>",
+     "solver": "cadical195",
+     "started_utc": "2026-11-05T01:06:01.571129+00:00",
+     "command": "timeout 10h nice -n 15 taskset -c <cores> <interp> -u <path> solve <path> cadical195 <path>",
+     "out_json": "<path>",
+     "result": null
+    },
+    "cadical153": {
+     "pid": "<word withheld>",
+     "solver": "cadical153",
+     "started_utc": "2026-11-05T01:06:01.574473+00:00",
+     "command": "timeout 10h nice -n 15 taskset -c <cores> <interp> -u <path> solve <path> cadical153 <path>",
+     "out_json": "<path>",
+     "result": "UNSAT",
+     "seconds": 4785.994,
+     "rc": 0
+    },
+    "glucose4": {
+     "pid": "<word withheld>",
+     "solver": "glucose4",
+     "started_utc": "2026-11-05T01:06:01.577415+00:00",
+     "command": "timeout 10h nice -n 15 taskset -c <cores> <interp> -u <path> solve <path> glucose4 <path>",
+     "out_json": "<path>",
+     "result": null
+    }
+   },
+   "cc": null,
+   "portfolio_started_utc": "2026-11-05T01:06:01.568671+00:00",
+   "cnf": {
+    "sha256": "17153c3d807656e0848ce87477643d36cad5c1e09a703c4ddffd64387cd7f38f",
+    "path": "<path>",
+    "clauses": 5345312,
+    "variables_header": 1394783,
+    "hashes": {
+     "tools/g50t_bmc3.py": "1b6ea6a032a32fc7d40b27b32b3a1b4ec81060f499539c1afa2e58f763548b41",
+     "tools/g50t_bmc2.py": "9044d5866aa64b654e38ae04d24e610bf1986fa9e1637754e190d6bf0526b6cb",
+     "tools/g50t_sim.py": "2a1e65e601bf3bc9d8d8deae4dd592c37ee6b2e13b9a7bb7975cc110a73f511f",
+     "environment_files/g50t/5849a774/g50t.py": "6f21f2065744e484ac38534f940158034e69f39add3b10a3d9fd258de7293aa9",
+     "<path>": "3e1eb93df7cc6df06134afa5d91016d071a65ef34a4d53225f2d65cf0cc8ee5d"
+    },
+    "seconds": 64.644
+   },
+   "decode": null,
+   "cnf_started": "2026-11-05T01:04:43.968735+00:00",
+   "cnf_pid": null,
+   "encoding_sha256_bmc3": "1b6ea6a032a32fc7d40b27b32b3a1b4ec81060f499539c1afa2e58f763548b41"
+  },
+  "9": {
+   "P": 9,
+   "state": "DONE",
+   "verdict": "UNSAT",
+   "winner": "cadical153",
+   "attempts": [
+    {
+     "phase": "portfolio",
+     "solver": "cadical195",
+     "pid": "<word withheld>",
+     "started_utc": "2026-11-05T01:06:01.668031+00:00",
+     "command": "timeout 10h nice -n 15 taskset -c <cores> <interp> -u <path> solve <path> cadical195 <path>"
+    },
+    {
+     "phase": "portfolio",
+     "solver": "cadical153",
+     "pid": "<word withheld>",
+     "started_utc": "2026-11-05T01:06:01.676806+00:00",
+     "command": "timeout 10h nice -n 15 taskset -c <cores> <interp> -u <path> solve <path> cadical153 <path>",
+     "result": "UNSAT",
+     "seconds": 3382.663,
+     "rc": 0,
+     "finished_utc": "2026-11-05T02:02:31.872629+00:00"
+    },
+    {
+     "phase": "portfolio",
+     "solver": "glucose4",
+     "pid": "<word withheld>",
+     "started_utc": "2026-11-05T01:06:01.678782+00:00",
+     "command": "timeout 10h nice -n 15 taskset -c <cores> <interp> -u <path> solve <path> glucose4 <path>"
+    }
+   ],
+   "workers": {
+    "cadical195": {
+     "pid": "<word withheld>",
+     "solver": "cadical195",
+     "started_utc": "2026-11-05T01:06:01.667949+00:00",
+     "command": "timeout 10h nice -n 15 taskset -c <cores> <interp> -u <path> solve <path> cadical195 <path>",
+     "out_json": "<path>",
+     "result": null
+    },
+    "cadical153": {
+     "pid": "<word withheld>",
+     "solver": "cadical153",
+     "started_utc": "2026-11-05T01:06:01.676720+00:00",
+     "command": "timeout 10h nice -n 15 taskset -c <cores> <interp> -u <path> solve <path> cadical153 <path>",
+     "out_json": "<path>",
+     "result": "UNSAT",
+     "seconds": 3382.663,
+     "rc": 0
+    },
+    "glucose4": {
+     "pid": "<word withheld>",
+     "solver": "glucose4",
+     "started_utc": "2026-11-05T01:06:01.678731+00:00",
+     "command": "timeout 10h nice -n 15 taskset -c <cores> <interp> -u <path> solve <path> glucose4 <path>",
+     "out_json": "<path>",
+     "result": null
+    }
+   },
+   "cc": null,
+   "portfolio_started_utc": "2026-11-05T01:06:01.655106+00:00",
+   "cnf": {
+    "sha256": "20dd312eaa0281311da93e84045ad983a94f936eb9a6bec82105d6be222d9787",
+    "path": "<path>",
+    "clauses": 5886329,
+    "variables_header": 1545146,
+    "hashes": {
+     "tools/g50t_bmc3.py": "1b6ea6a032a32fc7d40b27b32b3a1b4ec81060f499539c1afa2e58f763548b41",
+     "tools/g50t_bmc2.py": "9044d5866aa64b654e38ae04d24e610bf1986fa9e1637754e190d6bf0526b6cb",
+     "tools/g50t_sim.py": "2a1e65e601bf3bc9d8d8deae4dd592c37ee6b2e13b9a7bb7975cc110a73f511f",
+     "environment_files/g50t/5849a774/g50t.py": "6f21f2065744e484ac38534f940158034e69f39add3b10a3d9fd258de7293aa9",
+     "<path>": "3e1eb93df7cc6df06134afa5d91016d071a65ef34a4d53225f2d65cf0cc8ee5d"
+    },
+    "seconds": 54.02
+   },
+   "decode": null,
+   "cnf_started": "2026-11-05T01:04:44.466210+00:00",
+   "cnf_pid": null,
+   "encoding_sha256_bmc3": "1b6ea6a032a32fc7d40b27b32b3a1b4ec81060f499539c1afa2e58f763548b41"
+  },
+  "10": {
+   "P": 10,
+   "state": "DONE",
+   "verdict": "UNSAT",
+   "winner": "cadical195",
+   "attempts": [
+    {
+     "phase": "portfolio",
+     "solver": "cadical195",
+     "pid": "<word withheld>",
+     "started_utc": "2026-11-05T03:42:18.752409+00:00",
+     "command": "timeout 10h nice -n 15 taskset -c <cores> <interp> -u <path> solve <path> cadical195 <path>",
+     "result": "UNSAT",
+     "seconds": 2411.986,
+     "rc": 0,
+     "finished_utc": "2026-11-05T04:22:36.834037+00:00"
+    },
+    {
+     "phase": "portfolio",
+     "solver": "cadical153",
+     "pid": "<word withheld>",
+     "started_utc": "2026-11-05T03:42:18.754645+00:00",
+     "command": "timeout 10h nice -n 15 taskset -c <cores> <interp> -u <path> solve <path> cadical153 <path>",
+     "result": "UNSAT",
+     "seconds": 2475.881,
+     "rc": 0,
+     "finished_utc": "2026-11-05T04:23:36.859478+00:00"
+    },
+    {
+     "phase": "portfolio",
+     "solver": "glucose4",
+     "pid": "<word withheld>",
+     "started_utc": "2026-11-05T03:42:18.757106+00:00",
+     "command": "timeout 10h nice -n 15 taskset -c <cores> <interp> -u <path> solve <path> glucose4 <path>"
+    }
+   ],
+   "workers": {
+    "cadical195": {
+     "pid": "<word withheld>",
+     "solver": "cadical195",
+     "started_utc": "2026-11-05T03:42:18.752352+00:00",
+     "command": "timeout 10h nice -n 15 taskset -c <cores> <interp> -u <path> solve <path> cadical195 <path>",
+     "out_json": "<path>",
+     "result": "UNSAT",
+     "seconds": 2411.986,
+     "rc": 0
+    },
+    "cadical153": {
+     "pid": "<word withheld>",
+     "solver": "cadical153",
+     "started_utc": "2026-11-05T03:42:18.754570+00:00",
+     "command": "timeout 10h nice -n 15 taskset -c <cores> <interp> -u <path> solve <path> cadical153 <path>",
+     "out_json": "<path>",
+     "result": "UNSAT",
+     "seconds": 2475.881,
+     "rc": 0
+    },
+    "glucose4": {
+     "pid": "<word withheld>",
+     "solver": "glucose4",
+     "started_utc": "2026-11-05T03:42:18.757017+00:00",
+     "command": "timeout 10h nice -n 15 taskset -c <cores> <interp> -u <path> solve <path> glucose4 <path>",
+     "out_json": "<path>",
+     "result": null
+    }
+   },
+   "cc": null,
+   "portfolio_started_utc": "2026-11-05T03:42:18.750473+00:00",
+   "cnf": {
+    "sha256": "8f7be635926d2d522136f2680b5afd8b054a2512b941ce207b59ee831ed4303e",
+    "path": "<path>",
+    "clauses": 5677410,
+    "variables_header": 1486041,
+    "hashes": {
+     "tools/g50t_bmc3.py": "1b6ea6a032a32fc7d40b27b32b3a1b4ec81060f499539c1afa2e58f763548b41",
+     "tools/g50t_bmc2.py": "9044d5866aa64b654e38ae04d24e610bf1986fa9e1637754e190d6bf0526b6cb",
+     "tools/g50t_sim.py": "2a1e65e601bf3bc9d8d8deae4dd592c37ee6b2e13b9a7bb7975cc110a73f511f",
+     "environment_files/g50t/5849a774/g50t.py": "6f21f2065744e484ac38534f940158034e69f39add3b10a3d9fd258de7293aa9",
+     "<path>": "3e1eb93df7cc6df06134afa5d91016d071a65ef34a4d53225f2d65cf0cc8ee5d"
+    },
+    "seconds": 73.464
+   },
+   "decode": null,
+   "cnf_started": "2026-11-05T01:04:44.624364+00:00",
+   "cnf_pid": null,
+   "encoding_sha256_bmc3": "1b6ea6a032a32fc7d40b27b32b3a1b4ec81060f499539c1afa2e58f763548b41"
+  }
+ },
+ "log": [
+  {
+   "utc": "2026-11-05T04:23:36.859701+00:00",
+   "event": "ALL_DONE"
+  }
+ ],
+ "procs_in_use": "<threads>",
+ "rss_gb": "<memory>",
+ "updated_utc": "2026-11-05T04:23:36.859721+00:00"
+}

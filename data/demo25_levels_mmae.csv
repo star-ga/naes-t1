@@ -1,0 +1,184 @@
+game,level,mechanic_family,proven_floor,our_actions,human_baseline,mmae,proof_method,proof_detail
+ar25,1,placement/assignment,15,15,32,1.000,"Exact math (algebra, closed form, enumeration)",closed_form_exhaustive_endpoint
+ar25,2,placement/assignment,11,11,50,1.000,"Exact math (algebra, closed form, enumeration)",closed_form_exhaustive_endpoint
+ar25,3,placement/assignment,40,40,75,1.000,"Exact math (algebra, closed form, enumeration)",exact_cost_algebra_exhaustive_endpoint_enumeration
+ar25,4,placement/assignment,22,22,37,1.000,"Exact math (algebra, closed form, enumeration)",qf_lia_smt_exact_enumeration
+ar25,5,placement/assignment,28,28,89,1.000,"Exact math (algebra, closed form, enumeration)",qf_lia_smt_exact_enumeration
+ar25,6,placement/assignment,53,53,159,1.000,"Exact math (algebra, closed form, enumeration)",exact_cost_algebra_exhaustive_endpoint_enumeration
+ar25,7,placement/assignment,37,37,233,1.000,"Exact math (algebra, closed form, enumeration)",exact_cost_algebra_exhaustive_endpoint_enumeration
+ar25,8,placement/assignment,47,47,73,1.000,"Exact math (algebra, closed form, enumeration)",exact_cost_algebra_exhaustive_endpoint_enumeration
+bp35,1,gravity+push,15,15,21,1.000,Exhaustive search (uniform cost / breadth-first),move_ordering_uniform_cost+lemma
+bp35,2,gravity+push,40,40,48,1.000,Matching bounds (lower bound = verified win),relay_algebra_admissible_lb_meets_verified_win
+bp35,3,gravity+push,34,34,44,1.000,A* with an admissible heuristic,astar_complete_alphabet_bnb_gated_model
+bp35,4,gravity+push,19,19,38,1.000,A* with an admissible heuristic,native_model_astar_complete_api_alphabet+lemma
+bp35,5,gravity+push,30,30,33,1.000,A* with an admissible heuristic,astar_complete_alphabet_bnb_gated_model
+bp35,6,gravity+push,41,41,87,1.000,A* with an admissible heuristic,native_model_astar_complete_api_alphabet+lemma
+bp35,7,gravity+push,43,43,86,1.000,Matching bounds (lower bound = verified win),empty_contour_lb_meets_verified_win
+bp35,8,gravity+push,36,36,131,1.000,Bounded SAT (transition unrolled to one action below the floor; unsatisfiable),sat_bmc_unsat_at_F_minus_1
+bp35,9,gravity+push,64,64,163,1.000,Bounded SAT (transition unrolled to one action below the floor; unsatisfiable),sat_bmc_unsat_at_F_minus_1
+cd82,1,symmetric paint,5,5,55,1.000,Exhaustive search (uniform cost / breadth-first),complete_prefix_tree_licensed_alphabet
+cd82,2,symmetric paint,6,6,8,1.000,Exhaustive search (uniform cost / breadth-first),complete_prefix_tree_licensed_alphabet
+cd82,3,symmetric paint,16,16,41,1.000,Exhaustive search (uniform cost / breadth-first),octant_symmetry_uniform_cost_exhaustion
+cd82,4,symmetric paint,13,13,21,1.000,Exhaustive search (uniform cost / breadth-first),octant_symmetry_uniform_cost_exhaustion
+cd82,5,symmetric paint,13,13,23,1.000,Exhaustive search (uniform cost / breadth-first),octant_symmetry_uniform_cost_exhaustion
+cd82,6,symmetric paint,16,16,23,1.000,Exhaustive search (uniform cost / breadth-first),octant_symmetry_uniform_cost_exhaustion
+cn04,1,rigid-body assembly,13,13,29,1.000,Matching bounds (lower bound = verified win),relaxed_object_distance_matching_configuration_enumeration
+cn04,2,rigid-body assembly,29,29,54,1.000,Matching bounds (lower bound = verified win),relaxed_object_distance_matching_configuration_enumeration
+cn04,3,rigid-body assembly,20,20,85,1.000,Matching bounds (lower bound = verified win),relaxed_object_distance_matching_configuration_enumeration
+cn04,4,rigid-body assembly,29,29,300,1.000,Matching bounds (lower bound = verified win),relaxed_object_distance_matching_configuration_enumeration
+cn04,5,rigid-body assembly,44,44,208,1.000,Matching bounds (lower bound = verified win),relaxed_object_distance_matching_configuration_enumeration
+cn04,6,rigid-body assembly,38,38,113,1.000,Matching bounds (lower bound = verified win),relaxed_object_distance_matching_configuration_enumeration
+dc22,1,gated navigation,20,20,59,1.000,Exhaustive search (uniform cost / breadth-first),complete_state_ucs_structural_alphabet
+dc22,2,gated navigation,42,42,102,1.000,Exhaustive search (uniform cost / breadth-first),complete_state_ucs_structural_alphabet
+dc22,3,gated navigation,45,45,67,1.000,Exhaustive search (uniform cost / breadth-first),complete_state_ucs_structural_alphabet
+dc22,4,gated navigation,62,62,98,1.000,Exhaustive search (uniform cost / breadth-first),complete_state_ucs_structural_alphabet
+dc22,5,gated navigation,108,108,324,1.000,Exhaustive search (uniform cost / breadth-first),complete_state_ucs_simulator_bisimulation_gated
+dc22,6,gated navigation,139,139,578,1.000,Exhaustive search (uniform cost / breadth-first),complete_state_bfs_on_sampled_equivalent_simulator
+ft09,1,collect/route,4,4,43,1.000,Exhaustive search (uniform cost / breadth-first),engine_bfs_center_tuple
+ft09,2,collect/route,7,7,12,1.000,Exhaustive search (uniform cost / breadth-first),engine_bfs_center_tuple
+ft09,3,collect/route,14,14,23,1.000,"Exact math (algebra, closed form, enumeration)",engine_measured_columns_meet_in_middle_min_weight
+ft09,4,collect/route,16,16,28,1.000,"Exact math (algebra, closed form, enumeration)",engine_measured_columns_meet_in_middle_min_weight
+ft09,5,collect/route,21,21,65,1.000,"Exact math (algebra, closed form, enumeration)",engine_measured_columns_meet_in_middle_min_weight
+ft09,6,collect/route,13,13,37,1.000,"Exact math (algebra, closed form, enumeration)",engine_measured_columns_meet_in_middle_min_weight
+g50t,1,record-replay ghosts,17,17,78,1.000,A* with an admissible heuristic,dfpn_proven
+g50t,2,record-replay ghosts,31,31,175,1.000,Matching bounds (lower bound = verified win),relay_algebra_ablation_stable_lb_meets_verified_win+lemma
+g50t,3,record-replay ghosts,64,64,179,1.000,Bounded SAT (transition unrolled to one action below the floor; unsatisfiable),sat_bmc_v4_unsat_at_F_minus_1_main_grid_94_of_94
+g50t,4,record-replay ghosts,31,31,230,1.000,Bounded SAT (transition unrolled to one action below the floor; unsatisfiable),sat_bmc_v4_unsat_at_F_minus_1_main_grid_45_of_45+release_order_grid_15_of_15+index0_closing_grid_15_of_15
+g50t,5,record-replay ghosts,50,50,96,1.000,Bounded SAT (transition unrolled to one action below the floor; unsatisfiable),sat_bmc_unsat_at_F_minus_1_all_pass_counts+lemma
+g50t,6,record-replay ghosts,40,40,54,1.000,Bounded SAT (transition unrolled to one action below the floor; unsatisfiable),sat_bmc_v4_unsat_at_F_minus_1_main_grid_58_of_58
+g50t,7,record-replay ghosts,41,41,67,1.000,Bounded SAT (transition unrolled to one action below the floor; unsatisfiable),sat_bmc_v4_unsat_at_F_minus_1_main_grid_60_of_60+release_order_grid_20_of_20+index0_closing_grid_20_of_20
+ka59,1,block push + fuse,11,11,28,1.000,Exhaustive search (uniform cost / breadth-first),complete_state_ucs_native_action_quotient
+ka59,2,block push + fuse,30,30,109,1.000,Exhaustive search (uniform cost / breadth-first),bidirectional_complete_state_search_on_lockstep_checked_model
+ka59,3,block push + fuse,33,33,51,1.000,Exhaustive search (uniform cost / breadth-first),complete_state_ucs_exhausted_injective_key
+ka59,4,block push + fuse,38,38,51,1.000,Exhaustive search (uniform cost / breadth-first),complete_state_ucs_exhausted_injective_key
+ka59,5,block push + fuse,20,20,33,1.000,Exhaustive search (uniform cost / breadth-first),complete_state_ucs_native_action_quotient
+ka59,6,block push + fuse,45,45,132,1.000,Exhaustive search (uniform cost / breadth-first),complete_state_ucs_exhausted_injective_key
+ka59,7,block push + fuse,65,65,326,1.000,Exhaustive search (uniform cost / breadth-first),complete_supergraph_BFS_through_64_plus_fresh_exact_engine_replay_at_65
+lf52,1,peg merge,8,8,32,1.000,"Exact math (algebra, closed form, enumeration)",required_merge_pair_count_closed_form
+lf52,2,peg merge,34,34,81,1.000,A* with an admissible heuristic,"A* over complete Markov state (token cells+types, pillars, push-blocks, held, arrows, board offset); reduced alphabet (A"
+lf52,3,peg merge,45,45,60,1.000,A* with an admissible heuristic,"Abstract A* over peg-solitaire Markov state (goal cells+types, pillars, push-blocks) read from the real game engine state; actions:"
+lf52,4,peg merge,50,50,71,1.000,A* with an admissible heuristic,"Abstract A* over peg-solitaire Markov state (goal cells+types, pillars, push-blocks) read from the real game engine state; actions:"
+lf52,5,peg merge,83,83,205,1.000,A* with an admissible heuristic,"Abstract A* over peg-solitaire Markov state (goal cells+types, pillars, push-blocks) read from the real game engine state; actions:"
+lf52,6,peg merge,85,85,148,1.000,A* with an admissible heuristic,"Abstract A* over peg-solitaire Markov state (goal cells+types, pillars, push-blocks) read from the real game engine state; actions:"
+lf52,7,peg merge,125,125,244,1.000,A* with an admissible heuristic,exact A* over the complete abstract state (typed goal cells + block cells + mobile pillar cells) with an over-approximated 3-token+block pattern-database heuristic; engine->abstract cost-model lemma
+lf52,8,peg merge,68,68,109,1.000,A* with an admissible heuristic,"Abstract A* over peg-solitaire Markov state (goal cells+types, pillars, push-blocks) read from the real game engine state; actions:"
+lf52,9,peg merge,100,100,164,1.000,A* with an admissible heuristic,astar_complete_compact_state_pair_pattern_merge_count
+lf52,10,peg merge,43,43,225,1.000,A* with an admissible heuristic,astar_consistent_h_pdb_plus_structural_lb
+lp85,1,track/button,5,5,17,1.000,Exhaustive search (uniform cost / breadth-first),move_ordering_uniform_cost+lemma
+lp85,2,track/button,8,8,38,1.000,Exhaustive search (uniform cost / breadth-first),move_ordering_uniform_cost+lemma
+lp85,3,track/button,16,16,31,1.000,Exhaustive search (uniform cost / breadth-first),rotation_group_state_graph_exhaustion_button_alphabet
+lp85,4,track/button,12,12,16,1.000,Exhaustive search (uniform cost / breadth-first),move_ordering_uniform_cost+lemma
+lp85,5,track/button,9,9,41,1.000,Exhaustive search (uniform cost / breadth-first),rotation_group_state_graph_exhaustion_button_alphabet
+lp85,6,track/button,19,19,60,1.000,Exhaustive search (uniform cost / breadth-first),compound_rotation_state_graph_exhaustion_button_alphabet
+lp85,7,track/button,5,5,26,1.000,Exhaustive search (uniform cost / breadth-first),move_ordering_uniform_cost+lemma
+lp85,8,track/button,5,5,159,1.000,Exhaustive search (uniform cost / breadth-first),move_ordering_uniform_cost+lemma
+ls20,1,fuel-limited nav,13,13,22,1.000,Exhaustive search (uniform cost / breadth-first),zero_heuristic_astar_click_equiv+lemma
+ls20,2,fuel-limited nav,45,45,123,1.000,Exhaustive search (uniform cost / breadth-first),complete_state_ucs_fuel_dominance
+ls20,3,fuel-limited nav,39,39,73,1.000,Exhaustive search (uniform cost / breadth-first),move_ordering_uniform_cost+lemma
+ls20,4,fuel-limited nav,43,43,84,1.000,Exhaustive search (uniform cost / breadth-first),complete_state_ucs_fuel_dominance
+ls20,5,fuel-limited nav,44,44,96,1.000,Exhaustive search (uniform cost / breadth-first),complete_state_ucs_fuel_dominance
+ls20,6,fuel-limited nav,72,72,192,1.000,Exhaustive search (uniform cost / breadth-first),complete_state_ucs_fuel_dominance
+ls20,7,fuel-limited nav,53,53,186,1.000,Exhaustive search (uniform cost / breadth-first),complete_state_ucs_fuel_dominance
+m0r0,1,coupled-control maze,15,15,30,1.000,Exhaustive search (uniform cost / breadth-first),complete_state_ucs_recovered
+m0r0,2,coupled-control maze,23,23,111,1.000,Exhaustive search (uniform cost / breadth-first),complete_state_ucs_recovered
+m0r0,3,coupled-control maze,53,53,203,1.000,A* with an admissible heuristic,astar_consistent_heuristic
+m0r0,4,coupled-control maze,11,11,26,1.000,Exhaustive search (uniform cost / breadth-first),complete_state_ucs_recovered
+m0r0,5,coupled-control maze,39,39,500,1.000,Exhaustive search (uniform cost / breadth-first),complete_state_ucs_recovered
+m0r0,6,coupled-control maze,38,38,237,1.000,Exhaustive search (uniform cost / breadth-first),complete_alphabet_complete_state_ucs
+r11l,1,pick-place,3,3,22,1.000,Matching bounds (lower bound = verified win),relaxed_placement_enumeration_select_place_count
+r11l,2,pick-place,7,7,33,1.000,Matching bounds (lower bound = verified win),relaxed_placement_enumeration_select_place_count
+r11l,3,pick-place,9,9,51,1.000,Matching bounds (lower bound = verified win),relaxed_placement_enumeration_select_place_count
+r11l,4,pick-place,13,13,26,1.000,Matching bounds (lower bound = verified win),relaxed_placement_enumeration_select_place_count
+r11l,5,pick-place,12,12,52,1.000,Matching bounds (lower bound = verified win),assembly_word_schedule_dp_exhaustive_lb
+r11l,6,pick-place,13,13,49,1.000,Matching bounds (lower bound = verified win),assembly_word_schedule_dp_exhaustive_lb
+re86,1,phase coverage,20,20,26,1.000,Exhaustive search (uniform cost / breadth-first),complete_state_ucs_licensed_alphabet_reset_inclusive
+re86,2,phase coverage,36,36,42,1.000,Matching bounds (lower bound = verified win),phase_decomposition_coverage_lb
+re86,3,phase coverage,47,47,86,1.000,Matching bounds (lower bound = verified win),phase_decomposition_coverage_lb
+re86,4,phase coverage,42,42,108,1.000,Matching bounds (lower bound = verified win),phase_decomposition_coverage_lb
+re86,5,phase coverage,63,63,189,1.000,Matching bounds (lower bound = verified win),phase_decomposition_coverage_lb
+re86,6,phase coverage,46,46,139,1.000,Matching bounds (lower bound = verified win),phase_decomposition_coverage_lb
+re86,7,phase coverage,98,98,424,1.000,Matching bounds (lower bound = verified win),phase_decomposition_coverage_lb
+re86,8,phase coverage,155,155,241,1.000,Matching bounds (lower bound = verified win),phase_decomposition_coverage_lb
+s5i5,1,arm kinematics,13,13,20,1.000,Exhaustive search (uniform cost / breadth-first),engine_bfs_whole_object_key
+s5i5,2,arm kinematics,26,26,89,1.000,Exhaustive search (uniform cost / breadth-first),engine_bfs_whole_object_key
+s5i5,3,arm kinematics,37,37,106,1.000,Exhaustive search (uniform cost / breadth-first),engine_bfs_completion_loop
+s5i5,4,arm kinematics,30,30,54,1.000,Exhaustive search (uniform cost / breadth-first),engine_bfs_completion_loop
+s5i5,5,arm kinematics,28,28,162,1.000,Exhaustive search (uniform cost / breadth-first),engine_bfs_whole_object_key
+s5i5,6,arm kinematics,25,25,38,1.000,Exhaustive search (uniform cost / breadth-first),engine_bfs_completion_loop
+s5i5,7,arm kinematics,45,45,86,1.000,Exhaustive search (uniform cost / breadth-first),engine_bfs_completion_loop
+s5i5,8,arm kinematics,36,36,83,1.000,Exhaustive search (uniform cost / breadth-first),engine_bfs_completion_loop
+sb26,1,sequence/order,9,9,18,1.000,"Exact math (algebra, closed form, enumeration)",walk-topology exhaustion + exact placement counting
+sb26,2,sequence/order,15,15,28,1.000,"Exact math (algebra, closed form, enumeration)",walk-topology exhaustion + exact placement counting
+sb26,3,sequence/order,15,15,18,1.000,"Exact math (algebra, closed form, enumeration)",walk-topology exhaustion + exact placement counting
+sb26,4,sequence/order,15,15,19,1.000,"Exact math (algebra, closed form, enumeration)",walk-topology exhaustion + exact placement counting
+sb26,5,sequence/order,17,17,31,1.000,"Exact math (algebra, closed form, enumeration)",walk-topology exhaustion + exact placement counting
+sb26,6,sequence/order,19,19,23,1.000,"Exact math (algebra, closed form, enumeration)",walk-topology exhaustion + exact placement counting
+sb26,7,sequence/order,17,17,58,1.000,"Exact math (algebra, closed form, enumeration)",walk-topology exhaustion + exact placement counting
+sb26,8,sequence/order,17,17,18,1.000,"Exact math (algebra, closed form, enumeration)",walk-topology exhaustion + exact placement counting
+sc25,1,spell/macro,13,13,36,1.000,Exhaustive search (uniform cost / breadth-first),macro_dijkstra_complete_state_key
+sc25,2,spell/macro,5,5,6,1.000,Exhaustive search (uniform cost / breadth-first),complete_state_ucs_macro_reduction
+sc25,3,spell/macro,11,11,32,1.000,Exhaustive search (uniform cost / breadth-first),complete_state_macro_uniform_cost_search_reachable_start
+sc25,4,spell/macro,21,21,83,1.000,Exhaustive search (uniform cost / breadth-first),complete_state_ucs_reverified
+sc25,5,spell/macro,36,36,143,1.000,Exhaustive search (uniform cost / breadth-first),complete_state_macro_uniform_cost_search_all_facings
+sc25,6,spell/macro,35,35,50,1.000,Exhaustive search (uniform cost / breadth-first),complete_state_macro_uniform_cost_search_all_facings
+sk48,1,sokoban-like push,14,14,61,1.000,Exhaustive search (uniform cost / breadth-first),complete_finite_state_layers_native_coupling_L1_action_dominance
+sk48,2,sokoban-like push,27,27,177,1.000,Exhaustive search (uniform cost / breadth-first),complete_state_uniform_cost_bfs
+sk48,3,sokoban-like push,33,33,101,1.000,Exhaustive search (uniform cost / breadth-first),complete_state_uniform_cost_bfs
+sk48,4,sokoban-like push,23,23,103,1.000,Exhaustive search (uniform cost / breadth-first),fixed_instance_bfs_depth_22_win_at_23
+sk48,5,sokoban-like push,33,33,230,1.000,Exhaustive search (uniform cost / breadth-first),complete_state_ucs_reverified
+sk48,6,sokoban-like push,36,36,181,1.000,Exhaustive search (uniform cost / breadth-first),"complete_state_uniform_cost_layer_exhaustion (C reimplementation of the search model of sk48, colour-class symmetry quotient, 64-bit packed key)"
+sk48,7,sokoban-like push,23,23,125,1.000,Exhaustive search (uniform cost / breadth-first),"complete_state_uniform_cost_layer_exhaustion (C reimplementation of the search model of sk48, colour-class symmetry quotient, 64-bit packed key)"
+sk48,8,sokoban-like push,24,24,92,1.000,Exhaustive search (uniform cost / breadth-first),complete_state_ucs_reverified
+sp80,1,edit-and-commit plumbing,4,4,39,1.000,"Exact math (algebra, closed form, enumeration)",engine_spill_of_every_placement
+sp80,2,edit-and-commit plumbing,7,7,58,1.000,"Exact math (algebra, closed form, enumeration)",placement_enumeration_transcribed_spill_rule
+sp80,3,edit-and-commit plumbing,10,10,25,1.000,"Exact math (algebra, closed form, enumeration)",placement_enumeration_transcribed_spill_rule
+sp80,4,edit-and-commit plumbing,20,20,148,1.000,"Exact math (algebra, closed form, enumeration)",placement_enumeration_transcribed_spill_rule
+sp80,5,edit-and-commit plumbing,17,17,96,1.000,"Exact math (algebra, closed form, enumeration)",placement_enumeration_transcribed_spill_rule
+sp80,6,edit-and-commit plumbing,28,28,152,1.000,"Exact math (algebra, closed form, enumeration)",placement_enumeration_transcribed_spill_rule
+su15,1,fruit merge/vacuum,7,7,22,1.000,Exhaustive search (uniform cost / breadth-first),click_bfs_plus_undo_dominance
+su15,2,fruit merge/vacuum,8,8,42,1.000,"Exact math (algebra, closed form, enumeration)",one_merge_group_lemma_value_count_merge_tree_enumeration
+su15,3,fruit merge/vacuum,11,11,26,1.000,Matching bounds (lower bound = verified win),lineage_relaxation_lower_bound_plus_bound_10_exhaustion_machine_checked
+su15,4,fruit merge/vacuum,9,9,115,1.000,Exhaustive search (uniform cost / breadth-first),complete_state_ucs_reverified
+su15,5,fruit merge/vacuum,5,5,36,1.000,Exhaustive search (uniform cost / breadth-first),complete_state_ucs_reverified
+su15,6,fruit merge/vacuum,4,4,31,1.000,Exhaustive search (uniform cost / breadth-first),complete_layout_bfs_full_click_alphabet
+su15,7,fruit merge/vacuum,5,5,8,1.000,Exhaustive search (uniform cost / breadth-first),complete_layout_bfs_full_click_alphabet
+su15,8,fruit merge/vacuum,5,5,40,1.000,Exhaustive search (uniform cost / breadth-first),complete_layout_bfs_full_click_alphabet
+su15,9,fruit merge/vacuum,7,7,41,1.000,Exhaustive search (uniform cost / breadth-first),complete_state_ucs_licensed_alphabet
+tn36,1,program/opcode,7,7,32,1.000,Exhaustive search (uniform cost / breadth-first),engine_bfs_no_shorter
+tn36,2,program/opcode,9,9,72,1.000,"Exact math (algebra, closed form, enumeration)",opcode_dp_one_play_plus_min_hamming
+tn36,3,program/opcode,9,9,26,1.000,"Exact math (algebra, closed form, enumeration)",opcode_dp_one_play_plus_min_hamming
+tn36,4,program/opcode,12,12,40,1.000,"Exact math (algebra, closed form, enumeration)",opcode_dp_one_play_plus_min_hamming
+tn36,5,program/opcode,16,16,30,1.000,"Exact math (algebra, closed form, enumeration)",opcode_dp_one_play_plus_min_hamming
+tn36,6,program/opcode,16,16,55,1.000,Exhaustive search (uniform cost / breadth-first),run_chain_search_max_pop_bound
+tn36,7,program/opcode,16,16,62,1.000,Exhaustive search (uniform cost / breadth-first),run_chain_search_max_pop_bound
+tr87,1,collect/route,14,14,54,1.000,Exhaustive search (uniform cost / breadth-first),graph_exhausted+lemma
+tr87,2,collect/route,25,25,58,1.000,"Exact math (algebra, closed form, enumeration)",rotation_group_closed_form_nonalter
+tr87,3,collect/route,21,21,40,1.000,"Exact math (algebra, closed form, enumeration)",rotation_group_closed_form_nonalter
+tr87,4,collect/route,21,21,45,1.000,"Exact math (algebra, closed form, enumeration)",rotation_group_closed_form_nonalter
+tr87,5,collect/route,14,14,71,1.000,"Exact math (algebra, closed form, enumeration)",alter_offset_exhaust_enum_min_rot_plus_walk
+tr87,6,collect/route,23,23,146,1.000,"Exact math (algebra, closed form, enumeration)",alter_offset_complete_enumeration_disjoint_cost_partition
+tu93,1,directional nav,18,18,19,1.000,Exhaustive search (uniform cost / breadth-first),zero_heuristic_astar_click_equiv+lemma
+tu93,2,directional nav,10,10,16,1.000,Exhaustive search (uniform cost / breadth-first),complete_state_ucs_full_dispatch_reset_inclusive
+tu93,3,directional nav,19,19,34,1.000,Exhaustive search (uniform cost / breadth-first),move_ordering_uniform_cost+lemma
+tu93,4,directional nav,17,17,42,1.000,Exhaustive search (uniform cost / breadth-first),zero_heuristic_astar_click_equiv+lemma
+tu93,5,directional nav,29,29,123,1.000,Exhaustive search (uniform cost / breadth-first),move_ordering_uniform_cost+lemma
+tu93,6,directional nav,28,28,80,1.000,Exhaustive search (uniform cost / breadth-first),graph_exhausted+lemma
+tu93,7,directional nav,14,14,14,1.000,Exhaustive search (uniform cost / breadth-first),complete_state_ucs_full_dispatch_reset_inclusive
+tu93,8,directional nav,21,21,23,1.000,Exhaustive search (uniform cost / breadth-first),move_ordering_uniform_cost+lemma
+tu93,9,directional nav,29,29,111,1.000,Exhaustive search (uniform cost / breadth-first),move_ordering_uniform_cost+lemma
+vc33,1,constraint/bridge,3,3,7,1.000,Exhaustive search (uniform cost / breadth-first),engine_bfs_whole_object_key
+vc33,2,constraint/bridge,7,7,18,1.000,Exhaustive search (uniform cost / breadth-first),engine_bfs_whole_object_key
+vc33,3,constraint/bridge,23,23,44,1.000,Exhaustive search (uniform cost / breadth-first),complete_alphabet_uniform_cost_exhaustion
+vc33,4,constraint/bridge,21,21,61,1.000,Exhaustive search (uniform cost / breadth-first),complete_alphabet_uniform_cost_exhaustion
+vc33,5,constraint/bridge,44,44,131,1.000,Exhaustive search (uniform cost / breadth-first),uniform_cost_bfs_complete_state_full_alphabet
+vc33,6,constraint/bridge,20,20,34,1.000,Exhaustive search (uniform cost / breadth-first),complete_alphabet_uniform_cost_exhaustion
+vc33,7,constraint/bridge,49,49,152,1.000,Exhaustive search (uniform cost / breadth-first),complete_alphabet_uniform_cost_exhaustion
+wa30,1,sokoban + enemies,26,26,71,1.000,A* with an admissible heuristic,sokoban_astar_hungarian
+wa30,2,sokoban + enemies,46,46,119,1.000,A* with an admissible heuristic,astar_consistent_heuristic_first_goal_pop
+wa30,3,sokoban + enemies,67,67,183,1.000,Matching bounds (lower bound = verified win),relay_algebra_admissible_lb_meets_verified_win
+wa30,4,sokoban + enemies,43,43,98,1.000,A* with an admissible heuristic,idastar_bounded_tt_complete_bound_exhaustion
+wa30,5,sokoban + enemies,91,91,368,1.000,A* with an admissible heuristic,idastar_bound_exhaustion_pdb_h0_82
+wa30,6,sokoban + enemies,46,46,68,1.000,A* with an admissible heuristic,astar_consistent_heuristic_first_goal_pop
+wa30,7,sokoban + enemies,36,36,79,1.000,A* with an admissible heuristic,astar_consistent_heuristic_first_goal_pop
+wa30,8,sokoban + enemies,91,91,442,1.000,Empirical proof (winning route replayed on the engine; mathematical lower bound below it),replay_verified_route_upper_bound; sound lower bound 57
+wa30,9,sokoban + enemies,57,57,415,1.000,Empirical proof (winning route replayed on the engine; mathematical lower bound below it),replay_verified_route_upper_bound; sound lower bound 50

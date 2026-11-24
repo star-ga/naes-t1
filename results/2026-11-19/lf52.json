@@ -1,0 +1,46 @@
+{
+ "total": {
+  "levels": 10,
+  "ref_levels": 10,
+  "actions": 642,
+  "ref_actions": 642,
+  "games_full": 1,
+  "games": 1,
+  "perturb": 0
+ },
+ "games": [
+  {
+   "game": "lf52-271a04aa",
+   "levels": 10,
+   "ref_levels": 10,
+   "actions": 642,
+   "ref_actions": 642,
+   "per_level": [
+    9,
+    34,
+    45,
+    50,
+    83,
+    85,
+    125,
+    68,
+    100,
+    43
+   ],
+   "ref_per_level": [
+    8,
+    34,
+    45,
+    50,
+    83,
+    85,
+    125,
+    68,
+    100,
+    43
+   ],
+   "resets": 1,
+   "over_ref_levels": []
+  }
+ ]
+}

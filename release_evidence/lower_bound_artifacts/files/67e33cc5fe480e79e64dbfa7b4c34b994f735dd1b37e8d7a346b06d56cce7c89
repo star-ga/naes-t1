@@ -1,0 +1,19 @@
+{
+ "mode": "routecheck",
+ "level": 3,
+ "seed": 20260922,
+ "fail": [],
+ "ok": 0,
+ "route_len": 64,
+ "sim_won": true,
+ "k": 64,
+ "passes": [
+  11,
+  21,
+  30
+ ],
+ "encoding_admits_route": true,
+ "error": null,
+ "verdict": "PASS",
+ "secs": 0.8
+}

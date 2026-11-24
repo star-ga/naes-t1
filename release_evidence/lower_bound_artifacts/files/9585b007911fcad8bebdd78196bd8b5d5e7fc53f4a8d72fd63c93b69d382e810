@@ -1,0 +1,162 @@
+{
+ "n_levels_old": 7,
+ "n_levels_new": 7,
+ "levels": [
+  {
+   "level": 1,
+   "verdict": "ORDER_ONLY",
+   "n_sprites": [
+    30,
+    30
+   ],
+   "diffs": [],
+   "order_changed_layers": [
+    -3,
+    3,
+    10,
+    15
+   ],
+   "first_order_difference_index": 0
+  },
+  {
+   "level": 2,
+   "verdict": "CHANGED",
+   "n_sprites": [
+    76,
+    76
+   ],
+   "diffs": [
+    "geometry: 20 sprites only-old [(7, 35, 5), (12, 35, 5), (17, 35, 5), (7, 41, 5), (12, 41, 5), (17, 41, 5), (22, 35, 5), (22, 41, 5), (22, 47, 5), (17, 47, 5), (12, 47, 5), (7, 47, 5)], 20 only-new [(37, 32, 5), (42, 32, 5), (47, 32, 5), (6, 32, 5), (11, 32, 5), (16, 32, 5), (21, 32, 5), (52, 32, 5), (7, 35, 5), (12, 35, 5), (17, 35, 5), (7, 41, 5)]"
+   ]
+  },
+  {
+   "level": 3,
+   "verdict": "CHANGED",
+   "n_sprites": [
+    96,
+    96
+   ],
+   "diffs": [
+    "geometry: 22 sprites only-old [(7, 35, 5), (12, 35, 5), (17, 35, 5), (7, 41, 5), (12, 41, 5), (17, 41, 5), (17, 47, 5), (12, 47, 5), (7, 47, 5), (22, 35, 5), (22, 41, 5), (22, 47, 5)], 22 only-new [(32, 32, 5), (37, 32, 5), (42, 32, 5), (47, 32, 5), (52, 32, 5), (57, 32, 5), (6, 32, 5), (11, 32, 5), (16, 32, 5), (21, 32, 5), (7, 35, 5), (12, 35, 5)]"
+   ]
+  },
+  {
+   "level": 4,
+   "verdict": "CHANGED",
+   "n_sprites": [
+    89,
+    89
+   ],
+   "diffs": [
+    "geometry: 18 sprites only-old [(10, 35, 5), (15, 35, 5), (20, 35, 5), (10, 41, 5), (15, 41, 5), (20, 41, 5), (20, 47, 5), (15, 47, 5), (10, 47, 5), (32, 32, 4), (37, 32, 4), (42, 32, 4)], 18 only-new [(32, 32, 5), (37, 32, 5), (42, 32, 5), (47, 32, 5), (52, 32, 5), (57, 32, 5), (9, 32, 5), (19, 32, 5), (14, 32, 5), (10, 35, 5), (15, 35, 5), (20, 35, 5)]"
+   ]
+  },
+  {
+   "level": 5,
+   "verdict": "CHANGED",
+   "n_sprites": [
+    91,
+    91
+   ],
+   "diffs": [
+    "geometry: 18 sprites only-old [(10, 35, 5), (15, 35, 5), (20, 35, 5), (10, 41, 5), (15, 41, 5), (20, 41, 5), (20, 47, 5), (15, 47, 5), (10, 47, 5), (32, 32, 4), (37, 32, 4), (42, 32, 4)], 18 only-new [(32, 32, 5), (37, 32, 5), (42, 32, 5), (47, 32, 5), (52, 32, 5), (57, 32, 5), (9, 32, 5), (19, 32, 5), (14, 32, 5), (10, 35, 5), (15, 35, 5), (20, 35, 5)]"
+   ]
+  },
+  {
+   "level": 6,
+   "verdict": "CHANGED",
+   "n_sprites": [
+    95,
+    95
+   ],
+   "diffs": [
+    "geometry: 18 sprites only-old [(10, 35, 5), (15, 35, 5), (20, 35, 5), (10, 41, 5), (15, 41, 5), (20, 41, 5), (20, 47, 5), (15, 47, 5), (10, 47, 5), (32, 32, 4), (37, 32, 4), (42, 32, 4)], 18 only-new [(32, 32, 5), (37, 32, 5), (42, 32, 5), (47, 32, 5), (52, 32, 5), (57, 32, 5), (9, 32, 5), (19, 32, 5), (14, 32, 5), (10, 35, 5), (15, 35, 5), (20, 35, 5)]"
+   ]
+  },
+  {
+   "level": 7,
+   "verdict": "CHANGED",
+   "n_sprites": [
+    100,
+    100
+   ],
+   "diffs": [
+    "geometry: 9 sprites only-old [(32, 32, 4), (37, 32, 4), (42, 32, 4), (47, 32, 4), (52, 32, 4), (57, 32, 4), (9, 32, 4), (19, 32, 4), (14, 32, 4)], 9 only-new [(32, 32, 5), (37, 32, 5), (42, 32, 5), (47, 32, 5), (52, 32, 5), (57, 32, 5), (9, 32, 5), (19, 32, 5), (14, 32, 5)]"
+   ]
+  }
+ ],
+ "string_map_conflicts": {},
+ "string_map": {
+  "cohggajxpz": "pavecd",
+  "iggxhsyqne": "Maidxzhowygv",
+  "baxznkbwix": "Maidxz",
+  "sys_click": "sys_click",
+  "kbopcuwwcp": "sucqgkbuojsa",
+  "rlqfpkqktk": "sucqgk",
+  "kjhqtlszdp": "plljmx_2",
+  "annjcsdtyc": "plljmx",
+  "lxzoctclpu": "bltjrl4",
+  "yssamcbruq": "bltjrl",
+  "majpgpwkwy": "buojsacorqds",
+  "nptbwdzzvs": "takfnbsmurct",
+  "zdzgatsoyb": "takfnb",
+  "pstzpoiwdb": "dixdujbaatdvbizzhq",
+  "qaiqvpifch": "sthpyhbizzhq",
+  "egcefpppze": "sthpyh",
+  "qzgehddpew": "grsysj5",
+  "udwswsnybp": "grsysj",
+  "rnftwykgro": "Maidxzvenlef",
+  "rrvflvsand": "sthpyhbaatdvbizzhq",
+  "tkgkshggjr": "sthpyhbaatdv",
+  "sduonucejh": "reooaotakfnbsmurct",
+  "ilkhmcqzxr": "reooao",
+  "veaxnfieni": "inwolasmurct",
+  "clnkuqefvl": "inwola",
+  "vqonhxueyx": "plljmx_4",
+  "ylbysintoa": "taptxx",
+  "yqtdbukxta": "grsysj4",
+  "znhdjhhoai": "bltjrl4dixduj",
+  "cxekzdveic": "corqds2",
+  "dgrqyxsyaa": "pavecd3",
+  "egshileqmu": "tozzsf1",
+  "qgqvgxjtau": "tozzsf",
+  "etitgfbxdb": "reooaotakfnb",
+  "guctmenmpk": "iczcramoqjhw",
+  "xgapnkybba": "tozzsfsedoig",
+  "xgdricgzjv": "plljmx_3",
+  "mjbdqbhcpj": "Locked",
+  "cssgqumwhx": "corqds5",
+  "trvxlvpbdv": "wauzms",
+  "xaxbhjndqw": "buojsacorqds2",
+  "fppjnkvrii": "wauzms-2",
+  "gntlsxcsje": "iczcrascvkkwuqelhb",
+  "mvihxxmesq": "wauzms-4",
+  "uxiyjqbvkv": "iczcrascvkkwdoylbb",
+  "rgqetlldui": "corqds4",
+  "saglqyemck": "iczcrapumzpq",
+  "uyvgvwtfhs": "taptxx2",
+  "vjvujmfecu": "iczcraroumnb",
+  "aficsfwhyo": "corqds6",
+  "ccjcukzyce": "chrccc",
+  "qfjwfpqdrb": "wauzms-5",
+  "ajoyntzwka": "chrccc-2",
+  "decnufykmv": "wauzms-1",
+  "mgmykqfuye": "laycmuofkkgm",
+  "yikencmwll": "laycmuommm",
+  "hnqyyercke": "T",
+  "ifqezbzckm": "yhrxffrkqu",
+  "qwzbxapgyg": "bltjrl4_denvti",
+  "Block not found": "bltjrl not found",
+  "Grid not found": "grsysj not found",
+  "Tablet not found": "takfnb not found",
+  "Positions": "Positions",
+  "Rotations": "Rotations",
+  "Scales": "scvkkws",
+  "Programs": "Programs",
+  "Reset": "Reset",
+  "tn36": "tn36",
+  "x": "x",
+  "y": "y"
+ },
+ "non_injective": {}
+}

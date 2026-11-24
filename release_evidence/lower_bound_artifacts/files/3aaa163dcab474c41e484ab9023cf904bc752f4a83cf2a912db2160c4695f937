@@ -1,0 +1,682 @@
+{
+  "<word withheld>": "s5i5 counter-quotient exact search (RESET expanded, complete per-state click partition)",
+  "level": 2,
+  "instance": "s5i5-a48e4b1d",
+  "game_id": "s5i5-a48e4b1d",
+  "source_sha256": {
+    "s5i5.py": "4e0c7d1a813cc7f10a28b7c9f168c811450a4330d8717b1badc9bf76143cbfeb",
+    "mmae_minimum.py": "28bf4afb6666aa19a3a00cf79c2557f7943afec559f203e89c8abca69f30c41b"
+  },
+  "engine_source_sha256": {
+    "base_game.py": "5b5f41f3bec4c0c97a727fda7326114991dc0d4a5642d489b40ee4aa87e6b15f",
+    "level.py": "f74db969772b251018b2fcce6ec42f3522adeef4e9c03c036e455d2a35e3215a",
+    "camera.py": "f06e16807b0f97d86cafb5481bb3969213f27768f789d898c6b8b07e957de397"
+  },
+  "script_sha256": "c1e53e0a284345107cfd1fbba0700b72efe38e019743f3fd219f99b0b3f5a18d",
+  "state_key": "raw mm.whitebox_sig_bytes with _action popped, _action_count->int(>0), okmxyzxpez.current_steps->0, Level sort cache normalised; all else retained",
+  "quotient_evidence": [
+    "s5i5.py:1964-1968 gdqaemgdnw: clamped decrement of current_steps",
+    "s5i5.py:1974-1986 render_interface reads current_steps (display bar only, frame not stored in state)",
+    "s5i5.py:2074-2078 gnnfuqqnqu resets current_steps to StepCounter on every on_set_level",
+    "s5i5.py:2245 `elif not self.okmxyzxpez.current_steps: self.lose()` -- the only game-logic read",
+    "s5i5.py:1767,1852 StepCounter 150 for L2 and L5",
+    "base_game.py:160 set_level sets _action_count = 0",
+    "base_game.py:279 _action_count += 1 on non-RESET",
+    "base_game.py:313 `self._action_count == 0` -- the only read (full vs level reset)",
+    "level.py:200-202 get_sprite_at re-sorts when _need_sort or cache missing/length mismatch",
+    "s5i5.py: no add_sprite/remove_sprite/set_layer/.layer (grep-checked at run time)"
+  ],
+  "source_lemma_check": {
+    "s5i5_current_steps_lines": [
+      1958,
+      1962,
+      1966,
+      1967,
+      1968,
+      1972,
+      1978,
+      2245
+    ],
+    "s5i5_okmxyzxpez_lines": [
+      2027,
+      2036,
+      2040,
+      2077,
+      2078,
+      2189,
+      2245
+    ],
+    "s5i5_action_count_lines": [],
+    "base_game_action_count_lines": [
+      37,
+      90,
+      160,
+      279,
+      313,
+      321
+    ],
+    "level_sort_cache_lines": [
+      16,
+      21,
+      45,
+      110,
+      200,
+      201,
+      202,
+      203
+    ],
+    "s5i5_sprite_set_or_layer_mutations": [],
+    "ok": true
+  },
+  "step_counter": 150,
+  "dispatch_evidence": [
+    "s5i5.py:2042 available_actions=[6] (advertised)",
+    "s5i5.py:2181-2187 step(): if self.acgkuydgqx: restore pending undo (id-independent)",
+    "s5i5.py:2188 elif self.action.id == GameAction.ACTION6: click branch (ONLY id branch in step)",
+    "s5i5.py:2189 okmxyzxpez.gdqaemgdnw() step-budget decrement on every ACTION6 (return value discarded)",
+    "s5i5.py:2190-2192 action.data x/y -> camera.display_to_grid",
+    "s5i5.py:2194-2217 get_sprite_at(..., myzmclysbl): centre-pixel colour selects agujdcrunq pieces, then zszsrsbyzi rotation",
+    "s5i5.py:2219-2242 get_sprite_at(..., gdgcpukdrl): half-relative ldmrjbrvwa length index +/- 1 on dfyrdkjdcj[slider] pieces",
+    "s5i5.py:2214-2217,2239-2242 ulzimrggno() collision returns before complete_action; next step() in the same perform_action restores",
+    "s5i5.py:2243-2247 fall-through tail (ids 1-5,7 and misses): vodebmynqs win / lose when budget 0 / complete_action",
+    "s5i5.py:2080-2085 vodebmynqs win predicate (every cpdhnkdobh has a zylvdxoiuq at the same x,y)",
+    "base_game.py:189-232 perform_action -> step() loop until complete; no membership test (F1)",
+    "base_game.py:275-279 _set_action: _action_count += 1 for any non-RESET id",
+    "base_game.py:305-330 handle_reset / full_reset / level_reset (F2)",
+    "camera.py:318-350 display_to_grid (s5i5 jcevyecaju is 64x64 identity)",
+    "level.py:189-211 get_sprite_at(x, y, tag) layer-order tag-filtered lookup"
+  ],
+  "candidate_floor": 26,
+  "candidate_path": [
+    [
+      6,
+      12,
+      57
+    ],
+    [
+      6,
+      12,
+      57
+    ],
+    [
+      6,
+      12,
+      57
+    ],
+    [
+      6,
+      12,
+      57
+    ],
+    [
+      6,
+      12,
+      57
+    ],
+    [
+      6,
+      12,
+      57
+    ],
+    [
+      6,
+      12,
+      57
+    ],
+    [
+      6,
+      27,
+      57
+    ],
+    [
+      6,
+      27,
+      57
+    ],
+    [
+      6,
+      27,
+      57
+    ],
+    [
+      6,
+      12,
+      57
+    ],
+    [
+      6,
+      27,
+      57
+    ],
+    [
+      6,
+      27,
+      57
+    ],
+    [
+      6,
+      27,
+      57
+    ],
+    [
+      6,
+      27,
+      57
+    ],
+    [
+      6,
+      27,
+      57
+    ],
+    [
+      6,
+      42,
+      57
+    ],
+    [
+      6,
+      42,
+      57
+    ],
+    [
+      6,
+      42,
+      57
+    ],
+    [
+      6,
+      42,
+      57
+    ],
+    [
+      6,
+      57,
+      57
+    ],
+    [
+      6,
+      57,
+      57
+    ],
+    [
+      6,
+      57,
+      57
+    ],
+    [
+      6,
+      57,
+      57
+    ],
+    [
+      6,
+      57,
+      57
+    ],
+    [
+      6,
+      57,
+      57
+    ]
+  ],
+  "fresh_replay_win_at": 26,
+  "fresh_replay_Fminus1": null,
+  "search": {
+    "status": "WIN_FOUND",
+    "win_depth": 26,
+    "path": [
+      [
+        6,
+        25,
+        54
+      ],
+      [
+        6,
+        25,
+        54
+      ],
+      [
+        6,
+        25,
+        54
+      ],
+      [
+        6,
+        10,
+        54
+      ],
+      [
+        6,
+        10,
+        54
+      ],
+      [
+        6,
+        10,
+        54
+      ],
+      [
+        6,
+        10,
+        54
+      ],
+      [
+        6,
+        10,
+        54
+      ],
+      [
+        6,
+        10,
+        54
+      ],
+      [
+        6,
+        10,
+        54
+      ],
+      [
+        6,
+        10,
+        54
+      ],
+      [
+        6,
+        25,
+        54
+      ],
+      [
+        6,
+        25,
+        54
+      ],
+      [
+        6,
+        25,
+        54
+      ],
+      [
+        6,
+        25,
+        54
+      ],
+      [
+        6,
+        25,
+        54
+      ],
+      [
+        6,
+        10,
+        54
+      ],
+      [
+        6,
+        40,
+        54
+      ],
+      [
+        6,
+        40,
+        54
+      ],
+      [
+        6,
+        40,
+        54
+      ],
+      [
+        6,
+        55,
+        54
+      ],
+      [
+        6,
+        55,
+        54
+      ],
+      [
+        6,
+        55,
+        54
+      ],
+      [
+        6,
+        55,
+        54
+      ],
+      [
+        6,
+        55,
+        54
+      ],
+      [
+        6,
+        55,
+        54
+      ]
+    ],
+    "layers_complete": 25,
+    "per_layer": [
+      {
+        "depth": 1,
+        "expanded_states": 1,
+        "edges": 15,
+        "new_states": 6,
+        "visited": 7
+      },
+      {
+        "depth": 2,
+        "expanded_states": 6,
+        "edges": 84,
+        "new_states": 15,
+        "visited": 22
+      },
+      {
+        "depth": 3,
+        "expanded_states": 15,
+        "edges": 195,
+        "new_states": 28,
+        "visited": 50
+      },
+      {
+        "depth": 4,
+        "expanded_states": 28,
+        "edges": 372,
+        "new_states": 43,
+        "visited": 93
+      },
+      {
+        "depth": 5,
+        "expanded_states": 43,
+        "edges": 597,
+        "new_states": 64,
+        "visited": 157
+      },
+      {
+        "depth": 6,
+        "expanded_states": 64,
+        "edges": 912,
+        "new_states": 93,
+        "visited": 250
+      },
+      {
+        "depth": 7,
+        "expanded_states": 93,
+        "edges": 1341,
+        "new_states": 130,
+        "visited": 380
+      },
+      {
+        "depth": 8,
+        "expanded_states": 130,
+        "edges": 1890,
+        "new_states": 176,
+        "visited": 556
+      },
+      {
+        "depth": 9,
+        "expanded_states": 176,
+        "edges": 2574,
+        "new_states": 221,
+        "visited": 777
+      },
+      {
+        "depth": 10,
+        "expanded_states": 221,
+        "edges": 3243,
+        "new_states": 258,
+        "visited": 1035
+      },
+      {
+        "depth": 11,
+        "expanded_states": 258,
+        "edges": 3792,
+        "new_states": 284,
+        "visited": 1319
+      },
+      {
+        "depth": 12,
+        "expanded_states": 284,
+        "edges": 4182,
+        "new_states": 298,
+        "visited": 1617
+      },
+      {
+        "depth": 13,
+        "expanded_states": 298,
+        "edges": 4404,
+        "new_states": 308,
+        "visited": 1925
+      },
+      {
+        "depth": 14,
+        "expanded_states": 308,
+        "edges": 4566,
+        "new_states": 312,
+        "visited": 2237
+      },
+      {
+        "depth": 15,
+        "expanded_states": 312,
+        "edges": 4644,
+        "new_states": 312,
+        "visited": 2549
+      },
+      {
+        "depth": 16,
+        "expanded_states": 312,
+        "edges": 4644,
+        "new_states": 310,
+        "visited": 2859
+      },
+      {
+        "depth": 17,
+        "expanded_states": 310,
+        "edges": 4620,
+        "new_states": 299,
+        "visited": 3158
+      },
+      {
+        "depth": 18,
+        "expanded_states": 299,
+        "edges": 4461,
+        "new_states": 292,
+        "visited": 3450
+      },
+      {
+        "depth": 19,
+        "expanded_states": 292,
+        "edges": 4362,
+        "new_states": 275,
+        "visited": 3725
+      },
+      {
+        "depth": 20,
+        "expanded_states": 275,
+        "edges": 4113,
+        "new_states": 263,
+        "visited": 3988
+      },
+      {
+        "depth": 21,
+        "expanded_states": 263,
+        "edges": 3939,
+        "new_states": 239,
+        "visited": 4227
+      },
+      {
+        "depth": 22,
+        "expanded_states": 239,
+        "edges": 3585,
+        "new_states": 221,
+        "visited": 4448
+      },
+      {
+        "depth": 23,
+        "expanded_states": 221,
+        "edges": 3315,
+        "new_states": 205,
+        "visited": 4653
+      },
+      {
+        "depth": 24,
+        "expanded_states": 205,
+        "edges": 3075,
+        "new_states": 193,
+        "visited": 4846
+      },
+      {
+        "depth": 25,
+        "expanded_states": 193,
+        "edges": 2895,
+        "new_states": 190,
+        "visited": 5036
+      }
+    ],
+    "visited": 5201,
+    "states_expanded": 5024,
+    "states_probed": 5024,
+    "nodes": 74487
+  },
+  "partition_cache": {
+    "computed": 2,
+    "reused": 6662
+  },
+  "differential": {
+    "samples": 106,
+    "twin_pad_misses": 3,
+    "rounds": 2,
+    "pairs_checked": 11088,
+    "divergent": 0,
+    "first_divergence": null
+  },
+  "mutation_M1_budget_exhausted_twin": {
+    "pairs_checked": 294,
+    "divergent": 254,
+    "first_divergence": {
+      "stage": "successor",
+      "path": [
+        [
+          6,
+          10,
+          54
+        ],
+        [
+          6,
+          10,
+          54
+        ],
+        [
+          6,
+          40,
+          54
+        ],
+        [
+          6,
+          40,
+          54
+        ]
+      ],
+      "action": [
+        6,
+        25,
+        54
+      ]
+    }
+  },
+  "mutation_M2_overcoarse_key": {
+    "pairs_checked": 15,
+    "divergent": 1,
+    "first_divergence": {
+      "stage": "successor",
+      "path": [],
+      "action": [
+        0,
+        null,
+        null
+      ]
+    },
+    "start_action_count": 0
+  },
+  "projection_crosscheck": {
+    "depth": 6,
+    "full_key_states": 1157,
+    "full_status": "CLOSED_NO_WIN",
+    "q_states": 250,
+    "q_status": "CLOSED_NO_WIN",
+    "projection_of_full_equals_q": true,
+    "full_proj_size": 250,
+    "q_set_size": 250
+  },
+  "controls": {
+    "positive_planted_shorter_route": {
+      "ok": true,
+      "status": "WIN_FOUND",
+      "win_depth": 1
+    },
+    "negative_Fminus1_prefix_loses": {
+      "ok": true,
+      "fresh_replay_Fminus1": null
+    },
+    "mechanical_4096_start": {
+      "ok": true,
+      "n_classes": 13,
+      "splits": []
+    },
+    "dispatch_probe_start": {
+      "0": {
+        "q_unchanged": false,
+        "full_changed": true,
+        "physics_unchanged_mod_ac_bit": false,
+        "level_index": 0
+      },
+      "1": {
+        "q_unchanged": false,
+        "full_changed": true,
+        "physics_unchanged_mod_ac_bit": true,
+        "level_index": 1
+      },
+      "2": {
+        "q_unchanged": false,
+        "full_changed": true,
+        "physics_unchanged_mod_ac_bit": true,
+        "level_index": 1
+      },
+      "3": {
+        "q_unchanged": false,
+        "full_changed": true,
+        "physics_unchanged_mod_ac_bit": true,
+        "level_index": 1
+      },
+      "4": {
+        "q_unchanged": false,
+        "full_changed": true,
+        "physics_unchanged_mod_ac_bit": true,
+        "level_index": 1
+      },
+      "5": {
+        "q_unchanged": false,
+        "full_changed": true,
+        "physics_unchanged_mod_ac_bit": true,
+        "level_index": 1
+      },
+      "6": {
+        "q_unchanged": false,
+        "full_changed": true,
+        "physics_unchanged_mod_ac_bit": true,
+        "level_index": 1
+      },
+      "7": {
+        "q_unchanged": false,
+        "full_changed": true,
+        "physics_unchanged_mod_ac_bit": true,
+        "level_index": 1
+      }
+    }
+  },
+  "result": "PASS",
+  "elapsed_s": 1127.5,
+  "maxrss_kb": "<memory>",
+  "host": "REMOTE"
+}

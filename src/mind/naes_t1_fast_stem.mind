@@ -1,0 +1,459 @@
+// Stem of the grouped-sum kernel: the input tables, the encoding of one
+// record (encode4), the vector stem output (stem_lut_o) and the stem driver
+// (stem4). ws_lut names the workspace cell of the rounding table that the
+// reference workspace already holds.
+// Entry points: stem_tables4, stem_planes4, encode4, stem4.
+
+fn ws_lut() -> i64 { 26 }
+
+fn off_pal() -> i64 {
+    0
+}
+fn off_pact() -> i64 {
+    36864
+}
+fn off_run() -> i64 {
+    41472
+}
+fn off_click() -> i64 {
+    46080
+}
+fn off_params() -> i64 {
+    46656
+}
+fn off_spl() -> i64 {
+    54848
+}
+fn off_masks() -> i64 {
+    73280
+}
+fn off_ff() -> i64 {
+    73408
+}
+fn off_fixed() -> i64 {
+    73440
+}
+fn off_counts() -> i64 {
+    73600
+}
+fn off_ctx() -> i64 {
+    77696
+}
+fn off_total() -> i64 {
+    77824
+}
+
+fn halo_byte() -> i64 {
+    128
+}
+
+fn sext_i8(x: i64) -> i64 {
+    x - ((x >> 7) << 8)
+}
+
+fn splat_i64(p: i64, v: i64) -> i64 {
+    __mind_store_i64(p, v);
+    __mind_store_i64(p + 8, v);
+    __mind_store_i64(p + 16, v);
+    __mind_store_i64(p + 24, v);
+    0
+}
+
+fn splat_i8(p: i64, v: i64) -> i64 {
+    let b: i64 = v & 255;
+    let pat: i64 = b * 72340172838076673;
+    splat_i64(p, pat)
+}
+
+fn put_dup16(tab: i64, v: i64) -> i64 {
+    __mind_store_i8(tab, v);
+    __mind_store_i8(tab + 16, v);
+    0
+}
+
+fn stem_tables4(model: i64) -> i64 {
+    let lay: i64 = model_layer(model, 0);
+    let t: i64 = ld(lay, 4);
+    let tabs: i64 = alloc_zero_bytes(off_total());
+    if tabs == 0 {
+        return 0;
+    }
+    let mut o: i64 = 0;
+    while o < 64 {
+        let mut k: i64 = 0;
+        while k < 9 {
+            let palb: i64 = tabs + off_pal() + (o * 9 + k) * 64;
+            let mut c: i64 = 0;
+            while c < 16 {
+                put_dup16(palb + c, ld(t, (o * 49 + c) * 9 + k));
+                put_dup16(palb + 32 + c, ld(t, (o * 49 + 16 + c) * 9 + k));
+                c = c + 1;
+            }
+            let mut a: i64 = 0;
+            while a < 8 {
+                __mind_store_i8(tabs + off_pact() + (o * 9 + k) * 8 + a, ld(t, (o * 49 + 32 + a) * 9 + k));
+                __mind_store_i8(tabs + off_run() + (o * 9 + k) * 8 + a, ld(t, (o * 49 + 41 + a) * 9 + k));
+                a = a + 1;
+            }
+            __mind_store_i8(tabs + off_click() + o * 9 + k, ld(t, (o * 49 + 40) * 9 + k));
+            k = k + 1;
+        }
+        let m: i64 = ld(__mind_load_i64(lay + 40), o);
+        let ev: i64 = ld(__mind_load_i64(lay + 48), o);
+        let bq: i64 = ld(__mind_load_i64(lay + 56), o);
+        let sh: i64 = 0 - ev - 24;
+        let mut rd: i64 = 0;
+        if sh >= 1 {
+            rd = 1 << (sh - 1);
+        }
+        let pb: i64 = tabs + off_params() + o * 128;
+        splat_i64(pb, m);
+        splat_i64(pb + 32, rd);
+        splat_i64(pb + 64, sh);
+        splat_i64(pb + 96, bq);
+        o = o + 1;
+    }
+    let mut g: i64 = 0;
+    while g < 4 {
+        let msk: i64 = tabs + off_masks() + g * 32;
+        let mut b: i64 = 0;
+        while b < 32 {
+            __mind_store_i8(msk + b, 128);
+            b = b + 1;
+        }
+        __mind_store_i8(msk, g * 4);
+        __mind_store_i8(msk + 8, g * 4 + 1);
+        __mind_store_i8(msk + 16, g * 4 + 2);
+        __mind_store_i8(msk + 24, g * 4 + 3);
+        g = g + 1;
+    }
+    let mut i: i64 = 0;
+    while i < 32 {
+        __mind_store_i8(tabs + off_ff() + i, 255);
+        i = i + 1;
+    }
+    let fx: i64 = tabs + off_fixed();
+    splat_i64(fx, 127);
+    splat_i64(fx + 32, 0 - 256);
+    splat_i64(fx + 64, 45);
+    splat_i64(fx + 96, 0 - 45);
+    splat_i64(fx + 128, act_limit() - 1);
+    tabs
+}
+
+fn stem_planes4() -> i64 {
+    let n: i64 = 66 * 66;
+    let p: i64 = __mind_alloc(n * 5 + 64);
+    if p == 0 {
+        return 0;
+    }
+    let mut i: i64 = 0;
+    while i < n * 5 {
+        __mind_store_i8(p + i, halo_byte());
+        i = i + 1;
+    }
+    p
+}
+
+fn encode4(planes: i64, rec: i64) -> i64 {
+    let n: i64 = 66 * 66;
+    let pa: i64 = __mind_load_i8(rec + 8192);
+    let pc: i64 = rec_prev_cell(rec);
+    let run: i64 = rec_prev_run(rec);
+    let mut y: i64 = 0;
+    while y < 64 {
+        let mut x: i64 = 0;
+        while x < 64 {
+            let i: i64 = planes + (y + 1) * 66 + x + 1;
+            let mut mark: i64 = 0;
+            if y * 64 + x == pc {
+                mark = 1;
+            }
+            __mind_store_i8(i, __mind_load_i8(rec + y * 64 + x));
+            __mind_store_i8(i + n, __mind_load_i8(rec + 4096 + y * 64 + x));
+            __mind_store_i8(i + 2 * n, pa);
+            __mind_store_i8(i + 3 * n, mark);
+            __mind_store_i8(i + 4 * n, run);
+            x = x + 1;
+        }
+        y = y + 1;
+    }
+    let mut py: i64 = 0 - 1;
+    let mut px: i64 = 0;
+    let mut has: i64 = 0;
+    if pc >= 0 && pc < 4096 {
+        py = pc / 64;
+        px = pc - py * 64;
+        has = 1;
+    }
+    __mind_store_i64(planes + n * 5, pa);
+    __mind_store_i64(planes + n * 5 + 8, run);
+    __mind_store_i64(planes + n * 5 + 16, py);
+    __mind_store_i64(planes + n * 5 + 24, px);
+    __mind_store_i64(planes + n * 5 + 32, has);
+    0
+}
+
+// One stem output: the tap counts first, then the click correction, then the
+// rounding table. It calls no other function.
+fn stem_lut_o(ctx: i64) -> i64 {
+    let counts0: i64 = __mind_load_i64(ctx);
+    let dst0: i64 = __mind_load_i64(ctx + 8);
+    let planes: i64 = __mind_load_i64(ctx + 16);
+    let pal: i64 = __mind_load_i64(ctx + 24);
+    let spl: i64 = __mind_load_i64(ctx + 32);
+    let click: i64 = __mind_load_i64(ctx + 40);
+    let py: i64 = __mind_load_i64(ctx + 48);
+    let px: i64 = __mind_load_i64(ctx + 56);
+    let params: i64 = __mind_load_i64(ctx + 64);
+    let masks: i64 = __mind_load_i64(ctx + 72);
+    let ff: i64 = __mind_load_i64(ctx + 80);
+    let fx: i64 = __mind_load_i64(ctx + 88);
+    let dup: i64 = __mind_load_i64(ctx + 96);
+    let slot: i64 = __mind_load_i64(ctx + 104);
+    let has: i64 = __mind_load_i64(ctx + 112);
+    let zero: i64 = __mind_load_i64(ctx + 120);
+    __mind_ymm_vmovdqu_ld(8, params, 0);
+    __mind_ymm_vmovdqu_ld(7, params, 32);
+    __mind_ymm_vmovdqu_ld(6, params, 64);
+    __mind_ymm_vmovdqu_ld(5, params, 96);
+    __mind_ymm_vmovdqu_ld(12, fx, 0);
+    __mind_ymm_vmovdqu_ld(11, fx, 32);
+    __mind_ymm_vmovdqu_ld(10, fx, 64);
+    __mind_ymm_vmovdqu_ld(9, fx, 96);
+    __mind_ymm_vmovdqu_ld(13, fx, 128);
+    let mut r0: i64 = planes;
+    let mut rowp: i64 = counts0;
+    let mut y: i64 = 0;
+    while y < 64 {
+        __mind_ymm_vpsubq_i64x4_r(0, 0, 0);
+        __mind_ymm_vpsubq_i64x4_r(1, 1, 1);
+        let mut ky: i64 = 0;
+        let mut brow: i64 = r0;
+        let mut bpal: i64 = pal;
+        let mut bsp: i64 = spl;
+        while ky < 3 {
+            let mut kx: i64 = 0;
+            let mut col: i64 = brow;
+            let mut palc: i64 = bpal;
+            let mut sp: i64 = bsp;
+            while kx < 3 {
+                let d1: i64 = col + 32;
+                let p0: i64 = col + 4356;
+                let p1: i64 = d1 + 4356;
+                __mind_ymm_vmovdqu_ld(2, palc, 0);
+                __mind_ymm_vmovdqu_ld(3, palc, 32);
+                __mind_ymm_vpshufb_i8x32_m(4, 2, col, 0);
+                __mind_ymm_vpaddb_i8x32_r(0, 0, 4);
+                __mind_ymm_vpshufb_i8x32_m(4, 3, p0, 0);
+                __mind_ymm_vpaddb_i8x32_r(0, 0, 4);
+                __mind_ymm_vpshufb_i8x32_m(4, 2, d1, 0);
+                __mind_ymm_vpaddb_i8x32_r(1, 1, 4);
+                __mind_ymm_vpshufb_i8x32_m(4, 3, p1, 0);
+                __mind_ymm_vpaddb_i8x32_r(1, 1, 4);
+                __mind_ymm_vmovdqu_ld(2, ff, 0);
+                __mind_ymm_vmovdqu_ld(3, sp, 0);
+                __mind_ymm_vpshufb_i8x32_m(4, 2, col, 0);
+                __mind_ymm_vpand_i64x4_r(4, 4, 3);
+                __mind_ymm_vpaddb_i8x32_r(0, 0, 4);
+                __mind_ymm_vpshufb_i8x32_m(4, 2, d1, 0);
+                __mind_ymm_vpand_i64x4_r(4, 4, 3);
+                __mind_ymm_vpaddb_i8x32_r(1, 1, 4);
+                col = col + 1;
+                palc = palc + 64;
+                sp = sp + 32;
+                kx = kx + 1;
+            }
+            brow = brow + 66;
+            bpal = bpal + 192;
+            bsp = bsp + 96;
+            ky = ky + 1;
+        }
+        __mind_ymm_vmovdqu_st(0, rowp, 0);
+        __mind_ymm_vmovdqu_st(1, rowp, 32);
+        rowp = rowp + 64;
+        r0 = r0 + 66;
+        y = y + 1;
+    }
+    if has == 1 {
+        let mut ky2: i64 = 0;
+        while ky2 < 3 {
+            let yy: i64 = py - ky2 + 1;
+            if yy >= 0 && yy < 64 {
+                let mut kx2: i64 = 0;
+                while kx2 < 3 {
+                    let xx: i64 = px - kx2 + 1;
+                    if xx >= 0 && xx < 64 {
+                        let kk: i64 = ky2 * 3 + kx2;
+                        let wb: i64 = __mind_load_i8(click + kk);
+                        let ws: i64 = wb - ((wb >> 7) << 8);
+                        let ab: i64 = __mind_load_i8(counts0 + yy * 64 + xx);
+                        let asu: i64 = ab - ((ab >> 7) << 8);
+                        __mind_store_i8(counts0 + yy * 64 + xx, asu + ws);
+                    }
+                    kx2 = kx2 + 1;
+                }
+            }
+            ky2 = ky2 + 1;
+        }
+    }
+    __mind_ymm_vmovdqu_ld(4, zero, 0);
+    rowp = counts0;
+    let mut dst: i64 = dst0;
+    y = 0;
+    while y < 64 {
+        let mut tile: i64 = 0;
+        let mut src: i64 = rowp;
+        let mut outp: i64 = dst;
+        while tile < 2 {
+            let c0: i64 = __mind_load_i64(src);
+            let c1: i64 = __mind_load_i64(src + 8);
+            __mind_store_i64(dup, c0);
+            __mind_store_i64(dup + 8, c1);
+            __mind_store_i64(dup + 16, c0);
+            __mind_store_i64(dup + 24, c1);
+            let c2: i64 = __mind_load_i64(src + 16);
+            let c3: i64 = __mind_load_i64(src + 24);
+            __mind_store_i64(dup + 32, c2);
+            __mind_store_i64(dup + 40, c3);
+            __mind_store_i64(dup + 48, c2);
+            __mind_store_i64(dup + 56, c3);
+            let mut half: i64 = 0;
+            let mut hbase: i64 = dup;
+            let mut hp: i64 = outp;
+            while half < 2 {
+                __mind_ymm_vmovdqu_ld(2, hbase, 0);
+                let mut g: i64 = 0;
+                let mut mp: i64 = masks;
+                let mut dp: i64 = hp;
+                while g < 4 {
+                    __mind_ymm_vpshufb_i8x32_m(0, 2, mp, 0);
+                    __mind_ymm_vpcmpgtq_i64x4_r(1, 0, 12);
+                    __mind_ymm_vpand_i64x4_r(1, 1, 11);
+                    __mind_ymm_vpor_i64x4_r(0, 0, 1);
+                    __mind_ymm_vpcmpgtq_i64x4_r(1, 0, 10);
+                    __mind_ymm_vpor_i64x4_r(14, 14, 1);
+                    __mind_ymm_vpcmpgtq_i64x4_r(1, 9, 0);
+                    __mind_ymm_vpor_i64x4_r(14, 14, 1);
+                    __mind_ymm_vpcmpgtq_i64x4_r(3, 4, 0);
+                    __mind_ymm_vpand_i64x4_r(1, 0, 3);
+                    __mind_ymm_vpsubq_i64x4_r(0, 0, 1);
+                    __mind_ymm_vpsubq_i64x4_r(0, 0, 1);
+                    __mind_ymm_vpmuludq_i64x4_r(0, 0, 8);
+                    __mind_ymm_vpaddq_i64x4_r(0, 0, 7);
+                    __mind_ymm_vpsrlq_i64x4_r(0, 0, 6);
+                    __mind_ymm_vpand_i64x4_r(1, 0, 3);
+                    __mind_ymm_vpsubq_i64x4_r(0, 0, 1);
+                    __mind_ymm_vpsubq_i64x4_r(0, 0, 1);
+                    __mind_ymm_vpaddq_i64x4_r(0, 0, 5);
+                    __mind_ymm_vpcmpgtq_i64x4_r(1, 4, 0);
+                    __mind_ymm_vpand_i64x4_r(1, 1, 0);
+                    __mind_ymm_vpsubq_i64x4_r(0, 0, 1);
+                    __mind_ymm_vpcmpgtq_i64x4_r(1, 0, 13);
+                    __mind_ymm_vpor_i64x4_r(14, 14, 1);
+                    __mind_ymm_vmovdqu_st(0, dp, 0);
+                    mp = mp + 32;
+                    dp = dp + 32;
+                    g = g + 1;
+                }
+                hbase = hbase + 32;
+                hp = hp + 128;
+                half = half + 1;
+            }
+            src = src + 32;
+            outp = outp + 256;
+            tile = tile + 1;
+        }
+        rowp = rowp + 64;
+        dst = dst + 768;
+        y = y + 1;
+    }
+    __mind_ymm_vmovdqu_st(14, slot, 0);
+    if (__mind_load_i64(slot) | __mind_load_i64(slot + 8) | __mind_load_i64(slot + 16) | __mind_load_i64(slot + 24)) != 0 {
+        return 0 - 1;
+    }
+    0
+}
+
+fn stem_params_ok(tabs: i64) -> i64 {
+    let mut o: i64 = 0;
+    while o < 64 {
+        let pb: i64 = tabs + off_params() + o * 128;
+        let m: i64 = __mind_load_i64(pb);
+        let sh: i64 = __mind_load_i64(pb + 64);
+        if m < 0 || m > 4294967295 {
+            return 0;
+        }
+        if sh < 1 {
+            return 0;
+        }
+        if sh > 31 {
+            return 0;
+        }
+        o = o + 1;
+    }
+    1
+}
+
+fn stem_fill_splats(tabs: i64, pa: i64, run: i64) -> i64 {
+    let mut o: i64 = 0;
+    while o < 64 {
+        let mut k: i64 = 0;
+        while k < 9 {
+            let pb: i64 = __mind_load_i8(tabs + off_pact() + (o * 9 + k) * 8 + pa);
+            let rb: i64 = __mind_load_i8(tabs + off_run() + (o * 9 + k) * 8 + run);
+            let ps: i64 = sext_i8(pb);
+            let rs: i64 = sext_i8(rb);
+            splat_i8(tabs + off_spl() + (o * 9 + k) * 32, ps + rs);
+            k = k + 1;
+        }
+        o = o + 1;
+    }
+    0
+}
+
+fn stem4(ws: i64, tabs: i64, planes: i64, scratch: i64, zero: i64) -> i64 {
+    if scratch == 0 || zero == 0 || tabs == 0 {
+        return 0 - 1;
+    }
+    if stem_params_ok(tabs) == 0 {
+        return 0 - 1;
+    }
+    let n: i64 = 66 * 66;
+    let pa: i64 = __mind_load_i64(planes + n * 5);
+    let run: i64 = __mind_load_i64(planes + n * 5 + 8);
+    if pa < 0 || pa > 7 {
+        return 0 - 1;
+    }
+    if run < 0 || run > 7 {
+        return 0 - 1;
+    }
+    stem_fill_splats(tabs, pa, run);
+    let h: i64 = ld(ws, ws_ha());
+    let ctx: i64 = tabs + off_ctx();
+    __mind_store_i64(ctx, tabs + off_counts());
+    __mind_store_i64(ctx + 40, 0);
+    __mind_store_i64(ctx + 48, __mind_load_i64(planes + n * 5 + 16));
+    __mind_store_i64(ctx + 56, __mind_load_i64(planes + n * 5 + 24));
+    __mind_store_i64(ctx + 72, tabs + off_masks());
+    __mind_store_i64(ctx + 80, tabs + off_ff());
+    __mind_store_i64(ctx + 88, tabs + off_fixed());
+    __mind_store_i64(ctx + 96, scratch);
+    __mind_store_i64(ctx + 104, scratch + 64);
+    __mind_store_i64(ctx + 112, __mind_load_i64(planes + n * 5 + 32));
+    __mind_store_i64(ctx + 120, zero);
+    let mut o: i64 = 0;
+    while o < 64 {
+        __mind_store_i64(ctx + 8, h + (o * plane() + origin()) * 8);
+        __mind_store_i64(ctx + 16, planes);
+        __mind_store_i64(ctx + 24, tabs + off_pal() + o * 9 * 64);
+        __mind_store_i64(ctx + 32, tabs + off_spl() + o * 9 * 32);
+        __mind_store_i64(ctx + 40, tabs + off_click() + o * 9);
+        __mind_store_i64(ctx + 64, tabs + off_params() + o * 128);
+        if stem_lut_o(ctx) != 0 {
+            return 0 - 1;
+        }
+        o = o + 1;
+    }
+    0
+}

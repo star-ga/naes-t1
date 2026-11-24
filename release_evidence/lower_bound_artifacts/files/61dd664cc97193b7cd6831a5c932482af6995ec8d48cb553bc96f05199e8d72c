@@ -1,0 +1,739 @@
+{
+ "game": "s5i5",
+ "old": "<path>",
+ "new": "<path>",
+ "ignore_tags": [],
+ "opts": {
+  "ignore_names": false,
+  "invisible_layer_free": false
+ },
+ "rollouts": 200,
+ "len": 30,
+ "seed": 20260924,
+ "levels": {
+  "1": {
+   "floor": 13,
+   "chain_old": {
+    "won_at": 13,
+    "ok": true
+   },
+   "chain_new": {
+    "won_at": 13,
+    "ok": true
+   },
+   "direct_old": {
+    "won_at": 13,
+    "ok": true
+   },
+   "direct_new": {
+    "won_at": 13,
+    "ok": true
+   },
+   "static_offset": {
+    "sprites_only_old": [],
+    "sprites_only_new": [],
+    "n_only_old": 0,
+    "n_only_new": 0,
+    "scalars": []
+   },
+   "diff": {
+    "rollouts": 200,
+    "steps_compared": 5717,
+    "rollouts_diverged": 0,
+    "mismatch_components": {},
+    "frame_mismatch_steps": 5696,
+    "examples": [
+     {
+      "rollout": 0,
+      "kind": "frame_only",
+      "step": 1,
+      "seq": [
+       [
+        6,
+        18,
+        7
+       ]
+      ]
+     },
+     {
+      "rollout": 0,
+      "kind": "frame_only",
+      "step": 2,
+      "seq": [
+       [
+        6,
+        18,
+        7
+       ],
+       [
+        6,
+        46,
+        21
+       ]
+      ]
+     },
+     {
+      "rollout": 0,
+      "kind": "frame_only",
+      "step": 3,
+      "seq": [
+       [
+        6,
+        18,
+        7
+       ],
+       [
+        6,
+        46,
+        21
+       ],
+       [
+        6,
+        24,
+        44
+       ]
+      ]
+     }
+    ],
+    "min_divergence_step": null,
+    "secs": 7.1
+   }
+  },
+  "2": {
+   "floor": 26,
+   "chain_old": {
+    "won_at": 26,
+    "ok": true
+   },
+   "chain_new": {
+    "won_at": 26,
+    "ok": true
+   },
+   "direct_old": {
+    "won_at": 26,
+    "ok": true
+   },
+   "extra_search_witness_path_old": {
+    "won_at": 26,
+    "ok": true,
+    "len": 26
+   },
+   "direct_new": {
+    "won_at": 26,
+    "ok": true
+   },
+   "extra_search_witness_path_new": {
+    "won_at": 26,
+    "ok": true,
+    "len": 26
+   },
+   "static_offset": {
+    "sprites_only_old": [],
+    "sprites_only_new": [],
+    "n_only_old": 0,
+    "n_only_new": 0,
+    "scalars": []
+   },
+   "diff": {
+    "rollouts": 200,
+    "steps_compared": 5917,
+    "rollouts_diverged": 0,
+    "mismatch_components": {},
+    "frame_mismatch_steps": 5902,
+    "examples": [
+     {
+      "rollout": 0,
+      "kind": "frame_only",
+      "step": 1,
+      "seq": [
+       [
+        6,
+        38,
+        57
+       ]
+      ]
+     },
+     {
+      "rollout": 0,
+      "kind": "frame_only",
+      "step": 2,
+      "seq": [
+       [
+        6,
+        38,
+        57
+       ],
+       [
+        6,
+        57,
+        57
+       ]
+      ]
+     },
+     {
+      "rollout": 0,
+      "kind": "frame_only",
+      "step": 3,
+      "seq": [
+       [
+        6,
+        38,
+        57
+       ],
+       [
+        6,
+        57,
+        57
+       ],
+       [
+        6,
+        43,
+        58
+       ]
+      ]
+     }
+    ],
+    "min_divergence_step": null,
+    "secs": 12.4
+   }
+  },
+  "3": {
+   "floor": 37,
+   "chain_old": {
+    "won_at": 37,
+    "ok": true
+   },
+   "chain_new": {
+    "won_at": 37,
+    "ok": true
+   },
+   "direct_old": {
+    "won_at": 37,
+    "ok": true
+   },
+   "direct_new": {
+    "won_at": 37,
+    "ok": true
+   },
+   "static_offset": {
+    "sprites_only_old": [],
+    "sprites_only_new": [],
+    "n_only_old": 0,
+    "n_only_new": 0,
+    "scalars": []
+   },
+   "diff": {
+    "rollouts": 200,
+    "steps_compared": 5865,
+    "rollouts_diverged": 0,
+    "mismatch_components": {},
+    "frame_mismatch_steps": 5857,
+    "examples": [
+     {
+      "rollout": 0,
+      "kind": "frame_only",
+      "step": 1,
+      "seq": [
+       [
+        6,
+        45,
+        44
+       ]
+      ]
+     },
+     {
+      "rollout": 0,
+      "kind": "frame_only",
+      "step": 2,
+      "seq": [
+       [
+        6,
+        45,
+        44
+       ],
+       [
+        6,
+        34,
+        45
+       ]
+      ]
+     },
+     {
+      "rollout": 0,
+      "kind": "frame_only",
+      "step": 3,
+      "seq": [
+       [
+        6,
+        45,
+        44
+       ],
+       [
+        6,
+        34,
+        45
+       ],
+       [
+        6,
+        45,
+        45
+       ]
+      ]
+     }
+    ],
+    "min_divergence_step": null,
+    "secs": 17.4
+   }
+  },
+  "4": {
+   "floor": 30,
+   "chain_old": {
+    "won_at": 30,
+    "ok": true
+   },
+   "chain_new": {
+    "won_at": 30,
+    "ok": true
+   },
+   "direct_old": {
+    "won_at": 30,
+    "ok": true
+   },
+   "direct_new": {
+    "won_at": 30,
+    "ok": true
+   },
+   "static_offset": {
+    "sprites_only_old": [],
+    "sprites_only_new": [],
+    "n_only_old": 0,
+    "n_only_new": 0,
+    "scalars": []
+   },
+   "diff": {
+    "rollouts": 200,
+    "steps_compared": 5940,
+    "rollouts_diverged": 0,
+    "mismatch_components": {},
+    "frame_mismatch_steps": 5937,
+    "examples": [
+     {
+      "rollout": 0,
+      "kind": "frame_only",
+      "step": 1,
+      "seq": [
+       [
+        6,
+        56,
+        54
+       ]
+      ]
+     },
+     {
+      "rollout": 0,
+      "kind": "frame_only",
+      "step": 2,
+      "seq": [
+       [
+        6,
+        56,
+        54
+       ],
+       [
+        6,
+        55,
+        55
+       ]
+      ]
+     },
+     {
+      "rollout": 0,
+      "kind": "frame_only",
+      "step": 3,
+      "seq": [
+       [
+        6,
+        56,
+        54
+       ],
+       [
+        6,
+        55,
+        55
+       ],
+       [
+        6,
+        39,
+        15
+       ]
+      ]
+     }
+    ],
+    "min_divergence_step": null,
+    "secs": 16.4
+   }
+  },
+  "5": {
+   "floor": 28,
+   "chain_old": {
+    "won_at": 28,
+    "ok": true
+   },
+   "chain_new": {
+    "won_at": 28,
+    "ok": true
+   },
+   "direct_old": {
+    "won_at": 28,
+    "ok": true
+   },
+   "extra_search_witness_path_old": {
+    "won_at": 28,
+    "ok": true,
+    "len": 28
+   },
+   "direct_new": {
+    "won_at": 28,
+    "ok": true
+   },
+   "extra_search_witness_path_new": {
+    "won_at": 28,
+    "ok": true,
+    "len": 28
+   },
+   "static_offset": {
+    "sprites_only_old": [],
+    "sprites_only_new": [],
+    "n_only_old": 0,
+    "n_only_new": 0,
+    "scalars": []
+   },
+   "diff": {
+    "rollouts": 200,
+    "steps_compared": 5974,
+    "rollouts_diverged": 0,
+    "mismatch_components": {},
+    "frame_mismatch_steps": 5973,
+    "examples": [
+     {
+      "rollout": 0,
+      "kind": "frame_only",
+      "step": 1,
+      "seq": [
+       [
+        6,
+        36,
+        43
+       ]
+      ]
+     },
+     {
+      "rollout": 0,
+      "kind": "frame_only",
+      "step": 2,
+      "seq": [
+       [
+        6,
+        36,
+        43
+       ],
+       [
+        6,
+        50,
+        54
+       ]
+      ]
+     },
+     {
+      "rollout": 0,
+      "kind": "frame_only",
+      "step": 3,
+      "seq": [
+       [
+        6,
+        36,
+        43
+       ],
+       [
+        6,
+        50,
+        54
+       ],
+       [
+        6,
+        40,
+        56
+       ]
+      ]
+     }
+    ],
+    "min_divergence_step": null,
+    "secs": 18.2
+   }
+  },
+  "6": {
+   "floor": 25,
+   "chain_old": {
+    "won_at": 25,
+    "ok": true
+   },
+   "chain_new": {
+    "won_at": 25,
+    "ok": true
+   },
+   "direct_old": {
+    "won_at": 25,
+    "ok": true
+   },
+   "direct_new": {
+    "won_at": 25,
+    "ok": true
+   },
+   "static_offset": {
+    "sprites_only_old": [],
+    "sprites_only_new": [],
+    "n_only_old": 0,
+    "n_only_new": 0,
+    "scalars": []
+   },
+   "diff": {
+    "rollouts": 200,
+    "steps_compared": 5930,
+    "rollouts_diverged": 0,
+    "mismatch_components": {},
+    "frame_mismatch_steps": 3231,
+    "examples": [
+     {
+      "rollout": 0,
+      "kind": "frame_only",
+      "step": 1,
+      "seq": [
+       [
+        6,
+        13,
+        55
+       ]
+      ]
+     },
+     {
+      "rollout": 0,
+      "kind": "frame_only",
+      "step": 2,
+      "seq": [
+       [
+        6,
+        13,
+        55
+       ],
+       [
+        6,
+        33,
+        54
+       ]
+      ]
+     },
+     {
+      "rollout": 0,
+      "kind": "frame_only",
+      "step": 3,
+      "seq": [
+       [
+        6,
+        13,
+        55
+       ],
+       [
+        6,
+        33,
+        54
+       ],
+       [
+        6,
+        55,
+        56
+       ]
+      ]
+     }
+    ],
+    "min_divergence_step": null,
+    "secs": 11.6
+   }
+  },
+  "7": {
+   "floor": 45,
+   "chain_old": {
+    "won_at": 45,
+    "ok": true
+   },
+   "chain_new": {
+    "won_at": 45,
+    "ok": true
+   },
+   "direct_old": {
+    "won_at": 45,
+    "ok": true
+   },
+   "direct_new": {
+    "won_at": 45,
+    "ok": true
+   },
+   "static_offset": {
+    "sprites_only_old": [],
+    "sprites_only_new": [],
+    "n_only_old": 0,
+    "n_only_new": 0,
+    "scalars": []
+   },
+   "diff": {
+    "rollouts": 200,
+    "steps_compared": 5983,
+    "rollouts_diverged": 0,
+    "mismatch_components": {},
+    "frame_mismatch_steps": 5982,
+    "examples": [
+     {
+      "rollout": 0,
+      "kind": "frame_only",
+      "step": 1,
+      "seq": [
+       [
+        6,
+        58,
+        55
+       ]
+      ]
+     },
+     {
+      "rollout": 0,
+      "kind": "frame_only",
+      "step": 2,
+      "seq": [
+       [
+        6,
+        58,
+        55
+       ],
+       [
+        6,
+        41,
+        11
+       ]
+      ]
+     },
+     {
+      "rollout": 0,
+      "kind": "frame_only",
+      "step": 3,
+      "seq": [
+       [
+        6,
+        58,
+        55
+       ],
+       [
+        6,
+        41,
+        11
+       ],
+       [
+        6,
+        7,
+        57
+       ]
+      ]
+     }
+    ],
+    "min_divergence_step": null,
+    "secs": 17.1
+   }
+  },
+  "8": {
+   "floor": 36,
+   "chain_old": {
+    "won_at": 36,
+    "ok": true
+   },
+   "chain_new": {
+    "won_at": 36,
+    "ok": true
+   },
+   "direct_old": {
+    "won_at": 36,
+    "ok": true
+   },
+   "direct_new": {
+    "won_at": 36,
+    "ok": true
+   },
+   "static_offset": {
+    "sprites_only_old": [],
+    "sprites_only_new": [],
+    "n_only_old": 0,
+    "n_only_new": 0,
+    "scalars": []
+   },
+   "diff": {
+    "rollouts": 200,
+    "steps_compared": 5962,
+    "rollouts_diverged": 0,
+    "mismatch_components": {},
+    "frame_mismatch_steps": 5962,
+    "examples": [
+     {
+      "rollout": 0,
+      "kind": "frame_only",
+      "step": 1,
+      "seq": [
+       [
+        6,
+        51,
+        37
+       ]
+      ]
+     },
+     {
+      "rollout": 0,
+      "kind": "frame_only",
+      "step": 2,
+      "seq": [
+       [
+        6,
+        51,
+        37
+       ],
+       [
+        6,
+        37,
+        3
+       ]
+      ]
+     },
+     {
+      "rollout": 0,
+      "kind": "frame_only",
+      "step": 3,
+      "seq": [
+       [
+        6,
+        51,
+        37
+       ],
+       [
+        6,
+        37,
+        3
+       ],
+       [
+        6,
+        43,
+        10
+       ]
+      ]
+     }
+    ],
+    "min_divergence_step": null,
+    "secs": 19.4
+   }
+  }
+ }
+}

@@ -1,0 +1,75 @@
+{
+ "receipt": "TensorRT exact counts on the final model, NVIDIA RTX PRO 6000 Blackwell Server Edition",
+ "date": "2026-11-20",
+ "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+ "driver": "595.112.07",
+ "compute_capability": "12.0",
+ "tensorrt_version": "11.4.0.106",
+ "precision": "fp16-strongly-typed",
+ "host": "cpp",
+ "fixture_sha256": "a2dc9485252ddd922d742f7e36191fa92a20bbdb7680a2ca1c378874ecd7b925",
+ "fixture_decisions": 5499,
+ "mind_control": {
+  "batch": 25,
+  "rc": 0,
+  "compared": 5499,
+  "match_line": "MATCH 5499/5499",
+  "stream_sha256": "4d2d98f711a1209eace8f3841952e39d4d75870d48079c3175b361bba9746396",
+  "kernel_sha256": "e9ff340fb4521ace2c2ffe863d37f9e21208e8dcd71688a70d6f7691256475de",
+  "gate": "GATE_PASS"
+ },
+ "rows": [
+  {
+   "model": "final",
+   "batch": 25,
+   "cuda_graph": 1,
+   "exact": 5497,
+   "of": 5499,
+   "miss": [
+    4031,
+    5020
+   ],
+   "stream_sha256": "261641579a952761ab440f866c981f8535389eeb8937ec998637a6c7240ac133"
+  },
+  {
+   "model": "final",
+   "batch": 1,
+   "cuda_graph": 1,
+   "exact": 5496,
+   "of": 5499,
+   "miss": [
+    3625,
+    4031,
+    5020
+   ],
+   "stream_sha256": "b04e9f049087664c662da5694258ca6c0f9b8d02396d7c76368753f76abe61de"
+  },
+  {
+   "model": "final",
+   "batch": 25,
+   "cuda_graph": 0,
+   "exact": 5497,
+   "of": 5499,
+   "miss": [
+    4031,
+    5020
+   ],
+   "stream_sha256": "261641579a952761ab440f866c981f8535389eeb8937ec998637a6c7240ac133"
+  },
+  {
+   "model": "final",
+   "batch": 1,
+   "cuda_graph": 0,
+   "exact": 5496,
+   "of": 5499,
+   "miss": [
+    3625,
+    4031,
+    5020
+   ],
+   "stream_sha256": "b04e9f049087664c662da5694258ca6c0f9b8d02396d7c76368753f76abe61de"
+  }
+ ],
+ "rows_note": "cuda_graph 1 is the graph run and cuda_graph 0 is the eager twin of the same plan; each eager twin gives the same count and the same stream digest as its graph run",
+ "times_note": "this run measured counts only; the times of the rows of this GPU stay those of the 2026-11-16 window"
+}

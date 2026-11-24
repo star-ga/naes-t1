@@ -1,0 +1,4 @@
+ROOT h=11 (rule -1) bound B=10 flags=3 mode=exh root-prune-disabled
+DEPTH 0 expanded=1 clicks=4096 noop=2845 fail=245 lossy=0 distinct_children=992 hcalls=198 pruned_R_MASS=0 pruned_R_H=198 pruned_R_TT=0 win_clicks=0
+NO_WIN within B=10 (shard 2/5) exhausted=1
+rc=0

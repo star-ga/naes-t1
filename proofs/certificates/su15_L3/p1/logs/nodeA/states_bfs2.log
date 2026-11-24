@@ -1,0 +1,3 @@
+DEPTH1 distinct_states=993
+DEPTH2 distinct_states=454391 (all-time; may include depth1 states)
+CHK_STATES set=bfs2 states=455385 clicks=1865256960 |S|0=1292668347 |S|1=383743453 |S|2same=102067485 |S|2diff=77016255 |S|>=3=9761420 win_clicks=0 lossy_clicks=58216 class_violations=0 mass_violations=0

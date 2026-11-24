@@ -1,0 +1,10 @@
+INFO:arc_agi.scorecard:Initialized ScorecardManager with idle_for=0:15:00 and max_open_for=3 days, 0:00:00
+2026-11-19 03:39:48 | INFO | Created new scorecard: 7a551e9f-7d07-4d5a-830c-c13b49e2c690
+2026-11-19 03:39:48 | INFO | Successfully loaded game class Su15 from <path>/su15.py
+progress 25 102400 0
+progress 50 204800 0
+progress 75 307200 0
+progress 100 409600 0
+progress 125 512000 0
+progress 150 614400 0
+LOCKSTEP_ALLPOS seed 11 kind near states 160 clicks 655360 mismatch 0 wins_matched 3632 {'ok': 63950, 'noop': 574955, 'fail': 12823, 'win': 3632} lossy_clicks 357 sec 670

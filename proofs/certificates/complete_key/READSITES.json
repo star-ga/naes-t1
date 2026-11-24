@@ -1,0 +1,517 @@
+{
+ "fields": [
+  "_action_count",
+  "_action",
+  "action",
+  "_full_reset",
+  "current_steps"
+ ],
+ "files": [
+  {
+   "file": "s5i5.py",
+   "sha256": "341f85bac1fb5ca7a3315a367405c3c993a57ce4dd0ff01cc8aaa72bf6c6ed34",
+   "field_sites": [
+    {
+     "field": "current_steps",
+     "line": 1958,
+     "function": "__init__",
+     "kind": "store",
+     "source": "self.current_steps = dazkjahdqd"
+    },
+    {
+     "field": "current_steps",
+     "line": 1962,
+     "function": "fptcviopvo",
+     "kind": "store",
+     "source": "self.current_steps = max(0, min(xxgqrpitlq, self.dazkjahdqd))"
+    },
+    {
+     "field": "current_steps",
+     "line": 1966,
+     "function": "twwpyjzobt",
+     "kind": "load",
+     "source": "if self.current_steps > 0:"
+    },
+    {
+     "field": "current_steps",
+     "line": 1967,
+     "function": "twwpyjzobt",
+     "kind": "update",
+     "source": "self.current_steps -= 1"
+    },
+    {
+     "field": "current_steps",
+     "line": 1968,
+     "function": "twwpyjzobt",
+     "kind": "load",
+     "source": "return self.current_steps > 0"
+    },
+    {
+     "field": "current_steps",
+     "line": 1972,
+     "function": "yhkntwvjfr",
+     "kind": "store",
+     "source": "self.current_steps = self.dazkjahdqd"
+    },
+    {
+     "field": "current_steps",
+     "line": 1978,
+     "function": "render_interface",
+     "kind": "load",
+     "source": "tlultobbas = self.current_steps / self.dazkjahdqd"
+    },
+    {
+     "field": "action",
+     "line": 2188,
+     "function": "step",
+     "kind": "load",
+     "source": "elif self.action.id == GameAction.ACTION6:"
+    },
+    {
+     "field": "action",
+     "line": 2190,
+     "function": "step",
+     "kind": "load",
+     "source": "zackclumtb = self.action.data.get(\"x\", 0)"
+    },
+    {
+     "field": "action",
+     "line": 2191,
+     "function": "step",
+     "kind": "load",
+     "source": "pqtidnarzq = self.action.data.get(\"y\", 0)"
+    },
+    {
+     "field": "current_steps",
+     "line": 2245,
+     "function": "step",
+     "kind": "load",
+     "source": "elif not self.gwiuiwqizb.current_steps:"
+    }
+   ],
+   "click_flow": [
+    {
+     "function_line": 2181,
+     "names": [
+      "aavkaktnsw",
+      "game_x",
+      "game_y",
+      "gqjxhjkgsh",
+      "hbfbhmggps",
+      "kflqpefdye",
+      "kjfafkvdas",
+      "pkxvgtatly",
+      "pqtidnarzq",
+      "uxmbgjysee",
+      "zackclumtb"
+     ],
+     "lines": [
+      {
+       "line": 2190,
+       "source": "zackclumtb = self.action.data.get(\"x\", 0)"
+      },
+      {
+       "line": 2191,
+       "source": "pqtidnarzq = self.action.data.get(\"y\", 0)"
+      },
+      {
+       "line": 2192,
+       "source": "hbfbhmggps = self.camera.display_to_grid(zackclumtb, pqtidnarzq)"
+      },
+      {
+       "line": 2193,
+       "source": "if hbfbhmggps:"
+      },
+      {
+       "line": 2194,
+       "source": "game_x, game_y = hbfbhmggps"
+      },
+      {
+       "line": 2195,
+       "source": "aavkaktnsw = self.current_level.get_sprite_at(game_x, game_y, \"0089rvqdprjwpz\")"
+      },
+      {
+       "line": 2196,
+       "source": "if aavkaktnsw:"
+      },
+      {
+       "line": 2197,
+       "source": "kflqpefdye = aavkaktnsw.pixels[aavkaktnsw.height // 2, aavkaktnsw.height // 2]"
+      },
+      {
+       "line": 2202,
+       "source": "if xubtnfttpv == kflqpefdye:"
+      },
+      {
+       "line": 2219,
+       "source": "gqjxhjkgsh = self.current_level.get_sprite_at(game_x, game_y, \"0066ghlkyvdbgg\")"
+      },
+      {
+       "line": 2220,
+       "source": "if gqjxhjkgsh:"
+      },
+      {
+       "line": 2221,
+       "source": "pkxvgtatly = gqjxhjkgsh.width > gqjxhjkgsh.height"
+      },
+      {
+       "line": 2222,
+       "source": "if pkxvgtatly:"
+      },
+      {
+       "line": 2223,
+       "source": "kjfafkvdas = gqjxhjkgsh.width // 2"
+      },
+      {
+       "line": 2225,
+       "source": "kjfafkvdas = gqjxhjkgsh.height // 2"
+      },
+      {
+       "line": 2226,
+       "source": "uxmbgjysee = game_x - gqjxhjkgsh.x if pkxvgtatly else game_y - gqjxhjkgsh.y"
+      },
+      {
+       "line": 2229,
+       "source": "for oflixwqbdt in self.pigtralzpb[gqjxhjkgsh]:"
+      },
+      {
+       "line": 2235,
+       "source": "if uxmbgjysee > kjfafkvdas:"
+      },
+      {
+       "line": 2237,
+       "source": "elif uxmbgjysee < kjfafkvdas and index > 1:"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "file": "vc33.py",
+   "sha256": "8afa9f55054b2a2460b6c44ec5c66e120f6d6f4c2289e24d50832a68d1e3fcfd",
+   "field_sites": [
+    {
+     "field": "current_steps",
+     "line": 1798,
+     "function": "__init__",
+     "kind": "store",
+     "source": "self.current_steps = dmesyeowwd"
+    },
+    {
+     "field": "current_steps",
+     "line": 1802,
+     "function": "kzdrzwegyq",
+     "kind": "store",
+     "source": "self.current_steps = max(0, min(jwqkgpseim, self.dmesyeowwd))"
+    },
+    {
+     "field": "current_steps",
+     "line": 1806,
+     "function": "tuvumryrbp",
+     "kind": "load",
+     "source": "if self.current_steps > 0:"
+    },
+    {
+     "field": "current_steps",
+     "line": 1807,
+     "function": "tuvumryrbp",
+     "kind": "update",
+     "source": "self.current_steps -= 1"
+    },
+    {
+     "field": "current_steps",
+     "line": 1808,
+     "function": "tuvumryrbp",
+     "kind": "load",
+     "source": "return self.current_steps > 0"
+    },
+    {
+     "field": "current_steps",
+     "line": 1812,
+     "function": "mflhbpdcce",
+     "kind": "store",
+     "source": "self.current_steps = self.dmesyeowwd"
+    },
+    {
+     "field": "current_steps",
+     "line": 1818,
+     "function": "render_interface",
+     "kind": "load",
+     "source": "xmiochpvpa = self.current_steps / self.dmesyeowwd"
+    },
+    {
+     "field": "action",
+     "line": 2102,
+     "function": "step",
+     "kind": "load",
+     "source": "elif self.action.id == GameAction.ACTION6:"
+    },
+    {
+     "field": "action",
+     "line": 2104,
+     "function": "step",
+     "kind": "load",
+     "source": "wmatnlmsbs = self.action.data.get(\"x\", 0)"
+    },
+    {
+     "field": "action",
+     "line": 2105,
+     "function": "step",
+     "kind": "load",
+     "source": "iecizdiqxl = self.action.data.get(\"y\", 0)"
+    },
+    {
+     "field": "current_steps",
+     "line": 2122,
+     "function": "step",
+     "kind": "load",
+     "source": "elif not self.heczcoeosi.current_steps:"
+    }
+   ],
+   "click_flow": [
+    {
+     "function_line": 2094,
+     "names": [
+      "cagzzrtjlm",
+      "game_x",
+      "game_y",
+      "iecizdiqxl",
+      "rgadpfgsms",
+      "self",
+      "sprite",
+      "wmatnlmsbs"
+     ],
+     "lines": [
+      {
+       "line": 2096,
+       "source": "if self.bnnqyrupir:"
+      },
+      {
+       "line": 2097,
+       "source": "if self.bnnqyrupir.xryezihexa():"
+      },
+      {
+       "line": 2098,
+       "source": "self.bnnqyrupir = None"
+      },
+      {
+       "line": 2099,
+       "source": "self.wpcgsoumbr()"
+      },
+      {
+       "line": 2102,
+       "source": "elif self.action.id == GameAction.ACTION6:"
+      },
+      {
+       "line": 2103,
+       "source": "self.heczcoeosi.tuvumryrbp()"
+      },
+      {
+       "line": 2104,
+       "source": "wmatnlmsbs = self.action.data.get(\"x\", 0)"
+      },
+      {
+       "line": 2105,
+       "source": "iecizdiqxl = self.action.data.get(\"y\", 0)"
+      },
+      {
+       "line": 2106,
+       "source": "rgadpfgsms = self.camera.display_to_grid(wmatnlmsbs, iecizdiqxl)"
+      },
+      {
+       "line": 2107,
+       "source": "if rgadpfgsms:"
+      },
+      {
+       "line": 2108,
+       "source": "game_x, game_y = rgadpfgsms"
+      },
+      {
+       "line": 2109,
+       "source": "sprite = self.current_level.get_sprite_at(game_x, game_y)"
+      },
+      {
+       "line": 2110,
+       "source": "if sprite:"
+      },
+      {
+       "line": 2111,
+       "source": "if \"0022jvmlspyigc\" in sprite.tags:"
+      },
+      {
+       "line": 2112,
+       "source": "self.iootdyzbwv(sprite)"
+      },
+      {
+       "line": 2113,
+       "source": "elif \"0004sttgkofqwb\" in sprite.tags:"
+      },
+      {
+       "line": 2114,
+       "source": "if self.ezbubuphlm(sprite):"
+      },
+      {
+       "line": 2115,
+       "source": "self.bnnqyrupir = self.mwsdltsaxd(sprite)"
+      },
+      {
+       "line": 2116,
+       "source": "cagzzrtjlm = self.current_level.get_sprites_by_tag(\"0007gyluczquhi\")"
+      },
+      {
+       "line": 2117,
+       "source": "for pcbttqnhxk in cagzzrtjlm:"
+      },
+      {
+       "line": 2120,
+       "source": "if self.ielczunthe():"
+      },
+      {
+       "line": 2121,
+       "source": "self.next_level()"
+      },
+      {
+       "line": 2122,
+       "source": "elif not self.heczcoeosi.current_steps:"
+      },
+      {
+       "line": 2123,
+       "source": "self.lose()"
+      },
+      {
+       "line": 2124,
+       "source": "self.complete_action()"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "file": "__init__.py",
+   "sha256": "538961ed7fcd09401dc7157c5611ee9f1fdaa177eae751a4b61b16844ab4304b",
+   "field_sites": []
+  },
+  {
+   "file": "base_game.py",
+   "sha256": "5b5f41f3bec4c0c97a727fda7326114991dc0d4a5642d489b40ee4aa87e6b15f",
+   "field_sites": [
+    {
+     "field": "_action",
+     "line": 88,
+     "function": "__init__",
+     "kind": "store",
+     "source": "self._action = ActionInput()"
+    },
+    {
+     "field": "_action_count",
+     "line": 90,
+     "function": "__init__",
+     "kind": "store",
+     "source": "self._action_count = 0"
+    },
+    {
+     "field": "_full_reset",
+     "line": 91,
+     "function": "__init__",
+     "kind": "store",
+     "source": "self._full_reset = False"
+    },
+    {
+     "field": "_action_count",
+     "line": 160,
+     "function": "set_level",
+     "kind": "store",
+     "source": "self._action_count = 0"
+    },
+    {
+     "field": "_full_reset",
+     "line": 204,
+     "function": "perform_action",
+     "kind": "store",
+     "source": "self._full_reset = False"
+    },
+    {
+     "field": "_full_reset",
+     "line": 247,
+     "function": "perform_action",
+     "kind": "load",
+     "source": "frame_raw.full_reset = self._full_reset"
+    },
+    {
+     "field": "_full_reset",
+     "line": 258,
+     "function": "perform_action",
+     "kind": "load",
+     "source": "full_reset=self._full_reset,"
+    },
+    {
+     "field": "_action",
+     "line": 266,
+     "function": "action",
+     "kind": "load",
+     "source": "return self._action"
+    },
+    {
+     "field": "_action",
+     "line": 276,
+     "function": "_set_action",
+     "kind": "store",
+     "source": "self._action = action_input"
+    },
+    {
+     "field": "_action_count",
+     "line": 279,
+     "function": "_set_action",
+     "kind": "update",
+     "source": "self._action_count += 1"
+    },
+    {
+     "field": "_action_count",
+     "line": 313,
+     "function": "handle_reset",
+     "kind": "load",
+     "source": "elif self._action_count == 0 or self._state == GameState.WIN:"
+    },
+    {
+     "field": "_action_count",
+     "line": 321,
+     "function": "full_reset",
+     "kind": "store",
+     "source": "self._action_count = 0"
+    },
+    {
+     "field": "_full_reset",
+     "line": 322,
+     "function": "full_reset",
+     "kind": "store",
+     "source": "self._full_reset = True"
+    }
+   ]
+  },
+  {
+   "file": "camera.py",
+   "sha256": "f06e16807b0f97d86cafb5481bb3969213f27768f789d898c6b8b07e957de397",
+   "field_sites": []
+  },
+  {
+   "file": "enums.py",
+   "sha256": "94ebef48f6fe950a18679a1b991c366e8e28c32ab58c9335f385e19bea21950e",
+   "field_sites": []
+  },
+  {
+   "file": "interfaces.py",
+   "sha256": "0cfc24178e9f1102fb4ccb5892141d91c3a9eec88eccab3402b9777a76532cd8",
+   "field_sites": []
+  },
+  {
+   "file": "level.py",
+   "sha256": "f74db969772b251018b2fcce6ec42f3522adeef4e9c03c036e455d2a35e3215a",
+   "field_sites": []
+  },
+  {
+   "file": "sprites.py",
+   "sha256": "ea9d3d02c7db0814954134a0e0ea6a3cb9b80066930dbdbfc5865befb54c493f",
+   "field_sites": []
+  }
+ ]
+}

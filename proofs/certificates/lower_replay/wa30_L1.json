@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "game": "wa30",
+  "level": 1,
+  "recorded_floor": 26,
+  "family": "Matching bounds (lower bound = verified win)",
+  "command": "nice -n 15 timeout 1800 \"$PYTHON\" lower_replay/replay_carry_astar.txt --source-root \"$SOURCE_ROOT\" --games-dir \"$GAMES_DIR\" --game wa30 --level 1 --output \"$RUN_DIR/result.json\"",
+  "rc": 0,
+  "bound_obtained": 26,
+  "equals_recorded_floor": true,
+  "verdict": "MATCH_CURRENT_INPUT_MODEL_ONLY",
+  "scope": "Current pinned public engine supplies the level starts by native forward play. Exact A* searches the original external simulator. Its native engine replay and losing proper prefix are checked, but universal simulator/engine coupling is not re-proved; lower-bound scope remains conditional on the original transition and heuristic lemmas.",
+  "command_provenance": "Original source-tool CLI, source design and frozen method. Weighted upper probing disabled with --weight1; exact --main-weight1 retained. This reconstructs an executable command, not an archived historical shell trace.",
+  "runner_sha256": "6d59babe5699354490ba37a33ed5bb46dd0ae175a67c391c5d5df4070264da8b",
+  "tool": {
+    "path": "tools/floor_plan/wa30_prove.py",
+    "sha256": "f8a6a562273545e6b7e52912c1f336aacef3f5b6d2a0c5ffe00975c2d8669579",
+    "bundled": false
+  },
+  "prerequisites": [
+    {
+      "path": "wa30_sim.py",
+      "sha256": "8f9d4dab54cacc393165f3b9b344d4031ffefd7a4ffe4b5cc2d88516440ce733",
+      "bundled": false
+    },
+    {
+      "path": "docs/replay_oracles/wa30_winning_actions.json",
+      "sha256": "51e38cb2313880f4a7032718c0ef931d7f604eeae4e886e5f7e9f8f27ad50df2",
+      "bundled": false
+    }
+  ],
+  "game_id": "wa30-ee6fef47",
+  "current_game_sha256": "0c8b63caee2d092d6c0750fd74e417de682d09973b549046394dadf0437b1477",
+  "expected_game_sha256": "0c8b63caee2d092d6c0750fd74e417de682d09973b549046394dadf0437b1477",
+  "game_source_matches_pack": true,
+  "current_instance_lower_bound_confirmed": false,
+  "raw_output": {
+    "path": "lower_replay/wa30_L1.raw.txt",
+    "sha256": "3c9486e765c2c24d37509b9800d372665e7bedeb7a016c6d52623b22d42ddfeb",
+    "format": "selected structured tool output; route omitted"
+  },
+  "external_unredacted_log_sha256": "9d0fd2dbe90d879d432781741c983b83d8f0899a8aed5e9c14fb003a13d6e5ff",
+  "counts": {
+    "level": 1,
+    "h0_lower_bound": 14,
+    "route_ub": 26,
+    "boxes": 3,
+    "helpers": 0,
+    "enemies": 0,
+    "search_s": 1.4,
+    "popped": 5923,
+    "seen": 5926,
+    "kind": "proven",
+    "floor": 26,
+    "replay": {
+      "win_at": 26,
+      "exact": true,
+      "prefix_no_win": true
+    },
+    "prefix_replay": {
+      "win_at": null,
+      "exact": false,
+      "prefix_no_win": true
+    },
+    "replay_verified": true
+  },
+  "runtime": {
+    "python": "3.12.15",
+    "numpy": "2.5.0",
+    "arc-agi": "0.9.9",
+    "arcengine": "0.9.3"
+  },
+  "derivation": "The tool uses the maximum of consistent carrier-distance and divided matching bounds, accounting for all carriers moving in one tick. Exact A* with reopening reaches the first optimal goal. Its lower claim depends on the source model/engine correspondence and admissibility arguments; the fresh native win certifies attainment."
+}

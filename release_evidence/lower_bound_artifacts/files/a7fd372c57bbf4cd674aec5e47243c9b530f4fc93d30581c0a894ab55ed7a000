@@ -1,0 +1,29 @@
+{
+ "old": "old/ka59/9f096b4a/ka59.py",
+ "new": "new/ka59/38d34dbb/ka59.py",
+ "old_tokens": 3018,
+ "new_tokens": 3018,
+ "renamed": 149,
+ "mapped": 273,
+ "n_hunks": 0,
+ "hunks": [],
+ "string_map": {
+  "\"\"\".\"\"\"": "\"\"\".\"\"\"",
+  "'xlfuqjygey'": "'0022vrxelxosfy'",
+  "'nnckfubbhi'": "'0001uqqokjrptk'",
+  "'gobzaprasa'": "'0003umnkyodpjp'",
+  "'ka59'": "'ka59'",
+  "'StepCounter'": "'StepCounter'",
+  "'vwjqkxkyxm'": "'0015qniapgwsvb'",
+  "'divgcilurm'": "'0029ifoxxfvvvs'",
+  "'Enemy'": "'Enemy'",
+  "'rktpmjcpkt'": "'0010xzmuziohuf'",
+  "'ucjzrlvfkb'": "'0027jbgxilrocf'",
+  "'Collider'": "'Collider'",
+  "'whiknkvuty'": "'0007zqjfknlfvm'",
+  "explode-": "explode-",
+  "-": "-",
+  "'x'": "'x'",
+  "'y'": "'y'"
+ }
+}

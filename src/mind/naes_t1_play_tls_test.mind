@@ -1,0 +1,203 @@
+// naes_t1_play_tls_test.mind — tests for the HTTPS transport of the play
+// client (naes_t1_play_tcp.mind, naes_t1_play_tls.mind). No network: a
+// loopback listener in this process and canned response records. Build
+// (repo root, default backend):
+//   cat src/mind/naes_t1_libc.mind src/mind/naes_t1_dns.mind \
+//       src/mind/naes_t1_dns_resolve.mind src/mind/naes_t1_dns_udp.mind \
+//       src/mind/naes_t1_play_tcp.mind src/mind/naes_t1_play_tls.mind \
+//       src/mind/naes_t1_play_https.mind src/mind/naes_t1_play_tls_test.mind \
+//       > build/play_tls_unit.mind
+//   mindc build build/play_tls_unit.mind --no-cache --out naes_t1_play_tls_test
+// Run: naes_t1_play_tls_test; exit 0 when every case holds, else the number
+// of the first failing case. Cases:
+//   1 timeouts are 10 s 0 us on a heap whose recycled 16-byte chunk holds
+//     tv_usec 999999999 (control: the shaping does hand that chunk back)
+//   2 a refused address is closed and the next one is taken; setsockopt
+//     failure is reported
+//   3 naes_https_take: 200 body, status and Set-Cookie pair; 404 -> -2;
+//     an error record -> -1; no record -> -1 with status 0
+//   4 32 taken responses keep VmSize within one 8 MiB raw buffer
+//   5 the CA anchors load once into the cell; free clears the cell
+fn play_tt_str(s: String) -> i64 { s.addr }
+// Line value in kB of /proc/self/status for the 7-byte tag word, or -1.
+fn play_tt_status_kb(tag: i64) -> i64 {
+    let buf: i64 = __mind_alloc(8192);
+    let fd: i64 = __mind_open(play_tt_str("/proc/self/status\0"));
+    if fd < 0 { return 0 - 1; }
+    let n: i64 = __mind_read(fd, buf, 8192, 0 - 1);
+    let _c: i64 = (close(fd as i32)) as i64;
+    let mut kb: i64 = 0 - 1;
+    let mut i: i64 = 0;
+    while kb < 0 && i + 7 < n {
+        if (__mind_load_i64(buf + i) & 72057594037927935) == tag {
+            let mut j: i64 = i + 7;
+            while j < n && (__mind_load_i8(buf + j) == 32 || __mind_load_i8(buf + j) == 9) { j = j + 1; }
+            kb = 0;
+            while j < n && __mind_load_i8(buf + j) >= 48 && __mind_load_i8(buf + j) <= 57 { kb = kb * 10 + __mind_load_i8(buf + j) - 48; j = j + 1; }
+        }
+        i = i + 1;
+    }
+    __mind_free(buf);
+    kb
+}
+// Listening TCP socket on 127.0.0.1 (kernel-chosen port); the port is
+// stored at portc. Returns the fd or -1.
+fn play_tt_listen(portc: i64) -> i64 {
+    let sa: i64 = __mind_alloc(16);
+    let ln: i64 = __mind_alloc(8);
+    __mind_store_i64(sa, 0); __mind_store_i64(sa + 8, 0);
+    __mind_store_i8(sa, 2); __mind_store_i8(sa + 4, 127); __mind_store_i8(sa + 7, 1);
+    let fd: i64 = (socket(2, 1, 0)) as i64;
+    if fd < 0 { return 0 - 1; }
+    if (bind(fd as i32, sa as *const u8, 16)) as i64 != 0 { return 0 - 1; }
+    if (listen(fd as i32, 4)) as i64 != 0 { return 0 - 1; }
+    __mind_store_i64(ln, 16);
+    if (getsockname(fd as i32, sa as *mut u8, ln as *mut u8)) as i64 != 0 { return 0 - 1; }
+    __mind_store_i64(portc, (__mind_load_i8(sa + 2) & 255) * 256 + (__mind_load_i8(sa + 3) & 255));
+    fd
+}
+// 1 when SO_RCVTIMEO and SO_SNDTIMEO of fd are both 10 s 0 us.
+fn play_tt_tv_ok(fd: i64) -> i64 {
+    let tv: i64 = __mind_alloc(16);
+    let ln: i64 = __mind_alloc(8);
+    let mut opt: i64 = 20;
+    let mut ok: i64 = 1;
+    while opt <= 21 {
+        __mind_store_i64(tv, 0 - 1); __mind_store_i64(tv + 8, 0 - 1); __mind_store_i64(ln, 16);
+        if (getsockopt(fd as i32, 1, opt as i32, tv as *mut u8, ln as *mut u8)) as i64 != 0 { ok = 0; }
+        if __mind_load_i64(tv) != 10 || __mind_load_i64(tv + 8) != 0 { ok = 0; }
+        opt = opt + 1;
+    }
+    ok
+}
+// Leave a 16-byte chunk holding 999999999 at +8 as the next malloc(16): fill
+// the per-size cache, push one more chunk past it, then drain the cache.
+fn play_tt_shape(tab: i64) -> i64 {
+    let mut i: i64 = 0;
+    while i < 8 { let c: i64 = __mind_alloc(16); __mind_store_i64(c, 0); __mind_store_i64(c + 8, 999999999); __mind_store_i64(tab + i * 8, c); i = i + 1; }
+    __mind_store_i64(tab + 64, __mind_alloc(16));
+    i = 0;
+    while i < 8 { __mind_free(__mind_load_i64(tab + i * 8)); i = i + 1; }
+    i = 0;
+    while i < 7 { __mind_store_i64(tab + 72 + i * 8, __mind_alloc(16)); i = i + 1; }
+    0
+}
+// 127.0.0.<last> as a one-entry naes_dns address set at a (24 bytes)
+fn play_tt_addr(a: i64, last: i64) -> i64 {
+    __mind_store_i64(a, 2); __mind_store_i64(a + 8, 0); __mind_store_i64(a + 16, 0);
+    __mind_store_i8(a + 8, 127); __mind_store_i8(a + 11, last);
+    a
+}
+fn play_tt_case1() -> i64 {
+    let portc: i64 = __mind_alloc(8);
+    let lfd: i64 = play_tt_listen(portc);
+    if lfd < 0 { return 1; }
+    let addrs: i64 = play_tt_addr(__mind_alloc(48), 1);
+    let tab: i64 = __mind_alloc(256);
+    // control: after the shaping, malloc(16) does return the stale chunk
+    let _s0: i64 = play_tt_shape(tab);
+    let probe: i64 = __mind_alloc(16);
+    if __mind_load_i64(probe + 8) != 999999999 { return 1; }
+    let _s1: i64 = play_tt_shape(tab);
+    let fd: i64 = naes_tls_connect_addrs(addrs, 1, __mind_load_i64(portc));
+    if fd < 0 { return 1; }
+    if play_tt_tv_ok(fd) != 1 { return 1; }
+    let _c: i64 = (close(fd as i32)) as i64;
+    let _l: i64 = (close(lfd as i32)) as i64;
+    0
+}
+fn play_tt_case2() -> i64 {
+    let portc: i64 = __mind_alloc(8);
+    let lfd: i64 = play_tt_listen(portc);
+    if lfd < 0 { return 2; }
+    // 127.0.0.2 has no listener on the port: refused, then 127.0.0.1 is taken
+    let addrs: i64 = __mind_alloc(72);
+    let _a: i64 = play_tt_addr(addrs, 2);
+    let _b: i64 = play_tt_addr(addrs + 24, 1);
+    let fd: i64 = naes_tls_connect_addrs(addrs, 2, __mind_load_i64(portc));
+    if fd < 0 { return 2; }
+    if play_tt_tv_ok(fd) != 1 { return 2; }
+    let _c: i64 = (close(fd as i32)) as i64;
+    // only the refused address: no fd
+    if naes_tls_connect_addrs(addrs, 1, __mind_load_i64(portc)) != 0 - 1 { return 2; }
+    // setsockopt on a closed descriptor fails and is reported
+    if naes_tls_set_timeouts(fd, __mind_alloc(16)) != 0 - 1 { return 2; }
+    let _l: i64 = (close(lfd as i32)) as i64;
+    0
+}
+// A complete canned response record for status line + headers + body.
+fn play_tt_resp(s: String) -> i64 {
+    let r: i64 = hx_resp_new();
+    if hx_feed(r, s.addr, s.len) != 1 { return 0; }
+    r
+}
+fn play_tt_case3() -> i64 {
+    let buf: i64 = __mind_alloc(64);
+    let ck: i64 = __mind_alloc(2048);
+    let cells: i64 = __mind_alloc(24);
+    __mind_store_i64(cells, 0); __mind_store_i64(cells + 8, 0); __mind_store_i64(cells + 16, 0);
+    let r: i64 = play_tt_resp("HTTP/1.1 200 OK\r\nContent-Length: 2\r\nSet-Cookie: k=v; Path=/\r\n\r\n{}");
+    if r == 0 { return 3; }
+    if naes_https_take(r, buf, 64, cells, cells + 8, ck, cells + 16) != 1 { return 3; }
+    if __mind_load_i64(cells) != 200 || __mind_load_i64(cells + 8) != 2 || __mind_load_i64(cells + 16) != 3 { return 3; }
+    if __mind_load_i8(buf) != 123 || __mind_load_i8(buf + 1) != 125 { return 3; }
+    if __mind_load_i8(ck) != 107 || __mind_load_i8(ck + 1) != 61 || __mind_load_i8(ck + 2) != 118 { return 3; }
+    let r2: i64 = play_tt_resp("HTTP/1.1 404 Not Found\r\nContent-Length: 1\r\n\r\nx");
+    if r2 == 0 { return 3; }
+    if naes_https_take(r2, buf, 64, cells, cells + 8, ck, cells + 16) != 0 - 2 { return 3; }
+    if __mind_load_i64(cells) != 404 || __mind_load_i64(cells + 8) != 1 { return 3; }
+    // a body over cap is refused, never truncated
+    let r3: i64 = play_tt_resp("HTTP/1.1 200 OK\r\nContent-Length: 2\r\n\r\n{}");
+    if r3 == 0 { return 3; }
+    if naes_https_take(r3, buf, 1, cells, cells + 8, ck, cells + 16) != 0 - 1 { return 3; }
+    if naes_https_take(0 - 6, buf, 64, cells, cells + 8, ck, cells + 16) != 0 - 1 { return 3; }
+    if __mind_load_i64(cells) != 0 { return 3; }
+    0
+}
+fn play_tt_case4() -> i64 {
+    let buf: i64 = __mind_alloc(64);
+    let ck: i64 = __mind_alloc(2048);
+    let cells: i64 = __mind_alloc(24);
+    let v0: i64 = play_tt_status_kb(16437125076708694);
+    if v0 < 1 { return 4; }
+    let mut bad: i64 = 0;
+    let mut i: i64 = 0;
+    while i < 32 {
+        let r: i64 = play_tt_resp("HTTP/1.1 200 OK\r\nContent-Length: 2\r\n\r\n{}");
+        if r == 0 { bad = 1; }
+        if naes_https_take(r, buf, 64, cells, cells + 8, ck, cells + 16) != 1 { bad = 1; }
+        i = i + 1;
+    }
+    let v1: i64 = play_tt_status_kb(16437125076708694);
+    if bad == 1 || v1 < 1 { return 4; }
+    // each kept raw buffer is 8,454,656 bytes (8257 kB): 32 would be 264 MB
+    if v1 - v0 > 8257 { return 4; }
+    0
+}
+fn play_tt_case5() -> i64 {
+    let cell: i64 = __mind_alloc(8);
+    __mind_store_i64(cell, 0);
+    let w1: i64 = naes_tls_anchors(cell);
+    if w1 <= 0 || __mind_load_i64(cell) != w1 { return 5; }
+    // u32be anchor count first; the bundle holds at least one anchor
+    let w: i64 = __mind_load_i64(w1);
+    let count: i64 = (__mind_load_i8(w + 2) & 255) * 256 + (__mind_load_i8(w + 3) & 255);
+    if count < 1 || __mind_load_i64(w1 + 8) < 8 { return 5; }
+    let v0: i64 = play_tt_status_kb(16432701125193046);
+    let mut i: i64 = 0;
+    let mut same: i64 = 1;
+    while i < 16 { if naes_tls_anchors(cell) != w1 { same = 0; } i = i + 1; }
+    let v1: i64 = play_tt_status_kb(16432701125193046);
+    if same != 1 || v1 - v0 > 64 { return 5; }
+    let _f: i64 = naes_tls_anchors_free(cell, 0);
+    if __mind_load_i64(cell) != 0 { return 5; }
+    0
+}
+fn main(os_argc: i64, argv: i64) -> i64 {
+    let mut f: i64 = play_tt_case1();
+    if f == 0 { f = play_tt_case2(); }
+    if f == 0 { f = play_tt_case3(); }
+    if f == 0 { f = play_tt_case4(); }
+    if f == 0 { f = play_tt_case5(); }
+    f
+}

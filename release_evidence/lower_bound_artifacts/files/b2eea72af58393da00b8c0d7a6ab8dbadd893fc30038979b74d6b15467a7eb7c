@@ -1,0 +1,16 @@
+[<label withheld>] starts loaded from cache
+2026-09-21 22:35:12 | INFO | Created new scorecard: 9250265d-8819-446e-948d-9e8abd64dbdd
+INFO:arc_agi.base:Created new scorecard: 9250265d-8819-446e-948d-9e8abd64dbdd
+2026-09-21 22:35:12 | INFO | Successfully loaded game class Tn36 from <path>
+INFO:arc_agi.base:Successfully loaded game class Tn36 from <path>
+[replay-backend] cls=Tn36 kwargs={} deterministic=yes deepcopy_cache=on
+  L2 layer 1: 14 states edges=64 t=0s
+  L2 layer 2: 86 states edges=960 t=0s
+  L2 layer 3: 318 states edges=6464 t=0s
+  L2 layer 4: 838 states edges=26816 t=1s
+  L3 layer 1: 13 states edges=64 t=0s
+  L3 layer 2: 74 states edges=896 t=0s
+  L3 layer 3: 254 states edges=5632 t=0s
+  L3 layer 4: 631 states edges=21888 t=2s
+  L3 layer 5: 1304 states edges=62272 t=7s
+  L3 layer 6: 2416 states edges=145728 t=20s

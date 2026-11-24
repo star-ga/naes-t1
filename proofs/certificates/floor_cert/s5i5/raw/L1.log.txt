@@ -1,0 +1,14 @@
+SETUP level=1 floor=13 budget=50 classes=7 pixels=4096 mismatches=0 mobiles=6 static_bytes=272 pose_bytes=81 probe_win=None reset_level=0
+LAYER level=1 depth=1 expanded=1 visited=5 edges=7 wins=0 t=0.4
+LAYER level=1 depth=2 expanded=5 visited=12 edges=35 wins=0 t=0.4
+LAYER level=1 depth=3 expanded=12 visited=20 edges=84 wins=0 t=0.4
+LAYER level=1 depth=4 expanded=20 visited=28 edges=140 wins=0 t=0.4
+LAYER level=1 depth=5 expanded=28 visited=37 edges=196 wins=0 t=0.4
+LAYER level=1 depth=6 expanded=37 visited=47 edges=259 wins=0 t=0.4
+LAYER level=1 depth=7 expanded=47 visited=58 edges=329 wins=0 t=0.4
+LAYER level=1 depth=8 expanded=58 visited=70 edges=406 wins=0 t=0.4
+LAYER level=1 depth=9 expanded=70 visited=83 edges=490 wins=0 t=0.4
+LAYER level=1 depth=10 expanded=83 visited=96 edges=581 wins=0 t=0.4
+LAYER level=1 depth=11 expanded=96 visited=107 edges=672 wins=0 t=0.5
+LAYER level=1 depth=12 expanded=107 visited=116 edges=749 wins=0 t=0.5
+RESULT level=1 verdict=CONFIRMED states=116 edges=749 layers=12 seconds=0.5

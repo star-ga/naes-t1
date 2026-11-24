@@ -1,0 +1,6 @@
+{
+ "mode": "final",
+ "P": 20,
+ "status": "UNSAT",
+ "line": "v4 L7 mode=final k=40 K=2 P=20 -> UNSAT vars=136677 clauses=565006 (1.8s)"
+}

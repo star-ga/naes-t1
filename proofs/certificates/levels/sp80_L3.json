@@ -1,0 +1,119 @@
+{
+  "artifact_sha256": [
+    {
+      "kind": "safe_statement_count_extract",
+      "sha256": "9289f2d55a9257d4ed9d7c4d69928f0ff4da64c7525a1fcd8df5f406e161c8cd"
+    },
+    {
+      "kind": "authority_ledger_label",
+      "sha256": "9a8eccca1f89ca26f426eddf8a0a08b056202fd181af9094dc7de695922f8451"
+    },
+    {
+      "kind": "per_level_certificate_record",
+      "sha256": "eb1ea519af645a0011621166f415cd510979739a251b9fd9c205dca1488b5c2a"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "c40a3aafeb225f8e125af7ff301ff548c975e2ce265b1f4c8970164702e499e7"
+    },
+    {
+      "kind": "existing_search_or_enumeration_record",
+      "sha256": "496ad76394c46d41533e801af1a2f10c5f8317414c1e1de635dcefba5848ad5d"
+    },
+    {
+      "kind": "existing_search_or_enumeration_record",
+      "sha256": "da0443699647c2f04d7a208652848f85c285c25bbeface14c1f7532e869a8899"
+    },
+    {
+      "kind": "existing_search_or_enumeration_record",
+      "sha256": "8e6f86094e460d59598375ae35ad74ba05bc4cf62a9e9975cff9023fc924ae3a"
+    },
+    {
+      "kind": "existing_search_or_enumeration_record",
+      "sha256": "7a02be7f4062a4df92dc353f2584e508610defb5352bdd7690aafedb7210a775"
+    },
+    {
+      "kind": "existing_search_or_enumeration_record",
+      "sha256": "65e57605c89c3a9cd97114a14349f33902f9ac0c81172e41b1e770eb257613aa"
+    },
+    {
+      "kind": "existing_search_or_enumeration_record",
+      "sha256": "605ce5e514805b6ddd38d3db8535f430df7bdbfcc88e20db0ce348888506c5ad"
+    },
+    {
+      "kind": "existing_search_or_enumeration_record",
+      "sha256": "a045c3b86f537e7a48fe9eaa9b9b4508158f2a98e99be50c795eb5498f9d3f03"
+    },
+    {
+      "kind": "existing_search_or_enumeration_record",
+      "sha256": "b27ebd589634c3780af3a7ce73f59371ab1d4b263a966267e2c78206951c9472"
+    },
+    {
+      "kind": "existing_search_or_enumeration_record",
+      "sha256": "4b18db7bd125597ad2aaff8376e9a8d24e64768c71e003b05553b72be4c5397a"
+    },
+    {
+      "kind": "existing_search_or_enumeration_record",
+      "sha256": "3dd483aa7fdbe25f8ff3dadf374d3f051a3d3b4e7de7c9796408b4fa48affd35"
+    },
+    {
+      "kind": "existing_search_or_enumeration_record",
+      "sha256": "716765783afc952a98ead41b2bc170f1c08ec5d179dac98de4dc9735c5fe67f3"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "58384cd413404d94235cb5826fcf935f8f731b925925ffe1ca08add5b75e8757"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "33818c1afdd4bb7d2dc9bc9aa9465ff74ab1a65b84de758498ae34872e8931fd"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "3d3ddf56fc5ac908110cd56d5f5380aa6cc2f459f8ac66b5cbdcde6d14b46088"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "f9f6d5903281dee0a782f93abe5f438fdfd7847dc0d5239c5accdf2a77e594e2"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "3c418f97fb68bfffdce9fd8187a05e85f0524ccd73a6fb3d308a709659922c20"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "ad31ac284e793527259124beb82388ea38bd42f060c66e4c8e03dda489df996a"
+    },
+    {
+      "kind": "record: proofs/certificates/floor_cert/sp80/SUMMARY.md",
+      "sha256": "89e3c58ea1000e09d31f81a5757dc4f148d93c8416ed750fc846684e80c99c57"
+    },
+    {
+      "kind": "record: proofs/certificates/floor_cert/sp80/levels.json",
+      "sha256": "c1efdb0c5c2357d49865df1f1f1b14b6cc1f12ea0bc0d6312aede3b08d89d7c3"
+    }
+  ],
+  "floor": 10,
+  "game": "sp80",
+  "game_id": "sp80-589a99af",
+  "game_levels": 6,
+  "level": 3,
+  "lower_bound": {
+    "kind": "placement_enumeration_transcribed_spill_rule",
+    "statement": "Record: proofs/certificates/floor_cert/sp80 (verdict CONFIRMED). A win shorter than the floor F would be a placement whose move-plus-click cost is at most F-2, followed by one spill. Distances are breadth-first counts of official actions on each piece alone; pieces do not block one another except by other movable pieces, which are forced through. The scan covered every placement of the full game: 20772 placements (cost bound, then every placement of cost at most F-2 spilled by the transcribed water rule), 0 wins, 0 unresolved. The spill rule is transcribed into the scanner and anchored to the engine on the rasters, the origins and the six winning placements (claim code Cm: the transcribed spill is an explicit model of the water rule).",
+    "value": 10
+  },
+  "naes_t1_actions": 10,
+  "proof_class": "Exact math",
+  "proof_detail": "placement_enumeration_transcribed_spill_rule",
+  "schema_version": 1,
+  "source_certificate_sha256": "21b7857d28621ff5d9d18d7e6d63d7bafe0da28d455c7ff5d6ed2d9558ba44c9",
+  "status": "proven",
+  "upper_bound": {
+    "expected_levels_completed": 3,
+    "length": 10,
+    "opening_reset_counted": false,
+    "route": "4 6@18,34 3 3 6@50,30 3 3 6@14,22 4 5",
+    "seed": 0
+  }
+}

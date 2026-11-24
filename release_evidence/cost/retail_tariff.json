@@ -1,0 +1,32 @@
+{
+ "receipt": "public price-list entry used for the retail CPU cost (a price-list fact, not a measurement of any machine)",
+ "provider": "AWS EC2 Price List",
+ "price_list_version": "20261103235716",
+ "publication_date": "2026-11-03T23:57:16Z",
+ "region": "us-east-1",
+ "location": "US East (N. Virginia)",
+ "url": "https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonEC2/20261103235716/us-east-1/index.csv",
+ "file_sha256": "923190616cd0bc06699e523fcde2fadb46818bafe885c0f53b337b0764e9ab5e",
+ "file_bytes": "302903252",
+ "first_accessed": "2026-11-04",
+ "fetched": "2026-11-21",
+ "sku": "D8WVCVBE32N227KA",
+ "rate_code": "D8WVCVBE32N227KA.JRTCKXETXF.6YS6EN2CT7",
+ "instance_type": "c7i.xlarge",
+ "matching_instance_types": [
+  "c7i.xlarge"
+ ],
+ "operating_system": "Linux",
+ "tenancy": "Shared",
+ "pre_installed_sw": "NA",
+ "capacity_status": "Used",
+ "term": "OnDemand",
+ "vcpu_count": "4",
+ "price_per_unit_raw": "0.1785000000",
+ "price_description": "$0.1785 per On Demand Linux c7i.xlarge Instance Hour",
+ "effective_date": "2026-11-01",
+ "instance_hour_usd": "0.1785",
+ "vcpu_hour_usd": "0.0446",
+ "vcpu_hour_rule": "instance_hour_usd / vcpu_count = 0.044625, rounded half up to four decimals",
+ "scope": "one on-demand price-list entry"
+}

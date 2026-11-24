@@ -1,0 +1,37 @@
+{
+ "scorecard_url": "https://arcprize.org/scorecards/46dc8e53-0718-4182-84a9-88ffe31e282e",
+ "card_id": "46dc8e53-0718-4182-84a9-88ffe31e282e",
+ "mode": "live Competition Mode play through the ARC Prize API on the public demo set",
+ "competition_mode": true,
+ "score": "100.00",
+ "games_complete": 25,
+ "total_environments": 25,
+ "levels_completed": 183,
+ "total_levels": 183,
+ "total_actions": 5499,
+ "tags": [
+  "STARGA",
+  "MIND",
+  "NAES-T1",
+  "agent"
+ ],
+ "opened_utc": "2026-11-19T14:18:39Z",
+ "closed_utc": "2026-11-19T14:36:08Z",
+ "verified_by_arc_prize": false,
+ "player": "the NAES-T1 GPU decision server of 2026-11-19 (SHA-256 b4f364f41ea9f3de39c1696ecbf611b980a7f9fb479406b7eda7dcdbe80e7685) with the parameters of the weight file model/naes_t1.bin (SHA-256 fa54f507fdf9a9c74a8bc22d95a1c970e3528b3fe1707b6eb61d74bad2419fec), driven by the scorecard client of that date; it is not the release executable",
+ "replies_sha256": "4d2d98f711a1209eace8f3841952e39d4d75870d48079c3175b361bba9746396",
+ "replies_equal_release_stream": true,
+ "release_stream_note": "the 5,499 replies of this play equal the decision stream of the release executable (recordsha, model_20261119/decisions.records.bin; the run totals report records_match 5499 of 5499)",
+ "field_sources": "competition_mode, score, total_environments, total_levels and total_actions are the fields of the ARC Prize API close response of the card (api_close.txt, line CARD_CHECK close_response); games_complete and levels_completed are its fields total_environments_completed and total_levels_completed. The public card page (card_page.txt) shows the same score (100.00%), levels (183 / 183), environments (25 / 25) and total actions (5499).",
+ "files": {
+  "api_close.txt": {
+   "sha256": "41dccf87961c0b2f0533764e7b4230fff84139a00734af620a574a840117e247",
+   "original_sha256": "614ca83c5fe5d6cebe83572ad61dc12fa30f285801ccc98c22aa87059783c93a",
+   "note": "lines copied byte for byte from the play log of the run: card open and close, the API close response, the verdicts and the run totals, except that three digests of private files in the run-totals line (CARD_TOTAL: weights_sha256, stream_sha256, records_sha256) read <private>; original_sha256 is the digest of the original lines, kept in STARGA's <word withheld>. The log lines with timings, worker numbers and per-game progress are left out. The plain timestamps are the local time <word withheld> (PST, UTC-8); LIVE_EXIT is UTC."
+  },
+  "card_page.txt": {
+   "sha256": "6a0fa57edc5811b0f75ae30ec149b75eb2c8909d797ddc62639e95c03fcbd729",
+   "note": "the visible text of the public card page, fetched 2026-11-19 14:37 UTC [06:37 PST], one text node per line, with the name of one chat product in the footer replaced by <word withheld>"
+  }
+ }
+}

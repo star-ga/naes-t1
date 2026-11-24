@@ -1,0 +1,557 @@
+{
+  "schema": "<label withheld>",
+  "date": "2026-09-21",
+  "<key withheld>": "<word withheld>",
+  "not_claimed": [
+    "A fresh independent rerun of G50T SAT proofs.",
+    "Formal verification of the simulator/encoder from finite random gates.",
+    "An off-screen shorter winning BP35 route."
+  ],
+  "bp35": [
+    {
+      "level": 4,
+      "floor": 19,
+      "scope": "Canonical start used by original prover, completed agent actions, API-normalized integer x/y in 0..63. RESET remains initialization under the floor convention.",
+      "host_b_receipt": {
+        "start_source": "cascade_bootstrap",
+        "nodes": 1776,
+        "edges": 14386,
+        "keys": 4607,
+        "exhausted": true,
+        "model_floor": 19,
+        "replay_won_at": 19,
+        "replay_shorter_wins": false
+      },
+      "native_controls": {
+        "camera": 48,
+        "oor_click_controls": [
+          {
+            "cell": [
+              5,
+              7
+            ],
+            "xy": [
+              30,
+              -6
+            ],
+            "before_names": [
+              "lrpkmzabbfa"
+            ],
+            "after_names": [],
+            "key_changed": true,
+            "level_score": 3,
+            "budget": 1
+          },
+          {
+            "cell": [
+              3,
+              23
+            ],
+            "xy": [
+              18,
+              90
+            ],
+            "before_names": [
+              "lrpkmzabbfa"
+            ],
+            "after_names": [],
+            "key_changed": true,
+            "level_score": 3,
+            "budget": 1
+          },
+          {
+            "cell": [
+              5,
+              23
+            ],
+            "xy": [
+              30,
+              90
+            ],
+            "before_names": [
+              "lrpkmzabbfa"
+            ],
+            "after_names": [],
+            "key_changed": true,
+            "level_score": 3,
+            "budget": 1
+          }
+        ],
+        "action5": {
+          "scene_key_unchanged": true,
+          "budget_before": 0,
+          "budget_after": 1,
+          "move_counter_before": 0,
+          "move_counter_after": 0
+        }
+      },
+      "native_unrestricted_minimum": "not established by these screen-domain searches; no shorter winning counterexample produced by these controls"
+    },
+    {
+      "level": 6,
+      "floor": 41,
+      "scope": "Canonical start used by original prover, completed agent actions, API-normalized integer x/y in 0..63. RESET remains initialization under the floor convention.",
+      "host_b_receipt": {
+        "start_source": "cascade_bootstrap",
+        "nodes": 36761,
+        "edges": 295889,
+        "keys": 48657,
+        "exhausted": true,
+        "model_floor": 41,
+        "replay_won_at": 41,
+        "replay_shorter_wins": false
+      },
+      "native_controls": {
+        "camera": 102,
+        "oor_click_controls": [
+          {
+            "cell": [
+              8,
+              1
+            ],
+            "xy": [
+              48,
+              -96
+            ],
+            "before_names": [
+              "lrpkmzabbfa"
+            ],
+            "after_names": [],
+            "key_changed": true,
+            "level_score": 5,
+            "budget": 1
+          },
+          {
+            "cell": [
+              4,
+              31
+            ],
+            "xy": [
+              24,
+              84
+            ],
+            "before_names": [
+              "lrpkmzabbfa"
+            ],
+            "after_names": [],
+            "key_changed": true,
+            "level_score": 5,
+            "budget": 1
+          },
+          {
+            "cell": [
+              2,
+              13
+            ],
+            "xy": [
+              12,
+              -24
+            ],
+            "before_names": [
+              "oonshderxef"
+            ],
+            "after_names": [
+              "yuuqpmlxorv"
+            ],
+            "key_changed": true,
+            "level_score": 5,
+            "budget": 1
+          }
+        ],
+        "action5": {
+          "scene_key_unchanged": true,
+          "budget_before": 0,
+          "budget_after": 1,
+          "move_counter_before": 0,
+          "move_counter_after": 0
+        }
+      },
+      "native_unrestricted_minimum": "not established by these screen-domain searches; no shorter winning counterexample produced by these controls"
+    }
+  ],
+  "bp35_argument": "PixelMaps explicitly enumerates range(64)^2 and actions are singleton clickable classes in that map. Original theorem A covers that screen-domain alphabet, B the state quotient/dominance, C an admissible lower relaxation; A* reopens states and marks exhausted only after complete queue/cost closure. Host B receipts close 19 and41 and replay exact witnesses. The native engine instead adds camera offset and unbounded-divides click coordinates into grid cells, and raw ActionInput/LocalWrapper do not invoke ComplexAction coordinate validation. Thus original on-screen completeness cannot be applied to arbitrary native coordinates.",
+  "g50t_sweeps": [
+    {
+      "level": 6,
+      "k": 39,
+      "complete_pass_counts": 20,
+      "all_explicit_UNSAT": true,
+      "rows": [
+        {
+          "level": 6,
+          "k": 39,
+          "P": 1,
+          "T": 39,
+          "status": "UNSAT"
+        },
+        {
+          "level": 6,
+          "k": 39,
+          "P": 2,
+          "T": 37,
+          "status": "UNSAT"
+        },
+        {
+          "level": 6,
+          "k": 39,
+          "P": 3,
+          "T": 35,
+          "status": "UNSAT"
+        },
+        {
+          "level": 6,
+          "k": 39,
+          "P": 4,
+          "T": 33,
+          "status": "UNSAT"
+        },
+        {
+          "level": 6,
+          "k": 39,
+          "P": 5,
+          "T": 31,
+          "status": "UNSAT"
+        },
+        {
+          "level": 6,
+          "k": 39,
+          "P": 6,
+          "T": 29,
+          "status": "UNSAT"
+        },
+        {
+          "level": 6,
+          "k": 39,
+          "P": 7,
+          "T": 27,
+          "status": "UNSAT"
+        },
+        {
+          "level": 6,
+          "k": 39,
+          "P": 8,
+          "T": 25,
+          "status": "UNSAT"
+        },
+        {
+          "level": 6,
+          "k": 39,
+          "P": 9,
+          "T": 23,
+          "status": "UNSAT"
+        },
+        {
+          "level": 6,
+          "k": 39,
+          "P": 10,
+          "T": 21,
+          "status": "UNSAT"
+        },
+        {
+          "level": 6,
+          "k": 39,
+          "P": 11,
+          "T": 19,
+          "status": "UNSAT"
+        },
+        {
+          "level": 6,
+          "k": 39,
+          "P": 12,
+          "T": 17,
+          "status": "UNSAT"
+        },
+        {
+          "level": 6,
+          "k": 39,
+          "P": 13,
+          "T": 15,
+          "status": "UNSAT"
+        },
+        {
+          "level": 6,
+          "k": 39,
+          "P": 14,
+          "T": 13,
+          "status": "UNSAT"
+        },
+        {
+          "level": 6,
+          "k": 39,
+          "P": 15,
+          "T": 11,
+          "status": "UNSAT"
+        },
+        {
+          "level": 6,
+          "k": 39,
+          "P": 16,
+          "T": 9,
+          "status": "UNSAT"
+        },
+        {
+          "level": 6,
+          "k": 39,
+          "P": 17,
+          "T": 7,
+          "status": "UNSAT"
+        },
+        {
+          "level": 6,
+          "k": 39,
+          "P": 18,
+          "T": 5,
+          "status": "UNSAT"
+        },
+        {
+          "level": 6,
+          "k": 39,
+          "P": 19,
+          "T": 3,
+          "status": "UNSAT"
+        },
+        {
+          "level": 6,
+          "k": 39,
+          "P": 20,
+          "T": 1,
+          "status": "UNSAT"
+        }
+      ],
+      "artifact": "<path>/ctl_L6_k39.log"
+    }
+  ],
+  "g50t_pass_argument": "After deletion of blocked moves, empty A5 and actor-inert IDs6/7, each pass has at least one successful cardinal move. Nonterminal passes cost an additional A5, so k>=2P-1 and P<=floor((k+1)/2). Any one pass has at most k-(P-1)-(P-1)=k-2P+2 successful moves. The encoder budgets all successful-move literals by k-(P-1). Therefore P1..20 at k39 exhaust the pass counts; nonempty ending pass follows from the distinct canonical start/goal and A5 returning player to start.",
+  "g50t_noop_argument": "Blocked player move returns before recording history or moving ghosts/NPCs. Empty-history A5 does not schedule rewind/actor movement; its saved-history scratch assignment has no future effect because a nonempty A5 overwrites it before consumption (it need not preserve every raw scratch field after a slot wipe). IDs6/7 have no dispatch branch; at completed action boundaries only increment the loss timer. Deleting any of these leaves the actor/door trajectory and at least as much timer budget. A0 in the SAT encoding is absorbing end-of-pass padding, not a modeled native wait. The unused coordinate helper has no caller in the native source, so BP35 coordinate concerns do not transfer to G50T.",
+  "g50t_model_shape": {
+    "6": {
+      "level": 6,
+      "start": [
+        9,
+        5
+      ],
+      "goal": [
+        7,
+        8
+      ],
+      "n_slots": 3,
+      "n_npc": 1
+    }
+  },
+  "g50t_level_support": [
+    {
+      "level": 6,
+      "floor": 40,
+      "reason": "20 explicit UNSAT cases and existing40-action native replay receipt. Source establishes pass-count/alphabet reduction.",
+      "scope_limit": "Sweep is bound to the encoder/model version used; the source/model bridge is not re-proven mechanically here."
+    }
+  ],
+  "g50t_upper_bound_artifacts": [
+    "<path>/existence.json"
+  ],
+  "references": {
+    "bp35_pixel_map": {
+      "path": "<path>/bp35_prove_sim.py",
+      "line": 66
+    },
+    "bp35_alphabet": {
+      "path": "<path>/bp35_prove_sim.py",
+      "line": 86
+    },
+    "bp35_theorems": {
+      "path": "<path>/gpush_bp35_v5.py",
+      "line": 48
+    },
+    "bp35_astar": {
+      "path": "<path>/bp35_prove_sim.py",
+      "line": 333
+    },
+    "bp35_claim_conditions": {
+      "path": "<path>/bp35_prove_sim.py",
+      "line": 423
+    },
+    "bp35_native_grid": {
+      "path": "<path>/bp35.py",
+      "line": 2951
+    },
+    "bp35_native_click": {
+      "path": "<path>/bp35.py",
+      "line": 4289
+    },
+    "bp35_dispatch": {
+      "path": "<path>/bp35.py",
+      "line": 4536
+    },
+    "api_coordinate_type": {
+      "path": "<path>/enums.py",
+      "line": 45
+    },
+    "api_validation": {
+      "path": "<path>/api.py",
+      "line": 264
+    },
+    "raw_actioninput": {
+      "path": "<path>/enums.py",
+      "line": 111
+    },
+    "raw_wrapper": {
+      "path": "<path>/local_wrapper.py",
+      "line": 235
+    },
+    "g50t_blocked_move": {
+      "path": "<path>/g50t.py",
+      "line": 2670
+    },
+    "g50t_empty_a5": {
+      "path": "<path>/g50t.py",
+      "line": 2720
+    },
+    "g50t_rewind_scratch_liveness": {
+      "path": "<path>/g50t.py",
+      "line": 2771
+    },
+    "g50t_dispatch": {
+      "path": "<path>/g50t.py",
+      "line": 2804
+    },
+    "g50t_loss_timer": {
+      "path": "<path>/g50t.py",
+      "line": 2838
+    },
+    "g50t_unused_coordinate_helper": {
+      "path": "<path>/g50t.py",
+      "line": 2851
+    },
+    "g50t_nonempty_pass": {
+      "path": "<path>/g50t_bmc.py",
+      "line": 189
+    },
+    "g50t_padding": {
+      "path": "<path>/g50t_bmc.py",
+      "line": 272
+    },
+    "g50t_cost": {
+      "path": "<path>/g50t_bmc.py",
+      "line": 514
+    },
+    "g50t_cli": {
+      "path": "<path>/g50t_bmc.py",
+      "line": 550
+    },
+    "g50t_actual_swap_constraints": {
+      "path": "<path>/g50t_bmc.py",
+      "line": 434
+    },
+    "g50t_multiswap_source_argument": {
+      "path": "<path>/g50t_bmc.py",
+      "line": 86
+    },
+    "g50t_model_loading": {
+      "path": "<path>/g50t_bmc.py",
+      "line": 561
+    },
+    "g50t_l6_sweep": {
+      "path": "<path>/ctl_L6_k39.log",
+      "line": 1
+    }
+  },
+  "evidence_hashes": [
+    {
+      "path": "<path>/api.py",
+      "sha256": "07a82fa2b00cf2214c573a9027a628af67c9fdbd9c31b66e6250a9aa12c30ec5"
+    },
+    {
+      "path": "<path>/local_wrapper.py",
+      "sha256": "77e0a39f583e148bfc785f933d111ed4d8653d134def55b204dda3064e93bbd2"
+    },
+    {
+      "path": "<path>/enums.py",
+      "sha256": "94ebef48f6fe950a18679a1b991c366e8e28c32ab58c9335f385e19bea21950e"
+    },
+    {
+      "path": "<path>/bp35-domain-probe.py",
+      "sha256": "aed57a932c3dc6690b156c33c1fdd59f29d76fbf97994f2e9ae1448166da9247"
+    },
+    {
+      "path": "<path>/bp35-domain-host-b.json",
+      "sha256": "b8a3b5340012693e7f66aa9e7b636be22d7b43b9d2eeacc42d61c321668f0dc2"
+    },
+    {
+      "path": "<path>/bp35-domain-host-b.log",
+      "sha256": "26e5e0f0e135ba9bb23e83ddbc6f1c1d8fd1674bacb0421e2e52acfbbb8c91a1"
+    },
+    {
+      "path": "<path>/bp35-fresh-host-b.json",
+      "sha256": "07678f5edfe91364d4a92368e4692346ff36a311ffe5941952935610dbeed0df"
+    },
+    {
+      "path": "<path>/bp35-fresh-host-b.log",
+      "sha256": "1ae524541fd4455854e65d902b9c4f306b76ac7c2f1b3b4aa06e4b1749a9304b"
+    },
+    {
+      "path": "<path>/ctl_L6_k39.log",
+      "sha256": "2870f5c339b8457405338554b7473b1dbf5aea6af5a30f07fe65cd0e24c4e9bc"
+    },
+    {
+      "path": "<path>/g50t_bmc.py",
+      "sha256": "aac1a580c92eb6d364182b0eeec2f1e71db4755380eab4287c49c19360ba96c9"
+    },
+    {
+      "path": "<path>/bp35.py",
+      "sha256": "e9aecb52c629c3e742276c2db04b81f91555051d8617b6cbc58bac410824867f"
+    },
+    {
+      "path": "<path>/g50t.py",
+      "sha256": "6f21f2065744e484ac38534f940158034e69f39add3b10a3d9fd258de7293aa9"
+    },
+    {
+      "path": "<path>/existence.json",
+      "sha256": "c6ee7b07a3c2e702c121746be39c18638985ea8f378f1644c65c981b05191d4a"
+    },
+    {
+      "path": "<path>/g50t_model.json",
+      "sha256": "3e1eb93df7cc6df06134afa5d91016d071a65ef34a4d53225f2d65cf0cc8ee5d"
+    },
+    {
+      "path": "<path>/bp35_prove_sim.py",
+      "sha256": "5802f561c14b24ad19d56e293a2c0b54d5754a6889acefefafe196d195db6239"
+    },
+    {
+      "path": "<path>/gpush_bp35_v5.py",
+      "sha256": "9dd6511453fc96cd56c63a5e4c23ca2a7c276b513aaf7377e02776468b28a2e2"
+    },
+    {
+      "path": "<path>/calib_L3L5L6.json",
+      "sha256": "9fd1e9f5e12bd4bb783b5ec527163ef09673d758d32e8af2cbc0f37b555192bd"
+    },
+    {
+      "path": "<path>/calib_L3L5L6.log",
+      "sha256": "12e92ae61d679968b51d9746f7c07d524aaf7e4023421bdd37c4c838b4d73392"
+    },
+    {
+      "path": "<path>/g50t_sim.py",
+      "sha256": "2a1e65e601bf3bc9d8d8deae4dd592c37ee6b2e13b9a7bb7975cc110a73f511f"
+    }
+  ],
+  "g50t_gate_checks": {
+    "calibration": [
+      {
+        "level": 6,
+        "k": 39,
+        "P_count": 20,
+        "SAT_P": [],
+        "UNSAT_count": 20
+      }
+    ],
+    "source_refs": [
+      {
+        "path": "<path>/g50t_sim.py",
+        "line": 147
+      },
+      {
+        "path": "<path>/g50t_sim.py",
+        "line": 264
+      }
+    ]
+  }
+}

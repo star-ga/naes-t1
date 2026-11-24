@@ -1,0 +1,60 @@
+{
+  "artifact_sha256": [
+    {
+      "kind": "safe_statement_count_extract",
+      "sha256": "77e139e8ab19aeb50daa90c452c7de7c05d27006e1850c083ef9a0d6548f4c9c"
+    },
+    {
+      "kind": "recorded bounds 23..49",
+      "sha256": "bd0e8a161a8a80ffd1b87075c71153dbfcd90636990c10b534c6749028009937"
+    },
+    {
+      "kind": "recorded bounds 50..54",
+      "sha256": "dd0caa60f0e110ad8760edc14146e8efb53228b7d5265d0ccf3f2449f4c93c40"
+    },
+    {
+      "kind": "recorded bounds 55..56",
+      "sha256": "08c1a8ecd3bc2b4017b7566fdd55fe06c419ce30942ad1c8f464e62f77f59bdd"
+    },
+    {
+      "kind": "bound-run inventory",
+      "sha256": "179fa07068bed39621a36d8d4442b7675a5782dda3ea758f2b7f49040498f1b6"
+    },
+    {
+      "kind": "recorded_evidence",
+      "sha256": "5ce2b5061c5e1825b2bc9daf254c60869bd6c36441df674d44e582efe9d0f6c7"
+    },
+    {
+      "kind": "recorded_evidence",
+      "sha256": "a91f0b49c398d42c713459e0e66b427ee24fafbac8ceb1f8a04ff55744da6ffb"
+    },
+    {
+      "kind": "recorded_evidence",
+      "sha256": "74fde749266c79580cfd7147f6f4b82f84028a698aa0924e3a3176c1d44f651f"
+    }
+  ],
+  "floor": 91,
+  "game": "wa30",
+  "game_id": "wa30-ee6fef47",
+  "game_levels": 9,
+  "game_source_sha256": "0c8b63caee2d092d6c0750fd74e417de682d09973b549046394dadf0437b1477",
+  "level": 8,
+  "lower_bound": {
+    "kind": "ida_star_recorded_bound_exhaustion",
+    "statement": "Recorded exhaustive runs close bounds 23 through 56. The sound recorded lower bound is 57 and the upper witness has 91 actions. This floor is proven by empirical proof.",
+    "value": 57
+  },
+  "naes_t1_actions": 91,
+  "proof_class": "Empirical",
+  "proof_detail": "replay_verified_route_upper_bound; sound lower bound 57",
+  "schema_version": 1,
+  "source_certificate_sha256": "b79a5535b063754e01250f679e350da886848eefdc076d05549836e12c2398cf",
+  "status": "empirical",
+  "upper_bound": {
+    "expected_levels_completed": 8,
+    "length": 91,
+    "opening_reset_counted": false,
+    "route": "1 4 4 4 1 5 5 1 5 2 2 2 4 4 4 4 4 2 2 2 4 4 4 4 2 2 5 3 3 2 1 5 4 5 1 5 1 1 1 3 1 1 1 3 3 3 3 3 1 1 3 3 3 1 5 4 4 4 4 4 4 4 4 4 5 3 3 3 3 3 3 3 3 3 3 1 5 2 4 4 4 4 4 4 4 4 4 4 4 1 5",
+    "seed": 0
+  }
+}

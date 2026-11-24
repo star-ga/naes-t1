@@ -1,0 +1,3 @@
+CMD python lock_targeted.py 41 15 cluster
+LOCK_TARGETED kind cluster seed 41 states 15 clicks 61440 mismatch 0 {'ok': 4736, 'noop': 54562, 'fail': 2114, 'win': 28} lossy_clicks 1384 piece_click_pairs_at_distance_exactly_8 556 sec 37
+rc=0

@@ -1,0 +1,43 @@
+{
+  "artifact_sha256": [
+    {
+      "kind": "safe_statement_count_extract",
+      "sha256": "9b77275d78be014eaf851cf9484ed3985f3fd2320b11d385c6d0a0bcba1e4c27"
+    },
+    {
+      "kind": "authority_ledger_label",
+      "sha256": "dcec3081162351515626966697127fc94a41159f53a1b6007e36c1adf5ee6f63"
+    },
+    {
+      "kind": "replay receipt on the current pinned game file (proofs/certificates/lower_replay)",
+      "sha256": "a7983dc4ba17c7e0730a2238e33fcbc7836ee2d8b7cd75d00c6cb27f4c42fc51"
+    },
+    {
+      "kind": "raw output of that replay",
+      "sha256": "923cea50475eb247eadac476ccc518dd7e02da33ad98924b7cac2b7b5dc3cc8b"
+    }
+  ],
+  "floor": 14,
+  "game": "tr87",
+  "game_id": "tr87-cd924810",
+  "game_levels": 6,
+  "level": 5,
+  "lower_bound": {
+    "kind": "alter_offset_exhaust_enum_min_rot_plus_walk",
+    "statement": "Complete offset-vector enumeration checks every winning rotation assignment; sum of minimal ring rotations plus minimum cycle-cover walk is minimized to 14. The proof alter_offset_exhaust_enum_min_rot_plus_walk establishes lower bound 14, equal to the floor. A replay on the current pinned game file obtained the bound 14 (verdict MATCH; proofs/certificates/lower_replay/tr87_L5.json). Scope of that replay: Current pinned public game and canonical prefix; complete archived rotation-offset and cursor-walk cost enumeration. Frozen method-family classification is retained separately.",
+    "value": 14
+  },
+  "naes_t1_actions": 14,
+  "proof_class": "Exact math",
+  "proof_detail": "alter_offset_exhaust_enum_min_rot_plus_walk",
+  "schema_version": 1,
+  "source_certificate_sha256": "ff4d2a429da1f205a482dbb8582e8bea5874388750adb1c18dff7269719dd4ea",
+  "status": "proven",
+  "upper_bound": {
+    "expected_levels_completed": 5,
+    "length": 14,
+    "opening_reset_counted": false,
+    "route": "3 2 4 4 2 4 1 4 1 4 2 4 1 1",
+    "seed": 0
+  }
+}

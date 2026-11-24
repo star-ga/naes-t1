@@ -1,0 +1,86 @@
+// naes_t1_dns_test_udp.mind — case 39 of the DNS resolver selftest, on the
+// default-backend leg (naes_t1_dns_udp.mind; needs naes_t1_libc.mind). The
+// native test unit links naes_t1_dns_test_udp_stub.mind instead.
+//  39 the resolver socket is connected: a datagram sprayed at its port from
+//     another source is never read; positive control: an unconnected socket
+//     reads the same sprayed datagram first
+// ---- helpers ----------------------------------------------------------------
+// sockaddr_in 127.0.0.1:port (port 0 = any) in a 16-byte buffer
+fn naes_dt_lo(sa: i64, port: i64) -> i64 {
+    let _z: i64 = naes_dt_zero(sa, 16);
+    __mind_store_i8(sa, 2);
+    __mind_store_i8(sa + 2, (port >> 8) & 255);
+    __mind_store_i8(sa + 3, port & 255);
+    __mind_store_i8(sa + 4, 127);
+    __mind_store_i8(sa + 7, 1);
+    sa
+}
+// 12-byte datagram whose bytes are all v
+fn naes_dt_dgram(buf: i64, v: i64) -> i64 {
+    let mut i: i64 = 0;
+    while i < 12 { __mind_store_i8(buf + i, v); i = i + 1; }
+    12
+}
+// The stand-in resolver `rs` reads one datagram, learns its source, then a
+// sprayer sends a 0x66 datagram and `rs` a 0x77 one to that source.
+fn naes_dt_spray(rs: i64, buf: i64, peer: i64, plen: i64) -> i64 {
+    __mind_store_i64(plen, 16);
+    let got: i64 = (recvfrom(rs as i32, buf as *mut u8, 64, 0, peer as *mut u8, plen as *mut u8)) as i64;
+    if got != 12 { return 1; }
+    let x: i64 = (socket(2, 2, 0)) as i64;
+    if x < 0 { return 1; }
+    let _f: i64 = naes_dt_dgram(buf, 102);
+    let s1: i64 = (sendto(x as i32, buf as *const u8, 12, 0, peer as *const u8, 16)) as i64;
+    let _c: i64 = (close(x as i32)) as i64;
+    let _r: i64 = naes_dt_dgram(buf, 119);
+    let s2: i64 = (sendto(rs as i32, buf as *const u8, 12, 0, peer as *const u8, 16)) as i64;
+    if s1 != 12 || s2 != 12 { return 1; }
+    0
+}
+// ---- case -------------------------------------------------------------------
+fn naes_dt_case39_at(rs: i64) -> i64 {
+    let sa: i64 = __mind_alloc(16);
+    let peer: i64 = __mind_alloc(16);
+    let plen: i64 = __mind_alloc(8);
+    let buf: i64 = __mind_alloc(64);
+    let r: i64 = __mind_alloc(64);
+    let ns: i64 = __mind_alloc(24);
+    let _l: i64 = naes_dt_lo(sa, 0);
+    if (bind(rs as i32, sa as *const u8, 16)) as i64 != 0 { return 1; }
+    __mind_store_i64(plen, 16);
+    if (getsockname(rs as i32, sa as *mut u8, plen as *mut u8)) as i64 != 0 { return 1; }
+    let port: i64 = (__mind_load_i8(sa + 2) & 255) * 256 + (__mind_load_i8(sa + 3) & 255);
+    let _z: i64 = naes_dt_zero(ns, 24);
+    __mind_store_i64(ns, 2);
+    __mind_store_i8(ns + 8, 127);
+    __mind_store_i8(ns + 11, 1);
+    // the resolver socket, as naes_dns_udp_xchg opens it
+    let c: i64 = naes_dns_udp_open(ns, 2, port);
+    if c < 0 { return 1; }
+    let _q: i64 = naes_dt_dgram(buf, 1);
+    let _a: i64 = naes_dt_lo(sa, port);
+    let sc: i64 = (sendto(c as i32, buf as *const u8, 12, 0, sa as *const u8, 16)) as i64;
+    if sc != 12 || naes_dt_spray(rs, buf, peer, plen) != 0 { let _x: i64 = (close(c as i32)) as i64; return 1; }
+    let got: i64 = naes_dns_udp_wait(c, r, 64, 2);
+    let _cc: i64 = (close(c as i32)) as i64;
+    if got != 12 || (__mind_load_i8(r) & 255) != 119 { return 1; }
+    // positive control: the same spray reaches an unconnected socket first
+    let u: i64 = (socket(2, 2, 0)) as i64;
+    if u < 0 { return 1; }
+    let _q2: i64 = naes_dt_dgram(buf, 1);
+    let su: i64 = (sendto(u as i32, buf as *const u8, 12, 0, sa as *const u8, 16)) as i64;
+    if su != 12 || naes_dt_spray(rs, buf, peer, plen) != 0 { let _y: i64 = (close(u as i32)) as i64; return 1; }
+    let gu: i64 = naes_dns_udp_wait(u, r, 64, 2);
+    let _cu: i64 = (close(u as i32)) as i64;
+    if gu != 12 || (__mind_load_i8(r) & 255) != 102 { return 1; }
+    0
+}
+fn naes_dt_case39() -> i64 {
+    let rs: i64 = (socket(2, 2, 0)) as i64;
+    if rs < 0 { return 1; }
+    let rc: i64 = naes_dt_case39_at(rs);
+    let _c: i64 = (close(rs as i32)) as i64;
+    rc
+}
+// Run case 39; returns the number that failed.
+fn naes_dt_leg_run() -> i64 { naes_dt_guard_one(39, naes_dt_case39()) }

@@ -1,0 +1,13 @@
+LEVEL 1 start key=(0, ((2, 3, 58),), (), (8,)) counters=(32, 0) sha ok; prefix = OUR certificate routes L1..0
+DEPTH 1 {"depth": 1, "parents": 1, "children_generated": 155, "classes_sum": 142, "new_states": 141, "gameover": 0, "sec": 0.1}
+DEPTH 2 {"depth": 2, "parents": 141, "children_generated": 27329, "classes_sum": 25895, "new_states": 261, "gameover": 0, "sec": 15.9}
+DEPTH 3 {"depth": 3, "parents": 261, "children_generated": 61616, "classes_sum": 60171, "new_states": 386, "gameover": 0, "sec": 34.4}
+DEPTH 4 {"depth": 4, "parents": 386, "children_generated": 95591, "classes_sum": 94048, "new_states": 511, "gameover": 0, "sec": 61.1}
+DEPTH 5 {"depth": 5, "parents": 511, "children_generated": 129594, "classes_sum": 127949, "new_states": 638, "gameover": 0, "sec": 77.7}
+DEPTH 6 {"depth": 6, "parents": 638, "children_generated": 162399, "classes_sum": 159764, "new_states": 660, "gameover": 0, "sec": 125.5}
+DEPTH 7 {"depth": 7, "parents": 660, "children_generated": 160562, "classes_sum": 153655, "new_states": 393, "gameover": 0, "sec": 133.0}
+WIN at depth 7 route ((0, 51), (7, 44), (13, 37), (20, 31), (28, 27), (36, 23), (44, 19))
+MINIMUM on engine = 7 (win found at depth 7; every state at depths 0..6 fully expanded, depths 0..6 contain no win)
+total engine steps 637246 states seen 2990 elapsed 448
+REPLAY real env.step: n= 7 levels_completed 1 (prefix gives 0 )
+{"level": 1, "min": 7, "route": [[0, 51], [7, 44], [13, 37], [20, 31], [28, 27], [36, 23], [44, 19]], "stats": [{"depth": 1, "parents": 1, "children_generated": 155, "classes_sum": 142, "new_states": 141, "gameover": 0, "sec": 0.1}, {"depth": 2, "parents": 141, "children_generated": 27329, "classes_sum": 25895, "new_states": 261, "gameover": 0, "sec": 15.9}, {"depth": 3, "parents": 261, "children_generated": 61616, "classes_sum": 60171, "new_states": 386, "gameover": 0, "sec": 34.4}, {"depth": 4, "parents": 386, "children_generated": 95591, "classes_sum": 94048, "new_states": 511, "gameover": 0, "sec": 61.1}, {"depth": 5, "parents": 511, "children_generated": 129594, "classes_sum": 127949, "new_states": 638, "gameover": 0, "sec": 77.7}, {"depth": 6, "parents": 638, "children_generated": 162399, "classes_sum": 159764, "new_states": 660, "gameover": 0, "sec": 125.5}, {"depth": 7, "parents": 660, "children_generated": 160562, "classes_sum": 153655, "new_states": 393, "gameover": 0, "sec": 133.0}]}

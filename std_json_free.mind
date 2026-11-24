@@ -1,0 +1,96 @@
+pub fn jv_free(h: i64) -> i64 {
+    if h == 0 {
+        return 0;
+    }
+    let kind: i64 = __mind_load_i64(h + 0);
+    if kind == jv_kind_string() {
+        if __mind_load_i64(h + 56) != 0 {
+            let _ = __mind_free(__mind_load_i64(h + 56));
+        }
+    }
+    if kind == jv_kind_array() {
+        let n: i64 = __mind_load_i64(h + 88);
+        let a: i64 = __mind_load_i64(h + 80);
+        let mut i: i64 = 0;
+        while i < n {
+            let _ = jv_free(__mind_load_i64(a + i * 8));
+            i = i + 1;
+        }
+        if a != 0 {
+            let _ = __mind_free(a);
+        }
+    }
+    if kind == jv_kind_object() {
+        let n: i64 = __mind_load_i64(h + 120);
+        let ks: i64 = __mind_load_i64(h + 104);
+        let vs: i64 = __mind_load_i64(h + 112);
+        let mut i: i64 = 0;
+        while i < n {
+            let k: i64 = __mind_load_i64(ks + i * 8);
+            if __mind_load_i64(k + 0) != 0 {
+                let _ = __mind_free(__mind_load_i64(k + 0));
+            }
+            let _ = __mind_free(k);
+            let _ = jv_free(__mind_load_i64(vs + i * 8));
+            i = i + 1;
+        }
+        if ks != 0 {
+            let _ = __mind_free(ks);
+        }
+        if vs != 0 {
+            let _ = __mind_free(vs);
+        }
+    }
+    let _ = __mind_free(h);
+    0
+}
+
+// --- Constructors ---
+
+fn jv_make_null() -> i64 {
+    let h: i64 = jv_alloc();
+    __mind_store_i64(h + 0, jv_kind_null());
+    h
+}
+
+fn jv_make_bool(v: i64) -> i64 {
+    let h: i64 = jv_alloc();
+    __mind_store_i64(h + 0, jv_kind_bool());
+    __mind_store_i64(h + 8, v);
+    h
+}
+
+fn jv_make_number(n_int: i64, n_frac: i64, n_frac_d: i64, n_neg: i64, n_is_int: i64) -> i64 {
+    let h: i64 = jv_alloc();
+    __mind_store_i64(h + 0, jv_kind_number());
+    __mind_store_i64(h + 16, n_int);
+    __mind_store_i64(h + 24, n_frac);
+    __mind_store_i64(h + 32, n_frac_d);
+    __mind_store_i64(h + 40, n_neg);
+    __mind_store_i64(h + 48, n_is_int);
+    h
+}
+
+fn jv_make_string(s_addr: i64, s_len: i64, s_cap: i64) -> i64 {
+    let h: i64 = jv_alloc();
+    __mind_store_i64(h + 0, jv_kind_string());
+    __mind_store_i64(h + 56, s_addr);
+    __mind_store_i64(h + 64, s_len);
+    __mind_store_i64(h + 72, s_cap);
+    h
+}
+
+fn jv_make_array() -> i64 {
+    let h: i64 = jv_alloc();
+    __mind_store_i64(h + 0, jv_kind_array());
+    h
+}
+
+fn jv_make_object() -> i64 {
+    let h: i64 = jv_alloc();
+    __mind_store_i64(h + 0, jv_kind_object());
+    h
+}
+
+// --- Byte helpers ---
+

@@ -1,0 +1,201 @@
+// naes_t1_dns_test_name.mind — cases 40..43 of the DNS resolver selftest:
+// the name bounds that keep two wire names from decoding to one text, and
+// the resolver's heap use. Not a program by itself: see the build line in
+// naes_t1_dns_test.mind. Each negative assertion has a positive control.
+//  40 CNAME target longer than 253 characters -> err_form; a 253-character
+//     target resolves through its own A record, a 254-character one does
+//     not, and a CNAME to the root is err_form
+//  41 a NUL or '.' byte inside an owner label -> err_form, never a match
+//  42 a question label holding '.' is no echo of the query "a.b"
+//  43 resolve_at, read_resolv, question_ok and parse_response give their
+//     buffers back: 512 resolves leave VmData within 256 KiB (SKIP on the
+//     native leg, whose free does not reclaim)
+// ---- fixture helpers --------------------------------------------------------
+// "a.b" as text (NUL-terminated); the wire question a.b qtype 1 IN
+fn naes_dt_ab(buf: i64) -> i64 {
+    __mind_store_i8(buf, 97); __mind_store_i8(buf + 1, 46);
+    __mind_store_i8(buf + 2, 98); __mind_store_i8(buf + 3, 0);
+    3
+}
+fn naes_dt_q_ab(buf: i64, off: i64) -> i64 {
+    let mut o: i64 = naes_dt_b(buf, naes_dt_b(buf, off, 1), 97);
+    o = naes_dt_b(buf, naes_dt_b(buf, naes_dt_b(buf, o, 1), 98), 0);
+    naes_dt_wr8(buf, o, 16777472, 4)
+}
+// label of n bytes c; returns the next offset
+fn naes_dt_lab(buf: i64, off: i64, c: i64, n: i64) -> i64 {
+    let mut o: i64 = naes_dt_b(buf, off, n);
+    let mut i: i64 = 0;
+    while i < n { o = naes_dt_b(buf, o, c); i = i + 1; }
+    o
+}
+// a.b CNAME x.<63 y>*k.<last y>, then an A 6.6.6.6 owned by the target
+// itself (own == 1, compression pointer to the rdata) or by "x" (own == 0).
+// The target has 1 + 64k + (1 + last) characters when last > 0.
+fn naes_dt_mk_long(buf: i64, k: i64, last: i64, own: i64) -> i64 {
+    let o: i64 = naes_dt_hdr(buf, 4660, 33152, 1, 2);
+    let o2: i64 = naes_dns_wr16(buf, naes_dt_q_ab(buf, o), 49152 + 12);
+    let mut rdlen: i64 = 2 + k * 64 + 1;
+    if last > 0 { rdlen = rdlen + 1 + last; }
+    let rd: i64 = naes_dt_rr(buf, o2, 5, 1, rdlen);
+    let mut off: i64 = naes_dt_lab(buf, rd, 120, 1);
+    let mut i: i64 = 0;
+    while i < k { off = naes_dt_lab(buf, off, 121, 63); i = i + 1; }
+    if last > 0 { off = naes_dt_lab(buf, off, 122, last); }
+    off = naes_dt_b(buf, off, 0);
+    if own == 1 { off = naes_dns_wr16(buf, off, 49152 + rd); }
+    else { off = naes_dt_b(buf, naes_dt_lab(buf, off, 120, 1), 0); }
+    naes_dt_wr8(buf, naes_dt_rr(buf, off, 1, 1, 4), 101058054, 4)
+}
+// a.b A query answered by owner a.<3-byte label b, mid, z> A 9.9.9.9
+fn naes_dt_mk_mid(buf: i64, mid: i64) -> i64 {
+    let o: i64 = naes_dt_hdr(buf, 4660, 33152, 1, 1);
+    let mut off: i64 = naes_dt_lab(buf, naes_dt_q_ab(buf, o), 97, 1);
+    off = naes_dt_b(buf, naes_dt_b(buf, naes_dt_b(buf, naes_dt_b(buf, off, 3), 98), mid), 122);
+    off = naes_dt_b(buf, off, 0);
+    naes_dt_wr8(buf, naes_dt_rr(buf, off, 1, 1, 4), 151587081, 4)
+}
+// VmData of this process in kB from /proc/self/status, or -1.
+fn naes_dt_vmdata() -> i64 {
+    let path: i64 = __mind_alloc(24);
+    let buf: i64 = __mind_alloc(8192);
+    let _p: i64 = naes_dt_wr8(path, 0, 7310238724270485551, 8);
+    let _q: i64 = naes_dt_wr8(path, 8, 8463496752512591468, 8);
+    let _r: i64 = naes_dt_wr8(path, 16, 115, 8);
+    let n: i64 = naes_dns_read_file(path, buf, 8192);
+    let mut kb: i64 = 0 - 1;
+    let mut i: i64 = 0;
+    while kb < 0 && i + 7 < n {
+        if naes_dt_ckn(buf, i, 7, 16432701125193046) == 1 {
+            let mut j: i64 = i + 7;
+            while j < n && (__mind_load_i8(buf + j) == 32 || __mind_load_i8(buf + j) == 9) { j = j + 1; }
+            kb = 0;
+            while j < n && __mind_load_i8(buf + j) >= 48 && __mind_load_i8(buf + j) <= 57 { kb = kb * 10 + __mind_load_i8(buf + j) - 48; j = j + 1; }
+        }
+        i = i + 1;
+    }
+    let _rp: i64 = naes_dns_release(path);
+    let _rb: i64 = naes_dns_release(buf);
+    kb
+}
+// ---- cases ------------------------------------------------------------------
+fn naes_dt_case40() -> i64 {
+    let pkt: i64 = __mind_alloc(1024);
+    let want: i64 = __mind_alloc(8);
+    let out: i64 = __mind_alloc(24 * 4);
+    let _w: i64 = naes_dt_ab(want);
+    // 257-character target, A owned by "x": once cut to "x" it matched
+    let l1: i64 = naes_dt_mk_long(pkt, 4, 0, 0);
+    if naes_dns_parse_response(pkt, l1, 4660, want, 3, out, 4) != 0 - 3 { return 1; }
+    if naes_dns_collect(pkt, l1, 0, 0, 4660, 4661, want, 3, out, 4) != 0 - 3 { return 1; }
+    // control: a 65-character target is chased whole, so "x" is no owner
+    let l2: i64 = naes_dt_mk_long(pkt, 1, 0, 0);
+    if naes_dns_collect(pkt, l2, 0, 0, 4660, 4661, want, 3, out, 4) != 0 - 8 { return 1; }
+    // 253 characters (1 + 3*64 + 60) resolve through the target's own A
+    let l3: i64 = naes_dt_mk_long(pkt, 3, 59, 1);
+    __mind_store_i64(out + 8, 0);
+    if naes_dns_collect(pkt, l3, 0, 0, 4660, 4661, want, 3, out, 4) != 1 { return 1; }
+    if naes_dt_ckn(out, 8, 4, 101058054) == 0 { return 1; }
+    // 254 characters are one past the RFC 1035 bound
+    let l4: i64 = naes_dt_mk_long(pkt, 3, 60, 1);
+    if naes_dns_collect(pkt, l4, 0, 0, 4660, 4661, want, 3, out, 4) != 0 - 3 { return 1; }
+    // a CNAME to the root names no host: err_form, never the root's own A
+    let o5: i64 = naes_dt_hdr(pkt, 4660, 33152, 1, 2);
+    let o6: i64 = naes_dns_wr16(pkt, naes_dt_q_ab(pkt, o5), 49152 + 12);
+    let o7: i64 = naes_dt_b(pkt, naes_dt_b(pkt, naes_dt_rr(pkt, o6, 5, 1, 1), 0), 0);
+    let l5: i64 = naes_dt_wr8(pkt, naes_dt_rr(pkt, o7, 1, 1, 4), 101058054, 4);
+    if naes_dns_collect(pkt, l5, 0, 0, 4660, 4661, want, 3, out, 4) != 0 - 3 { return 1; }
+    0
+}
+fn naes_dt_case41() -> i64 {
+    let pkt: i64 = __mind_alloc(256);
+    let want: i64 = __mind_alloc(8);
+    let out: i64 = __mind_alloc(24 * 4);
+    let _w: i64 = naes_dt_ab(want);
+    // owner a.(b NUL z): as NUL-terminated text it read "a.b"
+    let l1: i64 = naes_dt_mk_mid(pkt, 0);
+    if naes_dns_collect(pkt, l1, 0, 0, 4660, 4661, want, 3, out, 4) != 0 - 3 { return 1; }
+    // owner a.(b . z): a '.' inside a label is refused the same way
+    let l2: i64 = naes_dt_mk_mid(pkt, 46);
+    if naes_dns_collect(pkt, l2, 0, 0, 4660, 4661, want, 3, out, 4) != 0 - 3 { return 1; }
+    // control: owner a.(b q z) decodes, and is simply not a.b
+    let l3: i64 = naes_dt_mk_mid(pkt, 113);
+    if naes_dns_collect(pkt, l3, 0, 0, 4660, 4661, want, 3, out, 4) != 0 - 8 { return 1; }
+    // control: the same packet with the owner a.b answers 9.9.9.9
+    let o: i64 = naes_dt_hdr(pkt, 4660, 33152, 1, 1);
+    let o2: i64 = naes_dns_wr16(pkt, naes_dt_q_ab(pkt, o), 49152 + 12);
+    let l4: i64 = naes_dt_wr8(pkt, naes_dt_rr(pkt, o2, 1, 1, 4), 151587081, 4);
+    if naes_dns_collect(pkt, l4, 0, 0, 4660, 4661, want, 3, out, 4) != 1 { return 1; }
+    if naes_dt_ckn(out, 8, 4, 151587081) == 0 { return 1; }
+    0
+}
+fn naes_dt_case42() -> i64 {
+    let pkt: i64 = __mind_alloc(256);
+    let want: i64 = __mind_alloc(8);
+    let out: i64 = __mind_alloc(24 * 4);
+    let _w: i64 = naes_dt_ab(want);
+    // question: one label "a.b" (03 61 2e 62 00), answer by pointer to it
+    let o: i64 = naes_dt_hdr(pkt, 4660, 33152, 1, 1);
+    let mut off: i64 = naes_dt_b(pkt, naes_dt_b(pkt, naes_dt_b(pkt, naes_dt_b(pkt, o, 3), 97), 46), 98);
+    off = naes_dt_wr8(pkt, naes_dt_b(pkt, off, 0), 16777472, 4);
+    off = naes_dns_wr16(pkt, off, 49152 + 12);
+    let l1: i64 = naes_dt_wr8(pkt, naes_dt_rr(pkt, off, 1, 1, 4), 117901063, 4);
+    if naes_dns_question_ok(pkt, l1, want, 3, 1) != 0 { return 1; }
+    if naes_dns_collect(pkt, l1, 0, 0, 4660, 4661, want, 3, out, 4) != 0 - 3 { return 1; }
+    // control: the two-label question a.b is the echo and answers 7.7.7.7
+    let o3: i64 = naes_dt_hdr(pkt, 4660, 33152, 1, 1);
+    let o4: i64 = naes_dns_wr16(pkt, naes_dt_q_ab(pkt, o3), 49152 + 12);
+    let l2: i64 = naes_dt_wr8(pkt, naes_dt_rr(pkt, o4, 1, 1, 4), 117901063, 4);
+    if naes_dns_question_ok(pkt, l2, want, 3, 1) != 1 { return 1; }
+    if naes_dns_collect(pkt, l2, 0, 0, 4660, 4661, want, 3, out, 4) != 1 { return 1; }
+    0
+}
+fn naes_dt_case43() -> i64 {
+    let pa: i64 = __mind_alloc(256);
+    let pb: i64 = __mind_alloc(256);
+    let www: i64 = __mind_alloc(32);
+    let out: i64 = __mind_alloc(24 * 4);
+    let ns: i64 = __mind_alloc(24);
+    let tx: i64 = __mind_alloc(104);
+    let _w: i64 = naes_dt_name_www(www);
+    let _n: i64 = naes_dt_zero(ns, 24);
+    __mind_store_i64(ns, 2);
+    let la: i64 = naes_dt_mk_a(pa, 4660);
+    let lb: i64 = naes_dt_mk_empty(pb, 28);
+    // warm-up round, so the first heap growth is not counted
+    let _s0: i64 = naes_dt_script(tx, pa, la, pb, lb, 0);
+    if naes_dns_resolve_at(tx, ns, 2, www, 15, out, 4) != 1 { return 1; }
+    let v0: i64 = naes_dt_vmdata();
+    if v0 < 1 { return 1; }
+    let mut bad: i64 = 0;
+    let mut i: i64 = 0;
+    while i < 512 {
+        // loss mask 1: the A is asked twice, so the retry path runs too
+        let _s: i64 = naes_dt_script(tx, pa, la, pb, lb, 1);
+        if naes_dns_resolve_at(tx, ns, 2, www, 15, out, 4) != 1 { bad = 1; }
+        if naes_dns_read_resolv(out) < 0 { bad = 1; }
+        i = i + 1;
+    }
+    let v1: i64 = naes_dt_vmdata();
+    if bad == 1 || v1 < 1 { return 1; }
+    // about 12 KiB a round would be 6 MiB; freed buffers are reused
+    if v1 - v0 > 256 { return 1; }
+    0
+}
+// Run cases 40..43; returns the number that failed. Case 43 needs a leg
+// whose free reclaims (naes_dns_leg_reclaims); the native leg prints
+// "SKIP 43", which is not counted as a pass.
+fn naes_dt_name_run() -> i64 {
+    let mut f: i64 = naes_dt_guard_one(40, naes_dt_case40());
+    f = f + naes_dt_guard_one(41, naes_dt_case41());
+    f = f + naes_dt_guard_one(42, naes_dt_case42());
+    if naes_dns_leg_reclaims() == 1 { f = f + naes_dt_guard_one(43, naes_dt_case43()); }
+    else {
+        let b: i64 = __mind_alloc(8);
+        let _w: i64 = naes_dt_wr8(b, 0, 138785934163, 5);
+        let _a: i64 = __mind_write(2, b, 5, 0 - 1);
+        let _n: i64 = naes_dt_say_num(43);
+        let _e: i64 = naes_dt_say_ch(10);
+    }
+    f
+}

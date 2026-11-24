@@ -1,0 +1,40 @@
+{
+ "total": {
+  "levels": 7,
+  "ref_levels": 7,
+  "actions": 243,
+  "ref_actions": 243,
+  "games_full": 1,
+  "games": 1,
+  "perturb": 0
+ },
+ "games": [
+  {
+   "game": "ka59-38d34dbb",
+   "levels": 7,
+   "ref_levels": 7,
+   "actions": 243,
+   "ref_actions": 243,
+   "per_level": [
+    12,
+    30,
+    33,
+    38,
+    20,
+    45,
+    65
+   ],
+   "ref_per_level": [
+    11,
+    30,
+    33,
+    38,
+    20,
+    45,
+    65
+   ],
+   "resets": 1,
+   "over_ref_levels": []
+  }
+ ]
+}

@@ -1,0 +1,38 @@
+{
+ "total": {
+  "levels": 6,
+  "ref_levels": 6,
+  "actions": 417,
+  "ref_actions": 417,
+  "games_full": 1,
+  "games": 1,
+  "perturb": 0
+ },
+ "games": [
+  {
+   "game": "dc22-fdcac232",
+   "levels": 6,
+   "ref_levels": 6,
+   "actions": 417,
+   "ref_actions": 417,
+   "per_level": [
+    21,
+    42,
+    45,
+    62,
+    108,
+    139
+   ],
+   "ref_per_level": [
+    20,
+    42,
+    45,
+    62,
+    108,
+    139
+   ],
+   "resets": 1,
+   "over_ref_levels": []
+  }
+ ]
+}

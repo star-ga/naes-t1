@@ -1,0 +1,17 @@
+23387: MECHANICS L1 state=positions+selection elements=1 shapes=1 axes=0 goals=5 rotations=0 filters=0 alphabet=A1-4_unit_dirs+A5_cycle_select+A6_click_select+A7_undo
+23388: QF_LIA L1 SAT cost<=15; UNSAT cost<=14; z3=5.0.0; checks=cost<=15:sat,cost<=7:unsat,cost<=11:unsat,cost<=13:unsat,cost<=14:unsat
+23389: FRESH_REPLAY L1 actions=15 first_win=15 result=WIN instance=ar25-e3c63847
+23390: FRESH_PREFIX L1 actions=14 result=NOT_WIN instance=ar25-e3c63847
+23391: ENDPOINT L1 {"qdwjaukgpe": [1, 15]}
+23392: EVIDENCE_SHA256 L1 0390beaa659ebb66a8959ad1e184aededf6e2dcdaf22bdb174970b1a8d15337c
+23393: SELF_CHECK L1 expected=15 exact=15 result=MATCH
+23394: 2026-07-25 02:16:03 | INFO | Successfully loaded game class Ar25 from <path>
+23395: 2026-07-25 02:16:03 | INFO | Successfully loaded game class Ar25 from <path>
+23396: 2026-07-25 02:16:03 | INFO | Successfully loaded game class Ar25 from <path>
+23397: MECHANICS L2 state=positions+selection elements=2 shapes=1 axes=1 goals=8 rotations=0 filters=0 alphabet=A1-4_unit_dirs+A5_cycle_select+A6_click_select+A7_undo
+23398: QF_LIA L2 SAT cost<=11; UNSAT cost<=10; z3=5.0.0; checks=cost<=11:sat,cost<=5:unsat,cost<=8:unsat,cost<=9:unsat,cost<=10:unsat
+23399: FRESH_REPLAY L2 actions=11 first_win=11 result=WIN instance=ar25-e3c63847
+23400: FRESH_PREFIX L2 actions=10 result=NOT_WIN instance=ar25-e3c63847
+23401: ENDPOINT L2 {"noaqoztjku": [15, 14], "zxikvwjsyl": [10, -3]}
+23402: EVIDENCE_SHA256 L2 017b1eb56986e2eb7b46fe2b10a65b0214cb0fc6cb6bb98cdc9c4f3b69589d6d
+23403: SELF_CHECK L2 expected=11 exact=11 result=MATCH

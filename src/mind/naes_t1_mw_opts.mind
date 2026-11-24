@@ -1,0 +1,282 @@
+// Options and the CPU list of the multi-worker bench path: the fixed kernel
+// options (mw_cfg_set), the record selection, and the reading of the CPU
+// list that the process may run on.
+// Entry points: mw_cfg_set, bit_byte, read_allowed, select4.
+
+// Fixed kernel options of the multi-worker path: groups of 3 channels, 8
+// groups per segment, tiles of 32 rows, epilogue mode 2, one thread per group.
+// The record count is the limit times the batch. Returns -1 when threads is
+// outside 2 to mw_limit.
+fn mw_cfg_set(cfg: i64, threads: i64) -> i64 {
+    if threads < 2 || threads > mw_limit() {
+        return 0 - 1;
+    }
+    st(cfg, cf_group(), 3);
+    st(cfg, cf_cg(), 8);
+    st(cfg, cf_tile(), 32);
+    st(cfg, cf_workers(), 1);
+    st(cfg, cf_epi(), 2);
+    st(cfg, cf_limit(), ld(cfg, cf_limit()) * ld(cfg, bf_batch()));
+    0
+}
+
+// Largest worker count of the multi-worker path.
+fn mw_limit() -> i64 { 24 }
+
+fn bit_byte(k: i64) -> i64 {
+    let mut b: i64 = 1;
+    let mut i: i64 = 0;
+    while i < k {
+        b = b * 2;
+        i = i + 1;
+    }
+    b
+}
+
+fn hex_val(c: i64) -> i64 {
+    if c >= 48 && c <= 57 {
+        return c - 48;
+    }
+    if c >= 97 && c <= 102 {
+        return c - 87;
+    }
+    if c >= 65 && c <= 70 {
+        return c - 55;
+    }
+    0 - 1
+}
+
+fn nibble_has(v: i64, b: i64) -> i64 {
+    let mut x: i64 = 1;
+    let mut i: i64 = 0;
+    while i < b {
+        x = x * 2;
+        i = i + 1;
+    }
+    if (v / x) % 2 == 1 {
+        return 1;
+    }
+    0
+}
+
+fn fill_lab(p: i64) -> i64 {
+    __mind_store_i8(p, 67);
+    __mind_store_i8(p + 1, 112);
+    __mind_store_i8(p + 2, 117);
+    __mind_store_i8(p + 3, 115);
+    __mind_store_i8(p + 4, 95);
+    __mind_store_i8(p + 5, 97);
+    __mind_store_i8(p + 6, 108);
+    __mind_store_i8(p + 7, 108);
+    __mind_store_i8(p + 8, 111);
+    __mind_store_i8(p + 9, 119);
+    __mind_store_i8(p + 10, 101);
+    __mind_store_i8(p + 11, 100);
+    __mind_store_i8(p + 12, 58);
+    0
+}
+
+fn find_lab(buf: i64, n: i64, lab: i64) -> i64 {
+    let mut i: i64 = 0;
+    while i + 13 <= n {
+        let mut k: i64 = 0;
+        let mut ok: i64 = 1;
+        while k < 13 {
+            if ldu8(buf, i + k) != ldu8(lab, k) {
+                ok = 0;
+            }
+            k = k + 1;
+        }
+        if ok == 1 {
+            return i + 13;
+        }
+        i = i + 1;
+    }
+    0 - 1
+}
+
+fn fill_cpus(tm: i64, buf: i64, lo: i64, hi: i64) -> i64 {
+    let mut pos: i64 = hi;
+    let mut bit: i64 = 0;
+    let mut n: i64 = 0;
+    while pos >= lo && bit < 72 {
+        let v: i64 = hex_val(ldu8(buf, pos));
+        if v >= 0 {
+            let mut b: i64 = 0;
+            while b < 4 {
+                if nibble_has(v, b) == 1 && bit + b < 72 && n < mw_limit() {
+                    st(tm, 240 + n, bit + b);
+                    n = n + 1;
+                }
+                b = b + 1;
+            }
+            bit = bit + 4;
+        }
+        if pos == lo {
+            pos = 0 - 1;
+        } else {
+            pos = pos - 1;
+        }
+    }
+    st(tm, 176, n);
+    n
+}
+
+fn read_allowed(tm: i64) -> i64 {
+    let path: i64 = mw_alloc_zero(4);
+    let lab: i64 = mw_alloc_zero(2);
+    let buf: i64 = mw_alloc_zero(512);
+    if path == 0 || lab == 0 || buf == 0 {
+        return 0;
+    }
+    __mind_store_i8(path, 47);
+    __mind_store_i8(path + 1, 112);
+    __mind_store_i8(path + 2, 114);
+    __mind_store_i8(path + 3, 111);
+    __mind_store_i8(path + 4, 99);
+    __mind_store_i8(path + 5, 47);
+    __mind_store_i8(path + 6, 115);
+    __mind_store_i8(path + 7, 101);
+    __mind_store_i8(path + 8, 108);
+    __mind_store_i8(path + 9, 102);
+    __mind_store_i8(path + 10, 47);
+    __mind_store_i8(path + 11, 115);
+    __mind_store_i8(path + 12, 116);
+    __mind_store_i8(path + 13, 97);
+    __mind_store_i8(path + 14, 116);
+    __mind_store_i8(path + 15, 117);
+    __mind_store_i8(path + 16, 115);
+    fill_lab(lab);
+    let fd: i64 = open_ro(path);
+    if fd < 0 {
+        return 0;
+    }
+    let n: i64 = read_some(fd, buf, 4000);
+    close_fd(fd);
+    if n < 14 {
+        return 0;
+    }
+    let at: i64 = find_lab(buf, n, lab);
+    if at < 0 {
+        return 0;
+    }
+    let mut lo: i64 = at;
+    while lo < n && (ldu8(buf, lo) == 32 || ldu8(buf, lo) == 9) {
+        lo = lo + 1;
+    }
+    let mut end: i64 = lo;
+    while end + 1 < n {
+        let c: i64 = ldu8(buf, end + 1);
+        if c == 10 || c == 13 {
+            return fill_cpus(tm, buf, lo, end);
+        }
+        end = end + 1;
+    }
+    fill_cpus(tm, buf, lo, end)
+}
+
+fn select4(cfg: i64) -> i64 {
+    let sel: i64 = mw_alloc_zero(2);
+    let path: i64 = ld(cfg, cf_records());
+    if path != 0 {
+        let fd: i64 = open_ro(path);
+        if fd < 0 {
+            return 0;
+        }
+        if mw_read_fd_all(fd, sel) < 0 {
+            close_fd(fd);
+            return 0;
+        }
+        close_fd(fd);
+        let n: i64 = ld(sel, 1) / 8;
+        if n < 1 || ld(sel, 1) != n * 8 {
+            return 0;
+        }
+        let mut prev: i64 = 0 - 1;
+        let mut k: i64 = 0;
+        while k < n {
+            let v: i64 = ld(ld(sel, 0), k);
+            if v <= prev || v >= 5499 {
+                return 0;
+            }
+            prev = v;
+            k = k + 1;
+        }
+        st(sel, 1, n);
+        return sel;
+    }
+    let mut n: i64 = ld(cfg, cf_limit());
+    if n <= 0 || n > 5499 {
+        n = 5499;
+    }
+    let idx: i64 = mw_alloc_zero(n);
+    let mut k: i64 = 0;
+    while k < n {
+        st(idx, k, (ld(cfg, cf_offset()) + k) % 5499);
+        k = k + 1;
+    }
+    st(sel, 0, idx);
+    st(sel, 1, n);
+    sel
+}
+
+fn name_at(buf: i64, off: i64, size: i64, i: i64) -> i64 {
+    if i == 0 {
+        if size != 3 {
+            return 0;
+        }
+        if ldu8(buf, off) != 105 || ldu8(buf, off + 1) != 110 || ldu8(buf, off + 2) != 112 {
+            return 0;
+        }
+        return 1;
+    }
+    if i >= 1 && i <= 8 {
+        if size != 8 {
+            return 0;
+        }
+        if ldu8(buf, off) != 98 || ldu8(buf, off + 1) != 108 || ldu8(buf, off + 2) != 111 {
+            return 0;
+        }
+        if ldu8(buf, off + 3) != 99 || ldu8(buf, off + 4) != 107 || ldu8(buf, off + 5) != 115 {
+            return 0;
+        }
+        if ldu8(buf, off + 6) != 46 || ldu8(buf, off + 7) != 47 + i {
+            return 0;
+        }
+        return 1;
+    }
+    if i == 9 {
+        if size != 8 {
+            return 0;
+        }
+        if ldu8(buf, off) != 97 || ldu8(buf, off + 1) != 99 || ldu8(buf, off + 2) != 116 {
+            return 0;
+        }
+        if ldu8(buf, off + 3) != 95 || ldu8(buf, off + 4) != 104 || ldu8(buf, off + 5) != 101 {
+            return 0;
+        }
+        if ldu8(buf, off + 6) != 97 || ldu8(buf, off + 7) != 100 {
+            return 0;
+        }
+        return 1;
+    }
+    if i == 10 {
+        if size != 10 {
+            return 0;
+        }
+        if ldu8(buf, off) != 99 || ldu8(buf, off + 1) != 108 || ldu8(buf, off + 2) != 105 {
+            return 0;
+        }
+        if ldu8(buf, off + 3) != 99 || ldu8(buf, off + 4) != 107 || ldu8(buf, off + 5) != 95 {
+            return 0;
+        }
+        if ldu8(buf, off + 6) != 104 || ldu8(buf, off + 7) != 101 || ldu8(buf, off + 8) != 97 {
+            return 0;
+        }
+        if ldu8(buf, off + 9) != 100 {
+            return 0;
+        }
+        return 1;
+    }
+    0
+}

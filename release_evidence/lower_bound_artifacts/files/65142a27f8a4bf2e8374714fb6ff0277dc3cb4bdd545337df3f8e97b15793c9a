@@ -1,0 +1,183 @@
+{
+ "n_levels_old": 7,
+ "n_levels_new": 7,
+ "levels": [
+  {
+   "level": 1,
+   "verdict": "ORDER_ONLY",
+   "n_sprites": [
+    7,
+    7
+   ],
+   "diffs": [],
+   "order_changed_layers": [
+    0,
+    1
+   ],
+   "first_order_difference_index": 0
+  },
+  {
+   "level": 2,
+   "verdict": "ORDER_ONLY",
+   "n_sprites": [
+    11,
+    11
+   ],
+   "diffs": [],
+   "order_changed_layers": [
+    0
+   ],
+   "first_order_difference_index": 1
+  },
+  {
+   "level": 3,
+   "verdict": "ORDER_ONLY",
+   "n_sprites": [
+    23,
+    23
+   ],
+   "diffs": [],
+   "order_changed_layers": [
+    0,
+    1
+   ],
+   "first_order_difference_index": 0
+  },
+  {
+   "level": 4,
+   "verdict": "ORDER_ONLY",
+   "n_sprites": [
+    19,
+    19
+   ],
+   "diffs": [],
+   "order_changed_layers": [
+    0,
+    1
+   ],
+   "first_order_difference_index": 0
+  },
+  {
+   "level": 5,
+   "verdict": "ORDER_ONLY",
+   "n_sprites": [
+    20,
+    20
+   ],
+   "diffs": [],
+   "order_changed_layers": [
+    0,
+    1
+   ],
+   "first_order_difference_index": 0
+  },
+  {
+   "level": 6,
+   "verdict": "ORDER_ONLY",
+   "n_sprites": [
+    13,
+    13
+   ],
+   "diffs": [],
+   "order_changed_layers": [
+    0,
+    1
+   ],
+   "first_order_difference_index": 0
+  },
+  {
+   "level": 7,
+   "verdict": "ORDER_ONLY",
+   "n_sprites": [
+    26,
+    26
+   ],
+   "diffs": [],
+   "order_changed_layers": [
+    0,
+    1
+   ],
+   "first_order_difference_index": 0
+  }
+ ],
+ "string_map_conflicts": {},
+ "string_map": {
+  "ChX": "0015cltmlkogkc",
+  "HQB": "0016uciqlhjlom",
+  "EtZ": "0009vwghyhtilb",
+  "fZK": "0010gnulkywfpz",
+  "KLo": "0044auurrayaab",
+  "rDn": "0043nzrtobajqi",
+  "pYt": "0024oklzljpbjf",
+  "UXg": "0025yfyiswdvoh",
+  "qAd": "0042ueboolxadn",
+  "xQZ": "0021ayhektiwsl",
+  "ZGd": "0022jvmlspyigc",
+  "ACQ": "sys_click",
+  "cCW": "0011egrqhpaniv",
+  "dkk": "0046qitpxixzbw",
+  "MZz": "0027sdwqirupzd",
+  "PPS": "0017pmjcrnwxxj",
+  "rVy": "0047nozrwoeeue",
+  "Tif": "0045wzhlvcxnxi",
+  "ySt": "0026mrilttcabm",
+  "EGp": "0029hisqstrfef",
+  "Eto": "0038kxomlaqnmm",
+  "fCG": "0062jjoqcrrlqt",
+  "GBb": "0037zhvthfywaf",
+  "hiB": "0028yrxfnwssrz",
+  "nDF": "0049gizsqrldri",
+  "sro": "0061hvrsaskhtv",
+  "TKb": "0048uprazwxldi",
+  "uUB": "0050xlivmfsgrg",
+  "VAJ": "0018rxmsqpnhhx",
+  "xIX": "0012efovcqtrsv",
+  "BfR": "0053hvedzitgvm",
+  "cGJ": "0063vjsvlzmsou",
+  "dBq": "0003qvhiakludh",
+  "zHk": "0004sttgkofqwb",
+  "JYf": "0051cbovinmogo",
+  "jyx": "0041wufoxqricu",
+  "MPi": "0023zpxhabfwya",
+  "mZh": "0069aqtrahmrun",
+  "Nxo": "0031pjczzavayi",
+  "Oqo": "0052jlqpbhssxz",
+  "Ubu": "0019yzthbwsumy",
+  "UIT": "0013nlpqaanefy",
+  "WGb": "0039vrggqczkeg",
+  "YBr": "0030tpzxnyfdvh",
+  "BqR": "0032xvysrppdmd",
+  "bUo": "0057jqxvzzgzuz",
+  "cni": "0020supxvsgicv",
+  "eoH": "0014fnratutanf",
+  "SnP": "0055zkynfqcbvf",
+  "tHm": "0033jkunkpsthb",
+  "UWO": "0056gvcomjuyya",
+  "Xfy": "0054vgoahtzchm",
+  "XTW": "0034gljhkoittz",
+  "egw": "0060vzyhngpdxk",
+  "JHJ": "0058isdkrjwbjw",
+  "PlW": "0035mojyqpmkca",
+  "rBz": "0000ufilpvvllo",
+  "WuO": "0001symqacyexa",
+  "uct": "0059nzfxpksuts",
+  "AEF": "0066vaxquypzdt",
+  "HfU": "0067nuweesmgmg",
+  "HMp": "0065dnabthoeah",
+  "iiv": "0002eemauzpzws",
+  "keB": "0040sfsyhdwzpa",
+  "khL": "0036rjrqlosxim",
+  "RmM": "0068ggudhgdmjj",
+  "WfE": "0005nxriaixjyr",
+  "wmR": "0064keizattioe",
+  "vc33": "vc33",
+  "RoA": "StepCounter",
+  "TiD": "Gravity",
+  "KEA": "0006mfbmvylbss",
+  "HPB": "0008rybtprnbie",
+  "rlV": "0007gyluczquhi",
+  "x": "x",
+  "y": "y"
+ },
+ "non_injective": {}
+}

@@ -1,0 +1,104 @@
+{
+ "instance": "sk48-d8078629",
+ "head": {
+  "model": "sk48_click_acceptance",
+  "game_py": "<path>",
+  "level": 4,
+  "ub": 23,
+  "ringless_heads": [
+   1,
+   2,
+   3,
+   4
+  ],
+  "robust_path": [
+   "extend",
+   "extend",
+   "lat_up",
+   "lat_up",
+   "lat_up",
+   "lat_up",
+   "retract",
+   "retract",
+   "retract",
+   "retract",
+   "lat_down",
+   "extend",
+   "lat_up",
+   "extend",
+   "lat_down",
+   "extend",
+   "lat_up",
+   "extend",
+   "extend",
+   "lat_down",
+   "retract",
+   "retract",
+   "lat_up"
+  ],
+  "robust_actions": 23
+ },
+ "hyps": [
+  {
+   "label": "accept",
+   "consistent": true,
+   "fi_min": 22,
+   "ub": 23,
+   "exhaustive": false,
+   "diff": {
+    "sampled": 1501,
+    "mismatches": 0
+   },
+   "fi_replay": {
+    "won_at": 22,
+    "n": 22
+   },
+   "same_route_under_ignore": {
+    "won_at": null,
+    "n": 22
+   },
+   "robust_replay": {
+    "won_at": 23,
+    "n": 23
+   }
+  },
+  {
+   "label": "ignore",
+   "consistent": true,
+   "fi_min": null,
+   "ub": 23,
+   "exhaustive": true,
+   "states": 10353367,
+   "depth_closed": 22,
+   "secs": 154.1,
+   "diff": {
+    "sampled": 1501,
+    "mismatches": 0
+   },
+   "robust_replay": {
+    "won_at": 23,
+    "n": 23
+   }
+  }
+ ],
+ "robust": {
+  "length": 23,
+  "replays": {
+   "accept": 23,
+   "ignore": 23
+  }
+ },
+ "verdict": {
+  "status": "OBSERVABLE_PROVEN",
+  "value": 23,
+  "lb": 23,
+  "ub": 23,
+  "reasons": [],
+  "hardest_hypotheses": [
+   "ignore"
+  ],
+  "n_hypotheses": 2,
+  "n_consistent": 2
+ },
+ "full_information_floor_actual": null
+}

@@ -1,0 +1,17 @@
+{
+ "level": 4,
+ "bound": 30,
+ "K": 2,
+ "mode": "final",
+ "P": 12,
+ "Pmax": 15,
+ "status": "UNSAT",
+ "line": "v4 L4 mode=final k=30 K=2 P=12 -> UNSAT vars=312124 clauses=1197239 (6.8s)",
+ "started_utc": "2026-11-04T12:43:59.528718+00:00",
+ "solver_finished_utc": "2026-11-04T12:44:06.363142+00:00",
+ "encoding_sha256": "1b6ea6a032a32fc7d40b27b32b3a1b4ec81060f499539c1afa2e58f763548b41",
+ "engine_sha256": "6f21f2065744e484ac38534f940158034e69f39add3b10a3d9fd258de7293aa9",
+ "partitions": null,
+ "finished_utc": "2026-11-04T12:44:06.363180+00:00",
+ "elapsed_seconds": 6.834
+}

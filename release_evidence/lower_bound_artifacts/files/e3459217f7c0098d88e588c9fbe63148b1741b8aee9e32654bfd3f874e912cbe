@@ -1,0 +1,222 @@
+{
+  "status": "<word withheld>",
+  "<key withheld>": false,
+  "rows": [
+    {
+      "game": "sk48",
+      "level": 1,
+      "instance": "sk48-41055498",
+      "<key withheld>": "<word withheld>",
+      "floor": 14,
+      "lb": 14,
+      "ub": 14,
+      "<key withheld 2>": "<word withheld>",
+      "source_sha256": "cebfbdf395c13812ec22938c2019a1d52fed66e9aa72a304f62c5d307ea452d3",
+      "canonical_start_sha256": "533bf2465030639c2c9e8d937ac6168eb6390fda0df100b5cb7cb34fc62a92ed",
+      "proof_kind": "recovered_complete_state_layers_plus_all_edge_native_coupling_and_L1_undo_dominance",
+      "action_scope": "native unit-action minimum IDs1..7 plus legal0..63 and raw integer click selections; RESET canonical-start dominance",
+      "dispatch": {
+        "advertised": [
+          1,
+          2,
+          3,
+          4,
+          6,
+          7
+        ],
+        "effective_forward": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "ID5": "explicit source membership rejection; native no-op",
+        "ID6": "sole upper pair already selected; all raw integer click selections no-op",
+        "ID7": "physical snapshot pop with no budget gain, deletable in L1 only",
+        "RESET": "returns identical canonical L1 start"
+      },
+      "coverage": {
+        "source_theorem": "THEOREM.md",
+        "sufficient_state": [
+          "selected_base",
+          "ordered_base_positions",
+          "ordered_segment_counts",
+          "ordered_dot_positions"
+        ],
+        "closed_depths": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13
+        ],
+        "states_expanded": 599,
+        "native_cardinal_edges": 2396,
+        "native_model_exact_edges": 2396,
+        "click_probe": {
+          "states_expanded": 599,
+          "states_probed": 599,
+          "pixel_queries_per_state": 4096,
+          "full_per_pixel_action_execution_claimed": false,
+          "native_representative_class_actions": 1797,
+          "validated": true
+        },
+        "undo_successor_comparisons": 2396,
+        "native_reset_checks": 599
+      },
+      "witnesses": [
+        {
+          "path": [
+            1,
+            1,
+            4,
+            4,
+            4,
+            1,
+            4,
+            3,
+            2,
+            2,
+            4,
+            3,
+            1,
+            4
+          ],
+          "sha256": "5addfc4893b7af4f5ba68a75c028aa55e8bd6400ccda86de9ae7764e0f3e6faf",
+          "first_completion": 14,
+          "F_minus_1_not_complete": true
+        },
+        {
+          "path": [
+            1,
+            1,
+            1,
+            4,
+            4,
+            4,
+            4,
+            3,
+            2,
+            2,
+            4,
+            3,
+            1,
+            4
+          ],
+          "sha256": "10a408abc9ab4806715e1806d7bf950fceaac9b02754294361b2b417e320a1a4",
+          "first_completion": 14,
+          "F_minus_1_not_complete": true
+        }
+      ],
+      "<key withheld 3>": [
+        "U",
+        "U",
+        "R",
+        "R",
+        "R",
+        "U",
+        "R",
+        "L",
+        "D",
+        "D",
+        "R",
+        "L",
+        "U",
+        "R"
+      ],
+      "<key withheld 4>": [
+        [
+          4,
+          null,
+          null
+        ],
+        [
+          4,
+          null,
+          null
+        ],
+        [
+          4,
+          null,
+          null
+        ],
+        [
+          1,
+          null,
+          null
+        ],
+        [
+          1,
+          null,
+          null
+        ],
+        [
+          1,
+          null,
+          null
+        ],
+        [
+          4,
+          null,
+          null
+        ],
+        [
+          3,
+          null,
+          null
+        ],
+        [
+          2,
+          null,
+          null
+        ],
+        [
+          2,
+          null,
+          null
+        ],
+        [
+          4,
+          null,
+          null
+        ],
+        [
+          3,
+          null,
+          null
+        ],
+        [
+          1,
+          null,
+          null
+        ],
+        [
+          4,
+          null,
+          null
+        ]
+      ],
+      "replay_verified": true,
+      "first_completion": 14,
+      "F_minus_1_not_complete": true,
+      "<key withheld 5>": false,
+      "receipt_pins": {
+        "THEOREM.md": "75c13569a64c36e36d810a2b4c5831d947ef12cf7dd17733a569a084f6799ec3",
+        "<key withheld>": "36772a64b3bc1645e55e77c87488e9da9a9a160a947811e0b126537d070035e9",
+        "results/edge-certificates.jsonl": "ede19095cfb0a8810aa0d48a4e6ba06edd00b3796a8270e93d42ff8a91e5bb24",
+        "receipt-verification.json": "489956709198341e68d7c8f731e65b8814aecbbcc4d6dfa4a0d91d1a7160ec63",
+        "SOURCE_MANIFEST.json": "740bd8535ea1ea9af858e24b4abd2791d6fcbd94fcf5f3440a61928e57001507",
+        "trust-base.json": "87248f21dc55107ce1e9cac1ddbcf95fd6108c928d58ec8534fa69f13930e0c7"
+      }
+    }
+  ]
+}

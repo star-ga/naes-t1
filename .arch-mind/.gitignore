@@ -1,0 +1,7 @@
+key.local
+keys.json
+store/
+store.lock
+last_summary.json
+last_scan.json
+empty-root/

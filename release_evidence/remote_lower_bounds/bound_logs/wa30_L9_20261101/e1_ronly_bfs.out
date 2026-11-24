@@ -1,0 +1,32 @@
+depth 0 states 1 seen 1
+depth 1 states 4 seen 5
+depth 2 states 14 seen 19
+depth 3 states 20 seen 39
+depth 4 states 29 seen 68
+depth 5 states 36 seen 104
+depth 6 states 44 seen 148
+depth 7 states 68 seen 216
+depth 8 states 113 seen 329
+depth 9 states 209 seen 538
+depth 10 states 427 seen 965
+depth 11 states 794 seen 1759
+depth 12 states 1392 seen 3151
+depth 13 states 2288 seen 5439
+depth 14 states 3788 seen 9227
+depth 15 states 6454 seen 15681
+depth 16 states 11450 seen 27131
+depth 17 states 19707 seen 46838
+depth 18 states 31775 seen 78613
+depth 19 states 49815 seen 128428
+depth 20 states 75692 seen 204120
+depth 21 states 116749 seen 320869
+depth 22 states 181979 seen 502848
+FIRST_DONE_ANYWHERE d=23
+depth 23 states 280749 seen 783597
+depth 24 states 423774 seen 1207371
+depth 25 states 616804 seen 1824175
+depth 26 states 875684 seen 2699859
+depth 27 states 1219186 seen 3919045
+FIRST_DONE_PLAYER_IN_L d=28 p=88
+depth 28 states 1687681 seen 5606726
+rc=0

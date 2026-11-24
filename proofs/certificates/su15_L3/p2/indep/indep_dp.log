@@ -1,0 +1,10 @@
+CONSTS R 8 STEP 4 TICKS 4 YMIN 10 YMAX 63 W 64 H 64 SZ [1, 2, 3, 4] ZONES [(5, 46, 9, 9), (19, 46, 9, 9)] GOAL {3: 1, 2: 1} START ((0, 8, 28), (0, 12, 23), (0, 31, 15), (0, 31, 22), (0, 55, 23), (0, 61, 23), (1, 18, 16), (1, 30, 32), (1, 46, 22))
+ENGINE_TABLES v 0 moves 3392 merges 3392 engine_calls 6784 sec 2
+ENGINE_TABLES v 1 moves 3392 merges 3392 engine_calls 13568 sec 5
+ENGINE_TABLES v 2 moves 3392 merges 3392 engine_calls 20352 sec 7
+ENGINE_TABLES v 3 moves 3392 merges 0 engine_calls 23744 sec 8
+TRAJCHECK samples 1500 mismatches 0
+DP subsets 150 sec 10
+PRE clicks 3392 sec 24
+PARTITIONS 63 best5 [(11, 12, 11, 207, 304), (11, 12, 11, 371, 140), (11, 12, 11, 380, 131), (11, 12, 11, 444, 67), (11, 12, 11, 496, 15)]
+INDEP_ROOT_BOUND 11 normal=12 joint=11 T3=1f0 T2=00f sec=27

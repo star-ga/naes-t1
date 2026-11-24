@@ -1,0 +1,13 @@
+# Lower-bound records
+
+`proofs/certificates/lower_bounds/files/` holds 183 records, one per level. The file name is `<game>_L<level>.md`.
+
+Each record states the level, the lower bound, the method, the proof, what the proof checks, a re-check command that is run from the repository root, and the sha256 of the source artifact. The source artifact is the statement-and-count extract for that level. The digest in the record equals the `safe_statement_count_extract` digest in `proofs/certificates/levels/<game>_L<level>.json`. On tn36 that digest is also the sha256 of a log under `proofs/certificates/floor_cert/tn36/logs/`. On every other level the extract file is not in this repository. Two records have a different source artifact: the digest in `su15_L3.md` is the sha256 of `proofs/certificates/su15_L3/RECORD.md`, and the digest in `wa30_L9.md` is the row of `proofs/certificates/levels/WITHHELD.md` for that level; neither level file has a `safe_statement_count_extract` entry.
+
+On a proven level the lower bound equals `floor` in that certificate and equals the floor column of `proofs/levels.csv`. On wa30 level 8 the lower bound is 57 and the floor is 91. On wa30 level 9 the lower bound is 50 and the floor is 57.
+
+`SHA256SUMS` in this directory lists every other file here. From the repository root, `cd proofs/certificates/lower_bounds && sha256sum -c SHA256SUMS` checks those bytes.
+
+`proofs/certificates/lower_bounds/extracts/` holds 28 source extracts. 65 level records cite a file in that folder by digest. 12 further records are withheld and are listed by digest in `proofs/certificates/lower_bounds/extracts/MANIFEST.tsv`. The file name of a published extract is the digest the certificate records. `proofs/certificates/lower_bounds/extracts/MANIFEST.tsv` lists, for each published file, the recorded digest, the digest of the published bytes (they differ where machine names or local paths were replaced; `proofs/certificates/lower_bounds/extracts/README.md` gives the counts), the levels that cite it, and what it shows. `proofs/certificates/lower_bounds/extracts/SHA256SUMS` checks the published bytes. A level record in `proofs/certificates/lower_bounds/files/` names its extracts on a last line.
+
+Two records that sc25 level 3 cites (dc419bb94c8004ec03b009f87ac83c98435163fc4ea1506d4d932c089c09b928 and 95d2863908e37c286332ba2b9944a89e87cad3c8c324315f53f85525618e784e) are searches from other start states: the first from the four start states that set_level makes, the second from one of them. Each record gives the key of the start that play reaches (canonical_key) and says that it equals none of its start states (canonical_matches_variant is empty). The goal costs in these two records are costs from those start states.

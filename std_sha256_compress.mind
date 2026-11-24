@@ -1,0 +1,206 @@
+fn h_init(i: i64) -> i64 {
+    if i == 0 {
+        return 1779033703;
+    }
+    if i == 1 {
+        return 3144134277;
+    }
+    if i == 2 {
+        return 1013904242;
+    }
+    if i == 3 {
+        return 2773480762;
+    }
+    if i == 4 {
+        return 1359893119;
+    }
+    if i == 5 {
+        return 2600822924;
+    }
+    if i == 6 {
+        return 528734635;
+    }
+    1541459225
+}
+
+// ---------------------------------------------------------------------------
+// W-schedule helpers — 64-word schedule stored stride-8 (like Vec elements).
+// ---------------------------------------------------------------------------
+
+fn w_get(w_addr: i64, i: i64) -> i64 {
+    __mind_load_i64(w_addr + i * 8)
+}
+
+fn w_set(w_addr: i64, i: i64, v: i64) -> i64 {
+    __mind_store_i64(w_addr + i * 8, v)
+}
+
+// ---------------------------------------------------------------------------
+// compress_block — process one 64-byte block.
+//
+// block_addr: pointer to 64 bytes of message (one byte per offset).
+// h_addr: pointer to 8*8=64-byte heap region holding h[0..7] stride-8.
+// Returns 0.
+// ---------------------------------------------------------------------------
+
+fn compress_block(block_addr: i64, h_addr: i64) -> i64 {
+    // Allocate W schedule: 64 words, stride-8 → 512 bytes.
+    let w_addr: i64 = __mind_alloc(512);
+
+    // W[0..15]: pack four consecutive message bytes (big-endian) into each
+    // 32-bit word.
+    let mut wi: i64 = 0;
+    while wi < 16 {
+        let base: i64 = wi * 4;
+        let b0: i64 = __mind_load_i8(block_addr + base + 0);
+        let b1: i64 = __mind_load_i8(block_addr + base + 1);
+        let b2: i64 = __mind_load_i8(block_addr + base + 2);
+        let b3: i64 = __mind_load_i8(block_addr + base + 3);
+        let word: i64 = (b0 << 24) | (b1 << 16) | (b2 << 8) | b3;
+        w_set(w_addr, wi, word);
+        wi = wi + 1;
+    }
+
+    // W[16..63]: message schedule extension.
+    let mut wj: i64 = 16;
+    while wj < 64 {
+        let s0: i64 = ssig0(w_get(w_addr, wj - 15));
+        let s1: i64 = ssig1(w_get(w_addr, wj - 2));
+        let val: i64 = mask32(w_get(w_addr, wj - 16) + s0 + w_get(w_addr, wj - 7) + s1);
+        w_set(w_addr, wj, val);
+        wj = wj + 1;
+    }
+
+    // Initialise working variables from h[0..7].
+    let mut wa: i64 = __mind_load_i64(h_addr + 0 * 8);
+    let mut wb: i64 = __mind_load_i64(h_addr + 1 * 8);
+    let mut wc: i64 = __mind_load_i64(h_addr + 2 * 8);
+    let mut wd: i64 = __mind_load_i64(h_addr + 3 * 8);
+    let mut we: i64 = __mind_load_i64(h_addr + 4 * 8);
+    let mut wf: i64 = __mind_load_i64(h_addr + 5 * 8);
+    let mut wg: i64 = __mind_load_i64(h_addr + 6 * 8);
+    let mut wh: i64 = __mind_load_i64(h_addr + 7 * 8);
+
+    // 64-round compression loop.
+    let mut rnd: i64 = 0;
+    while rnd < 64 {
+        let t1: i64 = mask32(wh + bsig1(we) + ch(we, wf, wg) + k_word(rnd) + w_get(w_addr, rnd));
+        let t2: i64 = mask32(bsig0(wa) + maj(wa, wb, wc));
+        wh = wg;
+        wg = wf;
+        wf = we;
+        we = mask32(wd + t1);
+        wd = wc;
+        wc = wb;
+        wb = wa;
+        wa = mask32(t1 + t2);
+        rnd = rnd + 1;
+    }
+
+    // Add compressed chunk back into H.
+    __mind_store_i64(h_addr + 0 * 8, mask32(__mind_load_i64(h_addr + 0 * 8) + wa));
+    __mind_store_i64(h_addr + 1 * 8, mask32(__mind_load_i64(h_addr + 1 * 8) + wb));
+    __mind_store_i64(h_addr + 2 * 8, mask32(__mind_load_i64(h_addr + 2 * 8) + wc));
+    __mind_store_i64(h_addr + 3 * 8, mask32(__mind_load_i64(h_addr + 3 * 8) + wd));
+    __mind_store_i64(h_addr + 4 * 8, mask32(__mind_load_i64(h_addr + 4 * 8) + we));
+    __mind_store_i64(h_addr + 5 * 8, mask32(__mind_load_i64(h_addr + 5 * 8) + wf));
+    __mind_store_i64(h_addr + 6 * 8, mask32(__mind_load_i64(h_addr + 6 * 8) + wg));
+    __mind_store_i64(h_addr + 7 * 8, mask32(__mind_load_i64(h_addr + 7 * 8) + wh));
+
+    // W is dead once this block has been folded into H.
+    let _fw: i64 = __mind_free(w_addr);
+    0
+}
+
+// ---------------------------------------------------------------------------
+// sha256 — public entry point.
+//
+// Pads the message (FIPS 180-4 §5.1.1), processes all 64-byte blocks,
+// then serialises the 8-word digest big-endian into out_addr.
+//
+// Padding:
+//   1. Append byte 0x80 (= 128).
+//   2. Append zero bytes until total ≡ 56 (mod 64).
+//   3. Append the 64-bit big-endian bit-count (in_len * 8).
+//
+// The padded length is always a multiple of 64.
+// For in_len = 0 → 64 bytes.
+// For in_len = 55 → 64 bytes (0x80 + 0 pad + 8-byte length fits exactly).
+// For in_len = 56 → 128 bytes (0x80 pushes past the 56-mod-64 mark).
+// ---------------------------------------------------------------------------
+
+pub fn sha256(in_addr: i64, in_len: i64, out_addr: i64) -> i64 {
+    // Compute the number of zero-padding bytes needed.
+    let tail: i64 = in_len % 64;
+    let pad_zeros: i64 = if tail < 56 {
+        55 - tail
+    } else {
+        119 - tail
+    };
+    let padded_len: i64 = in_len + 1 + pad_zeros + 8;
+
+    // Allocate scratch buffer and copy input bytes (one byte per offset).
+    let buf: i64 = __mind_alloc(padded_len);
+    let mut ci: i64 = 0;
+    while ci < in_len {
+        __mind_store_i8(buf + ci, __mind_load_i8(in_addr + ci));
+        ci = ci + 1;
+    }
+
+    // Append the 0x80 byte (= 128).
+    __mind_store_i8(buf + in_len, 128);
+
+    // Zero-fill the padding region.
+    let mut zi: i64 = in_len + 1;
+    while zi < in_len + 1 + pad_zeros {
+        __mind_store_i8(buf + zi, 0);
+        zi = zi + 1;
+    }
+
+    // Append the 64-bit big-endian message bit-length.
+    let bit_len: i64 = in_len * 8;
+    let len_off: i64 = padded_len - 8;
+    // High 32 bits (zero for messages < 2^29 bytes, but written correctly).
+    let blen_hi: i64 = (bit_len >> 32) & 4294967295;
+    let blen_lo: i64 = bit_len & 4294967295;
+    __mind_store_i8(buf + len_off + 0, (blen_hi >> 24) & 255);
+    __mind_store_i8(buf + len_off + 1, (blen_hi >> 16) & 255);
+    __mind_store_i8(buf + len_off + 2, (blen_hi >> 8) & 255);
+    __mind_store_i8(buf + len_off + 3, blen_hi & 255);
+    __mind_store_i8(buf + len_off + 4, (blen_lo >> 24) & 255);
+    __mind_store_i8(buf + len_off + 5, (blen_lo >> 16) & 255);
+    __mind_store_i8(buf + len_off + 6, (blen_lo >> 8) & 255);
+    __mind_store_i8(buf + len_off + 7, blen_lo & 255);
+
+    // Initialise the 8-word H state (stride-8, 64 bytes).
+    let h_addr: i64 = __mind_alloc(64);
+    let mut hi: i64 = 0;
+    while hi < 8 {
+        __mind_store_i64(h_addr + hi * 8, h_init(hi));
+        hi = hi + 1;
+    }
+
+    // Process each 64-byte block.
+    let num_blocks: i64 = padded_len / 64;
+    let mut blk: i64 = 0;
+    while blk < num_blocks {
+        compress_block(buf + blk * 64, h_addr);
+        blk = blk + 1;
+    }
+
+    // Serialise digest: 8 words × 4 bytes big-endian = 32 bytes.
+    let mut di: i64 = 0;
+    while di < 8 {
+        let word: i64 = __mind_load_i64(h_addr + di * 8);
+        __mind_store_i8(out_addr + di * 4 + 0, (word >> 24) & 255);
+        __mind_store_i8(out_addr + di * 4 + 1, (word >> 16) & 255);
+        __mind_store_i8(out_addr + di * 4 + 2, (word >> 8) & 255);
+        __mind_store_i8(out_addr + di * 4 + 3, word & 255);
+        di = di + 1;
+    }
+
+    // The digest lives in out_addr. The padded copy and H are per-message scratch.
+    let _fb: i64 = __mind_free(buf);
+    let _fh: i64 = __mind_free(h_addr);
+    0
+}

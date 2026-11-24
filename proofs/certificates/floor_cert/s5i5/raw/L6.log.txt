@@ -1,0 +1,26 @@
+SETUP level=6 floor=25 budget=150 classes=13 pixels=4096 mismatches=0 mobiles=5 static_bytes=555 pose_bytes=927 probe_win=None reset_level=0
+LAYER level=6 depth=1 expanded=1 visited=10 edges=13 wins=0 t=1.1
+LAYER level=6 depth=2 expanded=10 visited=50 edges=130 wins=0 t=1.1
+LAYER level=6 depth=3 expanded=50 visited=168 edges=650 wins=0 t=1.2
+LAYER level=6 depth=4 expanded=168 visited=425 edges=2184 wins=0 t=1.5
+LAYER level=6 depth=5 expanded=425 visited=871 edges=5525 wins=0 t=2.0
+LAYER level=6 depth=6 expanded=871 visited=1536 edges=11323 wins=0 t=3.1
+LAYER level=6 depth=7 expanded=1536 visited=2431 edges=19968 wins=0 t=5.1
+LAYER level=6 depth=8 expanded=2431 visited=3558 edges=31603 wins=0 t=7.8
+LAYER level=6 depth=9 expanded=3558 visited=4921 edges=46254 wins=0 t=11.2
+LAYER level=6 depth=10 expanded=4921 visited=6547 edges=63973 wins=0 t=15.2
+LAYER level=6 depth=11 expanded=6547 visited=8469 edges=85111 wins=0 t=19.9
+LAYER level=6 depth=12 expanded=8469 visited=10720 edges=110097 wins=0 t=25.4
+LAYER level=6 depth=13 expanded=10720 visited=13322 edges=139360 wins=0 t=32.5
+LAYER level=6 depth=14 expanded=13322 visited=16298 edges=173186 wins=0 t=39.4
+LAYER level=6 depth=15 expanded=16298 visited=19678 edges=211874 wins=0 t=47.3
+LAYER level=6 depth=16 expanded=19678 visited=23490 edges=255814 wins=0 t=56.0
+LAYER level=6 depth=17 expanded=23490 visited=27760 edges=305370 wins=0 t=64.9
+LAYER level=6 depth=18 expanded=27760 visited=32521 edges=360880 wins=0 t=76.0
+LAYER level=6 depth=19 expanded=32521 visited=37800 edges=422773 wins=0 t=87.4
+LAYER level=6 depth=20 expanded=37800 visited=43626 edges=491400 wins=0 t=100.5
+LAYER level=6 depth=21 expanded=43626 visited=50023 edges=567138 wins=0 t=115.3
+LAYER level=6 depth=22 expanded=50023 visited=57021 edges=650299 wins=0 t=130.8
+LAYER level=6 depth=23 expanded=57021 visited=64644 edges=741273 wins=0 t=147.6
+LAYER level=6 depth=24 expanded=64644 visited=72922 edges=840372 wins=0 t=166.1
+RESULT level=6 verdict=CONFIRMED states=72922 edges=840372 layers=24 seconds=166.3

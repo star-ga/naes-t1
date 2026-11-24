@@ -1,0 +1,25 @@
+VIOLATION h=5 but no win within depth 2: 5 0 55 23 0 61 23 1 46 22 2 16 38 2 32 26
+BFSROW n=5 h=5 exact=>2 nodes=237577
+VIOLATION h=4 but no win within depth 2: 4 1 46 22 1 54 26 2 16 38 2 32 26
+BFSROW n=4 h=4 exact=>2 nodes=279236
+BFSROW n=3 h=3 exact=3 nodes=197161
+BFSROW n=2 h=2 exact=2 nodes=576
+BFSROW n=2 h=1 exact=1 nodes=0
+VIOLATION h=5 but no win within depth 2: 4 1 46 22 1 57 31 2 16 38 2 32 26
+BFSROW n=4 h=5 exact=>2 nodes=307799
+VIOLATION h=4 but no win within depth 2: 4 1 46 22 1 54 26 2 16 38 2 31 29
+BFSROW n=4 h=4 exact=>2 nodes=295957
+VIOLATION h=5 but no win within depth 2: 4 1 46 22 1 54 26 2 14 40 2 32 26
+BFSROW n=4 h=5 exact=>2 nodes=280899
+VIOLATION h=5 but no win within depth 2: 4 1 46 22 1 54 26 2 9 37 2 32 26
+BFSROW n=4 h=5 exact=>2 nodes=281355
+VIOLATION h=4 but no win within depth 2: 4 1 45 28 1 54 26 2 16 38 2 32 26
+BFSROW n=4 h=4 exact=>2 nodes=259192
+VIOLATION h=5 but no win within depth 2: 4 1 46 22 1 54 26 2 11 34 2 32 26
+BFSROW n=4 h=5 exact=>2 nodes=280704
+VIOLATION h=4 but no win within depth 2: 4 1 46 22 1 54 26 2 14 41 2 32 26
+BFSROW n=4 h=4 exact=>2 nodes=281114
+VIOLATION h=5 but no win within depth 2: 4 1 46 22 1 56 22 2 16 38 2 32 26
+BFSROW n=4 h=5 exact=>2 nodes=280105
+BFSROW n=3 h=3 exact=3 nodes=193108
+BFSCHECK states=14 exact_found_h_equal=4 exact_found_h_less=0 not_found_within_depth=10 violations=10

@@ -1,0 +1,38 @@
+{
+ "total": {
+  "levels": 6,
+  "ref_levels": 6,
+  "actions": 87,
+  "ref_actions": 87,
+  "games_full": 1,
+  "games": 1,
+  "perturb": 0
+ },
+ "games": [
+  {
+   "game": "sp80-589a99af",
+   "levels": 6,
+   "ref_levels": 6,
+   "actions": 87,
+   "ref_actions": 87,
+   "per_level": [
+    5,
+    7,
+    10,
+    20,
+    17,
+    28
+   ],
+   "ref_per_level": [
+    4,
+    7,
+    10,
+    20,
+    17,
+    28
+   ],
+   "resets": 1,
+   "over_ref_levels": []
+  }
+ ]
+}

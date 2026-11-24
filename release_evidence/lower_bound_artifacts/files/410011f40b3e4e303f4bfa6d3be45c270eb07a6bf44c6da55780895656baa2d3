@@ -1,0 +1,8 @@
+<word withheld> (most recent call last):
+  File "<path>", line 5, in <module>
+    import h,prove_fast as P,probe
+  File "<path>", line 15, in <module>
+    import mmae_minimum as mm            # noqa: E402
+  File "<path>", line 67, in <module>
+    import numpy as np  # noqa: E402
+<word withheld>: No module named 'numpy'

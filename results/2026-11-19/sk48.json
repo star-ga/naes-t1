@@ -1,0 +1,42 @@
+{
+ "total": {
+  "levels": 8,
+  "ref_levels": 8,
+  "actions": 214,
+  "ref_actions": 214,
+  "games_full": 1,
+  "games": 1,
+  "perturb": 0
+ },
+ "games": [
+  {
+   "game": "sk48-d8078629",
+   "levels": 8,
+   "ref_levels": 8,
+   "actions": 214,
+   "ref_actions": 214,
+   "per_level": [
+    15,
+    27,
+    33,
+    23,
+    33,
+    36,
+    23,
+    24
+   ],
+   "ref_per_level": [
+    14,
+    27,
+    33,
+    23,
+    33,
+    36,
+    23,
+    24
+   ],
+   "resets": 1,
+   "over_ref_levels": []
+  }
+ ]
+}

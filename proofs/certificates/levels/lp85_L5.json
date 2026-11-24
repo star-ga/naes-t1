@@ -1,0 +1,43 @@
+{
+  "artifact_sha256": [
+    {
+      "kind": "safe_statement_count_extract",
+      "sha256": "b6819e9ebc510ba5bf3a5f80f12b5bbdf5013dced1a45bd48e2d70fbbb4b197e"
+    },
+    {
+      "kind": "authority_ledger_label",
+      "sha256": "b5f95e224296893b6d8b9f8981712f7677784fc6db52abf58e77dc707a4a065d"
+    },
+    {
+      "kind": "replay receipt on the current pinned game file (proofs/certificates/lower_replay)",
+      "sha256": "cfa5f5575a027f03f365841b3aadbcb6dd99dacaf123cfc7bd0f2f9065cf6c6c"
+    },
+    {
+      "kind": "raw output of that replay",
+      "sha256": "174fe1365169cda95d41441741903cea14950700a02a00969f334d2c2e6a640a"
+    }
+  ],
+  "floor": 9,
+  "game": "lp85",
+  "game_id": "lp85-305b61c3",
+  "game_levels": 8,
+  "level": 5,
+  "lower_bound": {
+    "kind": "rotation_group_state_graph_exhaustion_button_alphabet",
+    "statement": "Complete unit-cost search over the cyclic-track configuration and the complete button-effect alphabet closes every cost below 9; shared track-transfer effects are retained. The proof rotation_group_state_graph_exhaustion_button_alphabet establishes lower bound 9, equal to the floor. A replay on the current pinned game file obtained the bound 9 (verdict MATCH; proofs/certificates/lower_replay/lp85_L5.json). Scope of that replay: Current pinned public game and canonical prefix; archived complete grouped-click token BFS, complete pixel-alphabet coverage check, and native attaining witness replay. Token-model sufficiency and transition correspondence remain proof obligations.",
+    "value": 9
+  },
+  "naes_t1_actions": 9,
+  "proof_class": "Exhaustive search",
+  "proof_detail": "rotation_group_state_graph_exhaustion_button_alphabet",
+  "schema_version": 1,
+  "source_certificate_sha256": "162c0271ac49f83f7932a7da43f5b74c654576c45399269f99522106ea2083ce",
+  "status": "proven",
+  "upper_bound": {
+    "expected_levels_completed": 5,
+    "length": 9,
+    "opening_reset_counted": false,
+    "route": "6@38,37 6@38,37 6@10,7 6@12,37 6@12,37 6@12,37 6@12,37 6@52,7 6@12,37",
+    "seed": 0
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "artifact_sha256": [
+    {
+      "kind": "safe_statement_count_extract",
+      "sha256": "58b803fe2ba85f0fc8dc0ac923cc103aeead1913abcccf0d601fe5fc43c1857c"
+    },
+    {
+      "kind": "authority_ledger_label",
+      "sha256": "e8168e6eefb4e3601174833f98ba2116ff38b5592c077a2ae1ff30ab98282760"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "ecd0af8875168338a2a562074703c67260611022bf152caf2f386de7781663b2"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "5bdfadaf67099b99d1c40e025d6dce044c22658fc49353919299df2d16921556"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "a8cbd490caad6aa0dbdaeab82f449387628b133cab000dd66c1814cda728c041"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "a7fd372c57bbf4cd674aec5e47243c9b530f4fc93d30581c0a894ab55ed7a000"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "c024a352ccc54625035bf6c2a0a92c51c1ed96bb6735d9ccda96af8c0f3c8f48"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "b5094c312abbacfe53d02019ea2264b41c5dec5110064c4ce0f9e54b7e8951c5"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "8dfe06e243e97d60bdc39586e97fa125181be785560288182281e30fbe593264"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "624b65cda4ef01d3dab34dedfc5db3bd0807defb0ec793d2fb9e485ed32df976"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "26e04d5ef2269fa3eac1f7e0784224d93239e1696b795b64d0b9411767b955d9"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "119de0c86cda82c6bf00d15820e4b28447807e13da984abbebfc81ea0bbb0195"
+    },
+    {
+      "kind": "historical_method_or_search_output",
+      "sha256": "964811cce512b4053049c9ecbf42a765c5ca938a9919bf1c7d0d758b789489e9"
+    }
+  ],
+  "floor": 45,
+  "game": "ka59",
+  "game_id": "ka59-38d34dbb",
+  "game_levels": 7,
+  "level": 6,
+  "lower_bound": {
+    "kind": "complete_state_ucs_exhausted_injective_key",
+    "statement": "uniform-cost layers 1..44 were EXHAUSTED under an injective full-state key (225282 distinct states) with no win, so floor >= 45; a replay-verified win exists at exactly 45, so floor = 45. The proof complete_state_ucs_exhausted_injective_key establishes lower bound 45, equal to the floor.",
+    "value": 45
+  },
+  "naes_t1_actions": 45,
+  "proof_class": "Exhaustive search",
+  "proof_detail": "complete_state_ucs_exhausted_injective_key",
+  "schema_version": 1,
+  "source_certificate_sha256": "90e9d6d4765bd95a1cdee167cc67143db19aa2eeb8e1367c8e28613ee127f28e",
+  "status": "proven",
+  "upper_bound": {
+    "expected_levels_completed": 6,
+    "length": 45,
+    "opening_reset_counted": false,
+    "route": "1 3 3 1 3 3 3 3 3 3 3 2 1 1 3 3 3 3 3 3 3 1 4 4 4 4 1 2 4 1 2 2 2 4 1 4 4 4 4 4 4 4 1 1 4",
+    "seed": 0
+  }
+}

@@ -1,0 +1,194 @@
+{
+  "started_utc": "2026-09-22T11:27:19.523502+00:00",
+  "game_id": "sk48-41055498",
+  "level": 1,
+  "canonical_start_sha256": "533bf2465030639c2c9e8d937ac6168eb6390fda0df100b5cb7cb34fc62a92ed",
+  "source_sha256": "cebfbdf395c13812ec22938c2019a1d52fed66e9aa72a304f62c5d307ea452d3",
+  "affinity": "<cores>",
+  "nice": 15,
+  "cap_depth": 14,
+  "cutoff_proof_claimed": false,
+  "layers": [
+    {
+      "depth": 0,
+      "states_expanded": 1,
+      "sorted_state_hashes_sha256": "7f1865022530f370a0199953ffc66f623ea990a7b8a333b0cd2ddb7904c0ea91",
+      "goals_on_children": 0
+    },
+    {
+      "depth": 1,
+      "states_expanded": 3,
+      "sorted_state_hashes_sha256": "0c24d7aa9b1af2f1842d097d8208c3d9c83dab799523069d28421b2aeb2f857b",
+      "goals_on_children": 0
+    },
+    {
+      "depth": 2,
+      "states_expanded": 4,
+      "sorted_state_hashes_sha256": "d90a173a08f515005786c8d5aec5ba9d707273195950e57cfc09f5a722ce2aec",
+      "goals_on_children": 0
+    },
+    {
+      "depth": 3,
+      "states_expanded": 5,
+      "sorted_state_hashes_sha256": "d284370809adf50a11820f32cf19fe10306c17f69cec9e8df071a93fb16c93f3",
+      "goals_on_children": 0
+    },
+    {
+      "depth": 4,
+      "states_expanded": 6,
+      "sorted_state_hashes_sha256": "eddd59f18a4993291a6a0bf663b60262da6ca0501d5972e24cf608e6317eb0b3",
+      "goals_on_children": 0
+    },
+    {
+      "depth": 5,
+      "states_expanded": 6,
+      "sorted_state_hashes_sha256": "25330962b25e95fa8f5bbe5404e45d5d48daaf34f22d6e8e4b0dc9d471de2bf6",
+      "goals_on_children": 0
+    },
+    {
+      "depth": 6,
+      "states_expanded": 8,
+      "sorted_state_hashes_sha256": "7f2229b8e0c03b0d0fcdf222e6fd4071de1f4f9fb3e29a3e9723408c5557069b",
+      "goals_on_children": 0
+    },
+    {
+      "depth": 7,
+      "states_expanded": 13,
+      "sorted_state_hashes_sha256": "2e0470a5dddf41a87cc0768623641e35231f037228fb57ab6b0effeaa2913e02",
+      "goals_on_children": 0
+    },
+    {
+      "depth": 8,
+      "states_expanded": 24,
+      "sorted_state_hashes_sha256": "a8ac330398089671aeea75a90a243181585925c404007af5950490108b84b797",
+      "goals_on_children": 0
+    },
+    {
+      "depth": 9,
+      "states_expanded": 41,
+      "sorted_state_hashes_sha256": "6c339001b42c4ba11fa4f4a0a07233ea5d120772ac1d835c8b88884f96004bad",
+      "goals_on_children": 0
+    },
+    {
+      "depth": 10,
+      "states_expanded": 63,
+      "sorted_state_hashes_sha256": "ff844c2e098467cabbb1f5abf627202129427dc2bb0e19c07a31bad017076908",
+      "goals_on_children": 0
+    },
+    {
+      "depth": 11,
+      "states_expanded": 87,
+      "sorted_state_hashes_sha256": "2218adb1be526f38da4de6bb57ad860002bb7165184d790bcbccca2d67df958a",
+      "goals_on_children": 0
+    },
+    {
+      "depth": 12,
+      "states_expanded": 131,
+      "sorted_state_hashes_sha256": "aa42bfd138a50a7d16a28a66b46944157eb0961edf2cd8fc0074eec3b9735344",
+      "goals_on_children": 0
+    },
+    {
+      "depth": 13,
+      "states_expanded": 207,
+      "sorted_state_hashes_sha256": "a63300998797525817a1814a2a54526b3a9b863061fecf5448603b6a3a495ee0",
+      "goals_on_children": 1
+    }
+  ],
+  "native_cardinal_edges": 2396,
+  "native_model_exact_edges": 2396,
+  "native_id5_controls": 599,
+  "native_id6_controls": 1797,
+  "native_id7_controls": 599,
+  "native_reset_controls": 599,
+  "pixel_dispatch_classifications": 2453504,
+  "raw_oor_controls": 1198,
+  "violations": [],
+  "first_model_goal_depth": 14,
+  "closed_no_goal_depths": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13
+  ],
+  "states_expanded": 599,
+  "first_native_goal_depth": 14,
+  "goals": [
+    {
+      "depth": 14,
+      "native_advanced": true,
+      "path": [
+        1,
+        1,
+        1,
+        4,
+        4,
+        4,
+        4,
+        3,
+        2,
+        2,
+        4,
+        3,
+        1,
+        4
+      ]
+    }
+  ],
+  "native_path_replays": [
+    {
+      "path": [
+        1,
+        1,
+        4,
+        4,
+        4,
+        1,
+        4,
+        3,
+        2,
+        2,
+        4,
+        3,
+        1,
+        4
+      ],
+      "sha256": "5addfc4893b7af4f5ba68a75c028aa55e8bd6400ccda86de9ae7764e0f3e6faf",
+      "first_completion": 14,
+      "F_minus_1_not_complete": true
+    },
+    {
+      "path": [
+        1,
+        1,
+        1,
+        4,
+        4,
+        4,
+        4,
+        3,
+        2,
+        2,
+        4,
+        3,
+        1,
+        4
+      ],
+      "sha256": "10a408abc9ab4806715e1806d7bf950fceaac9b02754294361b2b417e320a1a4",
+      "first_completion": 14,
+      "F_minus_1_not_complete": true
+    }
+  ],
+  "status": "PASS",
+  "completed_utc": "2026-09-22T11:32:44.247217+00:00",
+  "edge_certificates_sha256": "ede19095cfb0a8810aa0d48a4e6ba06edd00b3796a8270e93d42ff8a91e5bb24"
+}

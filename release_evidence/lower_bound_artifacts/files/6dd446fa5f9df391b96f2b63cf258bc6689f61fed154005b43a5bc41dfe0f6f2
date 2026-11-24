@@ -1,0 +1,10 @@
+{
+ "mode": "encdiff",
+ "level": 4,
+ "seed": 20260922,
+ "fail": [],
+ "ok": 120,
+ "refused": 0,
+ "verdict": "PASS",
+ "secs": 139.9
+}

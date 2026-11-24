@@ -1,0 +1,7 @@
+mask=0 kill=1: b0@17 b1@8 b2@43 b3@82 b4@24 b5@61
+mask=1 kill=1: b0@0 b1@8 b2@33 b3@70 b4@18 b5@51
+mask=2 kill=1: b0@19 b1@0 b2@45 b3@65 b4@26 b5@10
+mask=4 kill=1: b0@17 b1@8 b2@0 b3@62 b4@24 b5@41
+mask=8 kill=1: b0@17 b1@8 b2@43 b3@0 b4@24 b5@61
+mask=16 kill=1: b0@17 b1@8 b2@30 b3@68 b4@0 b5@47
+mask=32 kill=1: b0@17 b1@8 b2@43 b3@63 b4@24 b5@0

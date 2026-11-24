@@ -1,0 +1,107 @@
+{
+  "artifact_sha256": [
+    {
+      "kind": "safe_statement_count_extract",
+      "sha256": "6d819cd73ec1789eb44b1f7dd55db5b1379ba7d858f0717c067a984c06353985"
+    },
+    {
+      "kind": "authority_ledger_label",
+      "sha256": "9cb40128d3010514d932ebac373183f76143c54fedf03969f4d3e5615df7a750"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "bce6b3ea7c820a25e4d8987ae063e6ea570f7a5f60888fba304b1a4f3c429843"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "3f112429e21fdc6c348e61f8464bc5015a4d67f5b1005363e7ab05abad06281e"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "36c6bc1965d678582e9587c804a4360da0de82dd3cd4d46f3f8363bf4fcd91b3"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "f74c5335ecd120b8cc492670f08a61e1070b17c0c56f60e6a971cfeeafbfcadf"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "94d23115b38e6335b242966f56501eef8a50322956c93a1c0862c23e61ccbd67"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "f2d013fb7807166108967e093ffc1f7be670bbddf049ed19e7ef37da7d1bbb99"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "870ee05598fda72153cdfa04b4b501c5cde98c9117e8c65c30ab623b000c5196"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "968d80e88457c2a2dc9b85d3eebbaeba55f676913915f92ed003085402a570ca"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "95b09a4b09104f521a378343fb0f990beaa39e71cee8b4bc1142a23d317daac7"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "02a2d980f927a7ce4f76b5412708eecab0b1b1d0f67a16c22ca6b03208e54bdd"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "80ce501e277ab0582eb678eebdcd282a401b9b84b3f31ffc6f53f53c1a1da72b"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "9cdc404f79adfb9ed12376347973ec17382338cd1e6115810c4d585e1dd5cd98"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "c31976bf3a4e90e9d65475e752130c38e0e30f0f7aed9cdf79b932f96b45094e"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "67e33cc5fe480e79e64dbfa7b4c34b994f735dd1b37e8d7a346b06d56cce7c89"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "30a4b8a01934a08ea87326c470183c22e4f308140cd185a3400af80141e6338d"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "9cbc1bf0bc0c700134b524ab7c77beda9c493aafd91d28f52fbf25987a9a5aa8"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "4c03d40bf402cafd8e69d79860fad7b26b0f41a38dbe440acf01a8b29098d7a0"
+    },
+    {
+      "kind": "recorded_replay_command_or_tool",
+      "sha256": "55e671eca7653cd7931b0fd89b34cf765cf8fad8185edbdd1aa11fe9e4284130"
+    }
+  ],
+  "floor": 64,
+  "game": "g50t",
+  "game_id": "g50t-5849a774",
+  "game_levels": 7,
+  "level": 3,
+  "lower_bound": {
+    "kind": "sat_bmc_v4_unsat_at_F_minus_1_main_grid_94_of_94",
+    "statement": "No winning run of 63 or fewer actions exists. The v4 encoding 1b6ea6a032a32fc7d40b27b32b3a1b4ec81060f499539c1afa2e58f763548b41 is UNSAT at k=63 on the 94-case main grid: 32 final-mode cases (pass counts 1 to 32), 31 cap-mode cases (pass counts 1 to 31) and 31 pause-mode cases (pass counts 1 to 31). These are solver verdicts. No proof-checker certificate is recorded for these queries. The receipts are in proofs/certificates/g50t-l3-l6-v4/.",
+    "value": 64
+  },
+  "naes_t1_actions": 64,
+  "proof_class": "Bounded SAT",
+  "proof_detail": "sat_bmc_v4_unsat_at_F_minus_1_main_grid_94_of_94",
+  "schema_version": 1,
+  "source_certificate_sha256": "fd8468d0255522c5e5d382a3b5b9dad1217410517e7453b3d1d4f9c3c74bea77",
+  "status": "proven",
+  "upper_bound": {
+    "expected_levels_completed": 3,
+    "length": 64,
+    "opening_reset_counted": false,
+    "route": "1 1 4 4 4 4 2 2 2 2 4 5 1 1 4 4 4 4 4 4 4 2 2 2 2 2 2 2 3 3 3 3 3 5 1 1 4 4 4 4 4 4 4 2 2 2 2 2 2 2 3 3 3 3 3 3 3 1 1 1 4 4 1 1",
+    "seed": 0
+  }
+}

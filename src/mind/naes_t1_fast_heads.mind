@@ -1,0 +1,357 @@
+// Head side of the grouped-sum kernel: channel pooling, click sums, argmax and
+// argmin, the stem, block and head phases, and the decision (decide4).
+// Entry point: decide4.
+
+fn pool_chan4v(row0: i64, out: i64) -> i64 {
+    __mind_ymm_vpsubq_i64x4_r(0, 0, 0);
+    __mind_ymm_vpsubq_i64x4_r(5, 5, 5);
+    __mind_ymm_vpsubq_i64x4_r(9, 9, 9);
+    __mind_ymm_vpsubq_i64x4_r(11, 11, 11);
+    __mind_ymm_vpsubq_i64x4_r(1, 1, 1);
+    __mind_ymm_vpsubq_i64x4_r(6, 6, 6);
+    __mind_ymm_vpsubq_i64x4_r(10, 10, 10);
+    __mind_ymm_vpsubq_i64x4_r(12, 12, 12);
+    let mut y: i64 = 0;
+    while y < 64 {
+        let row: i64 = row0 + y * 768;
+        let mut x: i64 = 0;
+        while x < 512 {
+            __mind_ymm_vmovdqu_ld(2, row + x, 0);
+            __mind_ymm_vpaddq_i64x4_r(0, 0, 2);
+            __mind_ymm_vpcmpgtq_i64x4_r(3, 2, 1);
+            __mind_ymm_vpsubq_i64x4_r(4, 2, 1);
+            __mind_ymm_vpand_i64x4_r(4, 4, 3);
+            __mind_ymm_vpaddq_i64x4_r(1, 1, 4);
+            __mind_ymm_vmovdqu_ld(2, row + x, 32);
+            __mind_ymm_vpaddq_i64x4_r(5, 5, 2);
+            __mind_ymm_vpcmpgtq_i64x4_r(3, 2, 6);
+            __mind_ymm_vpsubq_i64x4_r(4, 2, 6);
+            __mind_ymm_vpand_i64x4_r(4, 4, 3);
+            __mind_ymm_vpaddq_i64x4_r(6, 6, 4);
+            __mind_ymm_vmovdqu_ld(2, row + x, 64);
+            __mind_ymm_vpaddq_i64x4_r(9, 9, 2);
+            __mind_ymm_vpcmpgtq_i64x4_r(3, 2, 10);
+            __mind_ymm_vpsubq_i64x4_r(4, 2, 10);
+            __mind_ymm_vpand_i64x4_r(4, 4, 3);
+            __mind_ymm_vpaddq_i64x4_r(10, 10, 4);
+            __mind_ymm_vmovdqu_ld(2, row + x, 96);
+            __mind_ymm_vpaddq_i64x4_r(11, 11, 2);
+            __mind_ymm_vpcmpgtq_i64x4_r(3, 2, 12);
+            __mind_ymm_vpsubq_i64x4_r(4, 2, 12);
+            __mind_ymm_vpand_i64x4_r(4, 4, 3);
+            __mind_ymm_vpaddq_i64x4_r(12, 12, 4);
+            x = x + 128;
+        }
+        y = y + 1;
+    }
+    __mind_ymm_vpaddq_i64x4_r(0, 0, 5);
+    __mind_ymm_vpaddq_i64x4_r(0, 0, 9);
+    __mind_ymm_vpaddq_i64x4_r(0, 0, 11);
+    __mind_ymm_vpcmpgtq_i64x4_r(3, 6, 1);
+    __mind_ymm_vpsubq_i64x4_r(4, 6, 1);
+    __mind_ymm_vpand_i64x4_r(4, 4, 3);
+    __mind_ymm_vpaddq_i64x4_r(1, 1, 4);
+    __mind_ymm_vpcmpgtq_i64x4_r(3, 10, 1);
+    __mind_ymm_vpsubq_i64x4_r(4, 10, 1);
+    __mind_ymm_vpand_i64x4_r(4, 4, 3);
+    __mind_ymm_vpaddq_i64x4_r(1, 1, 4);
+    __mind_ymm_vpcmpgtq_i64x4_r(3, 12, 1);
+    __mind_ymm_vpsubq_i64x4_r(4, 12, 1);
+    __mind_ymm_vpand_i64x4_r(4, 4, 3);
+    __mind_ymm_vpaddq_i64x4_r(1, 1, 4);
+    __mind_ymm_vmovdqu_st(0, out, 0);
+    __mind_ymm_vmovdqu_st(1, out, 32);
+    0
+}
+
+fn pool_sum4(p: i64) -> i64 {
+    __mind_load_i64(p) + __mind_load_i64(p + 8) + __mind_load_i64(p + 16) + __mind_load_i64(p + 24)
+}
+
+fn pool_max4(p: i64) -> i64 {
+    let mut mx: i64 = __mind_load_i64(p);
+    let mut i: i64 = 1;
+    while i < 4 {
+        let v: i64 = __mind_load_i64(p + i * 8);
+        if v > mx {
+            mx = v;
+        }
+        i = i + 1;
+    }
+    mx
+}
+
+fn pool4v(h: i64, sums: i64, maxs: i64, scratch: i64) -> i64 {
+    let mut c: i64 = 0;
+    while c < 64 {
+        let row0: i64 = h + (c * 9216 + 1552) * 8;
+        pool_chan4v(row0, scratch);
+        st(sums, c, pool_sum4(scratch));
+        st(maxs, c, pool_max4(scratch + 32));
+        c = c + 1;
+    }
+    0
+}
+
+// Click channel list in scratch bytes 0..63: the +1 channels first, then the
+// -1 channels. Counts at scratch + 64 and + 72. Zero weights drop out.
+fn click_list4v(t: i64, scr: i64) -> i64 {
+    let mut n: i64 = 0;
+    let mut c: i64 = 0;
+    while c < 64 {
+        if ld(t, c) == 1 {
+            st8(scr, n, c);
+            n = n + 1;
+        }
+        c = c + 1;
+    }
+    let np: i64 = n;
+    c = 0;
+    while c < 64 {
+        if ld(t, c) == 0 - 1 {
+            st8(scr, n, c);
+            n = n + 1;
+        }
+        c = c + 1;
+    }
+    __mind_store_i64(scr + 64, np);
+    __mind_store_i64(scr + 72, n - np);
+    0
+}
+
+// Tile-major click sum: 8 acc tiles (256 bytes, half a row) stay in ymm0..7
+// across all listed channels and are stored once. No acc load, no zero pass.
+fn click_sum4v(acc: i64, h: i64, scr: i64) -> i64 {
+    let np: i64 = __mind_load_i64(scr + 64);
+    let nt: i64 = np + __mind_load_i64(scr + 72);
+    let mut y: i64 = 0;
+    while y < 64 {
+        let mut x: i64 = 0;
+        while x < 512 {
+            let off: i64 = h + 12416 + y * 768 + x;
+            __mind_ymm_vpsubq_i64x4_r(0, 0, 0);
+            __mind_ymm_vpsubq_i64x4_r(1, 1, 1);
+            __mind_ymm_vpsubq_i64x4_r(2, 2, 2);
+            __mind_ymm_vpsubq_i64x4_r(3, 3, 3);
+            __mind_ymm_vpsubq_i64x4_r(4, 4, 4);
+            __mind_ymm_vpsubq_i64x4_r(5, 5, 5);
+            __mind_ymm_vpsubq_i64x4_r(6, 6, 6);
+            __mind_ymm_vpsubq_i64x4_r(7, 7, 7);
+            let mut j: i64 = 0;
+            while j < np {
+                let s: i64 = off + __mind_load_i8(scr + j) * 73728;
+                __mind_ymm_vpaddq_i64x4_m(0, s, 0);
+                __mind_ymm_vpaddq_i64x4_m(1, s, 32);
+                __mind_ymm_vpaddq_i64x4_m(2, s, 64);
+                __mind_ymm_vpaddq_i64x4_m(3, s, 96);
+                __mind_ymm_vpaddq_i64x4_m(4, s, 128);
+                __mind_ymm_vpaddq_i64x4_m(5, s, 160);
+                __mind_ymm_vpaddq_i64x4_m(6, s, 192);
+                __mind_ymm_vpaddq_i64x4_m(7, s, 224);
+                j = j + 1;
+            }
+            while j < nt {
+                let s: i64 = off + __mind_load_i8(scr + j) * 73728;
+                __mind_ymm_vpsubq_i64x4_m(0, s, 0);
+                __mind_ymm_vpsubq_i64x4_m(1, s, 32);
+                __mind_ymm_vpsubq_i64x4_m(2, s, 64);
+                __mind_ymm_vpsubq_i64x4_m(3, s, 96);
+                __mind_ymm_vpsubq_i64x4_m(4, s, 128);
+                __mind_ymm_vpsubq_i64x4_m(5, s, 160);
+                __mind_ymm_vpsubq_i64x4_m(6, s, 192);
+                __mind_ymm_vpsubq_i64x4_m(7, s, 224);
+                j = j + 1;
+            }
+            let a: i64 = acc + y * 512 + x;
+            __mind_ymm_vmovdqu_st(0, a, 0);
+            __mind_ymm_vmovdqu_st(1, a, 32);
+            __mind_ymm_vmovdqu_st(2, a, 64);
+            __mind_ymm_vmovdqu_st(3, a, 96);
+            __mind_ymm_vmovdqu_st(4, a, 128);
+            __mind_ymm_vmovdqu_st(5, a, 160);
+            __mind_ymm_vmovdqu_st(6, a, 192);
+            __mind_ymm_vmovdqu_st(7, a, 224);
+            x = x + 256;
+        }
+        y = y + 1;
+    }
+    0
+}
+
+fn click_consts(k: i64) -> i64 {
+    __mind_store_i64(k, 0);
+    __mind_store_i64(k + 8, 1);
+    __mind_store_i64(k + 16, 2);
+    __mind_store_i64(k + 24, 3);
+    __mind_store_i64(k + 32, 4);
+    __mind_store_i64(k + 40, 4);
+    __mind_store_i64(k + 48, 4);
+    __mind_store_i64(k + 56, 4);
+    0
+}
+
+// Maximum over the four vector columns. The index vector starts at 0,1,2,3 and
+// steps by 4. The first group is the leader; a later group replaces a column
+// only when its value is greater.
+fn argmax4v(acc: i64, k: i64) -> i64 {
+    __mind_ymm_vmovdqu_ld(6, k, 0);
+    __mind_ymm_vmovdqu_ld(7, k, 32);
+    __mind_ymm_vmovdqu_ld(1, acc, 0);
+    __mind_ymm_vmovdqu_ld(8, k, 0);
+    let mut i: i64 = 32;
+    while i < 32768 {
+        __mind_ymm_vpaddq_i64x4_r(6, 6, 7);
+        __mind_ymm_vmovdqu_ld(0, acc + i, 0);
+        __mind_ymm_vpcmpgtq_i64x4_r(2, 0, 1);
+        __mind_ymm_vpsubq_i64x4_r(3, 0, 1);
+        __mind_ymm_vpand_i64x4_r(3, 3, 2);
+        __mind_ymm_vpaddq_i64x4_r(1, 1, 3);
+        __mind_ymm_vpsubq_i64x4_r(3, 6, 8);
+        __mind_ymm_vpand_i64x4_r(3, 3, 2);
+        __mind_ymm_vpaddq_i64x4_r(8, 8, 3);
+        i = i + 32;
+    }
+    __mind_ymm_vmovdqu_st(1, k, 64);
+    __mind_ymm_vmovdqu_st(8, k, 96);
+    0
+}
+
+// Minimum over the four vector columns. Same index rule; a later group
+// replaces a column only when its value is smaller.
+fn argmin4v(acc: i64, k: i64) -> i64 {
+    __mind_ymm_vmovdqu_ld(6, k, 0);
+    __mind_ymm_vmovdqu_ld(7, k, 32);
+    __mind_ymm_vmovdqu_ld(1, acc, 0);
+    __mind_ymm_vmovdqu_ld(8, k, 0);
+    let mut i: i64 = 32;
+    while i < 32768 {
+        __mind_ymm_vpaddq_i64x4_r(6, 6, 7);
+        __mind_ymm_vmovdqu_ld(0, acc + i, 0);
+        __mind_ymm_vpcmpgtq_i64x4_r(2, 1, 0);
+        __mind_ymm_vpsubq_i64x4_r(3, 0, 1);
+        __mind_ymm_vpand_i64x4_r(3, 3, 2);
+        __mind_ymm_vpaddq_i64x4_r(1, 1, 3);
+        __mind_ymm_vpsubq_i64x4_r(3, 6, 8);
+        __mind_ymm_vpand_i64x4_r(3, 3, 2);
+        __mind_ymm_vpaddq_i64x4_r(8, 8, 3);
+        i = i + 32;
+    }
+    __mind_ymm_vmovdqu_st(1, k, 64);
+    __mind_ymm_vmovdqu_st(8, k, 96);
+    0
+}
+
+// First index across the four column leaders. A strictly greater value wins;
+// an equal value keeps the smaller index.
+fn reduce4(k: i64, dir: i64) -> i64 {
+    let mut best_i: i64 = __mind_load_i64(k + 96);
+    let mut best_s: i64 = dir * __mind_load_i64(k + 64);
+    let mut col: i64 = 1;
+    while col < 4 {
+        let s: i64 = dir * __mind_load_i64(k + 64 + col * 8);
+        let ix: i64 = __mind_load_i64(k + 96 + col * 8);
+        if s > best_s {
+            best_s = s;
+            best_i = ix;
+        }
+        if s == best_s {
+            if ix < best_i {
+                best_i = ix;
+            }
+        }
+        col = col + 1;
+    }
+    best_i
+}
+
+// Click cell of one 4096-cell accumulator plane: first index of the maximum
+// (dir 1) or the minimum (dir -1); dir 0 keeps cell 0.
+fn best_cell4v(acc: i64, scratch: i64, dir: i64) -> i64 {
+    let mut best: i64 = 0;
+    if dir == 1 {
+        click_consts(scratch);
+        argmax4v(acc, scratch);
+        best = reduce4(scratch, 1);
+    }
+    if dir == 0 - 1 {
+        click_consts(scratch);
+        argmin4v(acc, scratch);
+        best = reduce4(scratch, 0 - 1);
+    }
+    best
+}
+
+fn click4v(model: i64, ws: i64, h: i64, scratch: i64) -> i64 {
+    let lay: i64 = model_layer(model, __mind_load_i64(model + 8) + 2);
+    let t: i64 = __mind_load_i64(lay + 32);
+    let acc: i64 = ld(ws, ws_acc());
+    click_list4v(t, scratch);
+    click_sum4v(acc, h, scratch);
+    let m: i64 = ld(__mind_load_i64(lay + 40), 0);
+    let mut dir: i64 = 1;
+    if m < 0 {
+        dir = 0 - 1;
+    }
+    if m == 0 {
+        dir = 0;
+    }
+    let best: i64 = best_cell4v(acc, scratch, dir);
+    st(ws, ws_cell(), best);
+    best
+}
+
+fn head_phase4(model: i64, w4: i64, h: i64) -> i64 {
+    let ws: i64 = ld(w4, w4_ws());
+    let scratch: i64 = ld(w4, w4_scratch());
+    pool4v(h, ld(ws, ws_sum()), ld(ws, ws_max()), scratch);
+    let action: i64 = act_head(model, ws, 64);
+    st(ws, ws_cell(), 0 - 1);
+    if action == 6 {
+        click4v(model, ws, h, scratch);
+    }
+    action
+}
+
+fn stem_phase4(w4: i64, rec: i64) -> i64 {
+    encode4(ld(w4, w4_planes()), rec);
+    stem4(ld(w4, w4_ws()), ld(w4, w4_tabs()), ld(w4, w4_planes()), ld(w4, w4_scratch()), ld(w4, w4_zero()))
+}
+
+fn block_phase4(model: i64, w4: i64, b: i64, hin: i64, hout: i64) -> i64 {
+    block4(w4, model_layer(model, b + 1), ld(ld(w4, w4_plans()), b), hin, hout)
+}
+
+fn add_ns(w4: i64, slot: i64, d: i64) -> i64 {
+    st(w4, slot, ld(w4, slot) + d)
+}
+
+// One decision with the grouped-sum kernel: stem phase, block phase, head
+// phase. Returns the action 1..7, or -1 when an activation guard trips.
+fn decide4(model: i64, w4: i64, rec: i64) -> i64 {
+    let ws: i64 = ld(w4, w4_ws());
+    let nb: i64 = __mind_load_i64(model + 8);
+    let t0: i64 = clock4(w4);
+    if stem_phase4(w4, rec) < 0 {
+        return 0 - 1;
+    }
+    let t1: i64 = clock4(w4);
+    let mut hin: i64 = ld(ws, ws_ha());
+    let mut hout: i64 = ld(ws, ws_hb());
+    let mut b: i64 = 0;
+    while b < nb {
+        if block_phase4(model, w4, b, hin, hout) < 0 {
+            return 0 - 1;
+        }
+        let tmp: i64 = hin;
+        hin = hout;
+        hout = tmp;
+        b = b + 1;
+    }
+    let t2: i64 = clock4(w4);
+    let action: i64 = head_phase4(model, w4, hin);
+    let t3: i64 = clock4(w4);
+    add_ns(w4, w4_stem_ns(), t1 - t0);
+    add_ns(w4, w4_block_ns(), t2 - t1);
+    add_ns(w4, w4_head_ns(), t3 - t2);
+    action
+}

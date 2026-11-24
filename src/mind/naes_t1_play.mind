@@ -1,0 +1,292 @@
+// naes_t1_play.mind — play scheduler and CLI for the NAES-T1 decision client.
+//
+// HTTPS by default (DNS by naes_t1_dns, TLS by std.https); --plain-http, or a
+// loopback IPv4 --host, keeps the raw-socket HTTP/1.1 transport for the
+// offline replay test (naes_t1_play_host.mind). One initial
+// RESET creates the game; later RESETs always carry its guid. Results use MAP
+// event records. No retries of actions: a transport error has an ambiguous
+// server-side commit status.
+fn play_action_path(action: i64) -> i64 {
+    if action == 0 { return play_ptr("/api/cmd/RESET\0"); }
+    if action == 1 { return play_ptr("/api/cmd/ACTION1\0"); }
+    if action == 2 { return play_ptr("/api/cmd/ACTION2\0"); }
+    if action == 3 { return play_ptr("/api/cmd/ACTION3\0"); }
+    if action == 4 { return play_ptr("/api/cmd/ACTION4\0"); }
+    if action == 5 { return play_ptr("/api/cmd/ACTION5\0"); }
+    if action == 6 { return play_ptr("/api/cmd/ACTION6\0"); }
+    if action == 7 { return play_ptr("/api/cmd/ACTION7\0"); }
+    0
+}
+// One HTTPS round trip. Builds the header block (API key + cookie), calls
+// naes_https_roundtrip, takes the body into the session buffer and the
+// Set-Cookie pair into the cookie slot (naes_https_take), and returns
+// the body pointer (the play loop's contract) or a negative error.
+fn play_action_https(s: i64, action: i64, body: i64, body_len: i64) -> i64 {
+    let path: i64 = play_action_path(action);
+    if path == 0 { return 0 - 1; }
+    let path_len: i64 = play_len(path);
+    let host: i64 = __mind_load_i64(s + 8);
+    let host_len: i64 = play_len(host);
+    let port: i64 = __mind_load_i64(s + 16);
+    // Header block: X-API-Key + optional Cookie.
+    let hdr: i64 = __mind_alloc(4096);
+    if hdr == 0 { return 0 - 1; }
+    let mut hp: i64 = 0;
+    let key: i64 = __mind_load_i64(s + 40);
+    let klen: i64 = __mind_load_i64(s + 48);
+    if klen > 0 {
+        let _a: i64 = play_copy(hdr + hp, play_ptr("X-API-Key: \0"), 11); hp = hp + 11;
+        let _b: i64 = play_copy(hdr + hp, key, klen); hp = hp + klen;
+        let _c: i64 = play_copy(hdr + hp, play_ptr("\r\n\0"), 2); hp = hp + 2;
+    }
+    if __mind_load_i64(s + 88) > 0 {
+        let _d: i64 = play_copy(hdr + hp, play_ptr("Cookie: \0"), 8); hp = hp + 8;
+        let _e: i64 = play_copy(hdr + hp, __mind_load_i64(s + 80), __mind_load_i64(s + 88)); hp = hp + __mind_load_i64(s + 88);
+        let _f: i64 = play_copy(hdr + hp, play_ptr("\r\n\0"), 2); hp = hp + 2;
+    }
+    // one kept-alive connection (s + 104) and one anchor parse (s + 96) per
+    // game (naes_t1_play_https.mind)
+    let r: i64 = naes_https_request(s + 104, s + 96, 1, host, host_len, port, path, path_len, hdr, hp, body, body_len, 0, 0);
+    __mind_free(hdr);
+    // status, body, Set-Cookie pair, then https_free (raw buffer included)
+    let rc: i64 = naes_https_take(r, __mind_load_i64(s + 24), play_body_cap(), s + 64, s + 32, __mind_load_i64(s + 80), s + 88);
+    if rc != 1 { return rc; }
+    __mind_load_i64(s + 24)
+}
+// Dispatch: HTTPS or plain HTTP.
+fn play_action_dispatch(s: i64, action: i64, body: i64, len: i64, plain: i64) -> i64 {
+    if plain == 1 {
+        if play_action_send(s, action, body, len) != 1 { return 0 - 1; }
+        return play_http_recv(s);
+    }
+    play_action_https(s, action, body, len)
+}
+// Readiness-driven scheduler (plain HTTP): other sockets may have a request
+// in flight while one shared workspace computes a decision. poll waits without
+// spinning; each ready game is serviced once before refreshing the descriptor
+// array. No threads; at most one action per game is in flight. HTTPS mode
+// (plain == 0) runs games sequentially: one round trip at a time.
+fn play_many(model: i64, ws: i64, games: i64, card: i64, host: i64, port: i64, cap: i64, result: i64, key: i64, klen: i64, plain: i64) -> i64 {
+    let len: i64 = play_len(games);
+    if len < 1 { return die(2, "naes_t1: empty game list\n"); }
+    let names: i64 = __mind_alloc(len + 1);
+    let _cp: i64 = play_copy(names, games, len + 1);
+    let contexts: i64 = alloc_zero(128);
+    let mut count: i64 = 0;
+    let mut p: i64 = 0;
+    let mut start: i64 = 0;
+    while p <= len {
+        if p == len || __mind_load_i8(names + p) == 44 {
+            if count >= 128 || play_safe_id(names + start, p - start) == 0 { return die(2, "naes_t1: invalid game list\n"); }
+            __mind_store_i8(names + p, 0);
+            let mut previous: i64 = 0;
+            while previous < count {
+                let prior: i64 = __mind_load_i64(contexts + previous * 8);
+                if play_same_cstr(names + start, __mind_load_i64(prior)) == 1 { return die(2, "naes_t1: duplicate game id\n"); }
+                previous = previous + 1;
+            }
+            let c: i64 = alloc_zero(16);
+            __mind_store_i64(contexts + count * 8, c);
+            __mind_store_i64(c, names + start);
+            count = count + 1;
+            start = p + 1;
+        }
+        p = p + 1;
+    }
+    let mut fd: i64 = 1;
+    if result != 0 { fd = creat(result as *const u8, 384 as i32) as i64; if fd < 0 { return die(6, "naes_t1: cannot create result record\n"); } }
+    let mut overall: i64 = 0;
+    let mut gi: i64 = 0;
+    // Sequential loop: works for both HTTPS and plain HTTP.
+    while gi < count {
+        let c: i64 = __mind_load_i64(contexts + gi * 8);
+        let s: i64 = alloc_zero(14);
+        __mind_store_i64(s, 0 - 1);
+        __mind_store_i64(s + 8, host);
+        __mind_store_i64(s + 16, port);
+        __mind_store_i64(s + 24, __mind_alloc(play_response_cap()));
+        __mind_store_i64(s + 40, key);
+        __mind_store_i64(s + 48, klen);
+        __mind_store_i64(s + 56, play_buf(16384));
+        __mind_store_i64(s + 80, __mind_alloc(2048));
+        let state: i64 = alloc_zero(5);
+        __mind_store_i64(state, __mind_alloc(256));
+        let rec: i64 = alloc_zero(1025);
+        __mind_store_i16(rec + 8193, 0 - 1);
+        let body: i64 = play_buf(2048);
+        __mind_store_i64(c + 8, s);
+        __mind_store_i64(c + 16, state);
+        __mind_store_i64(c + 24, rec);
+        __mind_store_i64(c + 32, body);
+        __mind_store_i64(c + 40, alloc_zero(256));
+        __mind_store_i64(c + 88, 0 - 1);
+        __mind_store_i64(c + 104, 1);
+        let _b: i64 = play_body(body, __mind_load_i64(c), card, state, 0, 0 - 1);
+        let mut code: i64 = 0;
+        let mut action: i64 = 0;
+        let mut cell: i64 = 0 - 1;
+        let mut actions: i64 = 0;
+        let mut resets: i64 = 0;
+        let mut level_actions: i64 = 0;
+        let mut running: i64 = 1;
+        while running == 1 && actions < cap {
+            let _bb: i64 = play_body(body, __mind_load_i64(c), card, state, action, cell);
+            let response: i64 = play_action_dispatch(s, action, __mind_load_i64(body), __mind_load_i64(body + 8), plain);
+            if response < 0 { code = 7; running = 0; }
+            else {
+                actions = actions + 1;
+                level_actions = level_actions + 1;
+                if action == 0 { resets = resets + 1; }
+                let old_levels: i64 = __mind_load_i64(state + 24);
+                if actions > 1 { let _p: i64 = play_copy(rec + 4096, rec, 4096); }
+                if play_game_ok(response, __mind_load_i64(s + 32), __mind_load_i64(c)) == 0 || play_parse(response, __mind_load_i64(s + 32), state, rec) == 0 { code = 8; running = 0; }
+                else {
+                    if actions == 1 { let _p: i64 = play_copy(rec + 4096, rec, 4096); }
+                    let levels: i64 = __mind_load_i64(state + 24);
+                    if levels > old_levels {
+                        let nper: i64 = __mind_load_i64(c + 48);
+                        __mind_store_i64(__mind_load_i64(c + 40) + nper * 8, level_actions);
+                        __mind_store_i64(c + 48, nper + 1);
+                        level_actions = 0;
+                    }
+                    if __mind_load_i64(state + 16) == 2 { running = 0; }
+                    else { if actions >= cap { code = 9; running = 0; }
+                    else {
+                        if action == 0 { __mind_store_i8(rec + 8192, 0); __mind_store_i16(rec + 8193, 0 - 1); __mind_store_i8(rec + 8195, 0); }
+                        else {
+                            let mut run: i64 = 1;
+                            if __mind_load_i8(rec + 8192) == action && rec_prev_cell(rec) == cell { run = rec_prev_run(rec) + 1; }
+                            if run > 7 { run = 7; }
+                            __mind_store_i8(rec + 8192, action);
+                            __mind_store_i16(rec + 8193, cell);
+                            __mind_store_i8(rec + 8195, run);
+                        }
+                        if __mind_load_i64(state + 16) == 3 || __mind_load_i64(state + 16) == 4 { action = 0; cell = 0 - 1; }
+                        else { action = fast_decide(model, ws, rec); cell = fast_cell(ws); if action < 1 || action > 7 { code = 5; running = 0; } }
+                    } }
+                }
+            }
+        }
+        if running == 1 { code = 9; }
+        let _d: i64 = play_disconnect(s);
+        let _hc: i64 = naes_https_close_cell(s + 104);
+        let _ca: i64 = naes_tls_anchors_free(s + 96, 0);
+        let rc: i64 = play_result(fd, __mind_load_i64(c), card, state, actions, resets, code, __mind_load_i64(c + 40), __mind_load_i64(c + 48));
+        if rc > overall { overall = rc; }
+        gi = gi + 1;
+    }
+    if result != 0 { let _c: i64 = (close(fd as i32)) as i64; }
+    overall
+}
+fn play_main(argc: i64, argv: i64) -> i64 {
+    let mut weights: i64 = play_ptr("naes_t1.bin\0");
+    let mut game: i64 = 0;
+    let mut games: i64 = 0;
+    let mut card: i64 = 0;
+    let mut host: i64 = play_ptr("three.arcprize.org\0");
+    let mut port: i64 = 443;
+    let mut cap: i64 = 10000;
+    let mut result: i64 = 0;
+    let mut plain: i64 = 0;
+    let mut i: i64 = 2;
+    while i < argc {
+        let a: i64 = __mind_load_i64(argv + i * 8);
+        if cstr_eq(a, "--plain-http") == 1 { plain = 1; i = i + 1; }
+        else {
+        if i + 1 >= argc { return die(2, "naes_t1: play option requires a value\n"); }
+        let v: i64 = __mind_load_i64(argv + (i + 1) * 8);
+        if cstr_eq(a, "--games") == 1 { games = v; }
+        else { if cstr_eq(a, "--game") == 1 { game = v; }
+        else { if cstr_eq(a, "--card") == 1 { card = v; }
+        else { if cstr_eq(a, "--weights") == 1 { weights = v; }
+        else { if cstr_eq(a, "--host") == 1 { host = v; }
+        else { if cstr_eq(a, "--port") == 1 { port = play_uint(v, play_len(v)); }
+        else { if cstr_eq(a, "--max-actions") == 1 { cap = play_uint(v, play_len(v)); }
+        else { if cstr_eq(a, "--result") == 1 { result = v; }
+        else { return die(2, "naes_t1: unknown play option\n"); } } } } } } } }
+        i = i + 2;
+        }
+    }
+    // HTTPS unless --plain-http or a loopback IPv4 host (naes_t1_play_host.mind);
+    // never a silent cleartext fallback for a host off this machine.
+    let tr: i64 = play_transport(host, plain);
+    if tr < 0 { return die(2, "naes_t1: --host is an IPv4 address that is not loopback: HTTPS needs a DNS name, and --plain-http sends the API key in cleartext\n"); }
+    plain = tr;
+    if plain == 1 && port == 443 { port = 8000; }
+    if (games == 0 && play_safe_id(game, play_len(game)) == 0) || (games != 0 && game != 0) || play_safe_id(card, play_len(card)) == 0 || port < 1 || port > 65535 || cap < 1 { return die(2, "usage: naes_t1 play --game ID --card ID [--host HOST] [--port PORT] [--weights FILE] [--max-actions N] [--result FILE] [--plain-http]\n"); }
+    let key: i64 = getenv(play_ptr("ARC_API_KEY\0") as *const u8) as i64;
+    let klen: i64 = play_len(key);
+    if klen < 1 || klen > 2048 { return die(7, "naes_t1: ARC_API_KEY is missing or invalid\n"); }
+    let mut ki: i64 = 0;
+    while ki < klen { let c: i64 = __mind_load_i8(key + ki); if c < 33 || c > 126 { return die(7, "naes_t1: invalid API key bytes\n"); } ki = ki + 1; }
+    let model: i64 = load_model(weights);
+    if model < 0 { return die(3, "naes_t1: play weights rejected\n"); }
+    let ws: i64 = fast_prepare(model);
+    if ws == 0 { return die(3, "naes_t1: play workspace allocation failed\n"); }
+    if games != 0 { return play_many(model, ws, games, card, host, port, cap, result, key, klen, plain); }
+    let s: i64 = alloc_zero(14);
+    __mind_store_i64(s, 0 - 1);
+    __mind_store_i64(s + 8, host);
+    __mind_store_i64(s + 16, port);
+    __mind_store_i64(s + 24, __mind_alloc(play_response_cap()));
+    __mind_store_i64(s + 40, key);
+    __mind_store_i64(s + 48, klen);
+    __mind_store_i64(s + 56, play_buf(16384));
+    __mind_store_i64(s + 80, __mind_alloc(2048));
+    let state: i64 = alloc_zero(5);
+    __mind_store_i64(state, __mind_alloc(256));
+    let rec: i64 = alloc_zero(1025);
+    __mind_store_i16(rec + 8193, 0 - 1);
+    let body: i64 = play_buf(2048);
+    let per: i64 = alloc_zero(256);
+    let mut nper: i64 = 0;
+    let mut level_actions: i64 = 0;
+    let mut actions: i64 = 0;
+    let mut resets: i64 = 0;
+    let mut action: i64 = 0;
+    let mut cell: i64 = 0 - 1;
+    let mut code: i64 = 0;
+    let mut running: i64 = 1;
+    while running == 1 && actions < cap {
+        let _b: i64 = play_body(body, game, card, state, action, cell);
+        let response: i64 = play_action_dispatch(s, action, __mind_load_i64(body), __mind_load_i64(body + 8), plain);
+        if response < 0 { code = 7; let _e: i64 = print_text(2, "naes_t1: play HTTP failure status="); let _f: i64 = print_i64(2, __mind_load_i64(s + 64)); let _g: i64 = print_text(2, "\n"); running = 0; }
+        else {
+            actions = actions + 1;
+            level_actions = level_actions + 1;
+            if action == 0 { resets = resets + 1; }
+            let old_levels: i64 = __mind_load_i64(state + 24);
+            if actions > 1 { let _p: i64 = play_copy(rec + 4096, rec, 4096); }
+            if play_game_ok(response, __mind_load_i64(s + 32), game) == 0 || play_parse(response, __mind_load_i64(s + 32), state, rec) == 0 { code = 8; let _e: i64 = print_text(2, "naes_t1: malformed play response\n"); running = 0; }
+            else {
+                if actions == 1 { let _p: i64 = play_copy(rec + 4096, rec, 4096); }
+                let levels: i64 = __mind_load_i64(state + 24);
+                if levels > old_levels { __mind_store_i64(per + nper * 8, level_actions); nper = nper + 1; level_actions = 0; }
+                if __mind_load_i64(state + 16) == 2 { running = 0; }
+                else { if actions >= cap { code = 9; running = 0; }
+                else {
+                    if action == 0 { __mind_store_i8(rec + 8192, 0); __mind_store_i16(rec + 8193, 0 - 1); __mind_store_i8(rec + 8195, 0); }
+                    else {
+                        let mut run: i64 = 1;
+                        if __mind_load_i8(rec + 8192) == action && rec_prev_cell(rec) == cell { run = rec_prev_run(rec) + 1; }
+                        if run > 7 { run = 7; }
+                        __mind_store_i8(rec + 8192, action);
+                        __mind_store_i16(rec + 8193, cell);
+                        __mind_store_i8(rec + 8195, run);
+                    }
+                    if __mind_load_i64(state + 16) == 3 || __mind_load_i64(state + 16) == 4 { action = 0; cell = 0 - 1; }
+                    else { action = fast_decide(model, ws, rec); cell = fast_cell(ws); if action < 1 || action > 7 { code = 5; running = 0; } }
+                } }
+            }
+        }
+    }
+    if running == 1 { code = 9; }
+    let _d: i64 = play_disconnect(s);
+    let _hc: i64 = naes_https_close_cell(s + 104);
+    let _ca: i64 = naes_tls_anchors_free(s + 96, 0);
+    let mut fd: i64 = 1;
+    if result != 0 { fd = creat(result as *const u8, 384 as i32) as i64; if fd < 0 { return die(6, "naes_t1: cannot create result record\n"); } }
+    let rc: i64 = play_result(fd, game, card, state, actions, resets, code, per, nper);
+    if result != 0 { let _c: i64 = (close(fd as i32)) as i64; }
+    rc
+}

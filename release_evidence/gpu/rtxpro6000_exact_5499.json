@@ -1,0 +1,83 @@
+{
+ "receipt": "exactness of the protected GPU build on the release fixture, NVIDIA RTX PRO 6000 Blackwell Server Edition",
+ "date": "2026-11-22",
+ "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+ "driver": "595.112.07",
+ "compute_capability": "12.0",
+ "fixture_sha256": "a2dc9485252ddd922d742f7e36191fa92a20bbdb7680a2ca1c378874ecd7b925",
+ "fixture_decisions": 5499,
+ "rows": [
+  {
+   "build": "naes_t1_gpu_a",
+   "build_sha256": "12db102d30cc8eb999ddc35dff95fd1a8f849ff17a2a22c36b0360a89f99e274",
+   "kernel": "naes_t1_gpu_a_k1.ptx",
+   "kernel_sha256": "e9ff340fb4521ace2c2ffe863d37f9e21208e8dcd71688a70d6f7691256475de",
+   "batch": 25,
+   "rc": 0,
+   "compared": 5499,
+   "match_line": "MATCH 5499/5499",
+   "stream_sha256": "4d2d98f711a1209eace8f3841952e39d4d75870d48079c3175b361bba9746396",
+   "gate": "GATE_PASS"
+  },
+  {
+   "build": "naes_t1_gpu_a",
+   "build_sha256": "12db102d30cc8eb999ddc35dff95fd1a8f849ff17a2a22c36b0360a89f99e274",
+   "kernel": "naes_t1_gpu_a_k2.ptx",
+   "kernel_sha256": "1aa59c7d7688450340ab78dd0ff764a36a31896832d5fc494d5be42da3437c3b",
+   "batch": 1,
+   "rc": 0,
+   "compared": 5499,
+   "match_line": "MATCH 5499/5499",
+   "stream_sha256": "4d2d98f711a1209eace8f3841952e39d4d75870d48079c3175b361bba9746396",
+   "gate": "GATE_PASS"
+  },
+  {
+   "build": "naes_t1_gpu_a",
+   "build_sha256": "12db102d30cc8eb999ddc35dff95fd1a8f849ff17a2a22c36b0360a89f99e274",
+   "kernel": "naes_t1_gpu_a_k1.ptx",
+   "kernel_sha256": "e9ff340fb4521ace2c2ffe863d37f9e21208e8dcd71688a70d6f7691256475de",
+   "batch": 1,
+   "rc": 0,
+   "compared": 5499,
+   "match_line": "MATCH 5499/5499",
+   "stream_sha256": "4d2d98f711a1209eace8f3841952e39d4d75870d48079c3175b361bba9746396",
+   "gate": "GATE_PASS"
+  },
+  {
+   "build": "naes_t1_gpu_a",
+   "build_sha256": "12db102d30cc8eb999ddc35dff95fd1a8f849ff17a2a22c36b0360a89f99e274",
+   "kernel": "naes_t1_gpu_a_k2.ptx",
+   "kernel_sha256": "1aa59c7d7688450340ab78dd0ff764a36a31896832d5fc494d5be42da3437c3b",
+   "batch": 25,
+   "rc": 0,
+   "compared": 5499,
+   "match_line": "MATCH 5499/5499",
+   "stream_sha256": "4d2d98f711a1209eace8f3841952e39d4d75870d48079c3175b361bba9746396",
+   "gate": "GATE_PASS"
+  }
+ ],
+ "rows_note": "protected build naes_t1_gpu_a: kernel k1 and kernel k2, each at batch 25 and at batch 1",
+ "negative_control": {
+  "what": "the same build on a copy of the release fixture in which the expected action of the record with index 3 is changed from 3 to 1",
+  "fixture_sha256": "65b374c0b81c2f2775efa58610b9674471a73fbefbcb8cdc2557443c45a1ad17",
+  "rows": [
+   {
+    "kernel": "naes_t1_gpu_a_k1.ptx",
+    "batch": 25,
+    "rc": 1,
+    "first_mismatch": 3,
+    "match_line": "MATCH 5498/5499",
+    "gate": "no GATE_PASS line"
+   },
+   {
+    "kernel": "naes_t1_gpu_a_k2.ptx",
+    "batch": 1,
+    "rc": 1,
+    "first_mismatch": 3,
+    "match_line": "MATCH 5498/5499",
+    "gate": "no GATE_PASS line"
+   }
+  ],
+  "result": "the check fails as it must: exit code 1, the first difference at record 3, no GATE_PASS line"
+ }
+}

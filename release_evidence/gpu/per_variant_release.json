@@ -1,0 +1,99 @@
+{
+ "receipt": "per-variant exactness of the protected GPU builds on the release fixture",
+ "date": "2026-11-22",
+ "weights_sha256": "fa54f507fdf9a9c74a8bc22d95a1c970e3528b3fe1707b6eb61d74bad2419fec",
+ "weights_note": "the digest of model/naes_t1.bin; the decision stream of every variant equals the decision stream of the CPU executable on these weights",
+ "fixture_sha256": "a2dc9485252ddd922d742f7e36191fa92a20bbdb7680a2ca1c378874ecd7b925",
+ "fixture_decisions": 5499,
+ "stream_sha256": "4d2d98f711a1209eace8f3841952e39d4d75870d48079c3175b361bba9746396",
+ "variant_definition": "one variant = one protected build with one of its kernel inputs; compute_capability is the lowest compute capability the variant is built for",
+ "run_note": "each variant ran on the devices of its run_on list; the two variants of build naes_t1_gpu_b ran on cards above the range that they are built for",
+ "source_receipts": [
+  "release_evidence/gpu/gpu_exact_5499.json",
+  "release_evidence/gpu/rtxpro6000_exact_5499.json"
+ ],
+ "variants": [
+  {
+   "variant": "naes_t1_gpu_a_k1",
+   "build": "naes_t1_gpu_a",
+   "build_sha256": "12db102d30cc8eb999ddc35dff95fd1a8f849ff17a2a22c36b0360a89f99e274",
+   "kernel": "naes_t1_gpu_a_k1.ptx",
+   "kernel_sha256": "e9ff340fb4521ace2c2ffe863d37f9e21208e8dcd71688a70d6f7691256475de",
+   "compute_capability": "8.0",
+   "built_for": "compute capability 8.0 and above",
+   "batches": [
+    25,
+    1
+   ],
+   "runs": 4,
+   "run_on": [
+    "GPU of the record gpu_exact_5499.json",
+    "NVIDIA RTX PRO 6000 Blackwell Server Edition, compute capability 12.0"
+   ],
+   "status": "PASS",
+   "logged_match": "5499/5499",
+   "stream_sha256": "4d2d98f711a1209eace8f3841952e39d4d75870d48079c3175b361bba9746396"
+  },
+  {
+   "variant": "naes_t1_gpu_a_k2",
+   "build": "naes_t1_gpu_a",
+   "build_sha256": "12db102d30cc8eb999ddc35dff95fd1a8f849ff17a2a22c36b0360a89f99e274",
+   "kernel": "naes_t1_gpu_a_k2.ptx",
+   "kernel_sha256": "1aa59c7d7688450340ab78dd0ff764a36a31896832d5fc494d5be42da3437c3b",
+   "compute_capability": "8.0",
+   "built_for": "compute capability 8.0 and above",
+   "batches": [
+    25,
+    1
+   ],
+   "runs": 4,
+   "run_on": [
+    "GPU of the record gpu_exact_5499.json",
+    "NVIDIA RTX PRO 6000 Blackwell Server Edition, compute capability 12.0"
+   ],
+   "status": "PASS",
+   "logged_match": "5499/5499",
+   "stream_sha256": "4d2d98f711a1209eace8f3841952e39d4d75870d48079c3175b361bba9746396"
+  },
+  {
+   "variant": "naes_t1_gpu_b_k1",
+   "build": "naes_t1_gpu_b",
+   "build_sha256": "eaf0a50067fe0ebe1389eab4123a8366610af0da5e3999e7b74acc7200d51a5a",
+   "kernel": "naes_t1_gpu_b_k1.ptx",
+   "kernel_sha256": "79e5eb79767878dfe75115bcbebe1b57fbafac95b27dc38835b392a868dd62e9",
+   "compute_capability": "7.5",
+   "built_for": "compute capability 7.5",
+   "batches": [
+    25,
+    1
+   ],
+   "runs": 2,
+   "run_on": [
+    "GPU of the record gpu_exact_5499.json"
+   ],
+   "status": "PASS",
+   "logged_match": "5499/5499",
+   "stream_sha256": "4d2d98f711a1209eace8f3841952e39d4d75870d48079c3175b361bba9746396"
+  },
+  {
+   "variant": "naes_t1_gpu_b_k2",
+   "build": "naes_t1_gpu_b",
+   "build_sha256": "eaf0a50067fe0ebe1389eab4123a8366610af0da5e3999e7b74acc7200d51a5a",
+   "kernel": "naes_t1_gpu_b_k2.ptx",
+   "kernel_sha256": "88fb8de85587d76029bc326ea6d7aa1fd9660e82e316cd643dcbb0e8cb5174cf",
+   "compute_capability": "6.0",
+   "built_for": "compute capability 6.0",
+   "batches": [
+    25,
+    1
+   ],
+   "runs": 2,
+   "run_on": [
+    "GPU of the record gpu_exact_5499.json"
+   ],
+   "status": "PASS",
+   "logged_match": "5499/5499",
+   "stream_sha256": "4d2d98f711a1209eace8f3841952e39d4d75870d48079c3175b361bba9746396"
+  }
+ ]
+}

@@ -1,0 +1,84 @@
+{
+  "node": "build-host",
+  "game": "cd82-fb555c5d",
+  "level": 1,
+  "floor_candidate": 5,
+  "lower_method": "complete prefix tree including RESET, no state key or dedup, fresh initial RESET plus path replay for every successor",
+  "levels_closed": 4,
+  "prefix_counts": [
+    1,
+    11,
+    121,
+    1331,
+    14641
+  ],
+  "transitions": 16104,
+  "winning_prefixes_below5": [],
+  "witness": [
+    [
+      3
+    ],
+    [
+      2
+    ],
+    [
+      2
+    ],
+    [
+      4
+    ],
+    [
+      5
+    ]
+  ],
+  "witness_first_win": 5,
+  "prefix_negative": true,
+  "planted_shorter_sequence_seen": true,
+  "accepted_ids": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "action6_empty_data_class_explicit": true,
+  "startup_reset_equivalence_verified": true,
+  "action6_partial_xy_payload_equivalent_to_empty": true,
+  "out_of_range_integer_coords_map_to_none": true,
+  "qnjvedxjm_write_only_occurrences": [
+    [
+      434,
+      "self.qnjvedxjm = False"
+    ],
+    [
+      462,
+      "self.qnjvedxjm = False"
+    ],
+    [
+      662,
+      "self.qnjvedxjm = False"
+    ],
+    [
+      667,
+      "self.qnjvedxjm = True"
+    ]
+  ],
+  "unexpected_qnjvedxjm_read_use": false,
+  "startup_vs_fresh_reset_equivalence_basis": "constructor and full-reset board/game variables match; only base flags differ (state NOT_PLAYED->NOT_FINISHED, action_complete False->True, full_reset False->True), and perform_action/_set_action overwrites the relevant control flags before any game step",
+  "click_data_domain": "integers x,y in [0,63]x[0,63]; arbitrary out-of-range integers tested to map to None; extra payload keys ignored by game handler",
+  "click_partition_states": 1464,
+  "coordinates_classified": 5996544,
+  "click_partition_method": "every display coordinate per expanded state grouped by returned active sprite identity or inert branch, as qbiojckwxl; palette objects never merged by colour",
+  "inert_click_class_present_every_state": true,
+  "truncated": false,
+  "elapsed_s": 66.789,
+  "sha256": {
+    "game": "dafeabff60a3a99b5c93629f8da0d8f555b873ef16a522247d6197b1b3addbcb",
+    "base_game": "5b5f41f3bec4c0c97a727fda7326114991dc0d4a5642d489b40ee4aa87e6b15f",
+    "camera": "f06e16807b0f97d86cafb5481bb3969213f27768f789d898c6b8b07e957de397",
+    "independent_prover": "d6679e7e54cdc746d9b098778ac5df08f0ea3d141723834631faefa887175486"
+  }
+}

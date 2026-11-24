@@ -1,0 +1,166 @@
+{
+ "old": "old/m0r0/dadda488/m0r0.py",
+ "new": "new/m0r0/492f87ba/m0r0.py",
+ "old_tokens": 2538,
+ "new_tokens": 2538,
+ "renamed": 121,
+ "mapped": 230,
+ "n_hunks": 16,
+ "hunks": [
+  {
+   "op": "map_violation",
+   "where_old": "kyrgqgqaes:render_interface",
+   "where_new": "uuyjjjqcvy:render_interface",
+   "old": "sprites",
+   "new": "sprites",
+   "expected_new": "cmrfmxkgsyp"
+  },
+  {
+   "op": "map_violation",
+   "where_old": "kyrgqgqaes:render_interface",
+   "where_new": "uuyjjjqcvy:render_interface",
+   "old": "sprites",
+   "new": "sprites",
+   "expected_new": "cmrfmxkgsyp"
+  },
+  {
+   "op": "map_violation",
+   "where_old": "kyrgqgqaes:render_interface",
+   "where_new": "uuyjjjqcvy:render_interface",
+   "old": "sprites",
+   "new": "sprites",
+   "expected_new": "cmrfmxkgsyp"
+  },
+  {
+   "op": "map_violation",
+   "where_old": "M0r0:step",
+   "where_new": "M0r0:step",
+   "old": "name",
+   "new": "name",
+   "expected_new": "dtktmyjjtsa"
+  },
+  {
+   "op": "map_violation",
+   "where_old": "M0r0:step",
+   "where_new": "M0r0:step",
+   "old": "sprite",
+   "new": "sprite",
+   "expected_new": "ssebydbziot"
+  },
+  {
+   "op": "map_violation",
+   "where_old": "M0r0:step",
+   "where_new": "M0r0:step",
+   "old": "name",
+   "new": "name",
+   "expected_new": "dtktmyjjtsa"
+  },
+  {
+   "op": "map_violation",
+   "where_old": "M0r0:step",
+   "where_new": "M0r0:step",
+   "old": "sprite",
+   "new": "sprite",
+   "expected_new": "ssebydbziot"
+  },
+  {
+   "op": "map_violation",
+   "where_old": "M0r0:step",
+   "where_new": "M0r0:step",
+   "old": "name",
+   "new": "name",
+   "expected_new": "dtktmyjjtsa"
+  },
+  {
+   "op": "map_violation",
+   "where_old": "M0r0:step",
+   "where_new": "M0r0:step",
+   "old": "sprite",
+   "new": "sprite",
+   "expected_new": "ssebydbziot"
+  },
+  {
+   "op": "map_violation",
+   "where_old": "M0r0:step",
+   "where_new": "M0r0:step",
+   "old": "name",
+   "new": "atdohiedatw",
+   "expected_new": "dtktmyjjtsa"
+  },
+  {
+   "op": "map_violation",
+   "where_old": "M0r0:step",
+   "where_new": "M0r0:step",
+   "old": "sprite",
+   "new": "sqctczantrh",
+   "expected_new": "ssebydbziot"
+  },
+  {
+   "op": "map_violation",
+   "where_old": "M0r0:step",
+   "where_new": "M0r0:step",
+   "old": "name",
+   "new": "atdohiedatw",
+   "expected_new": "dtktmyjjtsa"
+  },
+  {
+   "op": "map_violation",
+   "where_old": "M0r0:step",
+   "where_new": "M0r0:step",
+   "old": "sprite",
+   "new": "sqctczantrh",
+   "expected_new": "ssebydbziot"
+  },
+  {
+   "op": "map_violation",
+   "where_old": "M0r0:dssyxgdgjg",
+   "where_new": "M0r0:xxlavvheeu",
+   "old": "sprites",
+   "new": "sprites",
+   "expected_new": "cmrfmxkgsyp"
+  },
+  {
+   "op": "map_violation",
+   "where_old": "M0r0:dssyxgdgjg",
+   "where_new": "M0r0:xxlavvheeu",
+   "old": "sprites",
+   "new": "sprites",
+   "expected_new": "cmrfmxkgsyp"
+  },
+  {
+   "op": "map_violation",
+   "where_old": "M0r0:dssyxgdgjg",
+   "where_new": "M0r0:xxlavvheeu",
+   "old": "sprites",
+   "new": "sprites",
+   "expected_new": "cmrfmxkgsyp"
+  }
+ ],
+ "string_map": {
+  "\"\"\".\"\"\"": "\"\"\".\"\"\"",
+  "'M0r0'": "'M0r0'",
+  "'npwxa'": "'psqw'",
+  "'qzfkx-ubwff-idtiq'": "'pikgci-toljda-leklkn'",
+  "'qzfkx-ubwff-crkfz'": "'pikgci-toljda-rivmdg'",
+  "'qzfkx-kncqr-idtiq'": "'pikgci-boweok-leklkn'",
+  "'qzfkx-kncqr-crkfz'": "'pikgci-boweok-rivmdg'",
+  "'cvcer'": "'mosdlc'",
+  "'wyiex'": "'spswjz'",
+  "'pxwnx'": "'fucr'",
+  "'m0r0'": "'m0r0'",
+  "'sys_click'": "'sys_click'",
+  "'x'": "'x'",
+  "'y'": "'y'",
+  "'ubwff-idtiq'": "'toljda-leklkn'",
+  "'ubwff-crkfz'": "'toljda-rivmdg'",
+  "'kncqr-idtiq'": "'boweok-leklkn'",
+  "'kncqr-crkfz'": "'boweok-rivmdg'",
+  "'jggua'": "'wahtyt'",
+  "'nhiae'": "'xbso'",
+  "'raixb'": "'grwjuk'",
+  "'ujcze'": "'orfrpe'",
+  "'qeazm'": "'puvdux'",
+  "dfnuk-": "gayktr-",
+  "hnutp-": "unobxw-"
+ }
+}

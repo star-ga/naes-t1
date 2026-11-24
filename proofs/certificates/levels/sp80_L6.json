@@ -1,0 +1,99 @@
+{
+  "artifact_sha256": [
+    {
+      "kind": "safe_statement_count_extract",
+      "sha256": "71715945097ac4a9738e771b011e889f892d4fd6e90ac4880c045c9d4f7e6697"
+    },
+    {
+      "kind": "authority_ledger_label",
+      "sha256": "9a8eccca1f89ca26f426eddf8a0a08b056202fd181af9094dc7de695922f8451"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "fef665d7d399b61fc3d3669ff894758fbbfa6bdc6ba277c7593554418eb54ac8"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "da2817b2a0819c332807bcbbc229dd45dcd0c9b28fabf8d02fcbc4a9d602865d"
+    },
+    {
+      "kind": "per_level_certificate_record",
+      "sha256": "41d6404166754100cde34d86d697fbf66aba92fbf5f692980db9c8f7af2c45e5"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "58384cd413404d94235cb5826fcf935f8f731b925925ffe1ca08add5b75e8757"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "33818c1afdd4bb7d2dc9bc9aa9465ff74ab1a65b84de758498ae34872e8931fd"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "3d3ddf56fc5ac908110cd56d5f5380aa6cc2f459f8ac66b5cbdcde6d14b46088"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "f9f6d5903281dee0a782f93abe5f438fdfd7847dc0d5239c5accdf2a77e594e2"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "3c418f97fb68bfffdce9fd8187a05e85f0524ccd73a6fb3d308a709659922c20"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "ad31ac284e793527259124beb82388ea38bd42f060c66e4c8e03dda489df996a"
+    },
+    {
+      "kind": "fixed_instance_evidence",
+      "sha256": "9736ca64f85128787fe0d61fc49004405ae336dc19a85fdcae1ee0231c564e39"
+    },
+    {
+      "kind": "fixed_instance_evidence",
+      "sha256": "20c1bf448dc4d52b613d0c5badc0fec9b84472a8aa593536ef1b6d8821714499"
+    },
+    {
+      "kind": "fixed_instance_evidence",
+      "sha256": "efa7c10c9e6b413115443117e57bef19fe0646df22c43bdd23cddacc575a9728"
+    },
+    {
+      "kind": "fixed_instance_evidence",
+      "sha256": "4343286ecfc2395b2ddfedd76cd4d81912b342f8f7a28803dcb654af98c37fa2"
+    },
+    {
+      "kind": "record: withheld by digest 9736ca64f85128787fe0d61fc49004405ae336dc19a85fdcae1ee0231c564e39",
+      "sha256": "9736ca64f85128787fe0d61fc49004405ae336dc19a85fdcae1ee0231c564e39"
+    },
+    {
+      "kind": "record: proofs/certificates/sk48-l4-sp80-l6/MANIFEST.md",
+      "sha256": "e5887893a9e3de7e1513b350d5667d73b2d8452dea0a5f3991f5b064c8f255fc"
+    },
+    {
+      "kind": "record: proofs/certificates/floor_cert/sp80/SUMMARY.md",
+      "sha256": "89e3c58ea1000e09d31f81a5757dc4f148d93c8416ed750fc846684e80c99c57"
+    }
+  ],
+  "floor": 28,
+  "game": "sp80",
+  "game_id": "sp80-589a99af",
+  "game_levels": 6,
+  "level": 6,
+  "lower_bound": {
+    "kind": "placement_enumeration_transcribed_spill_rule",
+    "statement": "Record: proofs/certificates/sk48-l4-sp80-l6 (fixed-instance record) and proofs/certificates/floor_cert/sp80. The proven floor is 28. sp80 level 6, floor 28. The 28-action route wins on the official engine and its 27-action prefix does not. Two further engine wins have length 29. The fixed-instance minimum is 28.",
+    "value": 28
+  },
+  "naes_t1_actions": 28,
+  "proof_class": "Exact math",
+  "proof_detail": "placement_enumeration_transcribed_spill_rule",
+  "schema_version": 1,
+  "source_certificate_sha256": "f5ba1dea75a134add2051fa1738f7f81867fa445c54a6fd498584631e5320bb6",
+  "status": "proven",
+  "upper_bound": {
+    "expected_levels_completed": 6,
+    "length": 28,
+    "opening_reset_counted": false,
+    "route": "2 2 2 2 2 6@45,21 2 2 2 2 3 3 3 3 3 3 3 3 6@30,33 2 2 2 6@33,48 1 1 1 3 5",
+    "seed": 0
+  }
+}

@@ -1,0 +1,15 @@
+cost 0 bucket 25 seen 3
+cost 5 bucket 122 seen 91
+cost 10 bucket 1687 seen 1363
+cost 15 bucket 38900 seen 30018
+cost 20 bucket 524656 seen 409198
+cost 25 bucket 4343440 seen 3637891
+DONE excursions=1 aR=29
+DONE excursions=2 aR=30
+cost 30 bucket 22529039 seen 21224128
+DONE excursions=3 aR=31
+DONE excursions=4 aR=32
+cost 35 bucket 72869754 seen 80755232
+cost 40 bucket 134278489 seen 200378157
+
+[exited with code 0]

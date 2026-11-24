@@ -1,0 +1,637 @@
+{
+ "game": "dc22",
+ "old": "<path>/dc22.py",
+ "new": "<path>/dc22.py",
+ "ignore_tags": [],
+ "opts": {
+  "ignore_names": true,
+  "invisible_layer_free": false
+ },
+ "rollouts": 200,
+ "len": 30,
+ "seed": 20260924,
+ "levels": {
+  "1": {
+   "floor": 20,
+   "chain_old": {
+    "won_at": 20,
+    "ok": true
+   },
+   "chain_new": {
+    "won_at": 20,
+    "ok": true
+   },
+   "direct_old": {
+    "won_at": 20,
+    "ok": true
+   },
+   "direct_new": {
+    "won_at": 20,
+    "ok": true
+   },
+   "static_offset": {
+    "sprites_only_old": [],
+    "sprites_only_new": [],
+    "n_only_old": 0,
+    "n_only_new": 0,
+    "scalars": []
+   },
+   "diff": {
+    "rollouts": 200,
+    "steps_compared": 5713,
+    "rollouts_diverged": 0,
+    "mismatch_components": {},
+    "frame_mismatch_steps": 0,
+    "examples": [],
+    "min_divergence_step": null,
+    "secs": 14.8
+   }
+  },
+  "2": {
+   "floor": 42,
+   "chain_old": {
+    "won_at": 42,
+    "ok": true
+   },
+   "chain_new": {
+    "won_at": 42,
+    "ok": true
+   },
+   "direct_old": {
+    "won_at": 42,
+    "ok": true
+   },
+   "direct_new": {
+    "won_at": 42,
+    "ok": true
+   },
+   "static_offset": {
+    "sprites_only_old": [],
+    "sprites_only_new": [],
+    "n_only_old": 0,
+    "n_only_new": 0,
+    "scalars": []
+   },
+   "diff": {
+    "rollouts": 200,
+    "steps_compared": 5939,
+    "rollouts_diverged": 0,
+    "mismatch_components": {},
+    "frame_mismatch_steps": 0,
+    "examples": [],
+    "min_divergence_step": null,
+    "secs": 24.1
+   }
+  },
+  "3": {
+   "floor": 45,
+   "chain_old": {
+    "won_at": 45,
+    "ok": true
+   },
+   "chain_new": {
+    "won_at": 45,
+    "ok": true
+   },
+   "direct_old": {
+    "won_at": 45,
+    "ok": true
+   },
+   "direct_new": {
+    "won_at": 45,
+    "ok": true
+   },
+   "static_offset": {
+    "sprites_only_old": [],
+    "sprites_only_new": [],
+    "n_only_old": 0,
+    "n_only_new": 0,
+    "scalars": []
+   },
+   "diff": {
+    "rollouts": 200,
+    "steps_compared": 5953,
+    "rollouts_diverged": 0,
+    "mismatch_components": {},
+    "frame_mismatch_steps": 0,
+    "examples": [],
+    "min_divergence_step": null,
+    "secs": 26.2
+   }
+  },
+  "4": {
+   "floor": 62,
+   "chain_old": {
+    "won_at": 62,
+    "ok": true
+   },
+   "chain_new": {
+    "won_at": 62,
+    "ok": true
+   },
+   "direct_old": {
+    "won_at": 62,
+    "ok": true
+   },
+   "direct_new": {
+    "won_at": 62,
+    "ok": true
+   },
+   "static_offset": {
+    "sprites_only_old": [],
+    "sprites_only_new": [],
+    "n_only_old": 0,
+    "n_only_new": 0,
+    "scalars": []
+   },
+   "diff": {
+    "rollouts": 200,
+    "steps_compared": 5882,
+    "rollouts_diverged": 0,
+    "mismatch_components": {},
+    "frame_mismatch_steps": 0,
+    "examples": [],
+    "min_divergence_step": null,
+    "secs": 34.9
+   }
+  },
+  "5": {
+   "floor": 108,
+   "chain_old": {
+    "won_at": 108,
+    "ok": true
+   },
+   "chain_new": {
+    "won_at": 108,
+    "ok": true
+   },
+   "direct_old": {
+    "won_at": 108,
+    "ok": true
+   },
+   "direct_new": {
+    "won_at": 108,
+    "ok": true
+   },
+   "static_offset": {
+    "sprites_only_old": [],
+    "sprites_only_new": [],
+    "n_only_old": 0,
+    "n_only_new": 0,
+    "scalars": []
+   },
+   "diff": {
+    "rollouts": 200,
+    "steps_compared": 6000,
+    "rollouts_diverged": 0,
+    "mismatch_components": {},
+    "frame_mismatch_steps": 217,
+    "examples": [
+     {
+      "rollout": 28,
+      "kind": "frame_only",
+      "step": 27,
+      "seq": [
+       [
+        3,
+        null,
+        null
+       ],
+       [
+        6,
+        52,
+        40
+       ],
+       [
+        3,
+        null,
+        null
+       ],
+       [
+        1,
+        null,
+        null
+       ],
+       [
+        1,
+        null,
+        null
+       ],
+       [
+        3,
+        null,
+        null
+       ],
+       [
+        6,
+        52,
+        40
+       ],
+       [
+        6,
+        49,
+        23
+       ],
+       [
+        6,
+        49,
+        23
+       ],
+       [
+        6,
+        49,
+        23
+       ],
+       [
+        6,
+        49,
+        23
+       ],
+       [
+        6,
+        57,
+        20
+       ],
+       [
+        6,
+        57,
+        20
+       ],
+       [
+        6,
+        57,
+        20
+       ],
+       [
+        6,
+        57,
+        20
+       ],
+       [
+        6,
+        48,
+        29
+       ],
+       [
+        6,
+        48,
+        29
+       ],
+       [
+        6,
+        48,
+        29
+       ],
+       [
+        6,
+        56,
+        28
+       ],
+       [
+        6,
+        56,
+        28
+       ],
+       [
+        6,
+        56,
+        28
+       ],
+       [
+        6,
+        48,
+        36
+       ],
+       [
+        6,
+        45,
+        28
+       ],
+       [
+        6,
+        45,
+        28
+       ],
+       [
+        6,
+        45,
+        28
+       ],
+       [
+        6,
+        60,
+        28
+       ],
+       [
+        4,
+        null,
+        null
+       ]
+      ]
+     },
+     {
+      "rollout": 28,
+      "kind": "frame_only",
+      "step": 28,
+      "seq": [
+       [
+        3,
+        null,
+        null
+       ],
+       [
+        6,
+        52,
+        40
+       ],
+       [
+        3,
+        null,
+        null
+       ],
+       [
+        1,
+        null,
+        null
+       ],
+       [
+        1,
+        null,
+        null
+       ],
+       [
+        3,
+        null,
+        null
+       ],
+       [
+        6,
+        52,
+        40
+       ],
+       [
+        6,
+        49,
+        23
+       ],
+       [
+        6,
+        49,
+        23
+       ],
+       [
+        6,
+        49,
+        23
+       ],
+       [
+        6,
+        49,
+        23
+       ],
+       [
+        6,
+        57,
+        20
+       ],
+       [
+        6,
+        57,
+        20
+       ],
+       [
+        6,
+        57,
+        20
+       ],
+       [
+        6,
+        57,
+        20
+       ],
+       [
+        6,
+        48,
+        29
+       ],
+       [
+        6,
+        48,
+        29
+       ],
+       [
+        6,
+        48,
+        29
+       ],
+       [
+        6,
+        56,
+        28
+       ],
+       [
+        6,
+        56,
+        28
+       ],
+       [
+        6,
+        56,
+        28
+       ],
+       [
+        6,
+        48,
+        36
+       ],
+       [
+        6,
+        45,
+        28
+       ],
+       [
+        6,
+        45,
+        28
+       ],
+       [
+        6,
+        45,
+        28
+       ],
+       [
+        6,
+        60,
+        28
+       ],
+       [
+        4,
+        null,
+        null
+       ],
+       [
+        3,
+        null,
+        null
+       ]
+      ]
+     },
+     {
+      "rollout": 28,
+      "kind": "frame_only",
+      "step": 29,
+      "seq": [
+       [
+        3,
+        null,
+        null
+       ],
+       [
+        6,
+        52,
+        40
+       ],
+       [
+        3,
+        null,
+        null
+       ],
+       [
+        1,
+        null,
+        null
+       ],
+       [
+        1,
+        null,
+        null
+       ],
+       [
+        3,
+        null,
+        null
+       ],
+       [
+        6,
+        52,
+        40
+       ],
+       [
+        6,
+        49,
+        23
+       ],
+       [
+        6,
+        49,
+        23
+       ],
+       [
+        6,
+        49,
+        23
+       ],
+       [
+        6,
+        49,
+        23
+       ],
+       [
+        6,
+        57,
+        20
+       ],
+       [
+        6,
+        57,
+        20
+       ],
+       [
+        6,
+        57,
+        20
+       ],
+       [
+        6,
+        57,
+        20
+       ],
+       [
+        6,
+        48,
+        29
+       ],
+       [
+        6,
+        48,
+        29
+       ],
+       [
+        6,
+        48,
+        29
+       ],
+       [
+        6,
+        56,
+        28
+       ],
+       [
+        6,
+        56,
+        28
+       ],
+       [
+        6,
+        56,
+        28
+       ],
+       [
+        6,
+        48,
+        36
+       ],
+       [
+        6,
+        45,
+        28
+       ],
+       [
+        6,
+        45,
+        28
+       ],
+       [
+        6,
+        45,
+        28
+       ],
+       [
+        6,
+        60,
+        28
+       ],
+       [
+        4,
+        null,
+        null
+       ],
+       [
+        3,
+        null,
+        null
+       ],
+       [
+        3,
+        null,
+        null
+       ]
+      ]
+     }
+    ],
+    "min_divergence_step": null,
+    "secs": 48.5
+   }
+  }
+ }
+}

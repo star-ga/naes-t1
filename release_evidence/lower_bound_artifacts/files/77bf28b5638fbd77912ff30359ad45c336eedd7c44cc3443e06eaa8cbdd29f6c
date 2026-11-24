@@ -1,0 +1,327 @@
+{
+ "game": "ka59",
+ "build": "38d34dbb",
+ "level": 2,
+ "status": "PROVEN",
+ "floor": 30,
+ "lb": 30,
+ "ub": 30,
+ "full_information_floor": 30,
+ "lower_bound_method": "bidirectional complete exhaustion on an exact C model of the served source (lockstep-validated): forward BFS complete to depth 18 from the level start (no win), backward BFS complete to depth 13 from the full goal set with a sound pre-image; min fwd+bwd over the meet = 30 and Df+Db = 31 >= 29, so no play of length <= 29 wins. A second split (15/16) also gives 30.",
+ "states_explored": 84961432,
+ "layers_closed": {
+  "forward": 18,
+  "backward": 13
+ },
+ "per_layer_counts": {
+  "forward_new": [
+   1,
+   7,
+   32,
+   140,
+   562,
+   1988,
+   6217,
+   17514,
+   45574,
+   110560,
+   251582,
+   541237,
+   1107241,
+   2164758,
+   4052447,
+   7264035,
+   12467360,
+   20497567,
+   32324087
+  ],
+  "backward_new": [
+   4,
+   16,
+   79,
+   329,
+   1120,
+   3503,
+   10019,
+   26265,
+   63523,
+   142791,
+   299799,
+   589014,
+   1086111,
+   1885950
+  ],
+  "forward_total": 80852909,
+  "backward_total": 4108523,
+  "meet_states": 189,
+  "meet_min": 30,
+  "meet_min_count": 20,
+  "backward_candidates_verified": 32966397
+ },
+ "lemma_chain": [
+  "L1 alphabet: ids 0..7 all reach step() (arcengine never rejects an id). ACTION5/ACTION7 fall through the elif chain: no move, no counter decrement -> key self-loop (probe 60/60 each). RESET = level_reset -> level start (60/60). A minimal winning play has no RESET (the suffix after the last RESET is a shorter winning play from the start) and no key self-loop (by L3 the future depends only on the key, so deleting it keeps a winning play).",
+  "L2 clicks: camera 63x63 -> scale 1, padding 0; display x==63 or y==63 -> display_to_grid None -> inert. Otherwise get_sprite_at(x,y,box tag) returns the box whose rectangle holds (x,y) (box masks full, boxes pairwise disjoint by L5, boxes on layer 3 above the layer 0/-1 walls) -> selection := that box; else inert. So each state's 4096 coords fall into <=5 classes: inert, select box 0..3 (selecting the selected box is a self-loop). Applied analytically to every expanded state; validated by executing all 4096 clicks on 120 real states (491,520 clicks, 0 mismatches, class sizes 4015/9/18/18/36 every state).",
+  "L3 key sufficiency: key = (x,y of the 4 boxes of tag 0022vrxelxosfy in sprite order, selected index). Fields left out: step counter (read only for loss at 0; >= 127-30 on any play of length <= 30), box pixel colours (values 0/4/14, never -1, so collides_with / get_sprite_at masks are unchanged), ooneovlmbq and xrxdckwsth (written before read inside the same action; the bomb branch is dead: no 0003/0001/Enemy sprites in the level), lphmmaeepj/hrknegnjkg/Collider sprites (empty between actions, asserted on every real transition). So the key is a bisimulation quotient for positions, selection and win.",
+  "L4 model: C transition mirrors Ka59.step frame by frame (loydmqkgjw wall/gulch/box test; push frames with the full list evaluated each frame (list comprehension, no short-circuit), counter>=5 and off-gulch stop rule, recursive ifoelczjjh with sprite-order collision lists and stale-sibling semantics, border-only blocking for pushed boxes); collision tables built with the engine's own Sprite.collides_with. Win = dbmlcqbquh (every target holds the size-matched box at +1,+1) -> unique goal positions A(51,51) B(9,9) C(54,39) D(6,42), any selection.",
+  "L5 invariant P: every reachable state has all boxes clear of the border and pairwise disjoint (selected moves only into box-free, wall-free cells; a pushed box moves one 3-cell step at a time, checks the border each step, reverts when blocked, and everything it hits moves the same way and ahead of it, so no overlap is ever left). 0 violations over all 80,852,909 forward states. Backward candidates outside P are dropped (any predecessor on a winning play is reachable, so it is in P).",
+  "L6 pre-image (sound superset, then exact filter): for a move d with selected m, either m walked (candidate: m at pos-d, others unchanged) or m pushed (m unchanged; only boxes in m's perpendicular-overlap component can move, and only along +d by whole 3-cell steps through border-free cells; enumerate every combination of backward displacements k>=0 per component box). Clicks: every other selection. Every candidate is kept only if the exact model maps it to the state. Empirical completeness: every one of 28,639,515 forward edges out of depths 0..13 has its source in the pre-image of its target (0 missing).",
+  "L7 meet: forward complete to 18 with no win. Backward complete to 13. Any winning play of length L<=31 passes through its state s at step 18, which has fwd(s)<=18 and bwd(s)<=L-18<=13, so s is in both sets with fwd+bwd<=L. The minimum over the intersection is 30, so no play of length <=29 wins; with the 30-step witness, floor = 30. Independent split Df=15/Db=16 gives the same minimum 30."
+ ],
+ "reduction": {
+  "clicks": "per-state analytic partition of all 4096 display coords: inert | select box i (rectangle containment on the 63x63 grid, scale 1, offset 0; row/col 63 inert)",
+  "classes_per_state": "<=5 (inert, 4 selections; the selected box's class and inert are self-loops, 3 new successors)",
+  "validation": {
+   "states_probed": 120,
+   "clicks_executed": 491520,
+   "class_mismatch": 0,
+   "class_sizes_every_state": {
+    "inert": 4015,
+    "box0": 9,
+    "box1": 18,
+    "box2": 18,
+    "box3": 36
+   },
+   "secs": 1296.3
+  },
+  "state_key": "42-bit: selected index + cell x,y of the 4 boxes (sprite order)",
+  "justification": "L2 + L3 in lemma_chain; dedup over this key is exact because the transition and win are functions of it (source) and 0 lockstep mismatches"
+ },
+ "dispatch": {
+  "variant": "38d34dbb",
+  "advertised": [
+   1,
+   2,
+   3,
+   4,
+   6
+  ],
+  "accepted": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7
+  ],
+  "source_sha256": "3e8341f4c317ceb9992ca54e8ad453ee4e8a04547b27a907f4a560a9a30d857e",
+  "reset": "RESET = level_reset -> level start with budget 127 (60/60); never in a minimal play (L1)",
+  "action6_payload": "data {x,y} display coords 0..63; display_to_grid scale 1 offset 0",
+  "noops": "ACTION5 / ACTION7: key unchanged 60/60, no counter change; inert clicks: key unchanged",
+  "probe": {
+   "0": {
+    "trials": 60,
+    "key_unchanged_or_reset_to_start": 60,
+    "key_changed": 58,
+    "exceptions": 0
+   },
+   "1": {
+    "trials": 60,
+    "key_unchanged_or_reset_to_start": 0,
+    "key_changed": 60,
+    "exceptions": 0
+   },
+   "2": {
+    "trials": 60,
+    "key_unchanged_or_reset_to_start": 11,
+    "key_changed": 49,
+    "exceptions": 0
+   },
+   "3": {
+    "trials": 60,
+    "key_unchanged_or_reset_to_start": 11,
+    "key_changed": 49,
+    "exceptions": 0
+   },
+   "4": {
+    "trials": 60,
+    "key_unchanged_or_reset_to_start": 0,
+    "key_changed": 60,
+    "exceptions": 0
+   },
+   "5": {
+    "trials": 60,
+    "key_unchanged_or_reset_to_start": 60,
+    "key_changed": 0,
+    "exceptions": 0
+   },
+   "6": {
+    "trials": 60,
+    "key_unchanged_or_reset_to_start": 59,
+    "key_changed": 1,
+    "exceptions": 0
+   },
+   "7": {
+    "trials": 60,
+    "key_unchanged_or_reset_to_start": 60,
+    "key_changed": 0,
+    "exceptions": 0
+   }
+  }
+ },
+ "coverage": {
+  "key": "(box positions x4 in sprite order, selected index)",
+  "click_probe": {
+   "states_probed": 84961432,
+   "states_expanded": 84961432,
+   "coords_per_state": 4096,
+   "method": "all 4096 coords of every expanded state assigned by the analytic partition of L2; partition validated by real execution of all 4096 clicks on 120 states (491,520 clicks, 0 mismatches)"
+  },
+  "coverage_argument": "L1..L7: full alphabet (ids 0..7 + 4096 clicks) reduced by source-proven self-loops and the validated click partition; RESET dominated; forward/backward layers closed with no caps",
+  "truncated": false
+ },
+ "witness": [
+  1,
+  4,
+  4,
+  4,
+  4,
+  1,
+  3,
+  2,
+  4,
+  [
+   6,
+   12,
+   42
+  ],
+  1,
+  3,
+  [
+   6,
+   15,
+   45
+  ],
+  3,
+  3,
+  1,
+  1,
+  3,
+  [
+   6,
+   39,
+   33
+  ],
+  2,
+  2,
+  4,
+  4,
+  4,
+  4,
+  4,
+  [
+   6,
+   9,
+   18
+  ],
+  1,
+  1,
+  1
+ ],
+ "witness_model_route": [
+  4,
+  4,
+  4,
+  4,
+  1,
+  1,
+  3,
+  4,
+  2,
+  [
+   6,
+   12,
+   42
+  ],
+  3,
+  1,
+  [
+   6,
+   39,
+   33
+  ],
+  4,
+  4,
+  2,
+  2,
+  4,
+  4,
+  4,
+  [
+   6,
+   15,
+   45
+  ],
+  3,
+  3,
+  1,
+  1,
+  3,
+  [
+   6,
+   9,
+   18
+  ],
+  1,
+  1,
+  1
+ ],
+ "replay": {
+  "won_at": 30,
+  "prefix_wins_before_F": false,
+  "fresh_from_level_start": true,
+  "method": "real served game (arcengine 0.9.3, <interp> on build-host): fresh Ka59(), set_level(1), perform_action per step; win = score rise",
+  "engine_route": {
+   "won_at": 30,
+   "prefix_wins_before_end": false
+  },
+  "model_witness": {
+   "won_at": 30,
+   "prefix_wins_before_end": false,
+   "key_mismatches_vs_model_keys": 0
+  }
+ },
+ "bisimulation": {
+  "model": "C exact transition over the 42-bit key (ka59L2_search.c)",
+  "lockstep": {
+   "random_walk_transitions": 240000,
+   "sampled_reachable_keys_x4_moves": 12000,
+   "push_transitions": 6105,
+   "click_transitions": 491520,
+   "witness_replays": 2,
+   "mismatches": 0
+  },
+  "model_error_flags": 0,
+  "forward_P_violations": 0,
+  "preimage_completeness": {
+   "precheck_depth": 14,
+   "edges_checked": 28639515,
+   "preimage_missing": 0,
+   "err": 0
+  }
+ },
+ "evidence_paths": [
+  "<path>",
+  "build-host:<path>",
+  "<path>"
+ ],
+ "artifact_sha256": {
+  "ka59L2_search.c": "fbec4b34142f9f0657b9e81534ed618f5ba5bdd6b720ae4cd958b59857725232",
+  "ka59L2_search_v2.c": "1b0e7f40bcc0aa0d2a4bb4db843c3a0703a6da98abf89f720b97bbeb8fb45a53",
+  "tables.json": "818e0b342ed5dfdf67cabd495c995e18f585f60a5d6b701196a9e044bc2ec23c",
+  "main_run.json": "69372a4b999aa2d68fb454cf5930527d5501d652a049cf26af9506ae7731514f",
+  "split_15_16.json": "0b396e72c1ea7158ad266d48740a1dc3f33049c70ab9bb76772c7ffea6b21f98"
+ },
+ "runtime_s": {
+  "main_bidir_18_13": 34,
+  "split_15_16": 17,
+  "click_validation": 1296.3
+ },
+ "concerns": [
+  "The proof runs on a model, not the engine: exactness rests on the source reading in L3/L4 plus 749,625 lockstep transitions with 0 mismatches; unreachable-state behaviour is never used (candidates outside P dropped).",
+  "Invariant P (L5) is argued from source and checked on all forward states, not machine-proved for all reachable states beyond depth 18; the backward half relies on it only to discard overlapping/out-of-border candidates.",
+  "Sampled-key lockstep places boxes via set_position/qfachkyqvv on a fresh game (not reached by play); real-play walks cover only 3,173 pushes, so the push-focused set (6,105) uses placed states.",
+  "ka59L2_search_v2.c (precheck/sample modes) differs from the proof binary's source only by added modes; transition code identical (diff)."
+ ]
+}

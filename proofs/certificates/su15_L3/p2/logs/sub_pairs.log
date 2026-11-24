@@ -1,0 +1,10 @@
+state: 2 0 31 22 0 31 15
+SUBCHECK n=2 value=1 dmax=4 positions_reached_by_BFS=1838 dp_equal=1838 dp_less=0 dp_greater(VIOLATION)=0 dp_only_within_dmax=0
+state: 2 0 8 28 0 12 23
+SUBCHECK n=2 value=1 dmax=4 positions_reached_by_BFS=1520 dp_equal=1520 dp_less=0 dp_greater(VIOLATION)=0 dp_only_within_dmax=0
+state: 2 0 55 23 0 61 23
+SUBCHECK n=2 value=1 dmax=4 positions_reached_by_BFS=1377 dp_equal=1377 dp_less=0 dp_greater(VIOLATION)=0 dp_only_within_dmax=0
+state: 2 1 18 16 1 30 32
+SUBCHECK n=2 value=2 dmax=4 positions_reached_by_BFS=1657 dp_equal=1657 dp_less=0 dp_greater(VIOLATION)=0 dp_only_within_dmax=0
+state: 2 1 30 32 1 46 22
+SUBCHECK n=2 value=2 dmax=4 positions_reached_by_BFS=1884 dp_equal=1884 dp_less=0 dp_greater(VIOLATION)=0 dp_only_within_dmax=0

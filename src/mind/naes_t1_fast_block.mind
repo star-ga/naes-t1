@@ -1,0 +1,271 @@
+// Workspace of the grouped-sum kernel (w4_* cells), its set-up (prepare4),
+// one residual block (block4) and the binding of the row walk descriptors
+// (rows_bind, erec_*).
+// Entry points: prepare4, block4.
+
+fn w4_ws() -> i64 { 0 }
+fn w4_group() -> i64 { 1 }
+fn w4_cg() -> i64 { 2 }
+fn w4_tile() -> i64 { 3 }
+fn w4_plans() -> i64 { 4 }
+fn w4_bank() -> i64 { 5 }
+fn w4_accs() -> i64 { 6 }
+fn w4_zero() -> i64 { 7 }
+fn w4_tabs() -> i64 { 8 }
+fn w4_planes() -> i64 { 9 }
+fn w4_scratch() -> i64 { 10 }
+fn w4_stem_ns() -> i64 { 11 }
+fn w4_block_ns() -> i64 { 12 }
+fn w4_head_ns() -> i64 { 13 }
+fn w4_epi() -> i64 { 14 }
+fn w4_dil() -> i64 { 19 }
+
+fn acc_stride_bytes() -> i64 {
+    576
+}
+
+fn acc_row4(accs: i64, o: i64, y: i64) -> i64 {
+    accs + (y * 64 + o) * acc_stride_bytes()
+}
+
+// Workspace of the kernel for a loaded model and a configuration. Returns 0 on
+// failure.
+fn prepare4(model: i64, cfg: i64) -> i64 {
+    let gsz: i64 = ld(cfg, cf_group());
+    let cg: i64 = ld(cfg, cf_cg());
+    let w4: i64 = alloc_zero(24);
+    let ws: i64 = prepare(model);
+    if w4 == 0 || ws == 0 {
+        return 0;
+    }
+    st(w4, w4_ws(), ws);
+    st(w4, w4_group(), gsz);
+    st(w4, w4_cg(), cg);
+    st(w4, w4_tile(), ld(cfg, cf_tile()));
+    st(w4, w4_epi(), ld(cfg, cf_epi()));
+    st(w4, w4_plans(), pad_plans4(build_plans4(model, gsz, cg), model, gsz, cg));
+    st(w4, w4_bank(), pad_bank4(gsz, cg));
+    st(w4, w4_accs(), alloc_zero(64 * 64 * 72));
+    st(w4, w4_zero(), alloc_zero(128));
+    st(w4, w4_tabs(), stem_tables4(model));
+    st(w4, w4_planes(), stem_planes4());
+    st(w4, w4_scratch(), alloc_zero(88));
+    let mut i: i64 = w4_plans();
+    while i <= w4_scratch() {
+        if ld(w4, i) == 0 {
+            return 0;
+        }
+        i = i + 1;
+    }
+    if (ld(w4, w4_bank()) % 64) != 0 {
+        return 0;
+    }
+    if rows_bind(w4) == 0 {
+        return 0;
+    }
+    if tb_bind(w4, model, gsz, cg) == 0 {
+        return 0;
+    }
+    w4
+}
+
+fn block4(w4: i64, lay: i64, plan: i64, hin: i64, hout: i64) -> i64 {
+    let gsz: i64 = ld(w4, w4_group());
+    let cg: i64 = ld(w4, w4_cg());
+    let dil: i64 = ld(lay, 3);
+    let accs: i64 = ld(w4, w4_accs());
+    let zero: i64 = ld(w4, w4_zero());
+    let tb: i64 = clock4(w4);
+    st(w4, w4_dil(), dil);
+    let ms: i64 = __mind_load_i64(lay + 40);
+    let es: i64 = __mind_load_i64(lay + 48);
+    let bs: i64 = __mind_load_i64(lay + 56);
+    let tail: i64 = erec_layer(w4, ms, es, bs);
+    let nseg: i64 = ld(plan, pl_nseg());
+    let bank: i64 = ld(w4, w4_bank());
+    let desc: i64 = ld(w4, w4_desc());
+    let erec: i64 = ld(w4, w4_erec());
+    let starts: i64 = ld(plan, pl_starts());
+    if desc == 0 {
+        return 0 - 1;
+    }
+    let tbk: i64 = ld(w4, w4_tbank());
+    let sb: i64 = ld(tbk, 0);
+    let offs2: i64 = tb_plan_offs(tbk, plan);
+    if offs2 != 0 {
+        rows_bind_layer(desc, offs2);
+    } else {
+        rows_bind_layer(desc, ld(plan, pl_offs()));
+    }
+    let arow: i64 = 64 * acc_stride_bytes();
+    let pstep: i64 = plane() * 8;
+    let rstep: i64 = pw() * 8;
+    let c0: i64 = origin() * 8;
+    let mut sy: i64 = 0;
+    while sy < 64 {
+        let mut seg: i64 = 0;
+        while seg < nseg {
+            if offs2 == 0 {
+                let mut t0: i64 = 0;
+                if sy % 16 == 0 {
+                    t0 = clock4(w4);
+                }
+                bank_build4(hin, bank, sy, seg, gsz, cg, zero);
+                bank_ns4s(w4, t0);
+            }
+            let st_seg: i64 = starts + start_index(seg, 0, 0) * 8;
+            let mut tile: i64 = 0;
+            while tile < 2 {
+                let mut bptr: i64 = bank + tile * 256;
+                if offs2 != 0 {
+                    let mut t1: i64 = 0;
+                    if sy % 16 == 0 {
+                        t1 = clock4(w4);
+                    }
+                    tb_build(hin, sb, sy, seg, cg, zero, tile);
+                    bank_ns4s(w4, t1);
+                    bptr = sb;
+                }
+                let mut ky: i64 = 0;
+                while ky < 3 {
+                    let y: i64 = sy - (ky - 1) * dil;
+                    if y >= 0 && y < 64 {
+                        let mut flags: i64 = 1;
+                        if seg == 0 && ((ky == 0 && y >= dil) || (ky == 1 && y < dil)) {
+                            flags = 0;
+                        }
+                        let mut last: i64 = 0;
+                        if tail == 1 && seg == nseg - 1 && (ky == 2 || (ky == 1 && y + dil >= 64)) {
+                            last = 1;
+                            flags = flags | 32;
+                            let c: i64 = c0 + y * rstep + tile * 256;
+                            erec_fill(erec, hin + c, hout + c, pstep);
+                        }
+                        __mind_store_i64(desc, accs + y * arow + tile * 256);
+                        __mind_store_i64(desc + 16, bptr);
+                        __mind_store_i64(desc + 32, st_seg + ky * 24);
+                        __mind_store_i64(desc + 56, flags);
+                        __mind_group_accrows_i64(desc);
+                        if last == 1 && __mind_load_i64(desc + 72) != 0 {
+                            return 0 - 1;
+                        }
+                    }
+                    ky = ky + 1;
+                }
+                tile = tile + 1;
+            }
+            seg = seg + 1;
+        }
+        sy = sy + 1;
+    }
+    let epi: i64 = ld(w4, w4_epi());
+    let te: i64 = clock4(w4);
+    let mut o: i64 = 0;
+    if tail == 1 {
+        o = 64;
+    }
+    while o < 64 {
+        let mut y: i64 = 0;
+        while y < 64 {
+            let cell0: i64 = o * plane() + origin() + y * pw();
+            let a: i64 = acc_row4(accs, o, y);
+            let mut rc: i64 = 0;
+            if epi >= 1 {
+                rc = finish_row_epi(w4, a, ld(ms, o), 0 - ld(es, o), ld(bs, o), hin + cell0 * 8, hout + cell0 * 8);
+            } else {
+                rc = finish_row(a, ld(ms, o), 0 - ld(es, o), ld(bs, o), hin, hout, cell0);
+            }
+            if rc < 0 {
+                return 0 - 1;
+            }
+            y = y + 1;
+        }
+        o = o + 1;
+    }
+    split_end4(w4, tb, te)
+}
+
+fn w4_desc() -> i64 { 20 }
+fn w4_erec() -> i64 { 21 }
+
+fn rows_bind(w4: i64) -> i64 {
+    let d: i64 = alloc_zero(11);
+    let r: i64 = alloc_zero(512);
+    if d == 0 || r == 0 {
+        return 0;
+    }
+    __mind_store_i64(d + 64, r);
+    __mind_store_i64(d + 80, act_limit() - 1);
+    st(w4, w4_desc(), d);
+    st(w4, w4_erec(), r);
+    d
+}
+
+// Layer constants of the tail. Returns 1 when every output is in the vector
+// domain of finish_row_epi (shift >= 1, |multiplier| < 2^31) and the epilogue
+// mode is 2.
+fn erec_layer(w4: i64, ms: i64, es: i64, bs: i64) -> i64 {
+    if ld(w4, w4_epi()) != 2 {
+        return 0;
+    }
+    let r: i64 = ld(w4, w4_erec());
+    let mut o: i64 = 0;
+    while o < 64 {
+        let m: i64 = ld(ms, o);
+        let sh: i64 = 0 - ld(es, o);
+        if sh < 1 || m > 2147483647 || m < 0 - 2147483647 {
+            return 0;
+        }
+        let p: i64 = r + o * 64;
+        let s: i64 = sh - 1;
+        if m < 0 {
+            __mind_store_i64(p, 0 - m);
+            __mind_store_i64(p + 8, 0 - 1);
+        } else {
+            __mind_store_i64(p, m);
+            __mind_store_i64(p + 8, 0);
+        }
+        if s >= 32 {
+            __mind_store_i64(p + 16, 0);
+            __mind_store_i64(p + 24, 32);
+            if s - 32 <= 62 {
+                __mind_store_i64(p + 32, s - 32);
+            } else {
+                __mind_store_i64(p + 32, 64);
+            }
+        } else {
+            __mind_store_i64(p + 16, 32 - s);
+            __mind_store_i64(p + 24, s);
+            __mind_store_i64(p + 32, 0);
+        }
+        __mind_store_i64(p + 40, ld(bs, o));
+        o = o + 1;
+    }
+    1
+}
+
+// Layer constants of the desc block: out_step, off, starts_step, rows.
+fn rows_bind_layer(desc: i64, offs: i64) -> i64 {
+    __mind_store_i64(desc + 8, 576);
+    __mind_store_i64(desc + 24, offs);
+    __mind_store_i64(desc + 40, 72);
+    __mind_store_i64(desc + 48, 64);
+    0
+}
+
+// erec_row with the pointers stepped: record o gets src0 + o * step and dst0 +
+// o * step. step is the plane size in bytes.
+fn erec_fill(r: i64, src0: i64, dst0: i64, step: i64) -> i64 {
+    let mut p: i64 = r + 48;
+    let e: i64 = p + 4096;
+    let mut s: i64 = src0;
+    let mut d: i64 = dst0;
+    while p < e {
+        __mind_store_i64(p, s);
+        __mind_store_i64(p + 8, d);
+        p = p + 64;
+        s = s + step;
+        d = d + step;
+    }
+    0
+}

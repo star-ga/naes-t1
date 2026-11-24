@@ -1,0 +1,29 @@
+SETUP level=5 floor=28 budget=150 classes=13 pixels=4096 mismatches=0 mobiles=12 static_bytes=346 pose_bytes=5197 probe_win=None reset_level=0
+LAYER level=5 depth=1 expanded=1 visited=7 edges=13 wins=0 t=1.3
+LAYER level=5 depth=2 expanded=7 visited=24 edges=91 wins=0 t=1.3
+LAYER level=5 depth=3 expanded=24 visited=57 edges=312 wins=0 t=1.5
+LAYER level=5 depth=4 expanded=57 visited=110 edges=741 wins=0 t=1.8
+LAYER level=5 depth=5 expanded=110 visited=187 edges=1430 wins=0 t=2.2
+LAYER level=5 depth=6 expanded=187 visited=291 edges=2431 wins=0 t=2.9
+LAYER level=5 depth=7 expanded=291 visited=423 edges=3783 wins=0 t=4.0
+LAYER level=5 depth=8 expanded=423 visited=583 edges=5499 wins=0 t=5.5
+LAYER level=5 depth=9 expanded=583 visited=763 edges=7579 wins=0 t=7.3
+LAYER level=5 depth=10 expanded=763 visited=956 edges=9919 wins=0 t=9.2
+LAYER level=5 depth=11 expanded=956 visited=1156 edges=12428 wins=0 t=11.5
+LAYER level=5 depth=12 expanded=1156 visited=1356 edges=15028 wins=0 t=13.7
+LAYER level=5 depth=13 expanded=1356 visited=1545 edges=17628 wins=0 t=15.9
+LAYER level=5 depth=14 expanded=1545 visited=1719 edges=20085 wins=0 t=18.0
+LAYER level=5 depth=15 expanded=1719 visited=1877 edges=22347 wins=0 t=19.8
+LAYER level=5 depth=16 expanded=1877 visited=2024 edges=24401 wins=0 t=21.5
+LAYER level=5 depth=17 expanded=2024 visited=2164 edges=26312 wins=0 t=22.9
+LAYER level=5 depth=18 expanded=2164 visited=2304 edges=28132 wins=0 t=24.3
+LAYER level=5 depth=19 expanded=2304 visited=2449 edges=29952 wins=0 t=26.0
+LAYER level=5 depth=20 expanded=2449 visited=2600 edges=31837 wins=0 t=27.7
+LAYER level=5 depth=21 expanded=2600 visited=2754 edges=33800 wins=0 t=29.4
+LAYER level=5 depth=22 expanded=2754 visited=2907 edges=35802 wins=0 t=31.0
+LAYER level=5 depth=23 expanded=2907 visited=3059 edges=37791 wins=0 t=32.5
+LAYER level=5 depth=24 expanded=3059 visited=3213 edges=39767 wins=0 t=33.9
+LAYER level=5 depth=25 expanded=3213 visited=3377 edges=41769 wins=0 t=35.5
+LAYER level=5 depth=26 expanded=3377 visited=3556 edges=43901 wins=0 t=36.9
+LAYER level=5 depth=27 expanded=3556 visited=3749 edges=46228 wins=0 t=38.4
+RESULT level=5 verdict=CONFIRMED states=3749 edges=46228 layers=27 seconds=38.7

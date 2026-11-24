@@ -1,0 +1,208 @@
+// naes_t1_play_http.mind — plain-HTTP transport and action dispatch.
+//
+// The --plain-http path: TCP to an IPv4 address, HTTP/1.1 with bounded
+// Content-Length framing. Single transport boundary for the HTTPS path
+// (naes_t1_play_tls.mind). No retries of actions: a transport error has an
+// ambiguous server-side commit status.
+
+fn play_connect(s: i64) -> i64 {
+    let fd: i64 = socket(2 as i32, 1 as i32, 0 as i32) as i64;
+    if fd < 0 { return 0; }
+    let sa: i64 = alloc_zero(2);
+    __mind_store_i8(sa, 2);
+    let port: i64 = __mind_load_i64(s + 16);
+    __mind_store_i8(sa + 2, port / 256);
+    __mind_store_i8(sa + 3, port % 256);
+    let rc: i64 = inet_pton(2 as i32, __mind_load_i64(s + 8) as *const u8, (sa + 4) as *mut u8) as i64;
+    if rc != 1 { let _c: i64 = (close(fd as i32)) as i64; return 0; }
+    let tv: i64 = alloc_zero(2);
+    __mind_store_i64(tv, 10);
+    let _r: i64 = (setsockopt(fd as i32, 1 as i32, 20 as i32, tv as *const u8, 16 as i32)) as i64;
+    let _w: i64 = (setsockopt(fd as i32, 1 as i32, 21 as i32, tv as *const u8, 16 as i32)) as i64;
+    let r: i64 = connect(fd as i32, sa as *const u8, 16 as i32) as i64;
+    if r != 0 { let _c: i64 = (close(fd as i32)) as i64; return 0; }
+    __mind_store_i64(s, fd);
+    1
+}
+fn play_disconnect(s: i64) -> i64 {
+    let fd: i64 = __mind_load_i64(s);
+    if fd >= 0 { let _c: i64 = (close(fd as i32)) as i64; }
+    __mind_store_i64(s, 0 - 1);
+    0
+}
+// Single transport boundary for the future authenticated TLS implementation.
+// HTTP/1.1, reusable connections, bounded Content-Length responses. No retries
+// of actions: a transport error has an ambiguous server-side commit status.
+fn play_http_send(s: i64, path: String, body: i64, body_len: i64) -> i64 {
+    if __mind_load_i64(s) < 0 { if play_connect(s) == 0 { return 0 - 1; } }
+    let q: i64 = __mind_load_i64(s + 56);
+    __mind_store_i64(q + 8, 0);
+    let _a: i64 = play_lit(q, "POST ");
+    let _b: i64 = play_lit(q, path);
+    let _c: i64 = play_lit(q, " HTTP/1.1\r\nHost: ");
+    let host: i64 = __mind_load_i64(s + 8);
+    let _d: i64 = play_add(q, host, play_len(host));
+    let _e: i64 = play_lit(q, ":");
+    let _f: i64 = play_num(q, __mind_load_i64(s + 16));
+    let _g: i64 = play_lit(q, "\r\nContent-Type: application/json\r\nAccept: application/json\r\nConnection: keep-alive\r\nX-API-Key: ");
+    let _h: i64 = play_add(q, __mind_load_i64(s + 40), __mind_load_i64(s + 48));
+    if __mind_load_i64(s + 88) > 0 {
+        let _i: i64 = play_lit(q, "\r\nCookie: ");
+        let _j: i64 = play_add(q, __mind_load_i64(s + 80), __mind_load_i64(s + 88));
+    }
+    let _k: i64 = play_lit(q, "\r\nContent-Length: ");
+    let _l: i64 = play_num(q, body_len);
+    let _m: i64 = play_lit(q, "\r\n\r\n");
+    let _n: i64 = play_add(q, body, body_len);
+    let total: i64 = __mind_load_i64(q + 8);
+    if total < 0 { return 0 - 1; }
+    let fd: i64 = __mind_load_i64(s);
+    let mut sent: i64 = 0;
+    while sent < total {
+        let n: i64 = send(fd as i32, (__mind_load_i64(q) + sent) as *const u8, total - sent, 16384 as i32);
+        if n <= 0 { let _x: i64 = play_disconnect(s); return 0 - 1; }
+        sent = sent + n;
+    }
+    1
+}
+fn play_http_recv(s: i64) -> i64 {
+    let fd: i64 = __mind_load_i64(s);
+    let buf: i64 = __mind_load_i64(s + 24);
+    let mut got: i64 = 0;
+    let mut header: i64 = 0;
+    let mut length: i64 = 0 - 1;
+    let mut scan: i64 = 0;
+    __mind_store_i64(s + 72, 0);
+    while header == 0 {
+        if got >= 16384 { return 0 - 1; }
+        let n: i64 = recv(fd as i32, (buf + got) as *mut u8, play_response_cap() - got, 0 as i32);
+        if n <= 0 { let _x: i64 = play_disconnect(s); return 0 - 1; }
+        got = got + n;
+        while scan + 3 < got {
+            if __mind_load_i8(buf + scan) == 13 && __mind_load_i8(buf + scan + 1) == 10 && __mind_load_i8(buf + scan + 2) == 13 && __mind_load_i8(buf + scan + 3) == 10 { header = scan + 4; scan = got; }
+            else { scan = scan + 1; }
+        }
+    }
+    if header > 16384 { return 0 - 1; }
+    if header < 16 || play_eq(buf, 9, "HTTP/1.1 ") + play_eq(buf, 9, "HTTP/1.0 ") == 0 { return 0 - 1; }
+    let status: i64 = play_uint(buf + 9, 3);
+    __mind_store_i64(s + 64, status);
+    let mut p: i64 = 0;
+    while p + 1 < header && __mind_load_i8(buf + p) != 13 { p = p + 1; }
+    p = p + 2;
+    while p + 2 < header {
+        let start: i64 = p;
+        while p < header && __mind_load_i8(buf + p) != 58 && __mind_load_i8(buf + p) != 13 { p = p + 1; }
+        if p >= header || __mind_load_i8(buf + p) != 58 { return 0 - 1; }
+        let name_len: i64 = p - start;
+        p = p + 1;
+        while p < header && __mind_load_i8(buf + p) == 32 { p = p + 1; }
+        let val: i64 = p;
+        while p < header && __mind_load_i8(buf + p) != 13 { p = p + 1; }
+        if play_ci(buf + start, name_len, "content-length") == 1 { length = play_uint(buf + val, p - val); }
+        if play_ci(buf + start, name_len, "transfer-encoding") == 1 { return 0 - 1; }
+        if play_ci(buf + start, name_len, "connection") == 1 && play_ci(buf + val, p - val, "close") == 1 { __mind_store_i64(s + 72, 1); }
+        if play_ci(buf + start, name_len, "set-cookie") == 1 {
+            let mut end: i64 = val;
+            while end < p && __mind_load_i8(buf + end) != 59 { end = end + 1; }
+            if end - val <= 2048 { let _cc: i64 = play_copy(__mind_load_i64(s + 80), buf + val, end - val); __mind_store_i64(s + 88, end - val); }
+        }
+        p = p + 2;
+    }
+    if length < 0 || length > play_body_cap() || header + length > play_response_cap() || got > header + length { return 0 - 1; }
+    while got < header + length {
+        let n: i64 = recv(fd as i32, (buf + got) as *mut u8, header + length - got, 0 as i32);
+        if n <= 0 { let _x: i64 = play_disconnect(s); return 0 - 1; }
+        got = got + n;
+    }
+    __mind_store_i64(s + 32, length);
+    if __mind_load_i64(s + 72) == 1 { let _x: i64 = play_disconnect(s); }
+    if status < 200 || status > 299 { return 0 - 2; }
+    buf + header
+}
+fn play_http(s: i64, path: String, body: i64, body_len: i64) -> i64 {
+    if play_http_send(s, path, body, body_len) != 1 { return 0 - 1; }
+    play_http_recv(s)
+}
+
+fn play_body(q: i64, game: i64, card: i64, state: i64, action: i64, cell: i64) -> i64 {
+    __mind_store_i64(q + 8, 0);
+    let _a: i64 = play_lit(q, "{\"game_id\":\"");
+    let _b: i64 = play_add(q, game, play_len(game));
+    let _c: i64 = play_lit(q, "\"");
+    if action == 0 {
+        let _d: i64 = play_lit(q, ",\"card_id\":\"");
+        let _e: i64 = play_add(q, card, play_len(card));
+        let _f: i64 = play_lit(q, "\"");
+    }
+    if __mind_load_i64(state + 8) > 0 {
+        let _g: i64 = play_lit(q, ",\"guid\":\"");
+        let _h: i64 = play_add(q, __mind_load_i64(state), __mind_load_i64(state + 8));
+        let _i: i64 = play_lit(q, "\"");
+    }
+    if action == 6 {
+        let _j: i64 = play_lit(q, ",\"x\":");
+        let _k: i64 = play_num(q, cell % 64);
+        let _l: i64 = play_lit(q, ",\"y\":");
+        let _m: i64 = play_num(q, cell / 64);
+    }
+    play_lit(q, "}")
+}
+fn play_action(s: i64, action: i64, body: i64, len: i64) -> i64 {
+    if action == 0 { return play_http(s, "/api/cmd/RESET", body, len); }
+    if action == 1 { return play_http(s, "/api/cmd/ACTION1", body, len); }
+    if action == 2 { return play_http(s, "/api/cmd/ACTION2", body, len); }
+    if action == 3 { return play_http(s, "/api/cmd/ACTION3", body, len); }
+    if action == 4 { return play_http(s, "/api/cmd/ACTION4", body, len); }
+    if action == 5 { return play_http(s, "/api/cmd/ACTION5", body, len); }
+    if action == 6 { return play_http(s, "/api/cmd/ACTION6", body, len); }
+    if action == 7 { return play_http(s, "/api/cmd/ACTION7", body, len); }
+    0 - 1
+}
+fn play_result(fd: i64, game: i64, card: i64, state: i64, actions: i64, resets: i64, code: i64, per: i64, nper: i64) -> i64 {
+    let b: i64 = play_buf(8192);
+    let _a: i64 = play_lit(b, "!play_result version=1 game=\"");
+    let _g: i64 = play_add(b, game, play_len(game));
+    let _b: i64 = play_lit(b, "\" card=\"");
+    let _c: i64 = play_add(b, card, play_len(card));
+    let _d: i64 = play_lit(b, "\" actions=");
+    let _e: i64 = play_num(b, actions);
+    let _f: i64 = play_lit(b, " resets=");
+    let _h: i64 = play_num(b, resets);
+    let _i: i64 = play_lit(b, " levels=");
+    let _j: i64 = play_num(b, __mind_load_i64(state + 24));
+    let _k: i64 = play_lit(b, " win_levels=");
+    let _l: i64 = play_num(b, __mind_load_i64(state + 32));
+    let _m: i64 = play_lit(b, " state=");
+    let _n: i64 = play_num(b, __mind_load_i64(state + 16));
+    let _o: i64 = play_lit(b, " code=");
+    let _q: i64 = play_num(b, code);
+    let _r: i64 = play_lit(b, " per_level=[");
+    let mut i: i64 = 0;
+    while i < nper {
+        if i > 0 { let _comma: i64 = play_lit(b, ","); }
+        let _v: i64 = play_num(b, __mind_load_i64(per + i * 8));
+        i = i + 1;
+    }
+    let _s: i64 = play_lit(b, "]\n");
+    let p: i64 = __mind_load_i64(b);
+    let mut off: i64 = 0;
+    let len: i64 = __mind_load_i64(b + 8);
+    if len < 0 { return 6; }
+    while off < len { let n: i64 = __mind_write(fd, p + off, len - off, 0 - 1); if n <= 0 { return 6; } off = off + n; }
+    code
+}
+fn play_action_send(s: i64, action: i64, body: i64, len: i64) -> i64 {
+    if action == 0 { return play_http_send(s, "/api/cmd/RESET", body, len); }
+    if action == 1 { return play_http_send(s, "/api/cmd/ACTION1", body, len); }
+    if action == 2 { return play_http_send(s, "/api/cmd/ACTION2", body, len); }
+    if action == 3 { return play_http_send(s, "/api/cmd/ACTION3", body, len); }
+    if action == 4 { return play_http_send(s, "/api/cmd/ACTION4", body, len); }
+    if action == 5 { return play_http_send(s, "/api/cmd/ACTION5", body, len); }
+    if action == 6 { return play_http_send(s, "/api/cmd/ACTION6", body, len); }
+    if action == 7 { return play_http_send(s, "/api/cmd/ACTION7", body, len); }
+    0
+}
+// Readiness-driven scheduler: other sockets may have a request in flight
+// while one shared workspace computes a decision. poll waits without spinning;
+// each ready game is serviced once before refreshing the descriptor array.

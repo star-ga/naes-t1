@@ -1,0 +1,40 @@
+{
+ "total": {
+  "levels": 7,
+  "ref_levels": 7,
+  "actions": 310,
+  "ref_actions": 310,
+  "games_full": 1,
+  "games": 1,
+  "perturb": 0
+ },
+ "games": [
+  {
+   "game": "ls20-9607627b",
+   "levels": 7,
+   "ref_levels": 7,
+   "actions": 310,
+   "ref_actions": 310,
+   "per_level": [
+    14,
+    45,
+    39,
+    43,
+    44,
+    72,
+    53
+   ],
+   "ref_per_level": [
+    13,
+    45,
+    39,
+    43,
+    44,
+    72,
+    53
+   ],
+   "resets": 1,
+   "over_ref_levels": []
+  }
+ ]
+}

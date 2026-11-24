@@ -1,0 +1,11 @@
+[<label withheld>] starts loaded from cache
+2026-09-21 22:49:33 | INFO | Created new scorecard: c9bf2e10-340f-4bfc-b74c-e78f8e72f125
+INFO:arc_agi.base:Created new scorecard: c9bf2e10-340f-4bfc-b74c-e78f8e72f125
+2026-09-21 22:49:33 | INFO | Successfully loaded game class Tn36 from <path>
+INFO:arc_agi.base:Successfully loaded game class Tn36 from <path>
+[replay-backend] cls=Tn36 kwargs={} deterministic=yes deepcopy_cache=on
+<word withheld> (most recent call last):
+  File "<path>", line 92, in <module>
+    sig=sha(probe.full_sig(g)); assert sig==<label withheld>['canonical_start']['full_state_signature_sha256']
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<word withheld>

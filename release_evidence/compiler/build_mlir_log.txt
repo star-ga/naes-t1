@@ -1,0 +1,2 @@
+   Finished cpu [binary] naes_t1_mlir
+   Artifact: 121112 bytes

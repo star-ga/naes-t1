@@ -1,0 +1,721 @@
+{
+ "game_sha256": "43c30052cdeb230017eb1ec23877050d96297756b86071417868ec61138c9fb7",
+ "numpy": "2.4.6",
+ "pydantic": "2.12.3",
+ "engine_sha256": {
+  "camera.py": "f06e16807b0f97d86cafb5481bb3969213f27768f789d898c6b8b07e957de397",
+  "base_game.py": "5b5f41f3bec4c0c97a727fda7326114991dc0d4a5642d489b40ee4aa87e6b15f",
+  "enums.py": "94ebef48f6fe950a18679a1b991c366e8e28c32ab58c9335f385e19bea21950e",
+  "level.py": "f74db969772b251018b2fcce6ec42f3522adeef4e9c03c036e455d2a35e3215a",
+  "sprites.py": "ea9d3d02c7db0814954134a0e0ea6a3cb9b80066930dbdbfc5865befb54c493f"
+ },
+ "levels": {
+  "1": {
+   "camera": {
+    "x": 0,
+    "y": 0,
+    "width": 64,
+    "height": 64,
+    "scale": 1,
+    "available_actions": [
+     6
+    ]
+   },
+   "n_reps": 14,
+   "any_none": false,
+   "pickle_bytes": 300772,
+   "pickle_seconds": 0.0055,
+   "step_seconds": 0.0041,
+   "edit_reps": 10,
+   "edit_reps_that_change_key": 10,
+   "audit": {
+    "checked": 4096,
+    "mismatches": [],
+    "ok": true
+   },
+   "upper": {
+    "won": true,
+    "won_at": 7,
+    "clicks": 7
+   },
+   "upper_unstubbed": {
+    "won": true,
+    "won_at": 7,
+    "clicks": 7
+   },
+   "stub_matches_upper": true,
+   "geom_stable_after_one": true,
+   "timer_in_collision_lists": false,
+   "prefix": {
+    "won": false,
+    "won_at": null,
+    "clicks": 6
+   },
+   "dominated": {
+    "fresh_state": "NOT_PLAYED",
+    "ACTION1": {
+     "key_same_as_fresh": false,
+     "world_same_as_fresh": true,
+     "count_delta": 2,
+     "state": "NOT_FINISHED"
+    },
+    "ACTION2": {
+     "key_same_as_fresh": false,
+     "world_same_as_fresh": true,
+     "count_delta": 2,
+     "state": "NOT_FINISHED"
+    },
+    "ACTION3": {
+     "key_same_as_fresh": false,
+     "world_same_as_fresh": true,
+     "count_delta": 2,
+     "state": "NOT_FINISHED"
+    },
+    "ACTION4": {
+     "key_same_as_fresh": false,
+     "world_same_as_fresh": true,
+     "count_delta": 2,
+     "state": "NOT_FINISHED"
+    },
+    "ACTION5": {
+     "key_same_as_fresh": false,
+     "world_same_as_fresh": true,
+     "count_delta": 2,
+     "state": "NOT_FINISHED"
+    },
+    "ACTION7": {
+     "key_same_as_fresh": false,
+     "world_same_as_fresh": true,
+     "count_delta": 2,
+     "state": "NOT_FINISHED"
+    },
+    "ACTION1_after_click": {
+     "world_same": true
+    },
+    "RESET_after_click": {
+     "world_same_as_fresh": true,
+     "action_count": 0,
+     "level": 0,
+     "state": "NOT_FINISHED"
+    }
+   },
+   "timer_after_one_corner_click": [
+    {
+     "counter": 1,
+     "bar_x": 0,
+     "counter0": 0,
+     "bar0": 1
+    }
+   ],
+   "geom": 21,
+   "recorded_length": 7,
+   "queue_after_fresh": 0
+  },
+  "2": {
+   "camera": {
+    "x": 0,
+    "y": 0,
+    "width": 64,
+    "height": 64,
+    "scale": 1,
+    "available_actions": [
+     6
+    ]
+   },
+   "n_reps": 32,
+   "any_none": false,
+   "pickle_bytes": 303473,
+   "pickle_seconds": 0.0049,
+   "step_seconds": 0.0037,
+   "edit_reps": 24,
+   "edit_reps_that_change_key": 24,
+   "audit": {
+    "checked": 4096,
+    "mismatches": [],
+    "ok": true
+   },
+   "upper": {
+    "won": true,
+    "won_at": 9,
+    "clicks": 9
+   },
+   "upper_unstubbed": {
+    "won": true,
+    "won_at": 9,
+    "clicks": 9
+   },
+   "stub_matches_upper": true,
+   "geom_stable_after_one": true,
+   "timer_in_collision_lists": false,
+   "prefix": {
+    "won": false,
+    "won_at": null,
+    "clicks": 8
+   },
+   "dominated": {
+    "fresh_state": "NOT_PLAYED",
+    "ACTION1": {
+     "key_same_as_fresh": false,
+     "world_same_as_fresh": true,
+     "count_delta": 2,
+     "state": "NOT_FINISHED"
+    },
+    "ACTION2": {
+     "key_same_as_fresh": false,
+     "world_same_as_fresh": true,
+     "count_delta": 2,
+     "state": "NOT_FINISHED"
+    },
+    "ACTION3": {
+     "key_same_as_fresh": false,
+     "world_same_as_fresh": true,
+     "count_delta": 2,
+     "state": "NOT_FINISHED"
+    },
+    "ACTION4": {
+     "key_same_as_fresh": false,
+     "world_same_as_fresh": true,
+     "count_delta": 2,
+     "state": "NOT_FINISHED"
+    },
+    "ACTION5": {
+     "key_same_as_fresh": false,
+     "world_same_as_fresh": true,
+     "count_delta": 2,
+     "state": "NOT_FINISHED"
+    },
+    "ACTION7": {
+     "key_same_as_fresh": false,
+     "world_same_as_fresh": true,
+     "count_delta": 2,
+     "state": "NOT_FINISHED"
+    },
+    "ACTION1_after_click": {
+     "world_same": true
+    },
+    "RESET_after_click": {
+     "world_same_as_fresh": true,
+     "action_count": 0,
+     "level": 1,
+     "state": "NOT_FINISHED"
+    }
+   },
+   "timer_after_one_corner_click": [
+    {
+     "counter": 1,
+     "bar_x": 0,
+     "counter0": 0,
+     "bar0": 1
+    }
+   ],
+   "geom": 64,
+   "recorded_length": 9,
+   "queue_after_fresh": 0
+  },
+  "3": {
+   "camera": {
+    "x": 0,
+    "y": 0,
+    "width": 64,
+    "height": 64,
+    "scale": 1,
+    "available_actions": [
+     6
+    ]
+   },
+   "n_reps": 46,
+   "any_none": false,
+   "pickle_bytes": 304569,
+   "pickle_seconds": 0.0044,
+   "step_seconds": 0.0037,
+   "edit_reps": 36,
+   "edit_reps_that_change_key": 36,
+   "audit": {
+    "checked": 4096,
+    "mismatches": [],
+    "ok": true
+   },
+   "upper": {
+    "won": true,
+    "won_at": 9,
+    "clicks": 9
+   },
+   "upper_unstubbed": {
+    "won": true,
+    "won_at": 9,
+    "clicks": 9
+   },
+   "stub_matches_upper": true,
+   "geom_stable_after_one": true,
+   "timer_in_collision_lists": false,
+   "prefix": {
+    "won": false,
+    "won_at": null,
+    "clicks": 8
+   },
+   "dominated": {
+    "fresh_state": "NOT_PLAYED",
+    "ACTION1": {
+     "key_same_as_fresh": false,
+     "world_same_as_fresh": true,
+     "count_delta": 2,
+     "state": "NOT_FINISHED"
+    },
+    "ACTION2": {
+     "key_same_as_fresh": false,
+     "world_same_as_fresh": true,
+     "count_delta": 2,
+     "state": "NOT_FINISHED"
+    },
+    "ACTION3": {
+     "key_same_as_fresh": false,
+     "world_same_as_fresh": true,
+     "count_delta": 2,
+     "state": "NOT_FINISHED"
+    },
+    "ACTION4": {
+     "key_same_as_fresh": false,
+     "world_same_as_fresh": true,
+     "count_delta": 2,
+     "state": "NOT_FINISHED"
+    },
+    "ACTION5": {
+     "key_same_as_fresh": false,
+     "world_same_as_fresh": true,
+     "count_delta": 2,
+     "state": "NOT_FINISHED"
+    },
+    "ACTION7": {
+     "key_same_as_fresh": false,
+     "world_same_as_fresh": true,
+     "count_delta": 2,
+     "state": "NOT_FINISHED"
+    },
+    "ACTION1_after_click": {
+     "world_same": true
+    },
+    "RESET_after_click": {
+     "world_same_as_fresh": true,
+     "action_count": 0,
+     "level": 2,
+     "state": "NOT_FINISHED"
+    }
+   },
+   "timer_after_one_corner_click": [
+    {
+     "counter": 1,
+     "bar_x": 0,
+     "counter0": 0,
+     "bar0": 1
+    }
+   ],
+   "geom": 80,
+   "recorded_length": 9,
+   "queue_after_fresh": 0
+  },
+  "4": {
+   "camera": {
+    "x": 0,
+    "y": 0,
+    "width": 64,
+    "height": 64,
+    "scale": 1,
+    "available_actions": [
+     6
+    ]
+   },
+   "n_reps": 46,
+   "any_none": false,
+   "pickle_bytes": 304147,
+   "pickle_seconds": 0.0125,
+   "step_seconds": 0.007,
+   "edit_reps": 36,
+   "edit_reps_that_change_key": 36,
+   "audit": {
+    "checked": 4096,
+    "mismatches": [],
+    "ok": true
+   },
+   "upper": {
+    "won": true,
+    "won_at": 12,
+    "clicks": 12
+   },
+   "upper_unstubbed": {
+    "won": true,
+    "won_at": 12,
+    "clicks": 12
+   },
+   "stub_matches_upper": true,
+   "geom_stable_after_one": true,
+   "timer_in_collision_lists": false,
+   "prefix": {
+    "won": false,
+    "won_at": null,
+    "clicks": 11
+   },
+   "dominated": {
+    "fresh_state": "NOT_PLAYED",
+    "ACTION1": {
+     "key_same_as_fresh": false,
+     "world_same_as_fresh": true,
+     "count_delta": 2,
+     "state": "NOT_FINISHED"
+    },
+    "ACTION2": {
+     "key_same_as_fresh": false,
+     "world_same_as_fresh": true,
+     "count_delta": 2,
+     "state": "NOT_FINISHED"
+    },
+    "ACTION3": {
+     "key_same_as_fresh": false,
+     "world_same_as_fresh": true,
+     "count_delta": 2,
+     "state": "NOT_FINISHED"
+    },
+    "ACTION4": {
+     "key_same_as_fresh": false,
+     "world_same_as_fresh": true,
+     "count_delta": 2,
+     "state": "NOT_FINISHED"
+    },
+    "ACTION5": {
+     "key_same_as_fresh": false,
+     "world_same_as_fresh": true,
+     "count_delta": 2,
+     "state": "NOT_FINISHED"
+    },
+    "ACTION7": {
+     "key_same_as_fresh": false,
+     "world_same_as_fresh": true,
+     "count_delta": 2,
+     "state": "NOT_FINISHED"
+    },
+    "ACTION1_after_click": {
+     "world_same": true
+    },
+    "RESET_after_click": {
+     "world_same_as_fresh": true,
+     "action_count": 0,
+     "level": 3,
+     "state": "NOT_FINISHED"
+    }
+   },
+   "timer_after_one_corner_click": [
+    {
+     "counter": 1,
+     "bar_x": 0,
+     "counter0": 0,
+     "bar0": 1
+    }
+   ],
+   "geom": 73,
+   "recorded_length": 12,
+   "queue_after_fresh": 0
+  },
+  "5": {
+   "camera": {
+    "x": 0,
+    "y": 0,
+    "width": 64,
+    "height": 64,
+    "scale": 1,
+    "available_actions": [
+     6
+    ]
+   },
+   "n_reps": 47,
+   "any_none": false,
+   "pickle_bytes": 304227,
+   "pickle_seconds": 0.0089,
+   "step_seconds": 0.0071,
+   "edit_reps": 36,
+   "edit_reps_that_change_key": 36,
+   "audit": {
+    "checked": 4096,
+    "mismatches": [],
+    "ok": true
+   },
+   "upper": {
+    "won": true,
+    "won_at": 16,
+    "clicks": 16
+   },
+   "upper_unstubbed": {
+    "won": true,
+    "won_at": 16,
+    "clicks": 16
+   },
+   "stub_matches_upper": true,
+   "geom_stable_after_one": true,
+   "timer_in_collision_lists": false,
+   "prefix": {
+    "won": false,
+    "won_at": null,
+    "clicks": 15
+   },
+   "dominated": {
+    "fresh_state": "NOT_PLAYED",
+    "ACTION1": {
+     "key_same_as_fresh": false,
+     "world_same_as_fresh": true,
+     "count_delta": 2,
+     "state": "NOT_FINISHED"
+    },
+    "ACTION2": {
+     "key_same_as_fresh": false,
+     "world_same_as_fresh": true,
+     "count_delta": 2,
+     "state": "NOT_FINISHED"
+    },
+    "ACTION3": {
+     "key_same_as_fresh": false,
+     "world_same_as_fresh": true,
+     "count_delta": 2,
+     "state": "NOT_FINISHED"
+    },
+    "ACTION4": {
+     "key_same_as_fresh": false,
+     "world_same_as_fresh": true,
+     "count_delta": 2,
+     "state": "NOT_FINISHED"
+    },
+    "ACTION5": {
+     "key_same_as_fresh": false,
+     "world_same_as_fresh": true,
+     "count_delta": 2,
+     "state": "NOT_FINISHED"
+    },
+    "ACTION7": {
+     "key_same_as_fresh": false,
+     "world_same_as_fresh": true,
+     "count_delta": 2,
+     "state": "NOT_FINISHED"
+    },
+    "ACTION1_after_click": {
+     "world_same": true
+    },
+    "RESET_after_click": {
+     "world_same_as_fresh": true,
+     "action_count": 0,
+     "level": 4,
+     "state": "NOT_FINISHED"
+    }
+   },
+   "timer_after_one_corner_click": [
+    {
+     "counter": 1,
+     "bar_x": 0,
+     "counter0": 0,
+     "bar0": 1
+    }
+   ],
+   "geom": 74,
+   "recorded_length": 16,
+   "queue_after_fresh": 0
+  },
+  "6": {
+   "camera": {
+    "x": 0,
+    "y": 0,
+    "width": 64,
+    "height": 64,
+    "scale": 1,
+    "available_actions": [
+     6
+    ]
+   },
+   "n_reps": 46,
+   "any_none": false,
+   "pickle_bytes": 304396,
+   "pickle_seconds": 0.0074,
+   "step_seconds": 0.0061,
+   "edit_reps": 36,
+   "edit_reps_that_change_key": 36,
+   "audit": {
+    "checked": 4096,
+    "mismatches": [],
+    "ok": true
+   },
+   "upper": {
+    "won": true,
+    "won_at": 16,
+    "clicks": 16
+   },
+   "upper_unstubbed": {
+    "won": true,
+    "won_at": 16,
+    "clicks": 16
+   },
+   "stub_matches_upper": true,
+   "geom_stable_after_one": true,
+   "timer_in_collision_lists": false,
+   "prefix": {
+    "won": false,
+    "won_at": null,
+    "clicks": 15
+   },
+   "dominated": {
+    "fresh_state": "NOT_PLAYED",
+    "ACTION1": {
+     "key_same_as_fresh": false,
+     "world_same_as_fresh": true,
+     "count_delta": 2,
+     "state": "NOT_FINISHED"
+    },
+    "ACTION2": {
+     "key_same_as_fresh": false,
+     "world_same_as_fresh": true,
+     "count_delta": 2,
+     "state": "NOT_FINISHED"
+    },
+    "ACTION3": {
+     "key_same_as_fresh": false,
+     "world_same_as_fresh": true,
+     "count_delta": 2,
+     "state": "NOT_FINISHED"
+    },
+    "ACTION4": {
+     "key_same_as_fresh": false,
+     "world_same_as_fresh": true,
+     "count_delta": 2,
+     "state": "NOT_FINISHED"
+    },
+    "ACTION5": {
+     "key_same_as_fresh": false,
+     "world_same_as_fresh": true,
+     "count_delta": 2,
+     "state": "NOT_FINISHED"
+    },
+    "ACTION7": {
+     "key_same_as_fresh": false,
+     "world_same_as_fresh": true,
+     "count_delta": 2,
+     "state": "NOT_FINISHED"
+    },
+    "ACTION1_after_click": {
+     "world_same": true
+    },
+    "RESET_after_click": {
+     "world_same_as_fresh": true,
+     "action_count": 0,
+     "level": 5,
+     "state": "NOT_FINISHED"
+    }
+   },
+   "timer_after_one_corner_click": [
+    {
+     "counter": 1,
+     "bar_x": 1,
+     "counter0": 0,
+     "bar0": 1
+    }
+   ],
+   "geom": 73,
+   "recorded_length": 16,
+   "queue_after_fresh": 0
+  },
+  "7": {
+   "camera": {
+    "x": 0,
+    "y": 0,
+    "width": 64,
+    "height": 64,
+    "scale": 1,
+    "available_actions": [
+     6
+    ]
+   },
+   "n_reps": 46,
+   "any_none": false,
+   "pickle_bytes": 304626,
+   "pickle_seconds": 0.0109,
+   "step_seconds": 0.0091,
+   "edit_reps": 36,
+   "edit_reps_that_change_key": 36,
+   "audit": {
+    "checked": 4096,
+    "mismatches": [],
+    "ok": true
+   },
+   "upper": {
+    "won": true,
+    "won_at": 16,
+    "clicks": 16
+   },
+   "upper_unstubbed": {
+    "won": true,
+    "won_at": 16,
+    "clicks": 16
+   },
+   "stub_matches_upper": true,
+   "geom_stable_after_one": true,
+   "timer_in_collision_lists": false,
+   "prefix": {
+    "won": false,
+    "won_at": null,
+    "clicks": 15
+   },
+   "dominated": {
+    "fresh_state": "NOT_PLAYED",
+    "ACTION1": {
+     "key_same_as_fresh": false,
+     "world_same_as_fresh": true,
+     "count_delta": 2,
+     "state": "NOT_FINISHED"
+    },
+    "ACTION2": {
+     "key_same_as_fresh": false,
+     "world_same_as_fresh": true,
+     "count_delta": 2,
+     "state": "NOT_FINISHED"
+    },
+    "ACTION3": {
+     "key_same_as_fresh": false,
+     "world_same_as_fresh": true,
+     "count_delta": 2,
+     "state": "NOT_FINISHED"
+    },
+    "ACTION4": {
+     "key_same_as_fresh": false,
+     "world_same_as_fresh": true,
+     "count_delta": 2,
+     "state": "NOT_FINISHED"
+    },
+    "ACTION5": {
+     "key_same_as_fresh": false,
+     "world_same_as_fresh": true,
+     "count_delta": 2,
+     "state": "NOT_FINISHED"
+    },
+    "ACTION7": {
+     "key_same_as_fresh": false,
+     "world_same_as_fresh": true,
+     "count_delta": 2,
+     "state": "NOT_FINISHED"
+    },
+    "ACTION1_after_click": {
+     "world_same": true
+    },
+    "RESET_after_click": {
+     "world_same_as_fresh": true,
+     "action_count": 0,
+     "level": 6,
+     "state": "NOT_FINISHED"
+    }
+   },
+   "timer_after_one_corner_click": [
+    {
+     "counter": 1,
+     "bar_x": 1,
+     "counter0": 0,
+     "bar0": 1
+    }
+   ],
+   "geom": 73,
+   "recorded_length": 16,
+   "queue_after_fresh": 0
+  }
+ }
+}

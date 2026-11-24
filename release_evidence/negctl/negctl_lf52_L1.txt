@@ -1,0 +1,21 @@
+command:
+cd <work> && PROOF_SOURCE=<proof-checkout> OPERATION_MODE=offline nice -n 15 timeout 180 <interp> <path>/neg_a_lf52_l1.py > <out>/a.txt 2> <out>/a.err; echo RC:$?
+
+rc:
+0
+
+wrapper line:
+RC:0
+
+note:
+Stdout begins with two scorecard lines, copied below, then one game-load line that names the proof checkout. That load line is omitted. The JSON result line is copied unchanged. Stderr repeats the scorecard and the load line; the checkout path in the load line below is replaced by <proof-checkout>. The replay-backend line is unchanged.
+
+stdout:
+INFO:arc_agi.scorecard:Initialized ScorecardManager with idle_for=0:15:00 and max_open_for=3 days, 0:00:00
+2026-11-06 15:16:43 | INFO | Created new scorecard: 0f7a0f4a-fdc1-48ba-9454-c96864f618e2
+{"checker": "tools/floor_plan/hpush_lf52.py prove()", "class": "A", "planted_first_counterexample": {"child_h": 12, "child_n_active": 4, "cost": 2, "drop": 4, "edge": [[6, 19, 20], [6, 31, 20]], "edge_index": 5, "parent_h": 16, "parent_n_active": 5}, "planted_heuristic": "h = 4 * max(0, N_active - T)  (certified factor is 2)", "planted_search": {"closed_form_lb": 8, "consistency_violation": {"child_h": 4, "cost": 2, "parent_h": 8}, "floor": 8, "n_active": 5, "nodes": 4, "replay_verified": true, "status": "SANDWICH", "target": 1}, "recorded_floor": 8, "rejected": true, "row": "lf52_L1", "unplanted": {"closed_form_lb": 8, "consistency_violation": null, "floor": 8, "n_active": 5, "nodes": 6, "replay_verified": true, "status": "PROVEN", "target": 1}}
+
+stderr:
+INFO:arc_agi.base:Created new scorecard: 0f7a0f4a-fdc1-48ba-9454-c96864f618e2
+INFO:arc_agi.base:Successfully loaded game class Lf52 from <proof-checkout>/environment_files/lf52/271a04aa/lf52.py
+[replay-backend] cls=Lf52 kwargs={} deterministic=yes deepcopy_cache=on

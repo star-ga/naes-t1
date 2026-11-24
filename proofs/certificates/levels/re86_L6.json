@@ -1,0 +1,96 @@
+{
+  "artifact_sha256": [
+    {
+      "kind": "safe_statement_count_extract",
+      "sha256": "bf4ec389c509f02a91e45de162797d7f859490c9e76b412a22206a8de3f0a279"
+    },
+    {
+      "kind": "authority_ledger_label",
+      "sha256": "c540aaea58d9e389312392b4e0d8114810ab61eb9adc563b538fa659b4ea5a51"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "4bb106f86a49d387b88e13a65f4d873800495b8377b33f64020e03094f6e007f"
+    },
+    {
+      "kind": "referenced_evidence",
+      "sha256": "bb8731b42868241753d417191d2cae370f68244baa7757f7881c2135703a1897",
+      "status": "withheld"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "90a3f2b41c50a0ad096f25e2f072e0069426da3c9201f1fd1fdd0a7bc4d3e058"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "cc0fb6b57ecef73498615eb948b3ecc8fb2ac2c9efe0e3e5c1a8f6f5304df835"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "08dcca1e42461500aae1a18692a3451358be52b82a2e4bd6968141556903bcce"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "d6cf12c04de53b59d288601c4e5e62f74dbe2e42acb85fcbdac4345b3f3c30ab"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "3b49853c091d02635401cc5e1e0451a7731315692c7cbeef2747fd07afdfc70f"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "8afe97e6a529d569c6a371988ca80bb6000d651916520875ea92b9bdd08938a7"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "a85b106eca6e55935219ce38a903ed758181433e1e67d221e61ee64340b79559"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "557ef5142d980efe210201e98e6fa9518984994d9baa691e10979e07aded8807"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "f24ed03f887a01d3a3b0f430176a856483b8dd92180c32700b3ff4f30e907450"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "c5062a86f55806454223d7b02618035fa5034bead6017e628ed66b9dee562554"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "3e7f97655e521bf23d587c1d5edb11f29bf14221366a5d3e25792880eadf37ac"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "2b885857151d9b4845501b20ae5ae672866e668ffb15e188bfdbbb847d8a38f5"
+    },
+    {
+      "kind": "recovered_proof_packet_record",
+      "sha256": "7465159d31b6af6ca44fc437e7d108a9264d7818238a982417ae33d09f11c29d"
+    }
+  ],
+  "floor": 46,
+  "game": "re86",
+  "game_id": "re86-8af5384d",
+  "game_levels": 8,
+  "level": 6,
+  "lower_bound": {
+    "kind": "phase_decomposition_coverage_lb",
+    "statement": "Phase-decomposed coverage bound: lb_moves=45 + lb_presses=1 over 2 pieces / 8 cells to paint; per-piece distances [26, 19]. The proof phase_decomposition_coverage_lb establishes lower bound 46, equal to the floor.",
+    "value": 46
+  },
+  "naes_t1_actions": 46,
+  "proof_class": "Matching bounds",
+  "proof_detail": "phase_decomposition_coverage_lb",
+  "schema_version": 1,
+  "source_certificate_sha256": "0d11b5147cc1c0d6fb7d5f0c7a058e61747e152616d37e99e506ecb4e97d6da0",
+  "status": "proven",
+  "upper_bound": {
+    "expected_levels_completed": 6,
+    "length": 46,
+    "opening_reset_counted": false,
+    "route": "1 1 4 4 2 4 2 4 4 4 4 4 4 4 1 3 4 4 4 5 2 2 2 2 2 3 3 1 3 2 2 1 1 1 1 1 1 3 3 3 3 3 3 3 3 3",
+    "seed": 0
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "status": "PASS_<word withheld>",
+  "commands": [
+    {
+      "argv": ["<interp>", "packet/verify_manifest.py"],
+      "returncode": 0,
+      "stdout": "{\"status\": \"PASS\", \"files_verified\": N, \"floor\": 13, \"<word withheld>_route_preserved\": true}\n"
+    },
+    {
+      "argv": ["<interp>", "packet/producer/independent_native_gate.py"],
+      "returncode": 0,
+      "stdout": "{\"ok\": true, \"fresh_replay_win_at\": 13, \"fresh_replay_Fminus1\": null, ...}\n"
+    }
+  ],
+  "certificate_difference_coordinates": [["s5i5", "1"]],
+  "all_nonowned_certificate_nodes_semantically_identical": true,
+  "current_min_path_and_floor_unchanged": true,
+  "complete_<word withheld>_row_preserved": true,
+  "measurement": {
+    "instance": "s5i5-a48e4b1d",
+    "steps": 13,
+    "source": "kit/s5i5.json L1 route_len / <word withheld> scoped run"
+  },
+  "<key withheld>": {
+    "ok": true,
+    "reason": "<word withheld>",
+    "floor": 13,
+    "instance": "s5i5-a48e4b1d",
+    "scope": "<word withheld>"
+  },
+  "negative_controls": {
+    "below_floor": {
+      "ok": false,
+      "reason": "refuse_refuted_by_measurement"
+    },
+    "incomplete_click_coverage": {
+      "ok": false,
+      "reason": "refuse_coverage_incomplete"
+    }
+  },
+  "proven_controls": {
+    "negative_Fminus1_prefix_loses": true,
+    "positive_planted_shorter_route": true,
+    "positive_validate_probe_stride": true
+  },
+  "<word withheld>_unchanged": true,
+  "<word withheld>": true
+}
